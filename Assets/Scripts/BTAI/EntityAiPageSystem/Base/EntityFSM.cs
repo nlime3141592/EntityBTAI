@@ -18,19 +18,20 @@ namespace UnchordMetroidvania
             m_pages = new EntityAiPage[7];
         }
 
-        public override InvokeResult Invoke()
+        public override InvokeResult Invoke(long curFps)
         {
-            m_pages[6].Invoke();
+            m_pages[6].Invoke(curFps);
 
             if(
                 m_pages[5] != null && // TEST LINE!!
-                m_pages[5].Invoke() == InvokeResult.FAIL)
+                m_pages[5].Invoke(curFps) == InvokeResult.FAIL)
                 return InvokeResult.FAIL;
 
             int tCode = m_CreateTerrainCode(bDetectFloor, bHitFloor, bHitWall, bHitLedge);
             int pageIdx = m_ParsePage(tCode);
 
-            return m_pages[pageIdx].Invoke();
+            return m_pages[pageIdx].Invoke(curFps);
+            // return m_pages[1].Invoke();
         }
 
         private int m_CreateTerrainCode(bool bDF, bool bHF, bool bHW, bool bHL)

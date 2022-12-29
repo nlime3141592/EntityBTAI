@@ -16,6 +16,16 @@ public class VelocityController2D : MonoBehaviour
         m_rigid = null;
     }
 
+    public float GetVelocityX()
+    {
+        return m_rigid.velocity.x;
+    }
+
+    public float GetVelocityY()
+    {
+        return m_rigid.velocity.y;
+    }
+
     public void SetVelocityXY(float x, float y)
     {
         m_tvel.Set(x, y);

@@ -16,5 +16,10 @@ namespace UnchordMetroidvania
         {
             ++curFps;
         }
+
+        void IConfigurationBT.SetFps(long fps)
+        {
+            curFps = fps;
+        }
     }
 }

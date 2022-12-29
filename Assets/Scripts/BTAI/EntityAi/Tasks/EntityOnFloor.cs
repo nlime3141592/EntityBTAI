@@ -13,6 +13,7 @@ namespace UnchordMetroidvania
 
         public override InvokeResult Invoke()
         {
+            base.Invoke();
             p_config.currentState = this.id;
             return InvokeResult.SUCCESS;
         }

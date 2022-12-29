@@ -3,7 +3,7 @@ namespace UnchordMetroidvania
     public abstract class NodeBT<T_ConfigurationBT>
     where T_ConfigurationBT : IConfigurationBT
     {
-        protected readonly T_ConfigurationBT p_config;
+        public readonly T_ConfigurationBT p_config;
         public int id { get; protected set; }
         public string name { get; protected set; }
 

@@ -51,6 +51,10 @@ namespace UnchordMetroidvania
         public const int c_st_IDLE_LONG_ON_FLOOR                = 3;
         public const int c_st_SIT_ON_FLOOR                      = 4;
         public const int c_st_HEAD_UP_ON_FLOOR                  = 5;
+        public const int c_st_FREE_FALL                         = 6;
+        public const int c_st_GLIDING                           = 7;
+        public const int c_st_IDLE_WALL                         = 8;
+        public const int c_st_SLIDING_WALL                      = 9;
 
         private EntityMoveOnFloor<IEntityPlayerConfig> m_walk;
         private EntityMoveOnFloor<IEntityPlayerConfig> m_run;
@@ -58,11 +62,17 @@ namespace UnchordMetroidvania
         private EntityIdleOnFloor<IEntityPlayerConfig> m_idleLong;
         private EntityIdleOnFloor<IEntityPlayerConfig> m_sit;
         private EntityIdleOnFloor<IEntityPlayerConfig> m_headUp;
+
+        private EntityFreeFallOnAir<IEntityPlayerConfig> m_freeFall;
+        private EntityGlidingOnAir<IEntityPlayerConfig> m_gliding;
+
+        private EntityIdleOnWall<IEntityPlayerConfig> m_idleWall;
+        private EntitySlidingOnWall<IEntityPlayerConfig> m_slidingWall;
         #endregion
 
         #region Behavior Tree Page Sytsem
         private EntityFSM m_fsm;
-        private EntityAirPage m_airPage;
+        private EntityPlayerAirPage m_airPage;
         private EntityPlayerFloorPage m_floorPage;
         private EntityWallPage m_wallPage;
         private EntityLedgePage m_ledgePage;
@@ -104,13 +114,29 @@ namespace UnchordMetroidvania
             m_sit = new EntityIdleOnFloor<IEntityPlayerConfig>(pConfig, pConfig.floorConfig, c_st_SIT_ON_FLOOR, "Sit");
             m_headUp = new EntityIdleOnFloor<IEntityPlayerConfig>(pConfig, pConfig.floorConfig, c_st_HEAD_UP_ON_FLOOR, "HeadUp");
 
+            m_freeFall = new EntityFreeFallOnAir<IEntityPlayerConfig>(pConfig, c_st_FREE_FALL, "FreeFall");
+            m_gliding = new EntityGlidingOnAir<IEntityPlayerConfig>(pConfig, c_st_GLIDING, "Gliding");
+
+            m_idleWall = new EntityIdleOnWall<IEntityPlayerConfig>(pConfig, c_st_IDLE_WALL, "IdleWall");
+            m_slidingWall = new EntitySlidingOnWall<IEntityPlayerConfig>(pConfig, c_st_SLIDING_WALL, "SlidingWall");
+
             // Page System
             // TODO: m_xxxPage = new EntityXxxPage();
+            m_airPage = new EntityPlayerAirPage(
+                pConfig,
+                m_freeFall,
+                m_gliding
+            );
             m_floorPage = new EntityPlayerFloorPage(
                 pConfig,
                 m_walk, m_run,
                 m_idleBasic, m_idleLong,
                 m_sit, m_headUp
+            );
+            m_wallPage = new EntityPlayerWallPage(
+                pConfig,
+                m_idleWall,
+                m_slidingWall
             );
             m_terrainCheckPage = new EntityPlayerTerrainCheckPage(
                 pConfig.floorConfig,
@@ -128,6 +154,25 @@ namespace UnchordMetroidvania
             m_fsm.SetLedgePage(m_ledgePage);
             m_fsm.SetAbilityPage(m_abilityPage);
             m_fsm.SetTerrainCheckPage(m_terrainCheckPage);
+        }
+
+        private void FixedUpdateOrigins()
+        {
+            Bounds feet = hexCollider.feet.bounds;
+            Bounds head = hexCollider.head.bounds;
+
+            fOrigin.position = new Vector2(feet.center.x, feet.min.y);
+            flOrigin.position = new Vector2(feet.min.x, feet.min.y);
+            frOrigin.position = new Vector2(feet.max.x, feet.min.y);
+
+            hOrigin.position = new Vector2(head.center.x, head.max.y);
+            hlOrigin.position = new Vector2(head.min.x, head.max.y);
+            hrOrigin.position = new Vector2(head.max.x, head.max.y);
+
+            lbOrigin.position = new Vector2(feet.min.x, feet.center.y);
+            rbOrigin.position = new Vector2(feet.max.x, feet.center.y);
+            ltOrigin.position = new Vector2(head.min.x, head.center.y);
+            rtOrigin.position = new Vector2(head.max.x, head.center.y);
         }
 
         private void FixedUpdateTerrainCheckerConfigs()
@@ -189,40 +234,29 @@ namespace UnchordMetroidvania
             pConfig.rtLedgeConfig.ledgerp = 0.1f;
         }
 
-        private void FixedUpdateOrigins()
+        private void FixedUpdatePlayerTerrainConfigs()
         {
-            Bounds feet = hexCollider.feet.bounds;
-            Bounds head = hexCollider.head.bounds;
-
-            fOrigin.position = new Vector2(feet.center.x, feet.min.y);
-            flOrigin.position = new Vector2(feet.min.x, feet.min.y);
-            frOrigin.position = new Vector2(feet.max.x, feet.min.y);
-
-            hOrigin.position = new Vector2(head.center.x, head.max.y);
-            hlOrigin.position = new Vector2(head.min.x, head.max.y);
-            hrOrigin.position = new Vector2(head.max.x, head.max.y);
-
-            lbOrigin.position = new Vector2(feet.min.x, feet.center.y);
-            rbOrigin.position = new Vector2(feet.max.x, feet.center.y);
-            ltOrigin.position = new Vector2(head.min.x, head.center.y);
-            rtOrigin.position = new Vector2(head.max.x, head.center.y);
+            m_fsm.bDetectFloor = pConfig.floorConfig.bDetected;
+            m_fsm.bHitFloor = pConfig.floorConfig.bHit;
+            m_fsm.bDetectCeil = pConfig.ceilConfig.bDetected;
+            m_fsm.bHitCeil = pConfig.ceilConfig.bHit;
+            m_fsm.bDetectWall = (pConfig.ltWallConfig.bDetected && pConfig.lbWallConfig.bDetected && pConfig.lookDirX == -1) || (pConfig.rtWallConfig.bDetected && pConfig.rbWallConfig.bDetected && pConfig.lookDirX == 1);
+            m_fsm.bHitWall = (pConfig.ltWallConfig.bHit && pConfig.lbWallConfig.bHit && pConfig.lookDirX == -1) || (pConfig.rtWallConfig.bHit && pConfig.rbWallConfig.bHit && pConfig.lookDirX == 1);
         }
 
         private void FixedUpdate()
         {
             pConfig.AddFps();
 
-            FixedUpdateTerrainCheckerConfigs();
             FixedUpdateOrigins();
+            FixedUpdateTerrainCheckerConfigs();
+            FixedUpdatePlayerTerrainConfigs();
 
             // Debugs
             m_run.speedWeight = runSpeedWeight;
             pConfig.isRun = this.isRun;
 
-            m_fsm.bDetectFloor = pConfig.floorConfig.bDetected;
-            m_fsm.bHitFloor = pConfig.floorConfig.bHit;
-
-            m_fsm.Invoke();
+            m_fsm.Invoke(pConfig.curFps);
             CURRENT_STATE = pConfig.currentState;
         }
 

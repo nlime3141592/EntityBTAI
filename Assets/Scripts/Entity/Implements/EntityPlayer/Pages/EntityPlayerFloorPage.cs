@@ -83,10 +83,11 @@ namespace UnchordMetroidvania
             yQuery.Set(2, task);
         }
 
-        public override InvokeResult Invoke()
+        public override InvokeResult Invoke(long curFps)
         {
             idlePostDelay.SetFrame(m_config.maxIdleFrame);
 
+            root.p_config.SetFps(curFps);
             return root.Invoke();
         }
     }

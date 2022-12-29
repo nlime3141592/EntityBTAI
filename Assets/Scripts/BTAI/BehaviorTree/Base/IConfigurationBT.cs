@@ -6,5 +6,6 @@ namespace UnchordMetroidvania
 
         void ClearFps();
         void AddFps();
+        void SetFps(long fps);
     }
 }

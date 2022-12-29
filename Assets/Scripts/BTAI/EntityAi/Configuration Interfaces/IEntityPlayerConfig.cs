@@ -1,7 +1,7 @@
 namespace UnchordMetroidvania
 {
     public interface IEntityPlayerConfig
-    : IEntityInputConfig, IEntityMovementConfig, IEntityRunConfig
+    : IEntityGlidingConfig, IEntityRunConfig, IEntitySlidingOnWallConfig
     {
         IEntityPlayerConfig playerConfig { get; }
 

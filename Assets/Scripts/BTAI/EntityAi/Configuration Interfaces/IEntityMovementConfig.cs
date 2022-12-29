@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public interface IEntityMovementConfig : IConfigurationBT, IEntityLookConfig
+    public interface IEntityMovementConfig : IConfigurationBT, IEntityLookConfig, IEntityInputConfig
     {
         IEntityMovementConfig movementConfig { get; }
 
@@ -11,6 +11,5 @@ namespace UnchordMetroidvania
         VelocityController2D velModule { get; set; }
 
         float baseSpeed { get; set; }
-        float gravity { get; set; }
     }
 }

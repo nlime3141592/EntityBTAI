@@ -6,6 +6,7 @@ namespace UnchordMetroidvania
     {
         #region Entity Config
         int IEntityConfig.currentState { get; set; } = 0;
+        float IEntityConfig.fixedDeltaTime { get; set; } = Time.fixedDeltaTime;
         #endregion
 
         #region Entity Movement Config
@@ -17,7 +18,21 @@ namespace UnchordMetroidvania
         VelocityController2D IEntityMovementConfig.velModule { get; set; }
 
         float IEntityMovementConfig.baseSpeed { get; set; } = 3.0f;
-        float IEntityMovementConfig.gravity { get; set; } = -9.81f;
+        #endregion
+
+        #region Entity FreeFall Config
+        float IEntityFreeFallConfig.freeFallGravity { get; set; } = -9.81f;
+        float IEntityFreeFallConfig.minFreeFallSpeed { get; set; } = -12.0f;
+        #endregion
+
+        #region Entity Gliding Config
+        float IEntityGlidingConfig.glidingAcceleration { get; set; } = 19.0f;
+        float IEntityGlidingConfig.glidingSpeed { get; set; } = -3f;
+        #endregion
+
+        #region Entity Wall Sliding Config
+        float IEntitySlidingOnWallConfig.slidingGravity { get; set; } = -9.81f;
+        float IEntitySlidingOnWallConfig.slidingSpeed { get; set; } = -2.5f;
         #endregion
 
         #region Entity Look Config
@@ -112,7 +127,7 @@ namespace UnchordMetroidvania
                 defaultLookDir = 1;
             if(curLookDir != -1 && curLookDir != 1)
                 curLookDir = defaultLookDir;
-            
+
             if(bFix)
                 return curLookDir;
             else if(input < 0.0f)

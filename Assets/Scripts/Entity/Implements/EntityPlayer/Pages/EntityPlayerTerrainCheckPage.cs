@@ -31,7 +31,7 @@ namespace UnchordMetroidvania
             root.Set(9, rtlChecker);
         }
 
-        public override InvokeResult Invoke()
+        public override InvokeResult Invoke(long curFps)
         {
             return root.Invoke();
         }
