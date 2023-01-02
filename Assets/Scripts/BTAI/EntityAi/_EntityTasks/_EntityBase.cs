@@ -18,7 +18,7 @@ namespace UnchordMetroidvania
         public bool bOnAir;
 
         public Vector2 moveDir;
-        public Vector2 lookDir;
+        public Vector2 lookDir = Vector2.one;
         #endregion
 
         #region Entity Input
@@ -63,8 +63,8 @@ namespace UnchordMetroidvania
 
         protected virtual void FixedUpdate()
         {
-            lookDir.x = FixedUpdateLookDir(axisInput.x, lookDir.x, false);
-            // lookDir.y = FixedUpdateLookDir(axisInput.y, lookDir.y, false);
+            lookDir.x = FixedUpdateLookDir(axisInput.x, lookDir.x, 1, false);
+            // lookDir.y = FixedUpdateLookDir(axisInput.y, lookDir.y, 1, false);
             lookDir.y = 1;
 
             // TEST MOVEMENT.
@@ -85,10 +85,12 @@ namespace UnchordMetroidvania
                 skillRangeGizmoManager.OnDrawGizmos(Time.deltaTime);
         }
 
-        private float FixedUpdateLookDir(float axisValue, float curLookDir, bool bFixed)
+        private float FixedUpdateLookDir(float axisValue, float curLookDir, float defaultLookDir, bool bFixed)
         {
             if(bFixed)
                 return curLookDir;
+            else if(curLookDir != -1 && curLookDir != 1)
+                return defaultLookDir;
             else if(axisValue < 0)
                 return -1;
             else if(axisValue > 0)

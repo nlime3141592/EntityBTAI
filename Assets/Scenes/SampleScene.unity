@@ -220,7 +220,7 @@ MonoBehaviour:
   lookDir: {x: 0, y: 0}
   axisInput: {x: 0, y: 0}
   strength:
-    baseValue: 8
+    baseValue: 14
   defence:
     baseValue: 15
   maxHealth:
@@ -228,12 +228,14 @@ MonoBehaviour:
   mana:
     baseValue: 0
   health: 60
+  testMoveSpeed: 3
   ltrb:
     left: 0.5
     top: 2
     right: 5
     bottom: 0.5
   btModule: {fileID: 0}
+  applyBonusStrength: 0
 --- !u!212 &162998730
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1025,6 +1027,7 @@ MonoBehaviour:
   mana:
     baseValue: 0
   health: 60
+  testMoveSpeed: 3
   Positive_X: 0
   Negative_X: 0
   Positive_Y: 0

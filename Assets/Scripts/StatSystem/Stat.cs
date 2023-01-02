@@ -47,6 +47,7 @@ namespace UnchordMetroidvania
 
         public void AddModifier(StatModifier mod)
         {
+            // if(m_modifiers.Contains(mod)) return;
             m_bShouldUpdate = true;
             m_modifiers.Add(mod);
             m_modifiers.Sort(m_CompareModifiers);

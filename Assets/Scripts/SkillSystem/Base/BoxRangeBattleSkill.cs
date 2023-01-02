@@ -24,7 +24,7 @@ namespace UnchordMetroidvania
         public override _EntityBase[] GetTargets(_EntityBase executor)
         {
             Collider2D[] colliders = m_Detect(executor);
-            List<_EntityBase> entities = m_FilterEntities(colliders);
+            List<_EntityBase> entities = m_FilterEntities(executor, colliders);
             return entities.ToArray();
         }
 
@@ -48,7 +48,7 @@ namespace UnchordMetroidvania
             return colliders;
         }
 
-        private List<_EntityBase> m_FilterEntities(Collider2D[] colliders)
+        private List<_EntityBase> m_FilterEntities(_EntityBase executor, Collider2D[] colliders)
         {
             List<_EntityBase> entities = new List<_EntityBase>(colliders.Length);
             GameObject obj = default(GameObject);
@@ -61,11 +61,16 @@ namespace UnchordMetroidvania
                 contains = false;
                 j = entities.Count;
 
-                while(!contains && j > 0)
-                    contains |= (obj == entities[--j].gameObject);
+                while(!contains && --j >= 0)
+                    contains |= (obj == entities[j].gameObject);
 
                 if(!contains)
+                {
+                    if(!bCanDetectSelf && obj == executor.gameObject)
+                        continue;
+
                     entities.Add(obj.GetComponent<_EntityBase>());
+                }
             }
 
             return entities;
