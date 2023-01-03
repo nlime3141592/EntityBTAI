@@ -15,6 +15,6 @@ namespace UnchordMetroidvania
             this.targetCount = targetCount;
         }
 
-        public abstract _EntityBase[] GetTargets(_EntityBase executor);
+        public abstract EntityBase[] GetTargets(EntityBase executor);
     }
 }

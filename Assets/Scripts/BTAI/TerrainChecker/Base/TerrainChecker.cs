@@ -1,3 +1,4 @@
+/*
 namespace UnchordMetroidvania
 {
     public abstract class TerrainChecker : TaskNodeBT<ITerrainCheckerConfig>
@@ -9,3 +10,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/

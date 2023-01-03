@@ -24,8 +24,8 @@ namespace UnchordMetroidvania
 
             if(
                 m_pages[5] != null && // TEST LINE!!
-                m_pages[5].Invoke(curFps) == InvokeResult.FAIL)
-                return InvokeResult.FAIL;
+                m_pages[5].Invoke(curFps) == InvokeResult.Failure)
+                return InvokeResult.Failure;
 
             int tCode = m_CreateTerrainCode(bDetectFloor, bHitFloor, bHitWall, bHitLedge);
             int pageIdx = m_ParsePage(tCode);

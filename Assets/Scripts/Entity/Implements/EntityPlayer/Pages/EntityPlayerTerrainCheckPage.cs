@@ -1,3 +1,4 @@
+/*
 namespace UnchordMetroidvania
 {
     public class EntityPlayerTerrainCheckPage : EntityTerrainCheckPage
@@ -37,3 +38,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/

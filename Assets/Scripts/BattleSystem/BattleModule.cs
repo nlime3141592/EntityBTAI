@@ -6,22 +6,25 @@ namespace UnchordMetroidvania
 {
     public class BattleModule : MonoBehaviour
     {
-        public _EntityBase owner { get; private set; }
+        public EntityBase owner { get; private set; }
 
         private void OnValidate()
         {
-            owner = GetComponent<_EntityBase>();
+            owner = GetComponent<EntityBase>();
         }
 
         public void UseBattleSkill(BattleSkill skill)
         {
-            _EntityBase[] targets = skill.GetTargets(owner);
+            EntityBase[] targets = skill.GetTargets(owner);
+
+            if(targets == null)
+                return;
 
             for(int i = 0; i < targets.Length; ++i)
                 m_GiveDamage(targets[i]);
         }
 
-        private void m_GiveDamage(_EntityBase target)
+        private void m_GiveDamage(EntityBase target)
         {
             // 게임에 진심인 사람은
             // 나만의 전투 공식을 만드는 데

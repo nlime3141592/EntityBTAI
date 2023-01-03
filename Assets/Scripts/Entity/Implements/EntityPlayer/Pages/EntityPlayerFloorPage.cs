@@ -1,3 +1,4 @@
+/*
 namespace UnchordMetroidvania
 {
     public sealed class EntityPlayerFloorPage : EntityFloorPage
@@ -92,3 +93,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/

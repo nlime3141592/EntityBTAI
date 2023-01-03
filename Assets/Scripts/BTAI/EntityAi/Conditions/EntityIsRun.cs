@@ -1,20 +1,23 @@
+/*
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
-    public class EntityIsRun<T_Config> : ConditionNodeBT<T_Config>
-    where T_Config : IEntityRunConfig
+    public class EntityIsRun<EntityBase> : ConditionNodeBT<EntityBase>
     {
-        public EntityIsRun(T_Config config)
+        public EntityIsRun(ConfigurationBT<EntityBase> config, int id, string name)
         : base(config, -1, "EntityIsRun")
         {
 
         }
 
-        public override InvokeResult Invoke()
+        protected override InvokeResult p_Invoke()
         {
-            if(p_config.isRun)
-                return InvokeResult.SUCCESS;
+            if(config.instance.bIsRun)
+                return InvokeResult.Success;
             else
-                return InvokeResult.FAIL;
+                return InvokeResult.Failure;
         }
     }
 }
+*/

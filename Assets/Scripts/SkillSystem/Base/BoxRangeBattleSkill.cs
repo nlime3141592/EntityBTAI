@@ -21,14 +21,14 @@ namespace UnchordMetroidvania
             this.range = range;
         }
 
-        public override _EntityBase[] GetTargets(_EntityBase executor)
+        public override EntityBase[] GetTargets(EntityBase executor)
         {
             Collider2D[] colliders = m_Detect(executor);
-            List<_EntityBase> entities = m_FilterEntities(executor, colliders);
-            return entities.ToArray();
+            List<EntityBase> entities = m_FilterEntities(executor, colliders);
+            return entities?.ToArray();
         }
 
-        private Collider2D[] m_Detect(_EntityBase executor)
+        private Collider2D[] m_Detect(EntityBase executor)
         {
             Vector2 pStart = executor.transform.position;
             Vector2 pEnd = pStart;
@@ -48,29 +48,27 @@ namespace UnchordMetroidvania
             return colliders;
         }
 
-        private List<_EntityBase> m_FilterEntities(_EntityBase executor, Collider2D[] colliders)
+        private List<EntityBase> m_FilterEntities(EntityBase executor, Collider2D[] colliders)
         {
-            List<_EntityBase> entities = new List<_EntityBase>(colliders.Length);
-            GameObject obj = default(GameObject);
+            List<EntityBase> entities = new List<EntityBase>(colliders.Length);
             bool contains = false;
-            int j = 0;
+            GameObject obj = null;
+            EntityBase entity = null;
 
             for(int i = 0; i < colliders.Length; ++i)
             {
                 obj = colliders[i].gameObject;
                 contains = false;
-                j = entities.Count;
 
-                while(!contains && --j >= 0)
-                    contains |= (obj == entities[j].gameObject);
+                for(int j = 0; j < entities.Count && !contains; ++j)
+                    contains = (obj == entities[j].gameObject);
 
-                if(!contains)
-                {
-                    if(!bCanDetectSelf && obj == executor.gameObject)
-                        continue;
-
-                    entities.Add(obj.GetComponent<_EntityBase>());
-                }
+                if(contains)
+                    continue;
+                else if(!bCanDetectSelf && obj == executor.gameObject)
+                    continue;
+                else if(obj.TryGetComponent<EntityBase>(out entity))
+                    entities.Add(entity);
             }
 
             return entities;

@@ -1,3 +1,4 @@
+/*
 namespace UnchordMetroidvania
 {
     public class EntityGlidingOnAir<T_Config> : EntityFreeFallOnAir<T_Config>
@@ -36,3 +37,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/

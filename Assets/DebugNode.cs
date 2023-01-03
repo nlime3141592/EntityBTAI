@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnchordMetroidvania;
 
@@ -22,3 +23,4 @@ public class DebugConfigurationBT : ConfigurationBT
 {
     
 }
+*/

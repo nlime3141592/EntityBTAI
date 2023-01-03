@@ -1,33 +1,40 @@
+/*
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
-    public abstract class YInputCondition<T_Config> : ConditionNodeBT<T_Config>
-    where T_Config : IEntityInputConfig
+    public abstract class YInputCondition<EntityBase> : ConditionNodeBT<EntityBase>
     {
-        protected YInputCondition(T_Config config, int id, string name) : base(config, id, name) {}
+        protected YInputCondition(ConfigurationBT<EntityBase> config, int id, string name) : base(config, id, name) {}
 
-        private sealed class m_BiggerThanZero<T_InConfig> : YInputCondition<T_InConfig>
-        where T_InConfig : IEntityInputConfig
+        private sealed class m_BiggerThanZero : YInputCondition<EntityBase>
         {
-            public m_BiggerThanZero(T_InConfig config) : base(config, -1, "YInputCondition.m_BiggerThanZero") {}
-            public override InvokeResult Invoke() => p_config.yInput > 0.0f ? InvokeResult.SUCCESS : InvokeResult.FAIL;
+            public m_BiggerThanZero(ConfigurationBT<EntityBase> config) : base(config, -1, "YInputCondition.m_BiggerThanZero") {}
+            protected override InvokeResult p_Invoke() => config.instance.axisInput.y > 0.0f ? InvokeResult.Success : InvokeResult.Failure;
         }
 
-        private sealed class m_SmallerThanZero<T_InConfig> : YInputCondition<T_InConfig>
-        where T_InConfig : IEntityInputConfig
+        private sealed class m_SmallerThanZero : YInputCondition<EntityBase>
         {
-            public m_SmallerThanZero(T_InConfig config) : base(config, -1, "YInputCondition.m_SmallerThanZero") {}
-            public override InvokeResult Invoke() => p_config.yInput < 0.0f ? InvokeResult.SUCCESS : InvokeResult.FAIL;
+            public m_SmallerThanZero(ConfigurationBT<EntityBase> config) : base(config, -1, "YInputCondition.m_SmallerThanZero") {}
+            protected override InvokeResult p_Invoke() => config.instance.axisInput.y < 0.0f ? InvokeResult.Success : InvokeResult.Failure;
         }
 
-        private sealed class m_EqualsZero<T_InConfig> : YInputCondition<T_InConfig>
-        where T_InConfig : IEntityInputConfig
+        private sealed class m_EqualsZero : YInputCondition<EntityBase>
         {
-            public m_EqualsZero(T_InConfig config) : base(config, -1, "YInputCondition.m_EqualsZero") {}
-            public override InvokeResult Invoke() => p_config.yInput == 0.0f ? InvokeResult.SUCCESS : InvokeResult.FAIL;
+            public m_EqualsZero(ConfigurationBT<EntityBase> config) : base(config, -1, "YInputCondition.m_EqualsZero") {}
+            protected override InvokeResult p_Invoke() => config.instance.axisInput.y == 0.0f ? InvokeResult.Success : InvokeResult.Failure;
         }
 
-        public static YInputCondition<T_Config> BiggerThanZero(T_Config config) => new m_BiggerThanZero<T_Config>(config);
-        public static YInputCondition<T_Config> SmallerThanZero(T_Config config) => new m_SmallerThanZero<T_Config>(config);
-        public static YInputCondition<T_Config> EqualsZero(T_Config config) => new m_EqualsZero<T_Config>(config);
+        private sealed class m_NotEqualsZero : YInputCondition<EntityBase>
+        {
+            public m_NotEqualsZero(ConfigurationBT<EntityBase> config) : base(config, -1, "YInputCondition.m_NotEqualsZero") {}
+            protected override InvokeResult p_Invoke() => config.instance.axisInput.y != 0.0f ? InvokeResult.Success : InvokeResult.Failure;
+        }
+
+        public static YInputCondition<EntityBase> BiggerThanZero(ConfigurationBT<EntityBase> config) => new m_BiggerThanZero(config);
+        public static YInputCondition<EntityBase> SmallerThanZero(ConfigurationBT<EntityBase> config) => new m_SmallerThanZero(config);
+        public static YInputCondition<EntityBase> EqualsZero(ConfigurationBT<EntityBase> config) => new m_EqualsZero(config);
+        public static YInputCondition<EntityBase> NotEqualsZero(ConfigurationBT<EntityBase> config) => new m_NotEqualsZero(config);
     }
 }
+*/

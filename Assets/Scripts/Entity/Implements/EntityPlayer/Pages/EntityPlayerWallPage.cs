@@ -1,4 +1,6 @@
+/*
 using UnityEngine;
+
 namespace UnchordMetroidvania
 {
     public sealed class EntityPlayerWallPage : EntityWallPage
@@ -34,3 +36,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 namespace UnchordMetroidvania
 {
     public class EntityIdleOnAir<T_Config> : EntityOnAir<T_Config>
@@ -18,3 +19,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/

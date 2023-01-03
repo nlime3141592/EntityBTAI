@@ -1,3 +1,4 @@
+/*
 namespace UnchordMetroidvania
 {
     public class EntityMoveOnWall<T_Config> : EntityOnWall<T_Config>
@@ -22,3 +23,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/

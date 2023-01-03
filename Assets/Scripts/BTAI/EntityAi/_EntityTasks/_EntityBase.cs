@@ -87,10 +87,10 @@ namespace UnchordMetroidvania
 
         private float FixedUpdateLookDir(float axisValue, float curLookDir, float defaultLookDir, bool bFixed)
         {
-            if(bFixed)
-                return curLookDir;
-            else if(curLookDir != -1 && curLookDir != 1)
+            if(curLookDir != -1 && curLookDir != 1)
                 return defaultLookDir;
+            else if(bFixed)
+                return curLookDir;
             else if(axisValue < 0)
                 return -1;
             else if(axisValue > 0)

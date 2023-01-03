@@ -20,7 +20,7 @@ namespace UnchordMetroidvania
 
         }
 
-        public override _EntityBase[] GetTargets(_EntityBase executor)
+        public override EntityBase[] GetTargets(EntityBase executor)
         {
             Debug.Log("Use Test Box Skill.");
             return base.GetTargets(executor);

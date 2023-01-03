@@ -1,8 +1,9 @@
+/*
 using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class EntityPlayerConfig : ConfigurationBT, IEntityPlayerConfig
+    public class EntityPlayerConfig : IEntityPlayerConfig
     {
         #region Entity Config
         int IEntityConfig.currentState { get; set; } = 0;
@@ -139,3 +140,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/
