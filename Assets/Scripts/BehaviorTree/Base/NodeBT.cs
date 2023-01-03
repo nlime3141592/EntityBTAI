@@ -16,8 +16,7 @@ namespace UnchordMetroidvania
 
         protected NodeBT(ConfigurationBT<T> config, int id, string name)
         {
-            if(config == null)
-                throw new ArgumentNullException("Instance cannot be null.");
+            // if(config == null) throw new ArgumentNullException("Instance cannot be null.");
 
             this.config = config;
             this.id = id;
@@ -28,12 +27,15 @@ namespace UnchordMetroidvania
         {
             if(!bActive)
                 return inactiveResult;
+            
+            if(config != null)
+            {
+                long curFps = config.curFps;
+                long dF = curFps - lastFps;
 
-            long curFps = config.curFps;
-            long dF = curFps - lastFps;
-
-            if(dF > 1) m_OnBeginNode(curFps);
-            if(dF > 0) lastFps = curFps;
+                if(dF > 1) m_OnBeginNode(curFps);
+                if(dF > 0) lastFps = curFps;
+            }
 
             return p_Invoke();
         }

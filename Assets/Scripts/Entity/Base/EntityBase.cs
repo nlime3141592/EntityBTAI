@@ -5,25 +5,13 @@ namespace UnchordMetroidvania
     public class EntityBase : MonoBehaviour
     {
         #region Components
+        [Header("Entity Components")]
+        public Rigidbody2D physics;
         public VelocityController2D velModule;
         #endregion
 
-        #region Terrain Detection Info
-        public _GroundDetection floor;
-        public _GroundDetection ceil;
-        public _WallDetection wallL;
-        public _WallDetection wallR;
-        public _LedgeDetection ledgeLB;
-        public _LedgeDetection ledgeRB;
-        public _LedgeDetection ledgeLT;
-        public _LedgeDetection ledgeRT;
-        public bool bOnAir;
-        #endregion
-
         #region Entity AI
-        private ConfigurationBT<EntityBase> aiConfig;
-        private NodeBT<EntityBase> aiRoot;
-
+        [Header("Entity Action/AI")]
         public bool bFixLookDirX = false;
         public bool bFixLookDirY = true;
         public Vector2 lookDir = Vector2.one;
@@ -33,21 +21,24 @@ namespace UnchordMetroidvania
         #endregion
 
         #region Entity Inputs
+        [Header("Entity Inputs")]
         public Vector2 axisInput;
         #endregion
 
         #region Stat
+        [Header("Entity Stats")]
         public Stat strength;
         public Stat defence;
-
         public Stat maxHealth;
         public Stat maxMana;
+        public Stat baseMoveSpeed;
 
         public float health;
         public float mana;
         #endregion
 
         #region Debug
+        [Header("Debug Options")]
         public RangeGizmoManager skillRangeGizmoManager;
         #endregion
 
@@ -71,9 +62,13 @@ namespace UnchordMetroidvania
 
         protected virtual void p_OnValidate()
         {
-            if(aiConfig == null) aiConfig = new ConfigurationBT<EntityBase>(this);
             if(maxHealth != null) health = maxHealth.finalValue;
             if(skillRangeGizmoManager == null) skillRangeGizmoManager = new RangeGizmoManager();
+            
+            TryGetComponent<Rigidbody2D>(out physics);
+
+            if(TryGetComponent<VelocityController2D>(out velModule))
+                velModule.Subscribe(physics);
         }
 
         protected virtual void Awake()
@@ -88,13 +83,34 @@ namespace UnchordMetroidvania
 
         protected virtual void FixedUpdate()
         {
-            ++(aiConfig.curFps);
 
+        }
+
+        protected InvokeResult FixedUpdateAI<T>(ConfigurationBT<T> config, NodeBT<T> root)
+        where T : EntityBase
+        {
+            p_OnPreFrame();
+                ++(config.curFps);
+            p_OnPreInvoke();
+                InvokeResult iResult = root?.Invoke() ?? InvokeResult.Failure;
+            p_OnPostInvoke();
+                return iResult;
+        }
+
+        protected virtual void p_OnPreFrame()
+        {
+
+        }
+
+        protected virtual void p_OnPreInvoke()
+        {
             lookDir.x = m_GetNextLookDir(axisInput.x, lookDir.x, 1, bFixLookDirX);
             lookDir.y = m_GetNextLookDir(axisInput.y, lookDir.y, 1, bFixLookDirY);
+        }
 
-            if(aiRoot != null)
-                aiRoot.Invoke();
+        protected virtual void p_OnPostInvoke()
+        {
+
         }
 
         protected virtual void Update()
