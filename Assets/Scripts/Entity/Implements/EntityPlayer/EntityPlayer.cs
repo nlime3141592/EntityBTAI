@@ -13,8 +13,18 @@ namespace UnchordMetroidvania
 
         public bool canInput = true;
 
+        #region Stat
+        public Stat runSpeed;
+        public bool bIsRun;
+
+        public Stat glidingGravity;
+
+        public bool bOnHoldLedge = false;
+        public bool bOnLedgeEnd = false;
+        #endregion
+
         #region Terrain Checker
-        private PlayerTerrainCheckPage terrainPage; // Behavior Tree Node.
+        public PlayerTerrainCheckPage terrainPage { get; private set; } // Behavior Tree Node.
 
         // 인스펙터에서 서로 다른 10개의 Transform Component를 할당해야 함.
         public Transform origin_F;
@@ -34,7 +44,10 @@ namespace UnchordMetroidvania
 
         private ConfigurationBT<EntityPlayer> aiConfig;
         private EntityPlayerFSM fsm;
+        public PlayerOnAirPage airPage;
         public PlayerOnFloorPage floorPage;
+        public PlayerOnWallPage wallPage;
+        public PlayerClimbOnLedge ledgePage;
 
         protected override void Start()
         {
@@ -61,9 +74,15 @@ namespace UnchordMetroidvania
 
             aiConfig = new ConfigurationBT<EntityPlayer>(this);
             fsm = new EntityPlayerFSM(aiConfig, 1, "FSM", terrainPage);
-            floorPage = new PlayerOnFloorPage(aiConfig, 0, "FloorPage");
+            airPage = new PlayerOnAirPage(aiConfig, 0, "AirPage");
+            floorPage = new PlayerOnFloorPage(aiConfig, 1, "FloorPage");
+            wallPage = new PlayerOnWallPage(aiConfig, 2, "WallPage");
+            ledgePage = new PlayerClimbOnLedge(aiConfig, 300, "LedgeClimb");
 
-            fsm.Alloc(0, floorPage);
+            fsm.Alloc(0, airPage);
+            fsm.Alloc(1, floorPage);
+            fsm.Alloc(2, wallPage);
+            fsm.Alloc(3, ledgePage);
         }
 
         protected override void FixedUpdate()
@@ -117,6 +136,8 @@ namespace UnchordMetroidvania
 
             if(Input.GetKeyDown(KeyCode.Space))
                 btModule.UseBattleSkill(btSkill);
+
+            // bIsRun = Input.GetKey(KeyCode.LeftControl);
         }
     }
 

@@ -3,13 +3,6 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public enum EPlayerTerrainCheckResult
-    {
-        Floor = 0, Ceil,
-        WallLT, WallRT, WallLB, WallRB,
-        LedgeLT = 14, LedgeRT, LedgeLB, LedgeRB
-    }
-
     [Serializable]
     public class PlayerTerrainCheckPage : PageNodeBT<TerrainCheckResult>
     {
@@ -114,13 +107,19 @@ namespace UnchordMetroidvania
             {
                 m_pCheckers[j].tOrigin = m_tOrigins[j];
                 m_pCheckers[j].detectLength = 0.5f;
-                m_pCheckers[j].hitLength = 0.04f;
+                m_pCheckers[j].hitLength = 0.07f;
             }
             for(int j = 0; j < 4; ++j)
             {
                 m_pCheckers[10 + j].detectLength = 0.5f;
                 m_pCheckers[10 + j].tOrigin = m_tOrigins[6 + j];
             }
+
+            float dLength = 0.3f;
+            m_pCheckers[10].detectLength = dLength;
+            m_pCheckers[11].detectLength = dLength;
+            m_pCheckers[12].detectLength = dLength;
+            m_pCheckers[13].detectLength = dLength;
 
             m_UpdateValues();
 

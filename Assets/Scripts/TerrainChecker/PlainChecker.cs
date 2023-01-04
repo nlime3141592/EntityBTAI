@@ -40,7 +40,7 @@ namespace UnchordMetroidvania
             bool bHit = bDetected && hit.distance <= hitLength;
 
             // For Debugging.
-            // Debug.DrawLine(origin, origin + m_direction * detectLength);
+                Debug.DrawLine(origin, origin + m_direction * detectLength);
 
             config.instance.bDetected = bDetected;
             config.instance.bHit = bHit;

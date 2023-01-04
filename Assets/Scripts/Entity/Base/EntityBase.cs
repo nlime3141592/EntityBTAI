@@ -16,8 +16,6 @@ namespace UnchordMetroidvania
         public bool bFixLookDirY = true;
         public Vector2 lookDir = Vector2.one;
         public Vector2 moveDir;
-
-        public bool bIsRun = false;
         #endregion
 
         #region Entity Inputs
@@ -32,6 +30,7 @@ namespace UnchordMetroidvania
         public Stat maxHealth;
         public Stat maxMana;
         public Stat baseMoveSpeed;
+        public Stat baseGravity;
 
         public float health;
         public float mana;
@@ -58,6 +57,19 @@ namespace UnchordMetroidvania
                 health = maxHealth.finalValue;
             else
                 health = h;
+        }
+
+        public void FixConstraints(bool posX, bool posY)
+        {
+            if(posX)
+                physics.constraints |= RigidbodyConstraints2D.FreezePositionX;
+            else
+                physics.constraints &= ~(RigidbodyConstraints2D.FreezePositionX);
+
+            if(posY)
+                physics.constraints |= RigidbodyConstraints2D.FreezePositionY;
+            else
+                physics.constraints &= ~(RigidbodyConstraints2D.FreezePositionY);
         }
 
         protected virtual void p_OnValidate()

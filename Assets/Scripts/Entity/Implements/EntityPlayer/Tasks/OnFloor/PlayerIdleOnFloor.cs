@@ -10,14 +10,10 @@ namespace UnchordMetroidvania
 
         }
 
-        protected override void p_OnPreInvokeNode()
-        {
-            config.instance.physics.constraints |= RigidbodyConstraints2D.FreezePositionX;
-        }
-
         protected override InvokeResult p_Invoke()
         {
-            config.instance.velModule.SetVelocityXY(0.0f, -0.1f);
+            config.instance.FixConstraints(true, false);
+            config.instance.velModule.SetVelocityXY(0.0f, -1.0f);
             return InvokeResult.Running;
         }
     }
