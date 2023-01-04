@@ -47,7 +47,7 @@ namespace UnchordMetroidvania
         public PlayerOnAirPage airPage;
         public PlayerOnFloorPage floorPage;
         public PlayerOnWallPage wallPage;
-        public PlayerClimbOnLedge ledgePage;
+        public PlayerOnLedgePage ledgePage;
 
         protected override void Start()
         {
@@ -77,7 +77,7 @@ namespace UnchordMetroidvania
             airPage = new PlayerOnAirPage(aiConfig, 0, "AirPage");
             floorPage = new PlayerOnFloorPage(aiConfig, 1, "FloorPage");
             wallPage = new PlayerOnWallPage(aiConfig, 2, "WallPage");
-            ledgePage = new PlayerClimbOnLedge(aiConfig, 300, "LedgeClimb");
+            ledgePage = new PlayerOnLedgePage(aiConfig, 3, "LedgePage");
 
             fsm.Alloc(0, airPage);
             fsm.Alloc(1, floorPage);
