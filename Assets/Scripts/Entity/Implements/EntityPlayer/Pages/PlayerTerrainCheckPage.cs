@@ -11,7 +11,7 @@ namespace UnchordMetroidvania
     }
 
     [Serializable]
-    public class _EntityPlayerTerrainCheckPage : PageNodeBT<TerrainCheckResult>
+    public class PlayerTerrainCheckPage : PageNodeBT<TerrainCheckResult>
     {
         // Index Arrangement #1
         // Floor (F)
@@ -46,7 +46,7 @@ namespace UnchordMetroidvania
 
         private ParallelNodeBT<TerrainCheckResult> m_root;
 
-        public _EntityPlayerTerrainCheckPage(
+        public PlayerTerrainCheckPage(
             Transform f, Transform h,
             Transform lt, Transform rt, Transform lb, Transform rb,
             Transform hl, Transform hr, Transform fl, Transform fr

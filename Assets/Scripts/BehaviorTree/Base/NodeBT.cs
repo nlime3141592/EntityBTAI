@@ -43,7 +43,7 @@ namespace UnchordMetroidvania
 
         public virtual void ResetNode()
         {
-
+            
         }
 
         protected virtual void p_OnBeginNode()

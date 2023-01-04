@@ -2,15 +2,15 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _EntityPlayerFSM : FiniteStateMachineNodeBT<EntityPlayer>
+    public class EntityPlayerFSM : FiniteStateMachineNodeBT<EntityPlayer>
     {
-        private _EntityPlayerTerrainCheckPage m_terrainPage;
+        private PlayerTerrainCheckPage m_terrainPage;
 
         private bool m_bDF, m_bHF, m_bHW, m_bDL;
 
-        public _EntityPlayerFSM(
+        public EntityPlayerFSM(
             ConfigurationBT<EntityPlayer> config, int id, string name,
-            _EntityPlayerTerrainCheckPage terrainPage)
+            PlayerTerrainCheckPage terrainPage)
         : base(config, id, name, 7)
         {
             m_terrainPage = terrainPage;
@@ -48,10 +48,12 @@ namespace UnchordMetroidvania
         {
             int code = m_CreateTerrainCode(m_bDF, m_bHF, m_bHW, m_bDL);
             int index = m_ParsePage(code);
-            Debug.Log(string.Format("Page: {0}", index));
 
-            // return index;
-            return 0;
+            index = 0;
+
+            if(index == 0) m_OnFloor();
+
+            return index;
         }
 
         private int m_CreateTerrainCode(bool bDF, bool bHF, bool bHW, bool bDL)
@@ -70,6 +72,12 @@ namespace UnchordMetroidvania
             else if(code == 1) return 3;
             else if(code < 4) return code;
             else return (code >> 2) - 2;
+        }
+
+        private void m_OnFloor()
+        {
+            RaycastHit2D floor = m_terrainPage[EPlayerTerrainCheckResult.Floor].terrain;
+            config.instance.moveDir = new Vector2(1.0f, -floor.normal.x / floor.normal.y);
         }
     }
 }
