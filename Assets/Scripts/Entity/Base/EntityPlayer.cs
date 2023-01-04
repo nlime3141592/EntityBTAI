@@ -33,7 +33,8 @@ namespace UnchordMetroidvania
         public TEST_STAT_BONUS_TABLE bonusDefence;
 
         private ConfigurationBT<EntityPlayer> aiConfig;
-        private EntityMove<EntityPlayer> aiRoot;
+        private EntityMove<EntityPlayer> moveAction;
+        private _EntityPlayerFSM fsm;
 
         protected override void Start()
         {
@@ -59,18 +60,21 @@ namespace UnchordMetroidvania
             );
 
             aiConfig = new ConfigurationBT<EntityPlayer>(this);
-            aiRoot = new EntityMove<EntityPlayer>(aiConfig, 0, "Move");
+            moveAction = new EntityMove<EntityPlayer>(aiConfig, 0, "Move");
+            fsm = new _EntityPlayerFSM(aiConfig, 1, "FSM", terrainPage);
+
+            fsm.Alloc(0, moveAction);
         }
 
         protected override void FixedUpdate()
         {
-            base.FixedUpdateAI<EntityPlayer>(aiConfig, aiRoot);
+            base.FixedUpdateAI<EntityPlayer>(aiConfig, fsm);
         }
 
         protected override void p_OnPreFrame()
         {
             base.p_OnPreFrame();
-            aiRoot.SetSpeed(baseMoveSpeed);
+            moveAction.SetSpeed(baseMoveSpeed);
         }
         
         protected override void p_OnPreInvoke()

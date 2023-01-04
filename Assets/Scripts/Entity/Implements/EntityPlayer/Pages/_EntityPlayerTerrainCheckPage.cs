@@ -3,6 +3,13 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
+    public enum EPlayerTerrainCheckResult
+    {
+        Floor = 0, Ceil,
+        WallLT, WallRT, WallLB, WallRB,
+        LedgeLT = 14, LedgeRT, LedgeLB, LedgeRB
+    }
+
     [Serializable]
     public class _EntityPlayerTerrainCheckPage : PageNodeBT<TerrainCheckResult>
     {
@@ -16,6 +23,9 @@ namespace UnchordMetroidvania
 
         // Index Arrangement #2
         // F, H, LT, RT, LB, RB, HL, HR, FL, FR
+
+        public TerrainCheckResult this[EPlayerTerrainCheckResult result]
+        => m_results[(int)result];
 
         #region Terrain Detection Results
         private readonly TerrainCheckResult[] m_results; // Length: 18

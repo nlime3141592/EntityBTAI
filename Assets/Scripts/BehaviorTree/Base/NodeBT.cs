@@ -37,6 +37,7 @@ namespace UnchordMetroidvania
                 if(dF > 0) lastFps = curFps;
             }
 
+            p_OnPreInvokeNode();
             return p_Invoke();
         }
 
@@ -46,6 +47,11 @@ namespace UnchordMetroidvania
         }
 
         protected virtual void p_OnBeginNode()
+        {
+            
+        }
+
+        protected virtual void p_OnPreInvokeNode()
         {
             
         }
