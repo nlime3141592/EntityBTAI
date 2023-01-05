@@ -19,6 +19,15 @@ namespace UnchordMetroidvania
 
         public Stat glidingGravity;
 
+        public Stat jumpSpeedBase;
+
+        public int maxJumpFrame = 13;
+
+        public int maxAirJumpCount = 1;
+        public int leftAirJumpCount = 0;
+
+        public bool bOnJumpBegin = false;
+
         public bool bOnHoldLedge = false;
         public bool bOnLedgeEnd = false;
         #endregion
@@ -134,8 +143,25 @@ namespace UnchordMetroidvania
 
             // base.moveDir = base.axisInput;
 
-            if(Input.GetKeyDown(KeyCode.Space))
+            if(Input.GetKeyDown(KeyCode.G))
                 btModule.UseBattleSkill(btSkill);
+
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                if(fsm.pageIndex == 0 && leftAirJumpCount > 0)
+                {
+                    leftAirJumpCount--;
+                    bOnJumpBegin = true;
+                }
+                else if(fsm.pageIndex == 1 || fsm.pageIndex == 2)
+                {
+                    bOnJumpBegin = true;
+                }
+            }
+            else if(!Input.GetKey(KeyCode.Space))
+            {
+                
+            }
 
             // bIsRun = Input.GetKey(KeyCode.LeftControl);
         }

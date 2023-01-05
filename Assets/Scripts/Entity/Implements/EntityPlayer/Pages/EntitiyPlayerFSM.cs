@@ -4,6 +4,7 @@ namespace UnchordMetroidvania
 {
     public class EntityPlayerFSM : FiniteStateMachineNodeBT<EntityPlayer>
     {
+        public int pageIndex { get; private set; }
         private PlayerTerrainCheckPage m_terrainPage;
 
         private bool m_bDF, m_bHF, m_bHW, m_bDL;
@@ -53,6 +54,7 @@ namespace UnchordMetroidvania
 
             // index = 1;
 
+            pageIndex = index;
             if(index == 0) m_OnAir();
             else if(index == 1) m_OnFloor();
             else if(index == 2) m_OnWall();
