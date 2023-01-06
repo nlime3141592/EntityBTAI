@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public sealed class PlainChecker : TerrainChecker
+    public sealed class PlainChecker // : TerrainChecker
     {
         public Transform tOrigin;
         public Vector2 globalOffset;
@@ -25,11 +25,11 @@ namespace UnchordMetroidvania
         => new PlainChecker(config, 3, name, Vector2.down);
 
         private PlainChecker(ConfigurationBT<TerrainCheckResult> config, int id, string name, Vector2 direction)
-        : base(config, id, name)
+        // : base(config, id, name)
         {
             m_direction = direction;
         }
-
+/*
         protected override InvokeResult p_Invoke()
         {
             Vector2 origin = (Vector2)tOrigin.position + globalOffset;
@@ -48,5 +48,6 @@ namespace UnchordMetroidvania
 
             return InvokeResult.Success;
         }
+*/
     }
 }

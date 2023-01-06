@@ -17,6 +17,9 @@ namespace UnchordMetroidvania
 
             childIndex = iNextChild;
 
+            if(childIndex < 0)
+                return InvokeResult.Failure;
+
             return children[iNextChild].Invoke();
         }
 

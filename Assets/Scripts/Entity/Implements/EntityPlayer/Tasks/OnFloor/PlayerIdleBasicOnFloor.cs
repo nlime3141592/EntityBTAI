@@ -12,6 +12,7 @@ namespace UnchordMetroidvania
 
         protected override InvokeResult p_Invoke()
         {
+            /*
             if(config.instance.axisInput.x != 0 || config.instance.axisInput.y != 0)
             {
                 return InvokeResult.Failure;
@@ -25,6 +26,8 @@ namespace UnchordMetroidvania
             {
                 return InvokeResult.Failure;
             }
+            */
+            return InvokeResult.Failure;
         }
     }
 }

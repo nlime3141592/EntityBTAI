@@ -7,7 +7,5 @@ namespace UnchordMetroidvania
         {
 
         }
-
-        public abstract void ResetChild();
     }
 }

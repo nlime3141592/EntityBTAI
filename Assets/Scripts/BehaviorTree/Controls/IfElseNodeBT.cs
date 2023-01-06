@@ -35,7 +35,6 @@ namespace UnchordMetroidvania
             if(iResult != InvokeResult.Running)
             {
                 ResetNode();
-                ResetChild();
             }
 
             return iResult;

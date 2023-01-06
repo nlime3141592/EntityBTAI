@@ -38,7 +38,6 @@ namespace UnchordMetroidvania
             {
                 int sCnt = m_successCount;
                 ResetNode();
-                ResetChild();
 
                 if(sCnt == children.Length)
                     return InvokeResult.Success;

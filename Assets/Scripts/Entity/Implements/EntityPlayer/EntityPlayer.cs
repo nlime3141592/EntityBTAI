@@ -8,34 +8,38 @@ namespace UnchordMetroidvania
         public LTRB ltrb;
         public TestBoxSkill btSkill;
 
+        #region Components
         public BattleModule btModule;
         public ElongatedHexagonCollider2D hCol;
-
-        public bool canInput = true;
+        #endregion
 
         #region Stat
         public Stat runSpeed;
+        public Stat glidingGravity;
+        public Stat jumpGravity;
+        public Stat jumpSpeedBase;
+        #endregion
+
+        // Run Options
         public bool bIsRun;
 
-        public Stat glidingGravity;
-
-        public Stat jumpSpeedBase;
-
-        public int maxJumpFrame = 13;
-
+        // Jump Options
         public int maxAirJumpCount = 1;
         public int leftAirJumpCount = 0;
 
-        public bool bOnJumpBegin = false;
-
+        // Ledge Options
         public bool bOnHoldLedge = false;
-        public bool bOnLedgeEnd = false;
-        #endregion
+        // public bool bOnLedgeEnd = false;
 
-        #region Terrain Checker
-        public PlayerTerrainCheckPage terrainPage { get; private set; } // Behavior Tree Node.
+        // Input Messengers
+        public readonly InputMessenger jumpBeginMessenger = new InputMessenger();
+        public readonly InputMessenger jumpCancelMessenger = new InputMessenger();
+        public readonly InputMessenger ledgeEndMessenger = new InputMessenger();
 
         // 인스펙터에서 서로 다른 10개의 Transform Component를 할당해야 함.
+        public Transform originParent;
+        public TerrainCheckResult[] terrainCheckResults;
+        public Transform[] origins;
         public Transform origin_F;
         public Transform origin_H;
         public Transform origin_LT;
@@ -46,59 +50,59 @@ namespace UnchordMetroidvania
         public Transform origin_HR;
         public Transform origin_FL;
         public Transform origin_FR;
+
+        public ConfigurationBT<EntityPlayer> aiConfig { get; private set; }
+        public PlayerTerrainCheckPage terrainPage { get; private set; }
+        public PlayerAbilityPage abilityPage { get; private set; }
+        public PlayerFSM fsm { get; private set; }
+        public PlayerOnAirPage airPage { get; private set; }
+        public PlayerOnFloorPage floorPage { get; private set; }
+        public PlayerOnWallPage wallPage { get; private set; }
+        public PlayerOnLedgePage ledgePage { get; private set; }
+
+        #region Debug Options
+        public int CURRENT_TASK_ID = -1;
         #endregion
-
-        public TEST_STAT_BONUS_TABLE bonusStrength;
-        public TEST_STAT_BONUS_TABLE bonusDefence;
-
-        private ConfigurationBT<EntityPlayer> aiConfig;
-        private EntityPlayerFSM fsm;
-        public PlayerOnAirPage airPage;
-        public PlayerOnFloorPage floorPage;
-        public PlayerOnWallPage wallPage;
-        public PlayerOnLedgePage ledgePage;
 
         protected override void Start()
         {
             base.Start();
 
-            btSkill = new TestBoxSkill(
-                "TestBoxSkill", 315789474, 0,
-                10,
-                TargetSortType.None, false,
-                ltrb
-            );
+            btSkill = new TestBoxSkill("TestBoxSkill", 315789474, 0, 10, TargetSortType.None, false, ltrb);
             btSkill.bRangeOnEditor = true;
+
             btModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 
-            bonusStrength.Start(strength);
-            bonusDefence.Start(defence);
+            m_AllocAI();
+        }
+
+        private void m_AllocAI()
+        {
+            aiConfig = new ConfigurationBT<EntityPlayer>(this);
 
             terrainPage = new PlayerTerrainCheckPage(
                 origin_F, origin_H,
                 origin_LT, origin_RT, origin_LB, origin_RB,
                 origin_HL, origin_HR, origin_FL, origin_FR
             );
+            abilityPage = new PlayerAbilityPage(aiConfig, 4, "PlayerAbilityPage");
 
-            aiConfig = new ConfigurationBT<EntityPlayer>(this);
-            fsm = new EntityPlayerFSM(aiConfig, 1, "FSM", terrainPage);
-            airPage = new PlayerOnAirPage(aiConfig, 0, "AirPage");
-            floorPage = new PlayerOnFloorPage(aiConfig, 1, "FloorPage");
-            wallPage = new PlayerOnWallPage(aiConfig, 2, "WallPage");
-            ledgePage = new PlayerOnLedgePage(aiConfig, 3, "LedgePage");
+            fsm = new PlayerFSM(aiConfig, 1, "PlayerFSM", terrainPage, abilityPage);
+            airPage = new PlayerOnAirPage(aiConfig, 0, "PlayerAirPage");
+            floorPage = new PlayerOnFloorPage(aiConfig, 1, "PlayerFloorPage");
+            wallPage = new PlayerOnWallPage(aiConfig, 2, "PlayerWallPage");
+            ledgePage = new PlayerOnLedgePage(aiConfig, 3, "PlayerLedgePage");
 
             fsm.Alloc(0, airPage);
             fsm.Alloc(1, floorPage);
             fsm.Alloc(2, wallPage);
             fsm.Alloc(3, ledgePage);
+
+            base.RegisterAI<EntityPlayer>(fsm);
         }
 
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdateAI<EntityPlayer>(aiConfig, fsm);
-            Debug.Log(string.Format("curTask #{0}", aiConfig.curTask?.id ?? -1));
-        }
+        // private PlayerJumpOnFloor jumpA;
 
         protected override void p_OnPreFrame()
         {
@@ -108,8 +112,20 @@ namespace UnchordMetroidvania
         protected override void p_OnPreInvoke()
         {
             base.p_OnPreInvoke();
-            m_FixedUpdateOrigins();
             terrainPage.Invoke();
+            m_FixedUpdateOrigins();
+        }
+
+        protected override void p_Debug_OnPostInvoke()
+        {
+            /*
+            base.p_Debug_OnPostInvoke();
+            ++(aiConfig.curFps);
+            jumpA.jumpGravityY = jumpGravity;
+            jumpA.jumpSpeedStatY = jumpSpeedBase;
+            jumpA.speedStatX = bIsRun ? runSpeed : baseMoveSpeed;
+            jumpA.Invoke();
+            */
         }
 
         private void m_FixedUpdateOrigins()
@@ -131,6 +147,25 @@ namespace UnchordMetroidvania
             origin_FR.position = new Vector2(feet.max.x, feet.min.y);
         }
 
+        protected override void p_OnPostInvoke()
+        {
+            base.p_OnPostInvoke();
+            m_ClearMessengers();
+            CURRENT_TASK_ID = aiConfig.curTask?.id ?? -1;
+        }
+
+        private void m_ClearMessengers()
+        {
+            jumpBeginMessenger.Clear();
+            jumpCancelMessenger.Clear();
+            ledgeEndMessenger.Clear();
+        }
+
+        public void OnLedgeAnimationEnd()
+        {
+            ledgeEndMessenger.Publish();
+        }
+
         protected override void Update()
         {
             if(!canInput)
@@ -147,51 +182,14 @@ namespace UnchordMetroidvania
                 btModule.UseBattleSkill(btSkill);
 
             if(Input.GetKeyDown(KeyCode.Space))
-            {
-                if(fsm.pageIndex == 0 && leftAirJumpCount > 0)
-                {
-                    leftAirJumpCount--;
-                    bOnJumpBegin = true;
-                }
-                else if(fsm.pageIndex == 1 || fsm.pageIndex == 2)
-                {
-                    bOnJumpBegin = true;
-                }
-            }
-            else if(!Input.GetKey(KeyCode.Space))
-            {
-                
-            }
+                jumpBeginMessenger.Publish();
+            else if(Input.GetKeyUp(KeyCode.Space))
+                jumpCancelMessenger.Publish();
+
+            if(Input.GetKeyDown(KeyCode.Return))
+                OnLedgeAnimationEnd();
 
             // bIsRun = Input.GetKey(KeyCode.LeftControl);
-        }
-    }
-
-    [Serializable]
-    public class TEST_STAT_BONUS_TABLE
-    {
-        [Tooltip("테스트는 0~100까지 적용 가능합니다.")]
-        [Range(0, 100)] public float flatValue = 0;
-
-        [Tooltip("테스트는 0%p~200%p까지 적용 가능합니다.")]
-        [Range(0, 2)] public float percentPoint = 0;
-
-        [Tooltip("테스트는 0%~200%까지 적용 가능합니다.")]
-        [Range(0, 2)] public float percent = 0;
-
-        private StatModifier modFlatValue;
-        private StatModifier modPercentPoint;
-        private StatModifier modPercent;
-
-        public void Start(Stat stat)
-        {
-            modFlatValue = new StatModifier(flatValue, StatModType.Flat);
-            modPercentPoint = new StatModifier(percentPoint, StatModType.PercentAdd);
-            modPercent = new StatModifier(percent, StatModType.PercentMul);
-
-            stat.AddModifier(modFlatValue);
-            stat.AddModifier(modPercentPoint);
-            stat.AddModifier(modPercent);
         }
     }
 }

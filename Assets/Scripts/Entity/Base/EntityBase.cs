@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UnchordMetroidvania
@@ -16,10 +17,16 @@ namespace UnchordMetroidvania
         public bool bFixLookDirY = true;
         public Vector2 lookDir = Vector2.one;
         public Vector2 moveDir;
+        public InvokeResult lastInvokeResult;
+
+        private object m_root;
+        private Func<InvokeResult> m_func_rootInvoke;
+        private bool m_bHasAI = false;
         #endregion
 
         #region Entity Inputs
         [Header("Entity Inputs")]
+        public bool canInput = true;
         public Vector2 axisInput;
         #endregion
 
@@ -93,18 +100,32 @@ namespace UnchordMetroidvania
             
         }
 
-        protected virtual void FixedUpdate()
+        private void FixedUpdate()
         {
-
+            lastInvokeResult = m_FixedUpdateAI();
+            p_Debug_OnPostInvoke();
         }
 
-        protected InvokeResult FixedUpdateAI<T>(ConfigurationBT<T> config, NodeBT<T> root)
+        protected void RegisterAI<T>(NodeBT<T> root)
         where T : EntityBase
         {
-            p_OnPreFrame();
-                ++(config.curFps);
+            m_root = root;
+            m_func_rootInvoke = root.Invoke;
+            m_bHasAI = true;
+        }
+
+        protected virtual void p_Debug_OnPostInvoke()
+        {
+            
+        }
+
+        private InvokeResult m_FixedUpdateAI()
+        {
+            if(!m_bHasAI)
+                return InvokeResult.Failure;
+
             p_OnPreInvoke();
-                InvokeResult iResult = root?.Invoke() ?? InvokeResult.Failure;
+                InvokeResult iResult = m_func_rootInvoke();
             p_OnPostInvoke();
                 return iResult;
         }

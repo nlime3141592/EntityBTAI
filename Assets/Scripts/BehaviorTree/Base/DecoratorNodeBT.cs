@@ -22,8 +22,9 @@ namespace UnchordMetroidvania
             return Alloc(null);
         }
 
-        public override void ResetChild()
+        public override void ResetNode()
         {
+            base.ResetNode();
             child.ResetNode();
         }
     }

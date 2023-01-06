@@ -1,6 +1,6 @@
 namespace UnchordMetroidvania
 {
-    public class PlayerIsRun : ConditionNodeBT<EntityPlayer>
+    public class PlayerIsRun : PlayerCondition
     {
         public PlayerIsRun(ConfigurationBT<EntityPlayer> config, int id, string name)
         : base(config, id, name)

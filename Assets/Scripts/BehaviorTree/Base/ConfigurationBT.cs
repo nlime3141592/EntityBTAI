@@ -4,12 +4,7 @@ namespace UnchordMetroidvania
 {
     public class ConfigurationBT<T>
     {
-        public long prevFps;
-        public long curFps;
-
-        public TaskNodeBT<T> prevTask;
         public TaskNodeBT<T> curTask;
-
         public T instance { get; private set; }
 
         public ConfigurationBT(T instance)

@@ -30,10 +30,6 @@ namespace UnchordMetroidvania
             base.ResetNode();
 
             childIndex = 0;
-        }
-
-        public override void ResetChild()
-        {
             for(int i = 0; i < children.Length; ++i)
                 children[i].ResetNode();
         }

@@ -2,19 +2,21 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class EntityPlayerFSM : FiniteStateMachineNodeBT<EntityPlayer>
+    public class PlayerFSM : FiniteStateMachineNodeBT<EntityPlayer>
     {
         public int pageIndex { get; private set; }
         private PlayerTerrainCheckPage m_terrainPage;
+        private PlayerAbilityPage m_abilityPage;
 
         private bool m_bDF, m_bHF, m_bHW, m_bDL;
 
-        public EntityPlayerFSM(
+        public PlayerFSM(
             ConfigurationBT<EntityPlayer> config, int id, string name,
-            PlayerTerrainCheckPage terrainPage)
+            PlayerTerrainCheckPage terrainPage, PlayerAbilityPage abilityPage)
         : base(config, id, name, 5)
         {
             m_terrainPage = terrainPage;
+            m_abilityPage = abilityPage;
         }
 
         protected override void p_OnPreInvokeNode()
@@ -49,6 +51,11 @@ namespace UnchordMetroidvania
 
         protected override int GetNextChildIndex()
         {
+            InvokeResult abilityResult = m_abilityPage.Invoke();
+
+            if(abilityResult != InvokeResult.Failure)
+                return -1;
+
             int code = m_CreateTerrainCode(m_bDF, m_bHF, m_bHW, m_bDL);
             int index = m_ParsePage(code);
 
@@ -59,7 +66,6 @@ namespace UnchordMetroidvania
             else if(index == 1) m_OnFloor();
             else if(index == 2) m_OnWall();
             else if(index == 3) m_OnLedge();
-            else if(index == 4) m_OnAbility();
 
             return index;
         }

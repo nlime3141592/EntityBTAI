@@ -16,7 +16,7 @@ namespace UnchordMetroidvania
             if(config.instance.axisInput.y > 0)
             {
                 config.curTask = this;
-                bCamUp = base.lastFps - base.beginFps >= camUpFrame;
+                // bCamUp = base.lastFps - base.beginFps >= camUpFrame;
                 return base.p_Invoke();
             }
             else

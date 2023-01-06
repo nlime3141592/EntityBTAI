@@ -22,13 +22,11 @@ namespace UnchordMetroidvania
                 else if(iResult == InvokeResult.Success)
                 {
                     ResetNode();
-                    ResetChild();
                     return InvokeResult.Success;
                 }
             }
 
             ResetNode();
-            ResetChild();
             return InvokeResult.Failure;
         }
     }

@@ -45,7 +45,6 @@ namespace UnchordMetroidvania
         protected override InvokeResult p_Invoke()
         {
             // Debug here.
-
             walk.speedStat = config.instance.baseMoveSpeed;
             run.speedStat = config.instance.runSpeed;
 

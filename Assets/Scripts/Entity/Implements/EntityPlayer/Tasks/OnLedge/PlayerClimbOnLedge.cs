@@ -79,7 +79,9 @@ namespace UnchordMetroidvania
             if(!m_bHoldLedge && !m_CanLedgeHold())
                 return InvokeResult.Failure;
 
-            if(!config.instance.bOnLedgeEnd)
+            bool bOnLedgeEnd = config.instance.ledgeEndMessenger.Get() > 0;
+
+            if(!bOnLedgeEnd)
             {
                 config.instance.FixConstraints(true, true);
                 config.instance.transform.position = m_holdPosition;
@@ -90,7 +92,6 @@ namespace UnchordMetroidvania
             {
                 config.instance.FixConstraints(false, false);
                 config.instance.transform.position = m_endPosition;
-                config.instance.bOnLedgeEnd = false;
                 config.instance.bOnHoldLedge = false;
                 m_bHoldLedge = false;
                 return InvokeResult.Success;

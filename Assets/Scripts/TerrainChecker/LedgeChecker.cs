@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public sealed class LedgeChecker : TerrainChecker
+    public sealed class LedgeChecker // : TerrainChecker
     {
         private PlainChecker m_wall;
         private PlainChecker m_floor;
@@ -20,12 +20,12 @@ namespace UnchordMetroidvania
         private LedgeChecker(
             ConfigurationBT<TerrainCheckResult> config, int id, string name,
             PlainChecker wallChecker, PlainChecker floorChecker)
-        : base(config, id, name)
+        // : base(config, id, name)
         {
             m_wall = wallChecker;
             m_floor = floorChecker;
         }
-
+/*
         protected override InvokeResult p_Invoke()
         {
             m_wall.Invoke();
@@ -47,5 +47,6 @@ namespace UnchordMetroidvania
 
             return InvokeResult.Success;
         }
+*/
     }
 }

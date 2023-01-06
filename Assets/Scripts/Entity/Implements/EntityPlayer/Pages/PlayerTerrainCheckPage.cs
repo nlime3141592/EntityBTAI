@@ -130,6 +130,7 @@ namespace UnchordMetroidvania
             m_pCheckers[13].globalOffset = Vector3.right * offset;
 
             m_root = BehaviorTree.Parallel<TerrainCheckResult>(null, -1, "EntityPlayerTerrainChecker", 10);
+            /*
             m_root.Alloc(0, m_pCheckers[0]);
             m_root.Alloc(1, m_pCheckers[1]);
             m_root.Alloc(2, m_pCheckers[2]);
@@ -140,6 +141,7 @@ namespace UnchordMetroidvania
             m_root.Alloc(7, m_lCheckers[1]);
             m_root.Alloc(8, m_lCheckers[2]);
             m_root.Alloc(9, m_lCheckers[3]);
+            */
         }
 
         private void m_UpdateValues()
