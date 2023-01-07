@@ -19,9 +19,35 @@ namespace UnchordMetroidvania
         public TerrainSensor sensor;
         public VelocityModule2D vm;
 
+        public float walkSpeed = 2.0f;
+        public float runSpeed = 6.0f;
+        public bool bIsRun = false;
+        public Vector2 cameraOffset = Vector2.zero;
+
+        public bool bOnDetectFloor;
+        public bool bOnFloor;
+        public bool bOnCeil;
+        public bool bOnWallFrontT;
+        public bool bOnWallFrontB;
+        public bool bOnWallFront;
+        public bool bOnWallBackT;
+        public bool bOnWallBackB;
+        public bool bOnWallBack;
+        public bool bOnLedgeHorizontal;
+        public bool bOnLedgeVertical;
+        public bool bOnLedge;
+
         public PlayerData data;
         public PlayerIdle idleLong;
         public PlayerIdleShort idleShort;
+        public PlayerWalk walk;
+        public PlayerRun run;
+        public _PlayerSit sit;
+        public _PlayerHeadUp headUp;
+        public _PlayerFreeFall freeFall;
+        public _PlayerGliding gliding;
+        public PlayerIdleWallFront idleWallFront;
+        public PlayerSlidingWallFront slidingWallFront;
 
         public _PlayerFSM fsm;
 
@@ -35,6 +61,14 @@ namespace UnchordMetroidvania
             data = new PlayerData();
             idleLong = new PlayerIdle(this, data, ++state, "IdleLong");
             idleShort = new PlayerIdleShort(this, data, ++state, "IdleShort");
+            walk = new PlayerWalk(this, data, ++state, "Walk");
+            run = new PlayerRun(this, data, ++state, "Run");
+            sit = new _PlayerSit(this, data, ++state, "Sit");
+            headUp = new _PlayerHeadUp(this, data, ++state, "HeadUp");
+            freeFall = new _PlayerFreeFall(this, data, ++state, "FreeFall");
+            gliding = new _PlayerGliding(this, data, ++state, "Gliding");
+            idleWallFront = new PlayerIdleWallFront(this, data, ++state, "IdleWallFront");
+            slidingWallFront = new PlayerSlidingWallFront(this, data, ++state, "SlidingWallFront");
 
             fsm = new _PlayerFSM();
 
@@ -46,31 +80,7 @@ namespace UnchordMetroidvania
             vm.FixedUpdate(axisInput.x);
             
             m_FixedUpdateOrigins();
-            vm.SetVelocityXY(base.axisInput.x * 3.0f, base.axisInput.y * 3.0f);
-
-            sensor.CheckFloor(originFloor.transform.position, 0.04f);
-            sensor.CheckCeil(originCeil.transform.position, 0.04f);
-
-            if(vm.lookDirX > 0)
-            {
-                sensor.CheckWallFront(originWallRT.transform.position, 0.06f, vm.lookDirX);
-                sensor.CheckWallFront(originWallRB.transform.position, 0.06f, vm.lookDirX);
-                sensor.CheckWallBack(originWallLT.transform.position, 0.06f, vm.lookDirX);
-                sensor.CheckWallBack(originWallLB.transform.position, 0.06f, vm.lookDirX);
-
-                sensor.CheckLedgeHorizontal(originLedgeRT.transform.position, 0.5f, vm.lookDirX);
-                sensor.CheckLedgeVerticalDown(originLedgeRT.transform.position + Vector3.right * 0.1f, 0.3f);
-            }
-            else if(vm.lookDirX < 0)
-            {
-                sensor.CheckWallBack(originWallRT.transform.position, 0.06f, vm.lookDirX);
-                sensor.CheckWallBack(originWallRB.transform.position, 0.06f, vm.lookDirX);
-                sensor.CheckWallFront(originWallLT.transform.position, 0.06f, vm.lookDirX);
-                sensor.CheckWallFront(originWallLB.transform.position, 0.06f, vm.lookDirX);
-
-                sensor.CheckLedgeHorizontal(originLedgeLT.transform.position, 0.5f, vm.lookDirX);
-                sensor.CheckLedgeVerticalDown(originLedgeLT.transform.position - Vector3.right * 0.1f, 0.3f);
-            }
+            // vm.SetVelocityXY(base.axisInput.x * 3.0f, base.axisInput.y * 3.0f);
 
             fsm.OnFixedUpdate();
 

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
     public abstract class PlayerState
@@ -22,19 +24,69 @@ namespace UnchordMetroidvania
 
         }
 
-        public virtual void OnUpdate()
-        {
-
-        }
-
         public virtual void OnFixedUpdate()
         {
 
         }
 
+        // 상태 변화가 일어나면 true, 그렇지 않으면 false를 반환하세요.
+        public virtual bool OnUpdate()
+        {
+            m_CheckTerrains();
+            return false;
+        }
+
         public virtual void OnStateEnd()
         {
 
+        }
+
+        private void m_CheckTerrains()
+        {
+            bool bDetectFloor = player.sensor.CheckFloor(player.originFloor.transform.position, 0.5f);
+            bool bHitFloor = player.sensor.CheckFloor(player.originFloor.transform.position, 0.04f);
+            bool bHitCeil = player.sensor.CheckCeil(player.originCeil.transform.position, 0.04f);
+
+            bool bHitWallFrontT = false;
+            bool bHitWallFrontB = false;
+            bool bHitWallBackT = false;
+            bool bHitWallBackB = false;
+            bool bDetectLedgeHorizontal = true;
+            bool bDetectLedgeVertical = false;
+
+            if(player.vm.lookDirX > 0)
+            {
+                bHitWallFrontT = player.sensor.CheckWallFront(player.originWallRT.transform.position, 0.06f, player.vm.lookDirX);
+                bHitWallFrontB = player.sensor.CheckWallFront(player.originWallRB.transform.position, 0.06f, player.vm.lookDirX);
+                bHitWallBackT = player.sensor.CheckWallBack(player.originWallLT.transform.position, 0.06f, player.vm.lookDirX);
+                bHitWallBackB = player.sensor.CheckWallBack(player.originWallLB.transform.position, 0.06f, player.vm.lookDirX);
+
+                bDetectLedgeHorizontal = player.sensor.CheckLedgeHorizontal(player.originLedgeRT.transform.position, 0.5f, player.vm.lookDirX);
+                bDetectLedgeVertical = player.sensor.CheckLedgeVerticalDown(player.originLedgeRT.transform.position + Vector3.right * 0.1f, 0.3f);
+            }
+            else if(player.vm.lookDirX < 0)
+            {
+                bHitWallBackT = player.sensor.CheckWallBack(player.originWallRT.transform.position, 0.06f, player.vm.lookDirX);
+                bHitWallBackB = player.sensor.CheckWallBack(player.originWallRB.transform.position, 0.06f, player.vm.lookDirX);
+                bHitWallFrontT = player.sensor.CheckWallFront(player.originWallLT.transform.position, 0.06f, player.vm.lookDirX);
+                bHitWallFrontB = player.sensor.CheckWallFront(player.originWallLB.transform.position, 0.06f, player.vm.lookDirX);
+
+                bDetectLedgeHorizontal = player.sensor.CheckLedgeHorizontal(player.originLedgeLT.transform.position, 0.5f, player.vm.lookDirX);
+                bDetectLedgeVertical = player.sensor.CheckLedgeVerticalDown(player.originLedgeLT.transform.position - Vector3.right * 0.1f, 0.3f);
+            }
+
+            player.bOnDetectFloor = bDetectFloor;
+            player.bOnFloor = bHitFloor;
+            player.bOnCeil = bHitCeil;
+            player.bOnWallFrontT = bHitWallFrontT;
+            player.bOnWallFrontB = bHitWallFrontB;
+            player.bOnWallFront = bHitWallFrontT && bHitWallFrontB;
+            player.bOnWallBackT = bHitWallBackT;
+            player.bOnWallBackB = bHitWallBackB;
+            player.bOnWallBack = bHitWallBackT && bHitWallBackB;
+            player.bOnLedgeHorizontal = bDetectLedgeHorizontal;
+            player.bOnLedgeVertical = bDetectLedgeVertical;
+            player.bOnLedge = !bDetectLedgeHorizontal && bDetectLedgeVertical;
         }
     }
 }

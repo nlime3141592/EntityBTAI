@@ -1,9 +1,12 @@
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
     public class _PlayerFSM
     {
         public int state => currentState?.id ?? int.MinValue;
         public int fps { get; private set; } = -1;
+        public int nextFps => (fps + 1);
 
         private PlayerState currentState = null;
 

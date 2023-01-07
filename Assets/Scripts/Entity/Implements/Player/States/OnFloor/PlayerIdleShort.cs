@@ -13,17 +13,22 @@ namespace UnchordMetroidvania
             base.OnStateBegin();
         }
 
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-
-            if(fsm.fps >= data.shortIdleFrame)
-                fsm.Change(player.idleLong);
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
+        }
+
+        public override bool OnUpdate()
+        {
+            if(base.OnUpdate())
+                return true;
+            else if(fsm.nextFps >= data.shortIdleFrame)
+            {
+                fsm.Change(player.idleLong);
+                return true;
+            }
+
+            return false;
         }
 
         public override void OnStateEnd()

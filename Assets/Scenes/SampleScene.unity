@@ -464,6 +464,7 @@ MonoBehaviour:
     baseValue: 0
   health: 0
   mana: 0
+  hCol: {fileID: 0}
   originFloor: {fileID: 371345137}
   originCeil: {fileID: 2045168507}
   originWallLT: {fileID: 1450964779}
@@ -474,6 +475,22 @@ MonoBehaviour:
   originLedgeRT: {fileID: 1571468204}
   originLedgeLB: {fileID: 1539210310}
   originLedgeRB: {fileID: 1375081707}
+  walkSpeed: 2
+  runSpeed: 6
+  bIsRun: 0
+  cameraOffset: {x: 0, y: 0}
+  bOnDetectFloor: 0
+  bOnFloor: 0
+  bOnCeil: 0
+  bOnWallFrontT: 0
+  bOnWallFrontB: 0
+  bOnWallFront: 0
+  bOnWallBackT: 0
+  bOnWallBackB: 0
+  bOnWallBack: 0
+  bOnLedgeHorizontal: 0
+  bOnLedgeVertical: 0
+  bOnLedge: 0
 --- !u!114 &254749476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,7 +588,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254749474}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.5, y: 8, z: 0}
+  m_LocalPosition: {x: -8, y: 8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1440116124}
