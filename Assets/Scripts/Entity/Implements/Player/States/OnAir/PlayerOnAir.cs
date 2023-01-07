@@ -8,11 +8,19 @@ namespace UnchordMetroidvania
 
         }
 
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
+
+            if(player.vm.y < 0)
+                player.bJumpedOnFloor = false;
+        }
+
         public override bool OnUpdate()
         {
             if(base.OnUpdate())
                 return true;
-            else if(player.bOnFloor)
+            else if(player.bOnFloor && !player.bJumpedOnFloor)
             {
                 if(player.axisInput.y > 0)
                     player.fsm.Change(player.headUp);

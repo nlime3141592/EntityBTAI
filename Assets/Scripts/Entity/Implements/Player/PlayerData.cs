@@ -19,5 +19,8 @@ namespace UnchordMetroidvania
         [Header("Player Sliding Wall Front")]
         public float minSlidingWallFrontSpeed = -1.0f;
         public float slidingWallGravity = -9.81f;
+
+        [Header("Player Jump On Floor")]
+        public float jumpOnFloorSpeed = 5.0f;
     }
 }

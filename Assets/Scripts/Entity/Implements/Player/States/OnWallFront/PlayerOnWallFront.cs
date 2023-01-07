@@ -12,6 +12,14 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
+            else if(player.bOnDetectFloor)
+            {
+                if(player.axisInput.y > 0)
+                    player.fsm.Change(player.gliding);
+                else
+                    player.fsm.Change(player.freeFall);
+                return true;
+            }
             else if(player.axisInput.y < 0 && player.axisInput.x == 0)
             {
                 player.fsm.Change(player.freeFall);

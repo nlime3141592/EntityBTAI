@@ -24,6 +24,8 @@ namespace UnchordMetroidvania
         public bool bIsRun = false;
         public Vector2 cameraOffset = Vector2.zero;
 
+        public bool bJumpedOnFloor = false;
+
         public bool bOnDetectFloor;
         public bool bOnFloor;
         public bool bOnCeil;
@@ -48,6 +50,7 @@ namespace UnchordMetroidvania
         public _PlayerGliding gliding;
         public PlayerIdleWallFront idleWallFront;
         public PlayerSlidingWallFront slidingWallFront;
+        public _PlayerJumpOnFloor jumpOnFloor;
 
         public _PlayerFSM fsm;
 
@@ -69,6 +72,7 @@ namespace UnchordMetroidvania
             gliding = new _PlayerGliding(this, data, ++state, "Gliding");
             idleWallFront = new PlayerIdleWallFront(this, data, ++state, "IdleWallFront");
             slidingWallFront = new PlayerSlidingWallFront(this, data, ++state, "SlidingWallFront");
+            jumpOnFloor = new _PlayerJumpOnFloor(this, data, ++state, "JumpOnFloor");
 
             fsm = new _PlayerFSM();
 
@@ -93,6 +97,8 @@ namespace UnchordMetroidvania
 
             base.axisInput.x = Input.GetAxisRaw("Horizontal");
             base.axisInput.y = Input.GetAxisRaw("Vertical");
+
+            bJumpedOnFloor = Input.GetKey(KeyCode.Space);
 
             fsm.OnUpdate();
         }
