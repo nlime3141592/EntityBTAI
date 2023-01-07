@@ -8,9 +8,6 @@ namespace UnchordMetroidvania
         public float x => m_rigid.velocity.x;
         public float y => m_rigid.velocity.y;
 
-        public bool bFixLookDir = false;
-        public float lookDirX { get; private set; }
-
         private Vector2 m_tvel;
         private Vector2 m_cvel;
         private Rigidbody2D m_rigid;
@@ -18,12 +15,6 @@ namespace UnchordMetroidvania
         public VelocityModule2D(Rigidbody2D rigidbody)
         {
             m_rigid = rigidbody;
-        }
-
-        public void FixedUpdate(float xInput)
-        {
-            lookDirX = m_FixedUpdateLookDir(xInput, lookDirX, 1, bFixLookDir);
-            m_cvel = m_rigid.velocity;
         }
 
         public void SetVelocityXY(float x, float y)
@@ -68,20 +59,6 @@ namespace UnchordMetroidvania
         {
             m_cvel = m_tvel;
             m_rigid.velocity = m_tvel;
-        }
-
-        private float m_FixedUpdateLookDir(float xInput, float curLookDirX, float defaultLookDirX, bool bFix)
-        {
-            if(curLookDirX != -1 && curLookDirX != 1)
-                return defaultLookDirX;
-            else if(bFix)
-                return curLookDirX;
-            else if(xInput < 0)
-                return -1;
-            else if(xInput > 0)
-                return 1;
-            else
-                return curLookDirX;
         }
     }
 }

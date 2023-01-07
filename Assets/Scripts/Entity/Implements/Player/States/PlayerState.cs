@@ -41,6 +41,11 @@ namespace UnchordMetroidvania
 
         }
 
+        public virtual void OnAnimationEnd()
+        {
+            
+        }
+
         private void m_CheckTerrains()
         {
             bool bDetectFloor = player.sensor.CheckFloor(player.originFloor.transform.position, 0.5f);
@@ -54,24 +59,24 @@ namespace UnchordMetroidvania
             bool bDetectLedgeHorizontal = true;
             bool bDetectLedgeVertical = false;
 
-            if(player.vm.lookDirX > 0)
+            if(player.lookDir.x > 0)
             {
-                bHitWallFrontT = player.sensor.CheckWallFront(player.originWallRT.transform.position, 0.06f, player.vm.lookDirX);
-                bHitWallFrontB = player.sensor.CheckWallFront(player.originWallRB.transform.position, 0.06f, player.vm.lookDirX);
-                bHitWallBackT = player.sensor.CheckWallBack(player.originWallLT.transform.position, 0.06f, player.vm.lookDirX);
-                bHitWallBackB = player.sensor.CheckWallBack(player.originWallLB.transform.position, 0.06f, player.vm.lookDirX);
+                bHitWallFrontT = player.sensor.CheckWallFront(player.originWallRT.transform.position, 0.06f, player.lookDir.x);
+                bHitWallFrontB = player.sensor.CheckWallFront(player.originWallRB.transform.position, 0.06f, player.lookDir.x);
+                bHitWallBackT = player.sensor.CheckWallBack(player.originWallLT.transform.position, 0.06f, player.lookDir.x);
+                bHitWallBackB = player.sensor.CheckWallBack(player.originWallLB.transform.position, 0.06f, player.lookDir.x);
 
-                bDetectLedgeHorizontal = player.sensor.CheckLedgeHorizontal(player.originLedgeRT.transform.position, 0.5f, player.vm.lookDirX);
+                bDetectLedgeHorizontal = player.sensor.CheckLedgeHorizontal(player.originLedgeRT.transform.position, 0.5f, player.lookDir.x);
                 bDetectLedgeVertical = player.sensor.CheckLedgeVerticalDown(player.originLedgeRT.transform.position + Vector3.right * 0.1f, 0.3f);
             }
-            else if(player.vm.lookDirX < 0)
+            else if(player.lookDir.x < 0)
             {
-                bHitWallBackT = player.sensor.CheckWallBack(player.originWallRT.transform.position, 0.06f, player.vm.lookDirX);
-                bHitWallBackB = player.sensor.CheckWallBack(player.originWallRB.transform.position, 0.06f, player.vm.lookDirX);
-                bHitWallFrontT = player.sensor.CheckWallFront(player.originWallLT.transform.position, 0.06f, player.vm.lookDirX);
-                bHitWallFrontB = player.sensor.CheckWallFront(player.originWallLB.transform.position, 0.06f, player.vm.lookDirX);
+                bHitWallBackT = player.sensor.CheckWallBack(player.originWallRT.transform.position, 0.06f, player.lookDir.x);
+                bHitWallBackB = player.sensor.CheckWallBack(player.originWallRB.transform.position, 0.06f, player.lookDir.x);
+                bHitWallFrontT = player.sensor.CheckWallFront(player.originWallLT.transform.position, 0.06f, player.lookDir.x);
+                bHitWallFrontB = player.sensor.CheckWallFront(player.originWallLB.transform.position, 0.06f, player.lookDir.x);
 
-                bDetectLedgeHorizontal = player.sensor.CheckLedgeHorizontal(player.originLedgeLT.transform.position, 0.5f, player.vm.lookDirX);
+                bDetectLedgeHorizontal = player.sensor.CheckLedgeHorizontal(player.originLedgeLT.transform.position, 0.5f, player.lookDir.x);
                 bDetectLedgeVertical = player.sensor.CheckLedgeVerticalDown(player.originLedgeLT.transform.position - Vector3.right * 0.1f, 0.3f);
             }
 

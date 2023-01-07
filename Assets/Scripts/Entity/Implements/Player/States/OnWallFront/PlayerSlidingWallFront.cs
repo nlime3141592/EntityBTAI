@@ -12,6 +12,8 @@ namespace UnchordMetroidvania
 
         public override void OnStateBegin()
         {
+            base.OnStateBegin();
+
             player.vm.FreezePositionX();
             player.vm.MeltPositionY();
         }
@@ -45,6 +47,8 @@ namespace UnchordMetroidvania
 
         public override void OnStateEnd()
         {
+            base.OnStateEnd();
+
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
         }

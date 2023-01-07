@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
     public abstract class PlayerOnWallFront : PlayerState
@@ -8,16 +10,24 @@ namespace UnchordMetroidvania
 
         }
 
+        public override void OnStateBegin()
+        {
+            base.OnStateBegin();
+            player.leftAirJumpCount = data.maxAirJumpCount;
+        }
+
         public override bool OnUpdate()
         {
             if(base.OnUpdate())
                 return true;
+            else if(Input.GetKeyDown(KeyCode.Space))
+            {
+                player.fsm.Change(player.jumpOnWallFront);
+                return true;
+            }
             else if(player.bOnDetectFloor)
             {
-                if(player.axisInput.y > 0)
-                    player.fsm.Change(player.gliding);
-                else
-                    player.fsm.Change(player.freeFall);
+                player.fsm.Change(player.freeFall);
                 return true;
             }
             else if(player.axisInput.y < 0 && player.axisInput.x == 0)
@@ -27,10 +37,7 @@ namespace UnchordMetroidvania
             }
             else if(!player.bOnWallFront)
             {
-                if(player.axisInput.y > 0)
-                    player.fsm.Change(player.gliding);
-                else
-                    player.fsm.Change(player.freeFall);
+                player.fsm.Change(player.freeFall);
                 return true;
             }
 

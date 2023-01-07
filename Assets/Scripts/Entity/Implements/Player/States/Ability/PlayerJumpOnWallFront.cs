@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerJumpOnFloor : _PlayerJump
+    public class _PlayerJumpOnWallFront : _PlayerJump
     {
         private bool bJumpCanceled;
         private float vy;
 
-        public _PlayerJumpOnFloor(Player player, PlayerData data, int id, string name)
+        public _PlayerJumpOnWallFront(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
         {
 
@@ -17,19 +17,24 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
+            player.bFixLookDirX = true;
+
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
 
             bJumpCanceled = false;
-            vy = data.jumpOnFloorSpeed;
+            vy = data.jumpOnWallSpeedY;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float vx = player.bIsRun ? player.runSpeed : player.walkSpeed;
-            float ix = player.axisInput.x;
+            float vx = data.jumpOnWallSpeedX;
+            float ix = -player.lookDir.x;
+
+            if(bJumpCanceled)
+                ix = player.axisInput.x;
 
             player.moveDir.x = ix;
             player.moveDir.y = 0;
@@ -42,7 +47,7 @@ namespace UnchordMetroidvania
             }
 
             player.vm.SetVelocityXY(vx, vy);
-            vy -= (data.jumpOnFloorForce * Time.fixedDeltaTime);
+            vy -= (data.jumpOnWallForce * Time.fixedDeltaTime);
         }
 
         public override bool OnUpdate()
@@ -62,11 +67,18 @@ namespace UnchordMetroidvania
             else if(!bJumpCanceled && Input.GetKeyUp(KeyCode.Space))
             {
                 bJumpCanceled = true;
+                player.bFixLookDirX = false;
                 vy /= 2;
                 return false;
             }
 
             return false;
+        }
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+            player.bFixLookDirX = false;
         }
     }
 }

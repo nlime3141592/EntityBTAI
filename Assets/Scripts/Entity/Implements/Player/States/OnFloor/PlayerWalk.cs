@@ -15,7 +15,7 @@ namespace UnchordMetroidvania
             base.OnFixedUpdate();
 
             float vx = player.axisInput.x * player.moveDir.x * player.walkSpeed;
-            float vy = player.axisInput.x * player.moveDir.y * player.walkSpeed;
+            float vy = player.axisInput.x * player.moveDir.y * player.walkSpeed - 0.1f;
 
             player.vm.SetVelocityXY(vx, vy);
         }

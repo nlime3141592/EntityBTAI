@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerJumpOnFloor : _PlayerJump
+    public class _PlayerJumpOnAir : _PlayerJump
     {
         private bool bJumpCanceled;
         private float vy;
 
-        public _PlayerJumpOnFloor(Player player, PlayerData data, int id, string name)
+        public _PlayerJumpOnAir(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
         {
 
@@ -20,8 +20,9 @@ namespace UnchordMetroidvania
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
 
+            --player.leftAirJumpCount;
             bJumpCanceled = false;
-            vy = data.jumpOnFloorSpeed;
+            vy = data.jumpOnAirSpeed;
         }
 
         public override void OnFixedUpdate()
@@ -42,18 +43,13 @@ namespace UnchordMetroidvania
             }
 
             player.vm.SetVelocityXY(vx, vy);
-            vy -= (data.jumpOnFloorForce * Time.fixedDeltaTime);
+            vy -= (data.jumpOnAirForce * Time.fixedDeltaTime);
         }
 
         public override bool OnUpdate()
         {
             if(base.OnUpdate())
                 return true;
-            else if(player.leftAirJumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
-            {
-                player.fsm.Change(player.jumpOnAir);
-                return true;
-            }
             else if(player.bOnCeil)
             {
                 player.fsm.Change(player.freeFall);
@@ -64,6 +60,11 @@ namespace UnchordMetroidvania
                 bJumpCanceled = true;
                 vy /= 2;
                 return false;
+            }
+            else if(player.leftAirJumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
+            {
+                player.fsm.Change(player.jumpOnAir);
+                return true;
             }
 
             return false;

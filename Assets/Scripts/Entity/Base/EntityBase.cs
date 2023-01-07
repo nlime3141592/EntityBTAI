@@ -116,7 +116,8 @@ namespace UnchordMetroidvania
 
         protected virtual void p_Debug_OnPostInvoke()
         {
-            
+            lookDir.x = m_GetNextLookDir(axisInput.x, lookDir.x, 1, bFixLookDirX);
+            lookDir.y = m_GetNextLookDir(axisInput.y, lookDir.y, 1, bFixLookDirY);
         }
 
         private InvokeResult m_FixedUpdateAI()

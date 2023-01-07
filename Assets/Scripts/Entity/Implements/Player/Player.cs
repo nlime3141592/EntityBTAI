@@ -23,8 +23,7 @@ namespace UnchordMetroidvania
         public float runSpeed = 6.0f;
         public bool bIsRun = false;
         public Vector2 cameraOffset = Vector2.zero;
-
-        public bool bJumpedOnFloor = false;
+        public int leftAirJumpCount = 0;
 
         public bool bOnDetectFloor;
         public bool bOnFloor;
@@ -51,6 +50,9 @@ namespace UnchordMetroidvania
         public PlayerIdleWallFront idleWallFront;
         public PlayerSlidingWallFront slidingWallFront;
         public _PlayerJumpOnFloor jumpOnFloor;
+        public _PlayerJumpOnAir jumpOnAir;
+        public _PlayerJumpOnWallFront jumpOnWallFront;
+        public PlayerRoll roll;
 
         public _PlayerFSM fsm;
 
@@ -73,6 +75,9 @@ namespace UnchordMetroidvania
             idleWallFront = new PlayerIdleWallFront(this, data, ++state, "IdleWallFront");
             slidingWallFront = new PlayerSlidingWallFront(this, data, ++state, "SlidingWallFront");
             jumpOnFloor = new _PlayerJumpOnFloor(this, data, ++state, "JumpOnFloor");
+            jumpOnAir = new _PlayerJumpOnAir(this, data, ++state, "JumpOnAir");
+            jumpOnWallFront = new _PlayerJumpOnWallFront(this, data, ++state, "JumpOnWallFront");
+            roll = new PlayerRoll(this, data, ++state, "Roll");
 
             fsm = new _PlayerFSM();
 
@@ -81,8 +86,8 @@ namespace UnchordMetroidvania
 
         protected override void p_Debug_OnPostInvoke()
         {
-            vm.FixedUpdate(axisInput.x);
-            
+            base.p_Debug_OnPostInvoke();
+
             m_FixedUpdateOrigins();
             // vm.SetVelocityXY(base.axisInput.x * 3.0f, base.axisInput.y * 3.0f);
 
@@ -97,8 +102,6 @@ namespace UnchordMetroidvania
 
             base.axisInput.x = Input.GetAxisRaw("Horizontal");
             base.axisInput.y = Input.GetAxisRaw("Vertical");
-
-            bJumpedOnFloor = Input.GetKey(KeyCode.Space);
 
             fsm.OnUpdate();
         }
