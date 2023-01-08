@@ -5,6 +5,7 @@ namespace UnchordMetroidvania
     public class _PlayerFSM
     {
         public int state => currentState?.id ?? int.MinValue;
+        public int totalFps { get; private set; } = -1;
         public int fps { get; private set; } = -1;
         public int nextFps => (fps + 1);
 
@@ -17,6 +18,7 @@ namespace UnchordMetroidvania
 
         public void OnFixedUpdate()
         {
+            ++totalFps;
             ++fps;
             currentState.OnFixedUpdate();
         }
@@ -26,6 +28,7 @@ namespace UnchordMetroidvania
             if(currentState != null)
                 return;
 
+            totalFps = -1;
             fps = -1;
             currentState = initState;
             currentState.OnStateBegin();

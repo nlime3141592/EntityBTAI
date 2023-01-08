@@ -11,7 +11,7 @@ namespace UnchordMetroidvania
 
         protected override InvokeResult p_Invoke()
         {
-            config.instance.velModule.SetVelocityXY(0.0f, 0.0f);
+            config.instance.vm.SetVelocityXY(0.0f, 0.0f);
             return InvokeResult.Running;
         }
     }

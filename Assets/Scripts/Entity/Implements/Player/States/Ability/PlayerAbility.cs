@@ -12,6 +12,8 @@ namespace UnchordMetroidvania
 
         public override void OnStateBegin()
         {
+            base.OnStateBegin();
+
             p_bEndOfAbility = false;
         }
 

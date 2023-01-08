@@ -31,7 +31,7 @@ namespace UnchordMetroidvania
             float velocity = moveSpeedStat.finalValue * weight;
             dx *= velocity;
             dy *= velocity;
-            config.instance.velModule.SetVelocityXY(dx, dy);
+            config.instance.vm.SetVelocityXY(dx, dy);
         }
     }
 }

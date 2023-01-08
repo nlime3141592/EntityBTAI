@@ -9,13 +9,13 @@ namespace UnchordMetroidvania
 
         public BoxRangeBattleSkill(
             string name, int id, int level,
-            int targetCount,
+            int targetCount, float baseDamage,
             TargetSortType sortType, bool canDetectSelf,
             LTRB range
         )
         : base(
             name, id, level,
-            targetCount,
+            targetCount, baseDamage,
             sortType, canDetectSelf)
         {
             this.range = range;

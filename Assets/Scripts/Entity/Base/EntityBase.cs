@@ -8,7 +8,8 @@ namespace UnchordMetroidvania
         #region Components
         [Header("Entity Components")]
         public Rigidbody2D physics;
-        public VelocityController2D velModule;
+        public TerrainSensor sensor;
+        public VelocityModule2D vm;
         #endregion
 
         #region Entity AI
@@ -58,6 +59,8 @@ namespace UnchordMetroidvania
 
         public void SetHealth(float h)
         {
+            h = (float)Math.Round(h, 4);
+
             if(h < 0)
                 health = 0;
             else if (h > maxHealth.finalValue)
@@ -83,11 +86,6 @@ namespace UnchordMetroidvania
         {
             if(maxHealth != null) health = maxHealth.finalValue;
             if(skillRangeGizmoManager == null) skillRangeGizmoManager = new RangeGizmoManager();
-            
-            TryGetComponent<Rigidbody2D>(out physics);
-
-            if(TryGetComponent<VelocityController2D>(out velModule))
-                velModule.Subscribe(physics);
         }
 
         protected virtual void Awake()
@@ -97,7 +95,9 @@ namespace UnchordMetroidvania
 
         protected virtual void Start()
         {
-            
+            TryGetComponent<Rigidbody2D>(out physics);
+            sensor = new TerrainSensor();
+            vm = new VelocityModule2D(physics);
         }
 
         private void FixedUpdate()

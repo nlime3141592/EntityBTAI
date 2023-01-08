@@ -26,6 +26,11 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
+            else if(Input.GetKeyDown(KeyCode.Z) && player.attackOnAir.CanAttack())
+            {
+                player.fsm.Change(player.attackOnAir);
+                return true;
+            }
             else if(player.bOnCeil)
             {
                 player.fsm.Change(player.freeFall);

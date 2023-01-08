@@ -35,7 +35,8 @@ namespace UnchordMetroidvania
 
             RaycastHit2D hitX = default(RaycastHit2D);
             RaycastHit2D hitY = default(RaycastHit2D);
-            Vector2 dPosition = Vector2.zero;
+            Vector2 dtPosition = Vector2.zero;
+            Vector2 dfPosition = Vector2.zero;
             Vector2 handPosition = Vector2.zero;
 
             if(player.lookDir.x < 0)
@@ -55,11 +56,13 @@ namespace UnchordMetroidvania
 
             hitX = Physics2D.Raycast(rayOriginX, dirX, dLength, layerMask);
             hitY = Physics2D.Raycast(rayOriginY + dirX * ledgerp, dirY, dLength, layerMask);
-            dPosition = (Vector2)player.transform.position - rayOriginX;
+            dtPosition = (Vector2)player.transform.position - rayOriginX;
+            dfPosition = player.transform.position - player.originFloor.position;
             handPosition.x = hitX.point.x;
             handPosition.y = hitY.point.y;
 
-            playerPosition = handPosition + dPosition;
+            playerPosition = handPosition + dtPosition;
+            playerTeleportPosition = handPosition + dfPosition + dirX * ledgerp;
             bInitState = true;
         }
 
