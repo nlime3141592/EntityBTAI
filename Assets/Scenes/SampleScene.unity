@@ -477,9 +477,9 @@ MonoBehaviour:
   originLedgeRB: {fileID: 1375081707}
   walkSpeed: 2
   runSpeed: 6
-  bIsRun: 0
+  bIsRun: 1
   cameraOffset: {x: 0, y: 0}
-  bJumpedOnFloor: 0
+  leftAirJumpCount: 0
   bOnDetectFloor: 0
   bOnFloor: 0
   bOnCeil: 0
@@ -1634,8 +1634,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257604429}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3, y: 6.5, z: 0}
-  m_LocalScale: {x: 1, y: 6, z: 1}
+  m_LocalPosition: {x: 3, y: 5.5, z: 0}
+  m_LocalScale: {x: 1, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 40287500}
   m_RootOrder: 9
@@ -2596,8 +2596,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2008961585}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 6.5, z: 0}
-  m_LocalScale: {x: 1, y: 6, z: 1}
+  m_LocalPosition: {x: -3, y: 5.5, z: 0}
+  m_LocalScale: {x: 1, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 40287500}
   m_RootOrder: 8

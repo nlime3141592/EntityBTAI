@@ -4,7 +4,6 @@ namespace UnchordMetroidvania
 {
     public class _PlayerJumpOnAir : _PlayerJump
     {
-        private bool bJumpCanceled;
         private float vy;
 
         public _PlayerJumpOnAir(Player player, PlayerData data, int id, string name)
@@ -17,11 +16,7 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
-            player.vm.MeltPositionX();
-            player.vm.MeltPositionY();
-
             --player.leftAirJumpCount;
-            bJumpCanceled = false;
             vy = data.jumpOnAirSpeed;
         }
 
@@ -50,24 +45,19 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(player.bOnCeil)
+            else if(Input.GetKeyDown(KeyCode.LeftShift))
             {
-                player.fsm.Change(player.freeFall);
-                return true;
-            }
-            else if(!bJumpCanceled && Input.GetKeyUp(KeyCode.Space))
-            {
-                bJumpCanceled = true;
-                vy /= 2;
-                return false;
-            }
-            else if(player.leftAirJumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
-            {
-                player.fsm.Change(player.jumpOnAir);
+                player.fsm.Change(player.dash);
                 return true;
             }
 
             return false;
+        }
+
+        protected override void p_OnJumpCanceled()
+        {
+            base.p_OnJumpCanceled();
+            vy /= 2;
         }
     }
 }

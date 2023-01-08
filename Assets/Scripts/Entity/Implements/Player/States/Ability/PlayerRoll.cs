@@ -10,16 +10,11 @@ namespace UnchordMetroidvania
 
         }
 
-        public override void OnStateBegin()
-        {
-            base.OnStateBegin();
-
-            player.bFixLookDirX = true;
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
+
+            RaycastHit2D terrain = Physics2D.Raycast(player.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
 
             if(player.fsm.nextFps >= data.rollFrame)
             {
@@ -27,14 +22,13 @@ namespace UnchordMetroidvania
                     p_bEndOfAbility = true;
                 return;
             }
-            else if(player.bOnWallFrontB || player.bOnWallFrontT)
+            else if(!terrain || player.bOnWallFrontB || player.bOnWallFrontT)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;
                 return;
             }
 
-            RaycastHit2D terrain = Physics2D.Raycast(player.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
             player.moveDir.x = 1.0f;
 
             if(terrain.normal.y == 0)
@@ -71,13 +65,6 @@ namespace UnchordMetroidvania
             }
 
             return false;
-        }
-
-        public override void OnStateEnd()
-        {
-            base.OnStateEnd();
-
-            player.bFixLookDirX = false;
         }
     }
 }

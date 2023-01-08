@@ -53,8 +53,11 @@ namespace UnchordMetroidvania
         public _PlayerJumpOnAir jumpOnAir;
         public _PlayerJumpOnWallFront jumpOnWallFront;
         public PlayerRoll roll;
+        public PlayerDash dash;
+        public _PlayerClimbOnLedge climbLedge;
 
         public _PlayerFSM fsm;
+        public int CURRENT_STATE;
 
         protected override void Start()
         {
@@ -63,7 +66,7 @@ namespace UnchordMetroidvania
             vm = new VelocityModule2D(GetComponent<Rigidbody2D>());
 
             int state = -1;
-            data = new PlayerData();
+            // data = new PlayerData();
             idleLong = new PlayerIdle(this, data, ++state, "IdleLong");
             idleShort = new PlayerIdleShort(this, data, ++state, "IdleShort");
             walk = new PlayerWalk(this, data, ++state, "Walk");
@@ -78,6 +81,8 @@ namespace UnchordMetroidvania
             jumpOnAir = new _PlayerJumpOnAir(this, data, ++state, "JumpOnAir");
             jumpOnWallFront = new _PlayerJumpOnWallFront(this, data, ++state, "JumpOnWallFront");
             roll = new PlayerRoll(this, data, ++state, "Roll");
+            dash = new PlayerDash(this, data, ++state, "Dash");
+            climbLedge = new _PlayerClimbOnLedge(this, data, ++state, "ClimeLedge");
 
             fsm = new _PlayerFSM();
 
@@ -92,8 +97,7 @@ namespace UnchordMetroidvania
             // vm.SetVelocityXY(base.axisInput.x * 3.0f, base.axisInput.y * 3.0f);
 
             fsm.OnFixedUpdate();
-
-            Debug.Log(string.Format("CurrentState: {0}", fsm.state));
+            // Debug.Log(string.Format("CurrentState: {0}", fsm.state));
         }
 
         protected override void Update()
@@ -104,6 +108,7 @@ namespace UnchordMetroidvania
             base.axisInput.y = Input.GetAxisRaw("Vertical");
 
             fsm.OnUpdate();
+            CURRENT_STATE = fsm.state;
         }
 
         private void m_FixedUpdateOrigins()

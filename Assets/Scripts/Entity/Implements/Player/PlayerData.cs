@@ -3,8 +3,15 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
+    [Serializable]
     public class PlayerData
     {
+        [Header("Terrain Checker Options")]
+        public float detectLength = 0.5f;
+        public float hitLength = 0.06f;
+        public float ledgerp = 0.1f;
+        public float ledgeVerticalLengthWeight = 0.6f;
+
         [Header("Player Idle Short")]
         public int shortIdleFrame = 100;
 
@@ -35,7 +42,18 @@ namespace UnchordMetroidvania
         public float jumpOnWallSpeedY = 16.0f;
 
         [Header("Player Roll")]
-        public float rollFrame = 45;
+        public int rollFrame = 15;
         public float rollSpeed = 16.0f;
+
+        [Header("Player Dash")]
+        public int dashFrame = 7;
+        public float dashSpeed = 32.0f;
+
+        [Header("Skill Options")]
+        public BoxRangeBattleSkillOption attackOnFloor; // 기본 공격(바닥)
+        public BoxRangeBattleSkillOption attackOnAir; // 기본 공격(공중)
+        public BoxRangeBattleSkillOption takeDownEarthquake; // 내려 찍기 충격파
+        public BoxRangeBattleSkillOption abilitySword; // 근거리 어빌리티
+        public BoxRangeBattleSkillOption abilityGun; // 원거리 어빌리티
     }
 }

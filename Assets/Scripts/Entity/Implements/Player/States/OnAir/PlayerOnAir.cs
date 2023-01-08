@@ -24,6 +24,11 @@ namespace UnchordMetroidvania
                 player.fsm.Change(player.jumpOnAir);
                 return true;
             }
+            else if(Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                player.fsm.Change(player.dash);
+                return true;
+            }
             else if(player.bOnFloor)
             {
                 player.fsm.Change(player.idleShort);
@@ -33,16 +38,19 @@ namespace UnchordMetroidvania
             {
                 return false;
             }
-            else if(player.bOnLedge)
+            else if(player.axisInput.x != 0)
             {
-                return true;
+                if(player.bOnLedge)
+                {
+                    player.fsm.Change(player.climbLedge);
+                    return true;
+                }
+                else if(player.bOnWallFront)
+                {
+                    player.fsm.Change(player.idleWallFront);
+                    return true;
+                }
             }
-            else if(player.bOnWallFront && player.axisInput.x != 0)
-            {
-                player.fsm.Change(player.idleWallFront);
-                return true;
-            }
-
             return false;
         }
     }

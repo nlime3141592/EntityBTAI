@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public abstract class BoxRangeBattleSkill : RangeBattleSkill
+    public class BoxRangeBattleSkill : RangeBattleSkill
     {
         public LTRB range;
 
