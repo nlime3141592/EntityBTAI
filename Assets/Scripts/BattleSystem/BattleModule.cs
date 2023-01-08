@@ -8,6 +8,10 @@ namespace UnchordMetroidvania
     {
         public EntityBase owner { get; private set; }
 
+        public Transform damageParent;
+        public TestDamageUI hitUI;
+        public TestDamageUI healUI;
+
         private void OnValidate()
         {
             owner = GetComponent<EntityBase>();
@@ -45,7 +49,10 @@ namespace UnchordMetroidvania
             if(finalDamage < 1)
                 finalDamage = 1;
 
-            target.SetHealth(target.health - finalDamage);
+            float dH = target.SetHealth(target.health - finalDamage);
+Debug.Log("Damage Given.");
+            // TestDamageUI ui = TestDamageUI.Get(hitUI, dH, target.transform.position);
+            // ui.transform.SetParent(damageParent, false);
         }
     }
 }

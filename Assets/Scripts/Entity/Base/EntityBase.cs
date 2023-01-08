@@ -57,16 +57,18 @@ namespace UnchordMetroidvania
             p_OnValidate();
         }
 
-        public void SetHealth(float h)
+        public float SetHealth(float h)
         {
-            h = (float)Math.Round(h, 4);
+            float finalHealth = (float)Math.Round(h, 4);
 
-            if(h < 0)
-                health = 0;
-            else if (h > maxHealth.finalValue)
-                health = maxHealth.finalValue;
-            else
-                health = h;
+            if(finalHealth < 0)
+                finalHealth = 0;
+            else if (finalHealth > maxHealth.finalValue)
+                finalHealth = maxHealth.finalValue;
+
+            float dH = Math.Abs(health - finalHealth);
+            health = finalHealth;
+            return dH;
         }
 
         public void FixConstraints(bool posX, bool posY)
