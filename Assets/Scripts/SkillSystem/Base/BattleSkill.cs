@@ -17,6 +17,6 @@ namespace UnchordMetroidvania
             this.baseDamage = baseDamage;
         }
 
-        public abstract EntityBase[] GetTargets(EntityBase executor);
+        public abstract EntityBase[] GetTargets(EntityBase executor, params string[] tags);
     }
 }

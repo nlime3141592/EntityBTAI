@@ -1,32 +1,31 @@
+using System;
+
 namespace UnchordMetroidvania
 {
     public class WaitNodeBT<T> : TaskNodeBT<T>
     {
-        public int waitFrame { get; private set; }
-        private int m_waitedFrame;
+        public int waitFrame;
+        public int frameDifference = 0;
+        private int m_differenceFrame;
+        private int m_leftFrame;
+        private Random m_prng;
 
         internal WaitNodeBT(ConfigurationBT<T> config, int id, string name, int waitFrame)
         : base(config, id, name)
         {
-            SetFrame(waitFrame);
-            m_waitedFrame = -1;
-        }
+            this.waitFrame = waitFrame;
+            m_prng = new Random();
 
-        public void SetFrame(int waitFrame)
-        {
-            if(waitFrame < 0)
-                this.waitFrame = 0;
-            else
-                this.waitFrame = waitFrame;
+            ResetNode();
         }
 
         protected override InvokeResult p_Invoke()
         {
-            ++m_waitedFrame;
+            --m_leftFrame;
 
-            if(m_waitedFrame > -1 && m_waitedFrame < waitFrame)
+            if(m_leftFrame > 0)
                 return InvokeResult.Running;
-            else if(m_waitedFrame == waitFrame)
+            else if(m_leftFrame <= 0)
             {
                 ResetNode();
                 return InvokeResult.Success;
@@ -41,7 +40,13 @@ namespace UnchordMetroidvania
         public override void ResetNode()
         {
             base.ResetNode();
-            m_waitedFrame = -1;
+
+            if(frameDifference > 0)
+                m_leftFrame = (int)m_prng.RangeNextDouble((double)waitFrame, (double)frameDifference);
+            else if(frameDifference < 0)
+                m_leftFrame = (int)m_prng.RangeNextDouble((double)waitFrame, (double)-frameDifference);
+            else
+                m_leftFrame = waitFrame;
         }
     }
 }

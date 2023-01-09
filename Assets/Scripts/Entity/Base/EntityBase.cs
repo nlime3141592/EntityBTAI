@@ -19,6 +19,7 @@ namespace UnchordMetroidvania
         public Vector2 lookDir = Vector2.one;
         public Vector2 moveDir;
         public InvokeResult lastInvokeResult;
+        public bool bEndOfEntity = false;
 
         private object m_root;
         private Func<InvokeResult> m_func_rootInvoke;
@@ -82,6 +83,19 @@ namespace UnchordMetroidvania
                 physics.constraints |= RigidbodyConstraints2D.FreezePositionY;
             else
                 physics.constraints &= ~(RigidbodyConstraints2D.FreezePositionY);
+        }
+
+        // NOTE:
+        // 엔티티 사망 애니메이션이 끝날 때 이 함수를 호출하세요.
+        // 애니메이션 이벤트 기능을 사용합니다.
+        public void OnEntityDeadAnimationEnd()
+        {
+            bEndOfEntity = true;
+        }
+
+        public virtual void OnEntityDestroy()
+        {
+
         }
 
         protected virtual void p_OnValidate()
