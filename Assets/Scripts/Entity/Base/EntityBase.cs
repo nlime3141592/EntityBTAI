@@ -165,7 +165,7 @@ namespace UnchordMetroidvania
 
         protected virtual void Update()
         {
-            
+            canInput = GameManager.instance.bGameStarted;
         }
 
         protected virtual void OnDrawGizmos()

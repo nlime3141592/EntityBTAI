@@ -44,7 +44,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(Input.GetKeyDown(KeyCode.LeftShift))
+            else if(player.rushDown)
             {
                 player.fsm.Change(player.dash);
                 return true;

@@ -30,5 +30,25 @@ namespace UnchordMetroidvania
 
             ai.Invoke();
         }
+
+        public override void OnAggroBegin()
+        {
+            base.OnAggroBegin();
+
+            aggroRange.left = 200;
+            aggroRange.top = 200;
+            aggroRange.right = 200;
+            aggroRange.bottom = 200;
+        }
+
+        public override void OnAggroEnd()
+        {
+            base.OnAggroEnd();
+
+            aggroRange.left = 200;
+            aggroRange.top = 10;
+            aggroRange.right = 20;
+            aggroRange.bottom = 5;
+        }
     }
 }

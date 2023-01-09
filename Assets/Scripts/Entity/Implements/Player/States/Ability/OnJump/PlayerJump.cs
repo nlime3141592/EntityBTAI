@@ -26,7 +26,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(Input.GetKeyDown(KeyCode.Z) && player.attackOnAir.CanAttack())
+            else if(player.skill00 && player.attackOnAir.CanAttack())
             {
                 player.fsm.Change(player.attackOnAir);
                 return true;
@@ -36,13 +36,13 @@ namespace UnchordMetroidvania
                 player.fsm.Change(player.freeFall);
                 return true;
             }
-            else if(!bJumpCanceled && Input.GetKeyUp(KeyCode.Space))
+            else if(!bJumpCanceled && player.jumpUp)
             {
                 bJumpCanceled = true;
                 p_OnJumpCanceled();
                 return false;
             }
-            else if(player.leftAirJumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
+            else if(player.leftAirJumpCount > 0 && player.jumpDown)
             {
                 player.fsm.Change(player.jumpOnAir);
                 return true;

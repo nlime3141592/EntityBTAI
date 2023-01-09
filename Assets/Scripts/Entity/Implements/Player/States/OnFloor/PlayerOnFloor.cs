@@ -25,27 +25,27 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(Input.GetKeyDown(KeyCode.X) && player.abilitySword.CanAttack())
+            else if(player.skill01 && player.abilitySword.CanAttack())
             {
                 player.fsm.Change(player.abilitySword);
                 return true;
             }
-            else if(Input.GetKeyDown(KeyCode.C) && player.abilityGun.CanAttack())
+            else if(player.skill02 && player.abilityGun.CanAttack())
             {
                 player.fsm.Change(player.abilityGun);
                 return true;
             }
-            else if(Input.GetKeyDown(KeyCode.Z) && player.attackOnFloor.CanAttack())
+            else if(player.skill00 && player.attackOnFloor.CanAttack())
             {
                 player.fsm.Change(player.attackOnFloor);
                 return true;
             }
-            else if(Input.GetKeyDown(KeyCode.Space)) // NOTE: 테스트 조건문, InputHandler를 만들 필요가 있음.
+            else if(player.jumpDown)
             {
                 player.fsm.Change(player.jumpOnFloor);
                 return true;
             }
-            else if(Input.GetKeyDown(KeyCode.LeftShift))
+            else if(player.rushDown)
             {
                 player.fsm.Change(player.roll);
                 return true;

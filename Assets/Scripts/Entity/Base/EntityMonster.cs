@@ -20,5 +20,15 @@ namespace UnchordMetroidvania
         {
             base.p_Debug_OnPostInvoke();
         }
+
+        public virtual void OnAggroBegin()
+        {
+
+        }
+
+        public virtual void OnAggroEnd()
+        {
+            
+        }
     }
 }

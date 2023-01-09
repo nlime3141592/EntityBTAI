@@ -17,6 +17,12 @@ namespace UnchordMetroidvania
             if(prev != cur)
             {
                 config.instance.bPrevAggro = config.instance.bAggro;
+
+                if(cur)
+                    config.instance.OnAggroBegin();
+                else
+                    config.instance.OnAggroEnd();
+
                 return InvokeResult.Success;
             }
             else

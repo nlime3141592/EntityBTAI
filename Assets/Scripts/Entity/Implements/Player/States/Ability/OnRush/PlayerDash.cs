@@ -40,7 +40,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(player.leftAirJumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
+            else if(player.leftAirJumpCount > 0 && player.jumpDown)
             {
                 player.fsm.Change(player.jumpOnAir);
                 return true;

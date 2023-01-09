@@ -19,17 +19,17 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(Input.GetKeyDown(KeyCode.Z) && player.attackOnAir.CanAttack())
+            else if(player.skill00 && player.attackOnAir.CanAttack())
             {
                 player.fsm.Change(player.attackOnAir);
                 return true;
             }
-            else if(player.leftAirJumpCount > 0 && Input.GetKeyDown(KeyCode.Space))
+            else if(player.leftAirJumpCount > 0 && player.jumpDown)
             {
                 player.fsm.Change(player.jumpOnAir);
                 return true;
             }
-            else if(Input.GetKeyDown(KeyCode.LeftShift))
+            else if(player.rushDown)
             {
                 player.fsm.Change(player.dash);
                 return true;
