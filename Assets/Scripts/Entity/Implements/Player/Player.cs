@@ -4,6 +4,9 @@ namespace UnchordMetroidvania
 {
     public class Player : EntityBase
     {
+        public static Player instance => m_player;
+        private static Player m_player;
+
         public BattleModule battleModule;
         public ElongatedHexagonCollider2D hCol;
         public Transform originFloor;
@@ -17,8 +20,6 @@ namespace UnchordMetroidvania
         public Transform originLedgeLB;
         public Transform originLedgeRB;
 
-        public float walkSpeed = 2.0f;
-        public float runSpeed = 6.0f;
         public bool bIsRun = false;
         public Vector2 cameraOffset = Vector2.zero;
         public int leftAirJumpCount = 0;
@@ -99,6 +100,16 @@ namespace UnchordMetroidvania
 
         protected override void Start()
         {
+            if(m_player != null)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+            else
+            {
+                m_player = this;
+            }
+
             base.Start();
 
             int state = -1;

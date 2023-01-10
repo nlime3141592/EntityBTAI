@@ -16,7 +16,7 @@ namespace UnchordMetroidvania
                     private WaitNodeBT<T> m_waitOnAggroChange;
                     private SuccessNodeBT<T> m_successor;
                 private SequenceNodeBT<T> m_logicAI;
-                    private MonsterDebugNode<T> m_onExecutionMessage; // Debug Node.
+                    private NodeBT<T> m_executionNode;
                     private WaitNodeBT<T> m_waitOnActionChange;
 
         public MonsterBaseAI(ConfigurationBT<T> config, int id, string name)
@@ -33,14 +33,11 @@ namespace UnchordMetroidvania
                         m_waitOnAggroChange = new WaitNodeBT<T>(config, -1, "waitOnAggroChange", m_SecondToFps(fps_perSecond, 1));
                         m_successor = new SuccessNodeBT<T>(config, -1, "success");
                     m_logicAI = BehaviorTree.Sequence<T>(config, -1, "logicAI", 2);
-                        m_onExecutionMessage = new MonsterDebugNode<T>(config, -1, "onExecutionMessage"); // Debug Node.
+
                         m_waitOnActionChange = new WaitNodeBT<T>(config, -1, "waitOnActionsChange", m_SecondToFps(fps_perSecond, 1));
 
             m_waitOnAggroChange.frameDifference = m_SecondToFps(fps_perSecond, 1);
             m_waitOnActionChange.frameDifference = m_SecondToFps(fps_perSecond, 1);
-
-            // For debugging.                
-                m_onExecutionMessage.message = "동작 수행 중";
 
             m_pageRoot.Alloc(0, m_isDead);
             m_pageRoot.Alloc(1, m_isLived);
@@ -52,8 +49,13 @@ namespace UnchordMetroidvania
             m_checkAggroChange.Alloc(0, m_condi_checkAggroChange);
             m_checkAggroChange.Alloc(1, m_waitOnAggroChange);
             m_checkAggroChange.Alloc(2, m_successor);
-            m_logicAI.Alloc(0, m_onExecutionMessage); // Debug Node Allocation.
             m_logicAI.Alloc(1, m_waitOnActionChange);
+        }
+
+        public void Set(NodeBT<T> executionNode)
+        {
+            m_executionNode = executionNode;
+            m_logicAI.Alloc(0, executionNode);
         }
 
         protected override InvokeResult p_Invoke()

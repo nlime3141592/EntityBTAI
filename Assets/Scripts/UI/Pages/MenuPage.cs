@@ -18,8 +18,8 @@ namespace UnchordMetroidvania
 
         public void OnGameStart()
         {
-            this.gameObject.SetActive(false);
             GameManager.instance.OnGameStart();
+            this.gameObject.SetActive(false);
         }
     }
 }

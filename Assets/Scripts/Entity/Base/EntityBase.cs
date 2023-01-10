@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnchordMetroidvania
@@ -10,6 +11,7 @@ namespace UnchordMetroidvania
         public Rigidbody2D physics;
         public TerrainSensor sensor;
         public VelocityModule2D vm;
+        public List<Collider2D> hitColliders;
         #endregion
 
         #region Entity AI
@@ -111,6 +113,7 @@ namespace UnchordMetroidvania
 
         protected virtual void Start()
         {
+            hitColliders = new List<Collider2D>();
             TryGetComponent<Rigidbody2D>(out physics);
             sensor = new TerrainSensor();
             vm = new VelocityModule2D(physics);
@@ -166,6 +169,9 @@ namespace UnchordMetroidvania
         protected virtual void Update()
         {
             canInput = GameManager.instance.bGameStarted;
+
+            for(int i = 0; i < hitColliders.Count; ++i)
+                hitColliders[i].enabled = health > 0;
         }
 
         protected virtual void OnDrawGizmos()

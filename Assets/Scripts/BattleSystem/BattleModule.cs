@@ -21,6 +21,8 @@ namespace UnchordMetroidvania
         {
             EntityBase[] targets = skill.GetTargets(owner);
 
+            Debug.Log("전투 스킬 사용됨");
+
             if(targets == null)
                 return;
 
