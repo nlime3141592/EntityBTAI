@@ -20,20 +20,24 @@ namespace UnchordMetroidvania
                 config.instance.battleModule.UseBattleSkill(
                     config.instance.skUpSlice
                 );
-                Debug.Log("공격 성공");
-                return InvokeResult.Success;
-            }
-            else
-            {
-                Debug.Log("공격 대기 중..");
                 return InvokeResult.Running;
             }
+
+            InvokeResult iResult = config.instance.animationResult;
+
+            if(iResult == InvokeResult.Success)
+            {
+                config.instance.mantisAnimator.SetInteger("state", 0);
+                config.instance.animationResult = InvokeResult.Running;
+                config.instance.bFixLookDirX = false;
+            }
+
+            return iResult;
         }
 
         public override void ResetNode()
         {
             base.ResetNode();
-            Debug.Log("사마귀 초기화");
             config.instance.bFixLookDirX = false;
         }
     }

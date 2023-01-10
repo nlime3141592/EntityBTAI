@@ -607,18 +607,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.0854187, y: -1.6191707}
+  m_Offset: {x: -5.7169876, y: -1.1612773}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 17.794376, y: 8.428}
+    oldSize: {x: 36, y: 20.003906}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12.1670685, y: 3.9506369}
+  m_Size: {x: 18.103897, y: 6.634841}
   m_EdgeRadius: 0
 --- !u!212 &560320131
 SpriteRenderer:
@@ -660,7 +660,7 @@ SpriteRenderer:
   m_SortingLayerID: 1075045073
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7e87ba7e04074e04eaf45a8e38b4c8d3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 945279e4fda4be743900781a7a0ee1d8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -694,18 +694,18 @@ MonoBehaviour:
   canInput: 1
   axisInput: {x: 0, y: 0}
   strength:
-    baseValue: 0
+    baseValue: 30
   defence:
-    baseValue: 0
+    baseValue: 1
   maxHealth:
-    baseValue: 50
+    baseValue: 2000
   maxMana:
     baseValue: 0
   baseMoveSpeed:
     baseValue: 0
   baseGravity:
     baseValue: 0
-  health: 50
+  health: 2000
   mana: 0
   waitSecondOnChangeAggro: 0.75
   waitDiffSecondOnChangeAggro: 0.25
@@ -721,6 +721,7 @@ MonoBehaviour:
   targetTags:
   - Player
   targets: []
+  animationResult: -1
   mantisAnimator: {fileID: 0}
   battleModule: {fileID: 0}
   terrainCollider: {fileID: 1692038689}
@@ -745,10 +746,10 @@ MonoBehaviour:
       sortType: 0
       canDetectSelf: 0
       range:
-        left: 5
-        top: 2
-        right: 1
-        bottom: 3
+        left: 5.5
+        top: 5.5
+        right: 15.5
+        bottom: 5.5
       cooltime: 0
     downSlice:
       level: 0
@@ -1628,7 +1629,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.454094, y: -1.4461482}
+  m_Offset: {x: -5.721718, y: -1.1567087}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1639,7 +1640,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12.969696, y: 4.6922965}
+  m_Size: {x: 18.142181, y: 6.6100407}
   m_EdgeRadius: 0
 --- !u!1 &1707098705
 GameObject:

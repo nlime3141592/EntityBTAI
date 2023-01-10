@@ -12,6 +12,8 @@ namespace UnchordMetroidvania
 
         public override void OnStateBegin()
         {
+            base.OnStateBegin();
+
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
         }

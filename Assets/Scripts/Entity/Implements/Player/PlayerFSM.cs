@@ -53,5 +53,10 @@ namespace UnchordMetroidvania
             currentState.OnStateEnd();
             currentState = null;
         }
+
+        public void OnAnimationEnd()
+        {
+            currentState.OnAnimationEnd();
+        }
     }
 }

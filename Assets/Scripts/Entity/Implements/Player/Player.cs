@@ -7,6 +7,7 @@ namespace UnchordMetroidvania
         public static Player instance => m_player;
         private static Player m_player;
 
+        public Animator pAnimator;
         public BattleModule battleModule;
         public ElongatedHexagonCollider2D hCol;
         public Transform originFloor;
@@ -98,6 +99,11 @@ namespace UnchordMetroidvania
             }
         }
 
+        public void PublishEndOfAnimation()
+        {
+            fsm.OnAnimationEnd();
+        }
+
         protected override void Start()
         {
             if(m_player != null)
@@ -114,6 +120,7 @@ namespace UnchordMetroidvania
 
             int state = -1;
 
+            pAnimator = GetComponent<Animator>();
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 

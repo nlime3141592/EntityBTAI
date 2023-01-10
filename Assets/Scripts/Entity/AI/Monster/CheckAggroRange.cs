@@ -27,6 +27,20 @@ namespace UnchordMetroidvania
             config.instance.bAggro = targets.Length > 0;
             config.instance.targets = targets;
 
+            float baseX = config.instance.transform.position.x;
+            float targetX = baseX + 1;
+
+            if(targets != null && targets.Length > 0)
+                targetX = targets[0].transform.position.x;
+
+            float dX = targetX - baseX;
+
+            if(!config.instance.bFixLookDirX)
+                if(dX < 0)
+                    config.instance.lookDir.x = -1;
+                else if(dX >= 0)
+                    config.instance.lookDir.x = 1;
+
             return InvokeResult.Success;
         }
     }

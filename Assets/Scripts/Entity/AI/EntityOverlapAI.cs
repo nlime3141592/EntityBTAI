@@ -26,7 +26,7 @@ namespace UnchordMetroidvania
             Collider2D[] colliders = Physics2D.OverlapAreaAll(pStart, pEnd, layerMask);
 
             if(showGizmo)
-                origin.skillRangeGizmoManager.Add(new BoxRangeGizmo(0.8f, Color.cyan, pStart, pEnd));
+                origin.skillRangeGizmoManager.Add(new BoxRangeGizmo(0.1f, Color.cyan, pStart, pEnd));
 
             return colliders;
         }

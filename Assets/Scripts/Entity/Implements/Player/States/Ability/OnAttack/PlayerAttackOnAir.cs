@@ -53,6 +53,12 @@ namespace UnchordMetroidvania
             if(base.OnUpdate())
                 return true;
 
+            // NOTE: 디버그용 상태 전환 코드.
+            else if(Input.GetKeyDown(KeyCode.Q))
+                player.PublishAttackCommand();
+            else if(Input.GetKeyDown(KeyCode.W))
+                p_bEndOfAnimation = true;
+
             return false;
         }
 

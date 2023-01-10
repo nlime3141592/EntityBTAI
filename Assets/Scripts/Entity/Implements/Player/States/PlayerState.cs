@@ -24,6 +24,7 @@ namespace UnchordMetroidvania
         public virtual void OnStateBegin()
         {
             p_bEndOfAnimation = false;
+            player.pAnimator.SetInteger("state", id);
         }
 
         public virtual void OnFixedUpdate()

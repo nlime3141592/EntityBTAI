@@ -51,6 +51,11 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
+            else if(player.rushDown)
+            {
+                player.fsm.Change(player.roll);
+                return true;
+            }
 
             return false;
         }

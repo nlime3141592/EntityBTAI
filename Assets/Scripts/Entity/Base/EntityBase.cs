@@ -121,6 +121,12 @@ namespace UnchordMetroidvania
 
         private void FixedUpdate()
         {
+            // Rotation Logic
+            if(lookDir.x < 0)
+                transform.eulerAngles = Vector3.up * 180;
+            else if(lookDir.x > 0)
+                transform.eulerAngles = Vector3.zero;
+
             lastInvokeResult = m_FixedUpdateAI();
             p_Debug_OnPostInvoke();
         }

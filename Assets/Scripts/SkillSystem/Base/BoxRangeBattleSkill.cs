@@ -28,5 +28,15 @@ namespace UnchordMetroidvania
                 1 << LayerMask.NameToLayer("Entity"), bRangeOnEditor, tags
             );
         }
+
+        public void UpdateOptions(BoxRangeBattleSkillOption option)
+        {
+            base.level = option.level;
+            base.targetCount = option.targetCount;
+            base.baseDamage = option.baseDamage;
+            base.sortType = option.sortType;
+            base.bCanDetectSelf = option.canDetectSelf;
+            this.range = option.range;
+        }
     }
 }

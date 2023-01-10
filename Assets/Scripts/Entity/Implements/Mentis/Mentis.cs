@@ -98,6 +98,7 @@ namespace UnchordMetroidvania
             base.p_Debug_OnPostInvoke();
 
             m_FixedUpdateOrigins();
+            skUpSlice.UpdateOptions(data.upSlice);
 
             ai.Invoke();
         }
@@ -106,10 +107,10 @@ namespace UnchordMetroidvania
         {
             base.OnAggroBegin();
 
-            aggroRange.left = 200;
-            aggroRange.top = 200;
-            aggroRange.right = 200;
-            aggroRange.bottom = 200;
+            aggroRange.left = 20;
+            aggroRange.top = 20;
+            aggroRange.right = 20;
+            aggroRange.bottom = 20;
         }
 
         public override void OnAggroEnd()

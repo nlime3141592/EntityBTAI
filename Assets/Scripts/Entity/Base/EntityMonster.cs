@@ -15,6 +15,13 @@ namespace UnchordMetroidvania
         public bool bAggro = false;
         public List<string> targetTags;
         public EntityBase[] targets;
+        public InvokeResult animationResult = InvokeResult.Running;
+
+        public void PublishEndOfAnimation()
+        {
+            Debug.Log("End Animation.");
+            animationResult = InvokeResult.Success;
+        }
 
         protected override void p_Debug_OnPostInvoke()
         {
