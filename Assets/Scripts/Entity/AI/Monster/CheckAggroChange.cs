@@ -1,27 +1,27 @@
 namespace UnchordMetroidvania
 {
-    public class CheckAggroChange<T> : ConditionNodeBT<T>
+    public class CheckAggroChange<T> : TaskNodeBT<T>
     where T : EntityMonster
     {
-        public CheckAggroChange(ConfigurationBT<T> config, int id, string name)
-        : base(config, id, name)
+        public CheckAggroChange(T instance)
+        : base(instance)
         {
 
         }
 
         protected override InvokeResult p_Invoke()
         {
-            bool prev = config.instance.bPrevAggro;
-            bool cur = config.instance.bAggro;
+            bool prev = instance.bPrevAggro;
+            bool cur = instance.bAggro;
 
             if(prev != cur)
             {
-                config.instance.bPrevAggro = config.instance.bAggro;
+                instance.bPrevAggro = instance.bAggro;
 
                 if(cur)
-                    config.instance.OnAggroBegin();
+                    instance.OnAggroBegin();
                 else
-                    config.instance.OnAggroEnd();
+                    instance.OnAggroEnd();
 
                 return InvokeResult.Success;
             }

@@ -1,9 +1,9 @@
 namespace UnchordMetroidvania
 {
-    public class SequenceNodeBT<T> : CompositeNodeBT<T>
+    public class SequenceNodeBT<T> : ControlNodeBT<T>
     {
-        internal SequenceNodeBT(ConfigurationBT<T> config, int id, string name, int initCapacity)
-        : base(config, id, name, initCapacity)
+        public SequenceNodeBT(T instance, int capacity)
+        : base(instance, capacity)
         {
 
         }

@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public abstract class TaskNodeBT<T> : NodeBT<T>
     {
-        protected TaskNodeBT(ConfigurationBT<T> config, int id, string name)
-        : base(config, id, name)
+        public TaskNodeBT(T instance)
+        : base(instance)
         {
 
         }

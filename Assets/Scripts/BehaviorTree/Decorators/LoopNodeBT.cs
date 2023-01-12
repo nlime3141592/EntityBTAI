@@ -2,27 +2,40 @@ namespace UnchordMetroidvania
 {
     public class LoopNodeBT<T> : DecoratorNodeBT<T>
     {
-        public int loopFrame { get; private set; }
-        private int m_loopedFrame;
-
-        internal LoopNodeBT(ConfigurationBT<T> config, int id, string name, int loopFrame)
-        : base(config, id, name)
+        public int loopCount
         {
-            SetFrame(loopFrame);
+            get => m_loopCount;
+            set
+            {
+                // max(1, value)
+
+                if(value < 1)
+                    m_loopCount = 1;
+                else
+                    m_loopCount = value;
+            }
         }
 
-        public void SetFrame(int loopFrame)
+        private int m_loopCount = 1;
+        private int m_loopedCount = 0;
+
+        public LoopNodeBT(T instance)
+        : base(instance)
         {
-            if(loopFrame < 0)
-                this.loopFrame = 0;
-            else
-                this.loopFrame = loopFrame;
+
+        }
+
+        public override void ResetNode()
+        {
+            m_loopedCount = 0;
+
+            base.ResetNode();
         }
 
         protected override InvokeResult p_Invoke()
         {
-            ++m_loopedFrame;
-            InvokeResult iResult = child.Invoke();
+            ++m_loopedCount;
+            InvokeResult iResult = children[0]?.Invoke() ?? InvokeResult.Failure;
 
             if(iResult == InvokeResult.Failure)
             {
@@ -31,19 +44,12 @@ namespace UnchordMetroidvania
             }
             else
             {
-                if(m_loopedFrame < loopFrame)
+                if(m_loopedCount < loopCount)
                     return InvokeResult.Running;
 
                 ResetNode();
                 return InvokeResult.Success;
             }
-        }
-
-        public override void ResetNode()
-        {
-            base.ResetNode();
-
-            m_loopedFrame = 0;
         }
     }
 }

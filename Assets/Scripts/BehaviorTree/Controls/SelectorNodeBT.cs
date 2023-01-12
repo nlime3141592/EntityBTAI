@@ -1,9 +1,9 @@
 namespace UnchordMetroidvania
 {
-    public class SelectorNodeBT<T> : CompositeNodeBT<T>
+    public class SelectorNodeBT<T> : ControlNodeBT<T>
     {
-        internal SelectorNodeBT(ConfigurationBT<T> config, int id, string name, int initCapacity)
-        : base(config, id, name, initCapacity)
+        public SelectorNodeBT(T instance, int capacity)
+        : base(instance, capacity)
         {
 
         }

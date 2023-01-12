@@ -5,18 +5,18 @@ namespace UnchordMetroidvania
     public class DestroyEntityGameObject<T> : TaskNodeBT<T>
     where T : EntityBase
     {
-        public DestroyEntityGameObject(ConfigurationBT<T> config, int id, string name)
-        : base(config, id, name)
+        public DestroyEntityGameObject(T instance)
+        : base(instance)
         {
 
         }
 
         protected override InvokeResult p_Invoke()
         {
-            if(config.instance.bEndOfEntity)
+            if(instance.bEndOfEntity)
             {
-                config.instance.OnEntityDestroy();
-                GameObject.Destroy(config.instance.gameObject);
+                instance.OnEntityDestroy();
+                GameObject.Destroy(instance.gameObject);
                 return InvokeResult.Success;
             }
             else

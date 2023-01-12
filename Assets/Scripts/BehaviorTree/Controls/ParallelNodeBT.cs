@@ -2,23 +2,35 @@ namespace UnchordMetroidvania
 {
     public class ParallelNodeBT<T> : ControlNodeBT<T>
     {
-        private bool mb_executed;
         private int m_successCount;
         private int m_failureCount;
         private int m_skipCount;
         private bool[] m_bSkips;
 
-        internal ParallelNodeBT(ConfigurationBT<T> config, int id, string name, int initCapacity)
-        : base(config, id, name, initCapacity)
+        public ParallelNodeBT(T instance, int capacity = 2)
+        : base(instance, capacity)
         {
-            m_bSkips = new bool[initCapacity];
+            m_bSkips = new bool[capacity];
+        }
+
+        public override void ResetNode()
+        {
+            int count = children?.Length ?? 0;
+            for(int i = 0; i < count; ++i)
+                children[i]?.ResetNode();
+
+            m_successCount = 0;
+            m_failureCount = 0;
+            m_skipCount = 0;
+
+            for(int i = 0; i < m_bSkips.Length; ++i)
+                m_bSkips[i] = false;
+
+            base.ResetNode();
         }
 
         protected override InvokeResult p_Invoke()
         {
-            bool bPrevExecuted = mb_executed;
-            mb_executed = true;
-
             for(int i = 0; i < children.Length; ++i)
             {
                 if(m_bSkips[i])
@@ -46,19 +58,6 @@ namespace UnchordMetroidvania
             }
             else
                 return InvokeResult.Running;
-        }
-
-        public override void ResetNode()
-        {
-            base.ResetNode();
-
-            mb_executed = false;
-            m_successCount = 0;
-            m_failureCount = 0;
-            m_skipCount = 0;
-
-            for(int i = 0; i < m_bSkips.Length; ++i)
-                m_bSkips[i] = false;
         }
 
         private void m_OnSuccess(int iChild)

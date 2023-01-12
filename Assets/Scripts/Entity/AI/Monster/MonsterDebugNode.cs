@@ -7,15 +7,15 @@ namespace UnchordMetroidvania
     {
         public string message;
 
-        public MonsterDebugNode(ConfigurationBT<T> config, int id, string name)
-        : base(config, id, name)
+        public MonsterDebugNode(T instance)
+        : base(instance)
         {
 
         }
 
         protected override InvokeResult p_Invoke()
         {
-            InvokeResult iResult = child?.Invoke() ?? InvokeResult.Success;
+            InvokeResult iResult = children[0]?.Invoke() ?? InvokeResult.Success;
             Debug.Log(message);
             return iResult;
         }

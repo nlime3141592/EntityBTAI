@@ -1,11 +1,12 @@
 using System;
 
+// 개발 보류
 namespace UnchordMetroidvania
 {
-    public abstract class FiniteStateMachineNodeBT<T> : CompositeNodeBT<T>
+    public abstract class FiniteStateMachineNodeBT<T> : ControlNodeBT<T>
     {
-        protected FiniteStateMachineNodeBT(ConfigurationBT<T> config, int id, string name, int initCapacity)
-        : base(config, id, name, initCapacity)
+        protected FiniteStateMachineNodeBT(T instance, int capacity)
+        : base(instance, capacity)
         {
 
         }

@@ -1,31 +1,11 @@
 namespace UnchordMetroidvania
 {
-    public abstract class DecoratorNodeBT<T> : BranchNodeBT<T>
+    public abstract class DecoratorNodeBT<T> : CompositeNodeBT<T>
     {
-        protected NodeBT<T> child { get; private set; }
-
-        protected DecoratorNodeBT(ConfigurationBT<T> config, int id, string name)
-        : base(config, id, name)
+        public DecoratorNodeBT(T instance)
+        : base(instance, 1)
         {
 
-        }
-
-        public NodeBT<T> Alloc(NodeBT<T> node)
-        {
-            NodeBT<T> prevNode = child;
-            child = node;
-            return prevNode;
-        }
-
-        public NodeBT<T> Dealloc()
-        {
-            return Alloc(null);
-        }
-
-        public override void ResetNode()
-        {
-            base.ResetNode();
-            child?.ResetNode();
         }
     }
 }

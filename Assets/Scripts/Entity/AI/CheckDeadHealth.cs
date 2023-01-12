@@ -1,17 +1,17 @@
 namespace UnchordMetroidvania
 {
-    public class CheckDeadHealth<T> : ConditionNodeBT<T>
+    public class CheckDeadHealth<T> : TaskNodeBT<T>
     where T : EntityBase
     {
-        public CheckDeadHealth(ConfigurationBT<T> config, int id, string name)
-        : base(config, id, name)
+        public CheckDeadHealth(T instance)
+        : base(instance)
         {
 
         }
 
         protected override InvokeResult p_Invoke()
         {
-            if(config.instance.health <= 0)
+            if(instance.health <= 0)
                 return InvokeResult.Success;
             else
                 return InvokeResult.Failure;

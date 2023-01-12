@@ -52,7 +52,6 @@ namespace UnchordMetroidvania
         public BoxRangeBattleSkill skJumpSlice; // 도약찍기
 
         public MentisData data;
-        public ConfigurationBT<Mentis> aiConfig;
         public MonsterBaseAI<Mentis> ai;
 
         public virtual bool CanAggro()
@@ -66,8 +65,7 @@ namespace UnchordMetroidvania
             
             mantisAnimator = GetComponent<Animator>();
             battleModule = GetComponent<BattleModule>();
-            aiConfig = new ConfigurationBT<Mentis>(this);
-            ai = new MonsterBaseAI<Mentis>(aiConfig, -1, "ai");
+            ai = new MonsterBaseAI<Mentis>(this);
 
             skUpSlice = new BoxRangeBattleSkill(
                 "UpSlice", -1,
@@ -81,12 +79,12 @@ namespace UnchordMetroidvania
 
             skUpSlice.bRangeOnEditor = true;
 
-            idle = new MentisIdle(aiConfig, 0, "Idle");
-            upSlice = new MentisUpSlice(aiConfig, 1, "UpSlice");
+            idle = new MentisIdle(this);
+            upSlice = new MentisUpSlice(this);
 
-            fsm = new MentisFSM(aiConfig, -1, "fsm");
-            fsm.Alloc(0, idle);
-            fsm.Alloc(1, upSlice);
+            fsm = new MentisFSM(this);
+            fsm[0] = idle;
+            fsm[1] = upSlice;
 
             ai.Set(fsm);
 

@@ -4,15 +4,15 @@ namespace UnchordMetroidvania
 {
     public class InverterNodeBT<T> : DecoratorNodeBT<T>
     {
-        internal InverterNodeBT(ConfigurationBT<T> config, int id, string name)
-        : base(config, id, name)
+        public InverterNodeBT(T instance)
+        : base(instance)
         {
 
         }
 
         protected override InvokeResult p_Invoke()
         {
-            InvokeResult iResult = child.Invoke();
+            InvokeResult iResult = children[0]?.Invoke() ?? InvokeResult.Failure;
 
             if(iResult == InvokeResult.Success)
                 return InvokeResult.Failure;

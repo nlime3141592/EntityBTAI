@@ -7,8 +7,8 @@ namespace UnchordMetroidvania
     {
         private Stat m_moveSpeedStat;
 
-        public EntityMove(ConfigurationBT<T> config, int id, string name)
-        : base(config, id, name)
+        public EntityMove(T instance)
+        : base(instance)
         {
 
         }
@@ -20,7 +20,7 @@ namespace UnchordMetroidvania
 
         protected override InvokeResult p_Invoke()
         {
-            p_Move(m_moveSpeedStat, config.instance.moveDir, 1.0f);
+            p_Move(m_moveSpeedStat, instance.moveDir, 1.0f);
             return InvokeResult.Running;
         }
 
@@ -31,7 +31,7 @@ namespace UnchordMetroidvania
             float velocity = moveSpeedStat.finalValue * weight;
             dx *= velocity;
             dy *= velocity;
-            config.instance.vm.SetVelocityXY(dx, dy);
+            instance.vm.SetVelocityXY(dx, dy);
         }
     }
 }

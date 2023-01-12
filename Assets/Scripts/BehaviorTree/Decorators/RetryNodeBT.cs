@@ -2,26 +2,39 @@ namespace UnchordMetroidvania
 {
     public class RetryNodeBT<T> : DecoratorNodeBT<T>
     {
-        public int tryCount { get; private set; }
-        private int m_triedCount = 0;
-
-        internal RetryNodeBT(ConfigurationBT<T> config, int id, string name, int tryCount)
-        : base(config, id, name)
+        public int tryCount
         {
-            SetTryCount(tryCount);
+            get => m_tryCount;
+            set
+            {
+                // max(1, value)
+
+                if(value < 1)
+                    m_tryCount = 1;
+                else
+                    m_tryCount = value;
+            }
         }
 
-        public void SetTryCount(int tryCount)
+        private int m_tryCount = 1;
+        private int m_triedCount = 0;
+
+        public RetryNodeBT(T instance)
+        : base(instance)
         {
-            if(tryCount < 0)
-                this.tryCount = 0;
-            else
-                this.tryCount = tryCount;
+
+        }
+
+        public override void ResetNode()
+        {
+            m_triedCount = 0;
+
+            base.ResetNode();
         }
 
         protected override InvokeResult p_Invoke()
         {
-            InvokeResult iResult = child.Invoke();
+            InvokeResult iResult = children[0]?.Invoke() ?? InvokeResult.Failure;
 
             if(iResult == InvokeResult.Running)
             {
@@ -42,13 +55,6 @@ namespace UnchordMetroidvania
                 ResetNode();
                 return InvokeResult.Failure;
             }
-        }
-
-        public override void ResetNode()
-        {
-            base.ResetNode();
-
-            m_triedCount = 0;
         }
     }
 }

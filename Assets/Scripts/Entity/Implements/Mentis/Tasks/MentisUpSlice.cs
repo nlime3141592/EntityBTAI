@@ -4,32 +4,32 @@ namespace UnchordMetroidvania
 {
     public class MentisUpSlice : TaskNodeBT<Mentis>
     {
-        public MentisUpSlice(ConfigurationBT<Mentis> config, int id, string name)
-        : base(config, id, name)
+        public MentisUpSlice(Mentis instance)
+        : base(instance)
         {
 
         }
 
         protected override InvokeResult p_Invoke()
         {
-            config.instance.bFixLookDirX = true;
-            config.instance.mantisAnimator.SetInteger("state", 1);
+            instance.bFixLookDirX = true;
+            instance.mantisAnimator.SetInteger("state", 1);
 
-            if(config.instance.CanReceiveAttackCommand())
+            if(instance.CanReceiveAttackCommand())
             {
-                config.instance.battleModule.UseBattleSkill(
-                    config.instance.skUpSlice
+                instance.battleModule.UseBattleSkill(
+                    instance.skUpSlice
                 );
                 return InvokeResult.Running;
             }
 
-            InvokeResult iResult = config.instance.animationResult;
+            InvokeResult iResult = instance.animationResult;
 
             if(iResult == InvokeResult.Success)
             {
-                config.instance.mantisAnimator.SetInteger("state", 0);
-                config.instance.animationResult = InvokeResult.Running;
-                config.instance.bFixLookDirX = false;
+                instance.mantisAnimator.SetInteger("state", 0);
+                instance.animationResult = InvokeResult.Running;
+                instance.bFixLookDirX = false;
             }
 
             return iResult;
@@ -38,7 +38,7 @@ namespace UnchordMetroidvania
         public override void ResetNode()
         {
             base.ResetNode();
-            config.instance.bFixLookDirX = false;
+            instance.bFixLookDirX = false;
         }
     }
 }
