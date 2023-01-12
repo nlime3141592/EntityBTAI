@@ -11,6 +11,7 @@ namespace UnchordMetroidvania
         public readonly int id;
         public readonly string name;
 
+        protected bool p_bEndOfAction;
         protected bool p_bEndOfAnimation;
 
         public PlayerState(Player player, PlayerData data, int id, string name)
@@ -23,6 +24,7 @@ namespace UnchordMetroidvania
 
         public virtual void OnStateBegin()
         {
+            p_bEndOfAction = false;
             p_bEndOfAnimation = false;
             player.pAnimator.SetInteger("state", id);
         }
@@ -42,6 +44,11 @@ namespace UnchordMetroidvania
         public virtual void OnStateEnd()
         {
 
+        }
+
+        public virtual void OnActionEnd()
+        {
+            p_bEndOfAction = true;
         }
 
         public virtual void OnAnimationEnd()

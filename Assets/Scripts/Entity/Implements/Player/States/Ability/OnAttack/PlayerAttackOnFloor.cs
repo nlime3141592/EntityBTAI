@@ -6,6 +6,24 @@ namespace UnchordMetroidvania
     [Serializable]
     public class PlayerAttackOnFloor : PlayerAttack
     {
+        public int continuousAttackCount
+        {
+            get => m_continuousAttackCount;
+            set
+            {
+                if(value < 1)
+                    m_continuousAttackCount = 1;
+                else
+                    m_continuousAttackCount = value;
+            }
+        }
+
+        private float m_memoryTime = 2.0f;
+        private int m_continuousAttackCount = 1;
+        private int m_attackPhase = 0;
+        private bool m_bCanUpdate;
+        private float m_continuousTime;
+
         public PlayerAttackOnFloor(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
         {
@@ -27,13 +45,21 @@ namespace UnchordMetroidvania
 
         public override void OnStateBegin()
         {
-            base.OnStateBegin();
-
             player.bFixLookDirX = true;
             player.vm.FreezePositionX();
 
             player.skAttackOnFloor.cooltime = data.attackOnFloor.cooltime;
-            player.battleModule.Reserve(player.skAttackOnFloor, 3);
+            player.battleModule.Reserve(player.skAttackOnFloor, 1);
+
+            m_bCanUpdate = false;
+            if(m_attackPhase < m_continuousAttackCount)
+                ++m_attackPhase;
+            else
+                m_attackPhase = 1;
+
+            player.pAnimator.SetInteger("actionPhase", m_attackPhase);
+
+            base.OnStateBegin();
         }
 
         public override void OnFixedUpdate()
@@ -52,8 +78,34 @@ namespace UnchordMetroidvania
                 player.fsm.Change(player.roll);
                 return true;
             }
+            else if(p_bEndOfAction && player.skill00 && m_attackPhase < m_continuousAttackCount)
+            {
+                player.fsm.Replay();
+                return true;
+            }
 
             return false;
+        }
+
+        public override void OnActionEnd()
+        {
+            base.OnActionEnd();
+            m_continuousTime = m_memoryTime;
+            m_bCanUpdate = true;
+        }
+
+        public void UpdateContinuous()
+        {
+            if(m_bCanUpdate)
+            {
+                m_continuousTime -= Time.deltaTime;
+
+                if(m_continuousTime <= 0)
+                {
+                    m_continuousTime = 0;
+                    m_attackPhase = 0;
+                }
+            }
         }
 
         public override void OnStateEnd()
@@ -62,6 +114,14 @@ namespace UnchordMetroidvania
 
             player.bFixLookDirX = false;
             player.vm.MeltPositionX();
+
+            if(!m_bCanUpdate)
+            {
+                m_bCanUpdate = true;
+                m_continuousTime = m_memoryTime;
+            }
+
+            player.pAnimator.SetInteger("actionPhase", 0);
         }
     }
 }

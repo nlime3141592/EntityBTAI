@@ -45,6 +45,15 @@ namespace UnchordMetroidvania
             currentState.OnStateBegin();
         }
 
+        public void Replay()
+        {
+            if(currentState == null)
+                return;
+            currentState.OnStateEnd();
+            fps = -1;
+            currentState.OnStateBegin();
+        }
+
         public void End()
         {
             if(currentState == null)
@@ -52,6 +61,11 @@ namespace UnchordMetroidvania
 
             currentState.OnStateEnd();
             currentState = null;
+        }
+
+        public void OnActionEnd()
+        {
+            currentState.OnActionEnd();
         }
 
         public void OnAnimationEnd()

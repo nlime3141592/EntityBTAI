@@ -37,7 +37,6 @@ namespace UnchordMetroidvania
                 return true;
             }
 
-
             return false;
         }
 

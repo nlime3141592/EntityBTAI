@@ -26,7 +26,7 @@ namespace UnchordMetroidvania
 
         private object m_root;
         private Func<InvokeResult> m_func_rootInvoke;
-        private bool m_bHasAI = false;
+        // private bool m_bHasAI = false;
         #endregion
 
         #region Entity Events

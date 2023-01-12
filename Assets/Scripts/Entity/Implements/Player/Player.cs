@@ -80,6 +80,11 @@ namespace UnchordMetroidvania
         public bool skill02;
         #endregion
 
+        public void PublishEndOfAction()
+        {
+            fsm.OnActionEnd();
+        }
+
         public void PublishEndOfAnimation()
         {
             fsm.OnAnimationEnd();
@@ -140,6 +145,8 @@ namespace UnchordMetroidvania
             abilitySword = new PlayerAbilitySword(this, data, ++state, "AbilitySword");
             abilityGun = new PlayerAbilityGun(this, data, ++state, "AbilityGun");
 
+            attackOnFloor.continuousAttackCount = 3;
+
             fsm = new _PlayerFSM();
 
             rangeGizmoManager = new RangeGizmoManager();
@@ -197,6 +204,7 @@ namespace UnchordMetroidvania
             }
 
             fsm.OnUpdate();
+            attackOnFloor.UpdateContinuous();
 
             CURRENT_STATE = fsm.state;
         }
