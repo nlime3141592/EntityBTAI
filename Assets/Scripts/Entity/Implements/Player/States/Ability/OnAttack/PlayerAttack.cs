@@ -40,5 +40,11 @@ namespace UnchordMetroidvania
 
             return false;
         }
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+            player.battleModule.Clear();
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace UnchordMetroidvania
 
             if(instance.CanReceiveAttackCommand())
             {
-                instance.battleModule.UseBattleSkill(
+                instance.battleModule.ExecuteImmediate(
                     instance.skUpSlice
                 );
                 return InvokeResult.Running;

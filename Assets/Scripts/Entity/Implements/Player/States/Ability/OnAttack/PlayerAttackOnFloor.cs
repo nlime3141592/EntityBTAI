@@ -33,6 +33,7 @@ namespace UnchordMetroidvania
             player.vm.FreezePositionX();
 
             player.skAttackOnFloor.cooltime = data.attackOnFloor.cooltime;
+            player.battleModule.Reserve(player.skAttackOnFloor, 3);
         }
 
         public override void OnFixedUpdate()
@@ -40,11 +41,6 @@ namespace UnchordMetroidvania
             base.OnFixedUpdate();
 
             player.vm.SetVelocityXY(0.0f, -1.0f);
-
-            if(player.CanReceiveAttackCommand())
-            {
-                player.battleModule.UseBattleSkill(player.skAttackOnFloor);
-            }
         }
 
         public override bool OnUpdate()

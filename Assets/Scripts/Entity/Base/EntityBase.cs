@@ -21,11 +21,19 @@ namespace UnchordMetroidvania
         public Vector2 lookDir = Vector2.one;
         public Vector2 moveDir;
         public InvokeResult lastInvokeResult;
+        public bool bBeginOfEntity = false;
         public bool bEndOfEntity = false;
 
         private object m_root;
         private Func<InvokeResult> m_func_rootInvoke;
         private bool m_bHasAI = false;
+        #endregion
+
+        #region Entity Events
+        public event EntityEvent<EntityHealArgs> onHeal;
+        public event EntityEvent<EntityDamageArgs> onDamage;
+        public event EntityEvent<EntityChargeArgs> onCharge;
+        public event EntityEvent<EntityExpenseArgs> onExpense;
         #endregion
 
         #region Entity Inputs
@@ -60,31 +68,90 @@ namespace UnchordMetroidvania
             p_OnValidate();
         }
 
-        public float SetHealth(float h)
+        public float Heal(float dHealth)
         {
-            float finalHealth = (float)Math.Round(h, 4);
+            if(dHealth <= 0)
+                return 0;
 
-            if(finalHealth < 0)
-                finalHealth = 0;
-            else if (finalHealth > maxHealth.finalValue)
-                finalHealth = maxHealth.finalValue;
+            EntityHealArgs args = new EntityHealArgs();
+            args.minHealth = 0;
+            args.maxHealth = maxHealth.finalValue;
+            args.prevHealth = health;
+            args.currentHealth = m_ClampValue(health + dHealth, 0, args.maxHealth);
+            args.dHealthOriginal = dHealth;
+            health = args.currentHealth;
 
-            float dH = Math.Abs(health - finalHealth);
-            health = finalHealth;
-            return dH;
+            if(onHeal != null)
+                onHeal(this, args);
+
+            return args.dHealthReal;
         }
 
-        public void FixConstraints(bool posX, bool posY)
+        public float Damage(float dHealth)
         {
-            if(posX)
-                physics.constraints |= RigidbodyConstraints2D.FreezePositionX;
-            else
-                physics.constraints &= ~(RigidbodyConstraints2D.FreezePositionX);
+            if(dHealth <= 0)
+                return 0;
 
-            if(posY)
-                physics.constraints |= RigidbodyConstraints2D.FreezePositionY;
+            EntityDamageArgs args = new EntityDamageArgs();
+            args.minHealth = 0;
+            args.maxHealth = maxHealth.finalValue;
+            args.prevHealth = health;
+            args.currentHealth = m_ClampValue(health - dHealth, 0, args.maxHealth);
+            args.dHealthOriginal = dHealth;
+            health = args.currentHealth;
+
+            if(onDamage != null)
+                onDamage(this, args);
+
+            return args.dHealthReal;
+        }
+
+        public float Charge(float dMana)
+        {
+            if(dMana <= 0)
+                return 0;
+
+            EntityChargeArgs args = new EntityChargeArgs();
+            args.minMana = 0;
+            args.maxMana = maxMana.finalValue;
+            args.prevMana = mana;
+            args.currentMana = m_ClampValue(mana + dMana, 0, args.maxMana);
+            args.dManaOriginal = dMana;
+            mana = args.currentMana;
+
+            if(onCharge != null)
+                onCharge(this, args);
+
+            return args.dManaReal;
+        }
+
+        public float Expense(float dMana)
+        {
+            if(dMana <= 0)
+                return 0;
+
+            EntityExpenseArgs args = new EntityExpenseArgs();
+            args.minMana = 0;
+            args.maxMana = maxMana.finalValue;
+            args.prevMana = mana;
+            args.currentMana = m_ClampValue(mana - dMana, 0, args.maxMana);
+            args.dManaOriginal = dMana;
+            mana = args.currentMana;
+
+            if(onExpense != null)
+                onExpense(this, args);
+
+            return args.dManaReal;
+        }
+
+        private float m_ClampValue(float value, float min, float max)
+        {
+            if(value < min)
+                return min;
+            else if(value > max)
+                return max;
             else
-                physics.constraints &= ~(RigidbodyConstraints2D.FreezePositionY);
+                return (float)Math.Round(value, 4);
         }
 
         // NOTE:
@@ -103,7 +170,7 @@ namespace UnchordMetroidvania
         protected virtual void p_OnValidate()
         {
             if(maxHealth != null) health = maxHealth.finalValue;
-            if(skillRangeGizmoManager == null) skillRangeGizmoManager = new RangeGizmoManager();
+            if(maxMana != null) mana = maxMana.finalValue;
         }
 
         protected virtual void Awake()
@@ -113,6 +180,7 @@ namespace UnchordMetroidvania
 
         protected virtual void Start()
         {
+            skillRangeGizmoManager = new RangeGizmoManager();
             hitColliders = new List<Collider2D>();
             TryGetComponent<Rigidbody2D>(out physics);
             sensor = new TerrainSensor();
@@ -127,16 +195,7 @@ namespace UnchordMetroidvania
             else if(lookDir.x > 0)
                 transform.eulerAngles = Vector3.zero;
 
-            lastInvokeResult = m_FixedUpdateAI();
             p_Debug_OnPostInvoke();
-        }
-
-        protected void RegisterAI<T>(NodeBT<T> root)
-        where T : EntityBase
-        {
-            m_root = root;
-            m_func_rootInvoke = root.Invoke;
-            m_bHasAI = true;
         }
 
         protected virtual void p_Debug_OnPostInvoke()
@@ -145,31 +204,10 @@ namespace UnchordMetroidvania
             lookDir.y = m_GetNextLookDir(axisInput.y, lookDir.y, 1, bFixLookDirY);
         }
 
-        private InvokeResult m_FixedUpdateAI()
-        {
-            if(!m_bHasAI)
-                return InvokeResult.Failure;
-
-            p_OnPreInvoke();
-                InvokeResult iResult = m_func_rootInvoke();
-            p_OnPostInvoke();
-                return iResult;
-        }
-
-        protected virtual void p_OnPreFrame()
-        {
-
-        }
-
         protected virtual void p_OnPreInvoke()
         {
             lookDir.x = m_GetNextLookDir(axisInput.x, lookDir.x, 1, bFixLookDirX);
             lookDir.y = m_GetNextLookDir(axisInput.y, lookDir.y, 1, bFixLookDirY);
-        }
-
-        protected virtual void p_OnPostInvoke()
-        {
-
         }
 
         protected virtual void Update()

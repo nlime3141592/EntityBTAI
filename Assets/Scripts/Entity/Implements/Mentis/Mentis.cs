@@ -67,15 +67,7 @@ namespace UnchordMetroidvania
             battleModule = GetComponent<BattleModule>();
             ai = new MonsterBaseAI<Mentis>(this);
 
-            skUpSlice = new BoxRangeBattleSkill(
-                "UpSlice", -1,
-                data.upSlice.level,
-                data.upSlice.targetCount,
-                data.upSlice.baseDamage,
-                data.upSlice.sortType,
-                data.upSlice.canDetectSelf,
-                data.upSlice.range
-            );
+            skUpSlice = new BoxRangeBattleSkill("UpSlice", -1, data.upSlice);
 
             skUpSlice.bRangeOnEditor = true;
 

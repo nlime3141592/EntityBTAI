@@ -33,6 +33,7 @@ namespace UnchordMetroidvania
             player.vm.FreezePositionX();
 
             player.skAbilityGun.cooltime = data.abilityGun.cooltime;
+            player.battleModule.Reserve(player.skAbilityGun, 1);
         }
 
         public override void OnFixedUpdate()
@@ -40,11 +41,6 @@ namespace UnchordMetroidvania
             base.OnFixedUpdate();
 
             player.vm.SetVelocityXY(0.0f, -1.0f);
-
-            if(player.CanReceiveAttackCommand())
-            {
-                player.battleModule.UseBattleSkill(player.skAbilityGun);
-            }
         }
 
         public override bool OnUpdate()
@@ -53,8 +49,6 @@ namespace UnchordMetroidvania
                 return true;
 
             // NOTE: 디버그용 상태 전환 코드.
-            else if(Input.GetKeyDown(KeyCode.Q))
-                player.PublishAttackCommand();
             else if(Input.GetKeyDown(KeyCode.W))
                 p_bEndOfAnimation = true;
 

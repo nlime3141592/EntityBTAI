@@ -6,31 +6,54 @@ namespace UnchordMetroidvania
 {
     public class BattleModule : MonoBehaviour
     {
-        public EntityBase owner { get; private set; }
+        public EntityBase owner => m_owner;
+        private EntityBase m_owner;
 
         public Transform damageParent;
         public TestDamageUI hitUI;
         public TestDamageUI healUI;
 
+        private Queue<BattleSkill> m_reservedSkills;
+
         private void OnValidate()
         {
-            owner = GetComponent<EntityBase>();
+            TryGetComponent<EntityBase>(out m_owner);
         }
 
-        public void UseBattleSkill(BattleSkill skill)
+        private void Start()
+        {
+            m_reservedSkills = new Queue<BattleSkill>(4);
+        }
+
+        public void Reserve(BattleSkill skill, int count = 1)
+        {
+            if(count < 1)
+                count = 1;
+            for(int i = 0; i < count; ++i)
+                m_reservedSkills.Enqueue(skill);
+        }
+
+        public void ExecuteReserved()
+        {
+            if(m_reservedSkills.Count > 0)
+                ExecuteImmediate(m_reservedSkills.Dequeue());
+        }
+
+        public void ExecuteImmediate(BattleSkill skill)
         {
             EntityBase[] targets = skill.GetTargets(owner);
 
-            Debug.Log("전투 스킬 사용됨");
-
-            if(targets == null)
-                return;
-
-            for(int i = 0; i < targets.Length; ++i)
-                m_GiveDamage(skill, targets[i]);
+            int cnt = targets?.Length ?? 0;
+            for(int i = 0; i < cnt; ++i)
+                m_GiveDamage(targets[i], skill);
         }
 
-        private void m_GiveDamage(BattleSkill skill, EntityBase target)
+        public void Clear()
+        {
+            m_reservedSkills.Clear();
+        }
+
+        private void m_GiveDamage(EntityBase target, BattleSkill skill)
         {
             // 게임에 진심인 사람은
             // 나만의 전투 공식을 만드는 데
@@ -51,8 +74,8 @@ namespace UnchordMetroidvania
             if(finalDamage < 1)
                 finalDamage = 1;
 
-            float dH = target.SetHealth(target.health - finalDamage);
-Debug.Log("Damage Given.");
+            target.Damage(finalDamage);
+            Debug.Log("Damage Given.");
             // TestDamageUI ui = TestDamageUI.Get(hitUI, dH, target.transform.position);
             // ui.transform.SetParent(damageParent, false);
         }

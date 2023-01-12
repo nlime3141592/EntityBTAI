@@ -21,6 +21,19 @@ namespace UnchordMetroidvania
             this.range = range;
         }
 
+        public BoxRangeBattleSkill(
+            string name, int id,
+            BoxRangeBattleSkillOption options
+        )
+        : base(
+            name, id, options.level,
+            options.targetCount, options.baseDamage,
+            options.sortType, options.canDetectSelf
+        )
+        {
+            this.range = options.range;
+        }
+
         public override EntityBase[] GetTargets(EntityBase executor, params string[] tags)
         {
             return EntityOverlapAI.GetEntities(

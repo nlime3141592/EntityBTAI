@@ -35,6 +35,14 @@ namespace UnchordMetroidvania
             SetVelocityXY(x, y);
         }
 
+        public void FreezePosition(bool bFreezeX, bool bFreezeY)
+        {
+            if(bFreezeX) FreezePositionX();
+            else MeltPositionX();
+            if(bFreezeY) FreezePositionY();
+            else MeltPositionY();
+        }
+
         public void FreezePositionX()
         {
             m_rigid.constraints |= RigidbodyConstraints2D.FreezePositionX;

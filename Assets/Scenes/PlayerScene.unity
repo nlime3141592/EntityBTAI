@@ -355,6 +355,7 @@ MonoBehaviour:
   lookDir: {x: 1, y: 1}
   moveDir: {x: 0, y: 0}
   lastInvokeResult: 0
+  bBeginOfEntity: 0
   bEndOfEntity: 0
   canInput: 1
   axisInput: {x: 0, y: 0}
@@ -400,7 +401,6 @@ MonoBehaviour:
   bOnLedgeHorizontal: 0
   bOnLedgeVertical: 0
   bOnLedge: 0
-  attackCount: 0
   data:
     detectLength: 0.5
     hitLength: 0.06
@@ -437,7 +437,7 @@ MonoBehaviour:
         left: 1
         top: 2
         right: 4
-        bottom: 1
+        bottom: 2
       cooltime: 35
     attackOnAir:
       level: 0

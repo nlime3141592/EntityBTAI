@@ -38,7 +38,6 @@ namespace UnchordMetroidvania
         public bool bOnLedgeVertical;
         public bool bOnLedge;
 
-        public int attackCount = 0;
         public BoxRangeBattleSkill skAttackOnFloor;
         public BoxRangeBattleSkill skAttackOnAir;
         public BoxRangeBattleSkill skAbilitySword;
@@ -81,24 +80,6 @@ namespace UnchordMetroidvania
         public bool skill02;
         #endregion
 
-        public void PublishAttackCommand()
-        {
-            ++attackCount;
-        }
-
-        public bool CanReceiveAttackCommand()
-        {
-            if(attackCount > 0)
-            {
-                --attackCount;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public void PublishEndOfAnimation()
         {
             fsm.OnAnimationEnd();
@@ -125,42 +106,10 @@ namespace UnchordMetroidvania
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 
             state = -1;
-            skAttackOnFloor = new BoxRangeBattleSkill(
-                "AttackOnFloor", ++state,
-                data.attackOnFloor.level,
-                data.attackOnFloor.targetCount,
-                data.attackOnFloor.baseDamage,
-                data.attackOnFloor.sortType,
-                data.attackOnFloor.canDetectSelf,
-                data.attackOnFloor.range
-            );
-            skAttackOnAir = new BoxRangeBattleSkill(
-                "AttackOnAir", ++state,
-                data.attackOnAir.level,
-                data.attackOnAir.targetCount,
-                data.attackOnAir.baseDamage,
-                data.attackOnAir.sortType,
-                data.attackOnAir.canDetectSelf,
-                data.attackOnAir.range
-            );
-            skAbilitySword = new BoxRangeBattleSkill(
-                "AbilitySword", ++state,
-                data.abilitySword.level,
-                data.abilitySword.targetCount,
-                data.abilitySword.baseDamage,
-                data.abilitySword.sortType,
-                data.abilitySword.canDetectSelf,
-                data.abilitySword.range
-            );
-            skAbilityGun = new BoxRangeBattleSkill(
-                "AbilityGun", ++state,
-                data.abilityGun.level,
-                data.abilityGun.targetCount,
-                data.abilityGun.baseDamage,
-                data.abilityGun.sortType,
-                data.abilityGun.canDetectSelf,
-                data.abilityGun.range
-            );
+            skAttackOnFloor = new BoxRangeBattleSkill("AttackOnFloor", ++state, data.attackOnFloor);
+            skAttackOnAir = new BoxRangeBattleSkill("AttackOnAir", ++state, data.attackOnAir);
+            skAbilitySword = new BoxRangeBattleSkill("AbilitySword", ++state, data.abilitySword);
+            skAbilityGun = new BoxRangeBattleSkill("AbilityGun", ++state, data.abilityGun);
             
             // For Debugging.
             skAttackOnFloor.bRangeOnEditor = true;
@@ -203,6 +152,10 @@ namespace UnchordMetroidvania
             base.p_Debug_OnPostInvoke();
 
             m_FixedUpdateOrigins();
+            skAttackOnFloor.UpdateOptions(data.attackOnFloor);
+            skAttackOnAir.UpdateOptions(data.attackOnAir);
+            skAbilitySword.UpdateOptions(data.abilitySword);
+            skAbilityGun.UpdateOptions(data.abilityGun);
             // vm.SetVelocityXY(base.axisInput.x * 3.0f, base.axisInput.y * 3.0f);
 
             fsm.OnFixedUpdate();
