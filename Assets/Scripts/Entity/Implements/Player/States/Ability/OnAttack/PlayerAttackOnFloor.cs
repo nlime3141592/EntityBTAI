@@ -23,6 +23,7 @@ namespace UnchordMetroidvania
         private int m_attackPhase = 0;
         private bool m_bCanUpdate;
         private float m_continuousTime;
+        private bool m_bGoNextPhase;
 
         public PlayerAttackOnFloor(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
@@ -52,6 +53,7 @@ namespace UnchordMetroidvania
             player.battleModule.Reserve(player.skAttackOnFloor, 1);
 
             m_bCanUpdate = false;
+            m_bGoNextPhase = false;
             if(m_attackPhase < m_continuousAttackCount)
                 ++m_attackPhase;
             else
@@ -78,10 +80,14 @@ namespace UnchordMetroidvania
                 player.fsm.Change(player.roll);
                 return true;
             }
-            else if(p_bEndOfAction && player.skill00 && m_attackPhase < m_continuousAttackCount)
+            else if(p_bEndOfAction && m_bGoNextPhase)
             {
                 player.fsm.Replay();
                 return true;
+            }
+            else if(player.skill00)
+            {
+                m_bGoNextPhase = true;
             }
 
             return false;
