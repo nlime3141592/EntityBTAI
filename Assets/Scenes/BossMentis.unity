@@ -690,6 +690,7 @@ MonoBehaviour:
   lookDir: {x: 1, y: 1}
   moveDir: {x: 0, y: 0}
   lastInvokeResult: 0
+  bBeginOfEntity: 0
   bEndOfEntity: 0
   canInput: 1
   axisInput: {x: 0, y: 0}
@@ -716,6 +717,10 @@ MonoBehaviour:
     top: 10
     right: 20
     bottom: 5
+  aggroDebugOption:
+    bShowGizmo: 1
+    duration: 0.3
+    color: {r: 1, g: 0.5800741, b: 0.51482475, a: 1}
   bPrevAggro: 0
   bAggro: 0
   targetTags:

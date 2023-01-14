@@ -39,7 +39,7 @@ namespace UnchordMetroidvania
 
         public override EntityBase[] GetTargets(EntityBase executor, params string[] tags)
         {
-            EntitySensorGizmo gizmo = new EntitySensorGizmo();
+            EntitySensorGizmoOption gizmo = new EntitySensorGizmoOption();
             gizmo.bShowGizmo = true;
             gizmo.duration = 0.5f;
             gizmo.color = Color.cyan;

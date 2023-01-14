@@ -68,7 +68,7 @@ namespace UnchordMetroidvania
         public _PlayerFSM fsm;
 
         public int CURRENT_STATE;
-        public RangeGizmoManager rangeGizmoManager;
+        public EntitySensorGizmoManager rangeGizmoManager;
 
         #region Player Inputs
         public bool jumpDown;
@@ -149,7 +149,7 @@ namespace UnchordMetroidvania
 
             fsm = new _PlayerFSM();
 
-            rangeGizmoManager = new RangeGizmoManager();
+            rangeGizmoManager = new EntitySensorGizmoManager();
 
             fsm.Begin(idleShort);
         }

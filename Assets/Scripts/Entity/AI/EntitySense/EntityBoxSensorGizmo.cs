@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public sealed class BoxRangeGizmo : RangeGizmo
+    public sealed class EntityBoxSensorGizmo : EntitySensorGizmo
     {
         private Vector2 m_pCenter;
         private Vector2 m_size;
 
-        public BoxRangeGizmo(
+        public EntityBoxSensorGizmo(
             float lifeTime, Color color,
             Vector2 pStart, Vector2 pEnd)
         : base(lifeTime, color)

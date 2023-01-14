@@ -57,7 +57,7 @@ namespace UnchordMetroidvania
 
         #region Debug
         [Header("Debug Options")]
-        public RangeGizmoManager skillRangeGizmoManager;
+        public EntitySensorGizmoManager skillRangeGizmoManager;
         #endregion
 
         private void OnValidate()
@@ -180,7 +180,7 @@ namespace UnchordMetroidvania
 
         protected virtual void Start()
         {
-            skillRangeGizmoManager = new RangeGizmoManager();
+            skillRangeGizmoManager = new EntitySensorGizmoManager();
             hitColliders = new List<Collider2D>();
             TryGetComponent<Rigidbody2D>(out physics);
             sensor = new TerrainSensor();

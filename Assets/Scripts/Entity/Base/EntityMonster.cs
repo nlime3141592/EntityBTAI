@@ -11,7 +11,7 @@ namespace UnchordMetroidvania
         public float waitSecondOnChangeAction = 1.5f;
         public float waitDiffSecondOnChangeAction = 0.5f;
         public LTRB aggroRange;
-        public EntitySensorGizmo aggroDebugOption;
+        public EntitySensorGizmoOption aggroDebugOption;
         public bool bPrevAggro = false;
         public bool bAggro = false;
         public List<string> targetTags;
