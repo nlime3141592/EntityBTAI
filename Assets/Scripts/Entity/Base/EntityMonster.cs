@@ -11,11 +11,19 @@ namespace UnchordMetroidvania
         public float waitSecondOnChangeAction = 1.5f;
         public float waitDiffSecondOnChangeAction = 0.5f;
         public LTRB aggroRange;
+        public EntitySensorGizmo aggroDebugOption;
         public bool bPrevAggro = false;
         public bool bAggro = false;
         public List<string> targetTags;
-        public EntityBase[] targets;
+        public List<EntityBase> targets;
         public InvokeResult animationResult = InvokeResult.Running;
+
+        protected override void Start()
+        {
+            base.Start();
+
+            targets = new List<EntityBase>(4);
+        }
 
         public void PublishEndOfAnimation()
         {

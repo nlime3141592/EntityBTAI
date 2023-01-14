@@ -14,24 +14,20 @@ namespace UnchordMetroidvania
 
         protected override InvokeResult p_Invoke()
         {
-            // NOTE: 플레이어 탐지 동작을 이 곳에 넣기.
-            EntityBase[] targets = EntityOverlapAI.GetEntities(
+            Collider2D[] colTargets = EntitySensor.OverlapBox(
                 instance,
                 instance.aggroRange,
-                false,
-                1 << LayerMask.NameToLayer("Entity"),
-                true,
-                instance.targetTags.ToArray()
+                instance.aggroDebugOption
             );
 
-            instance.bAggro = targets.Length > 0;
-            instance.targets = targets;
+            instance.targets.FilterFromColliders(instance, colTargets, false, instance.targetTags.ToArray());
+            instance.bAggro = instance.targets.Count > 0;
 
             float baseX = instance.transform.position.x;
             float targetX = baseX + 1;
 
-            if(targets != null && targets.Length > 0)
-                targetX = targets[0].transform.position.x;
+            if(instance.targets != null && instance.targets.Count > 0)
+                targetX = instance.targets[0].transform.position.x;
 
             float dX = targetX - baseX;
 

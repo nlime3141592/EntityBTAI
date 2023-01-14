@@ -6,6 +6,7 @@ namespace UnchordMetroidvania
     public class BoxRangeBattleSkill : RangeBattleSkill
     {
         public LTRB range;
+        private List<EntityBase> m_targets;
 
         public BoxRangeBattleSkill(
             string name, int id, int level,
@@ -19,27 +20,37 @@ namespace UnchordMetroidvania
             sortType, canDetectSelf)
         {
             this.range = range;
+            m_targets = new List<EntityBase>(4);
         }
 
         public BoxRangeBattleSkill(
             string name, int id,
             BoxRangeBattleSkillOption options
         )
-        : base(
+        : this(
             name, id, options.level,
             options.targetCount, options.baseDamage,
-            options.sortType, options.canDetectSelf
+            options.sortType, options.canDetectSelf,
+            options.range
         )
         {
-            this.range = options.range;
+            
         }
 
         public override EntityBase[] GetTargets(EntityBase executor, params string[] tags)
         {
-            return EntityOverlapAI.GetEntities(
-                executor, range, bCanDetectSelf,
-                1 << LayerMask.NameToLayer("Entity"), bRangeOnEditor, tags
-            );
+            EntitySensorGizmo gizmo = new EntitySensorGizmo();
+            gizmo.bShowGizmo = true;
+            gizmo.duration = 0.5f;
+            gizmo.color = Color.cyan;
+
+            Collider2D[] colTargets = EntitySensor.OverlapBox(executor, range, gizmo);
+
+            m_targets
+                .FilterFromColliders(executor, colTargets, bCanDetectSelf, tags)
+                .SetTargetCount(targetCount);
+
+            return m_targets.ToArray();
         }
 
         public void UpdateOptions(BoxRangeBattleSkillOption option)
