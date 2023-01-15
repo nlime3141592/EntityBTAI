@@ -4,31 +4,62 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public class PlayerAttackOnFloor : PlayerAttack
+    public class PlayerAttackOnFloor : PlayerAttack, IBattleState
     {
-        public int continuousAttackCount
-        {
-            get => m_continuousAttackCount;
-            set
-            {
-                if(value < 1)
-                    m_continuousAttackCount = 1;
-                else
-                    m_continuousAttackCount = value;
-            }
-        }
+        // property
+        public int targetCount => m_targetCount;
+        public int maxActionPhase => m_maxActionPhase;
+        public float baseDamage01 => m_baseDamages[0];
+        public float baseDamage02 => m_baseDamages[1];
+        public float baseDamage03 => m_baseDamages[2];
+        public float coyoteTime => m_coyoteTime;
 
-        private float m_memoryTime = 2.0f;
-        private int m_continuousAttackCount = 1;
-        private int m_attackPhase = 0;
-        private bool m_bCanUpdate;
-        private float m_continuousTime;
+        // fixed data
+        private int m_targetCount = 7;
+        private int m_maxActionPhase = 3;
+        private float[] m_baseDamages = new float[]{ 1.0f, 1.1f, 1.25f };
+        private float m_coyoteTime = 2.0f;
+        private LTRB m_attackRange = new LTRB()
+        {
+            left = 1.0f,
+            top = 2.0f,
+            right = 4.0f,
+            bottom = 2.0f
+        };
+        private EntitySensorGizmoOption m_attackGizmoOption = new EntitySensorGizmoOption()
+        {
+            bShowGizmo = true,
+            duration = 0.2f,
+            color = Color.magenta
+        };
+
+        // variable
+        private bool m_bCanUpdateCoyoteTime;
+        private float m_leftCoyoteTime;
+        private int m_actionPhase = 0;
         private bool m_bGoNextPhase;
 
         public PlayerAttackOnFloor(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
         {
 
+        }
+
+        void IBattleState.OnBattle()
+        {
+            float baseDamage = m_baseDamages[m_actionPhase - 1];
+
+            Collider2D[] colTargets = EntitySensor.OverlapBox(player, m_attackRange, m_attackGizmoOption);
+            targets.Clear();
+            targets
+                .FilterFromColliders(player, colTargets, false)
+                .SetTargetCount(m_targetCount);
+
+            foreach(EntityBase target in targets)
+            {
+                float finalDamage = player.battleModule.GetFinalDamage(target, baseDamage);
+                target.Damage(finalDamage);
+            }
         }
 
         public override bool CanAttack()
@@ -46,22 +77,22 @@ namespace UnchordMetroidvania
 
         public override void OnStateBegin()
         {
+            player.battleModule.SetBattleState(this);
             player.bFixLookDirX = true;
+
+            player.pAnimator.SetInteger("actionPhase", m_actionPhase);
+            base.OnStateBegin();
+
             player.vm.FreezePositionX();
 
             player.skAttackOnFloor.cooltime = data.attackOnFloor.cooltime;
-            player.battleModule.Reserve(player.skAttackOnFloor, 1);
 
-            m_bCanUpdate = false;
+            m_bCanUpdateCoyoteTime = false;
             m_bGoNextPhase = false;
-            if(m_attackPhase < m_continuousAttackCount)
-                ++m_attackPhase;
+            if(m_actionPhase < m_maxActionPhase)
+                ++m_actionPhase;
             else
-                m_attackPhase = 1;
-
-            player.pAnimator.SetInteger("actionPhase", m_attackPhase);
-
-            base.OnStateBegin();
+                m_actionPhase = 1;
         }
 
         public override void OnFixedUpdate()
@@ -96,20 +127,20 @@ namespace UnchordMetroidvania
         public override void OnActionEnd()
         {
             base.OnActionEnd();
-            m_continuousTime = m_memoryTime;
-            m_bCanUpdate = true;
+            m_leftCoyoteTime = m_coyoteTime;
+            m_bCanUpdateCoyoteTime = true;
         }
 
-        public void UpdateContinuous()
+        public void UpdateCoyoteTime()
         {
-            if(m_bCanUpdate)
+            if(m_bCanUpdateCoyoteTime)
             {
-                m_continuousTime -= Time.deltaTime;
+                m_leftCoyoteTime -= Time.deltaTime;
 
-                if(m_continuousTime <= 0)
+                if(m_leftCoyoteTime <= 0)
                 {
-                    m_continuousTime = 0;
-                    m_attackPhase = 0;
+                    m_leftCoyoteTime = 0;
+                    m_actionPhase = 0;
                 }
             }
         }
@@ -121,10 +152,10 @@ namespace UnchordMetroidvania
             player.bFixLookDirX = false;
             player.vm.MeltPositionX();
 
-            if(!m_bCanUpdate)
+            if(!m_bCanUpdateCoyoteTime)
             {
-                m_bCanUpdate = true;
-                m_continuousTime = m_memoryTime;
+                m_bCanUpdateCoyoteTime = true;
+                m_leftCoyoteTime = m_coyoteTime;
             }
 
             player.pAnimator.SetInteger("actionPhase", 0);

@@ -145,8 +145,6 @@ namespace UnchordMetroidvania
             abilitySword = new PlayerAbilitySword(this, data, ++state, "AbilitySword");
             abilityGun = new PlayerAbilityGun(this, data, ++state, "AbilityGun");
 
-            attackOnFloor.continuousAttackCount = 3;
-
             fsm = new _PlayerFSM();
 
             rangeGizmoManager = new EntitySensorGizmoManager();
@@ -204,7 +202,7 @@ namespace UnchordMetroidvania
             }
 
             fsm.OnUpdate();
-            attackOnFloor.UpdateContinuous();
+            attackOnFloor.UpdateCoyoteTime();
 
             CURRENT_STATE = fsm.state;
         }

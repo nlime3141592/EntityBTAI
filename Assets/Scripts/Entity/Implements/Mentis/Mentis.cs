@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnchordMetroidvania
@@ -54,6 +55,9 @@ namespace UnchordMetroidvania
         public MentisData data;
         public MonsterBaseAI<Mentis> ai;
 
+        private EntitySpawnData m_spawnData;
+        private LinkedListNode<EntitySpawnData> m_spawnDataNode;
+
         public virtual bool CanAggro()
         {
             return false;
@@ -62,7 +66,11 @@ namespace UnchordMetroidvania
         protected override void Start()
         {
             base.Start();
-            
+
+            m_spawnData = new EntitySpawnData("사마귀", this);
+            m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
+            GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
+
             mantisAnimator = GetComponent<Animator>();
             battleModule = GetComponent<BattleModule>();
             ai = new MonsterBaseAI<Mentis>(this);
@@ -131,6 +139,11 @@ namespace UnchordMetroidvania
             originWallRT.position = new Vector2(maxX, y90);
             originWallLB.position = new Vector2(minX, y10);
             originWallRB.position = new Vector2(maxX, y10);
+        }
+
+        protected void OnDisable()
+        {
+            GameManager.instance.generatedBoss.Remove(m_spawnDataNode);
         }
     }
 }

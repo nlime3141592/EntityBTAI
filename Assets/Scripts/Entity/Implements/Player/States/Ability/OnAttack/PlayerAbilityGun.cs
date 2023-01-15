@@ -33,7 +33,7 @@ namespace UnchordMetroidvania
             player.vm.FreezePositionX();
 
             player.skAbilityGun.cooltime = data.abilityGun.cooltime;
-            player.battleModule.Reserve(player.skAbilityGun, 1);
+            // player.battleModule.Reserve(player.skAbilityGun, 1);
         }
 
         public override void OnFixedUpdate()

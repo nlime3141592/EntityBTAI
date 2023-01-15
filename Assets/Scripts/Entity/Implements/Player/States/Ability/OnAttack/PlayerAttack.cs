@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnchordMetroidvania
@@ -6,10 +7,12 @@ namespace UnchordMetroidvania
     [Serializable]
     public abstract class PlayerAttack : _PlayerAbility
     {
+        protected readonly List<EntityBase> targets;
+
         public PlayerAttack(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
         {
-
+            targets = new List<EntityBase>(20);
         }
 
         public abstract bool CanAttack();
@@ -43,7 +46,7 @@ namespace UnchordMetroidvania
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            player.battleModule.Clear();
+            player.battleModule.ClearBattleState();
         }
     }
 }

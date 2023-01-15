@@ -11,7 +11,7 @@ namespace UnchordMetroidvania
         public BoxRangeBattleSkill(
             string name, int id, int level,
             int targetCount, float baseDamage,
-            TargetSortType sortType, bool canDetectSelf,
+            EntitySortType sortType, bool canDetectSelf,
             LTRB range
         )
         : base(

@@ -1,6 +1,6 @@
 namespace UnchordMetroidvania
 {
-    public enum TargetSortType
+    public enum EntitySortType
     {
         None,
         DistanceShorter,

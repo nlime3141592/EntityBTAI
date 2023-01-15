@@ -13,7 +13,7 @@ namespace UnchordMetroidvania
         public TestDamageUI hitUI;
         public TestDamageUI healUI;
 
-        private Queue<BattleSkill> m_reservedSkills;
+        private IBattleState m_battleState;
 
         private void OnValidate()
         {
@@ -22,42 +22,26 @@ namespace UnchordMetroidvania
 
         private void Start()
         {
-            m_reservedSkills = new Queue<BattleSkill>(4);
+
         }
 
-        public void Reserve(BattleSkill skill, int count = 1)
+        public void SetBattleState(IBattleState state)
         {
-            if(count < 1)
-                count = 1;
-            for(int i = 0; i < count; ++i)
-                m_reservedSkills.Enqueue(skill);
+            m_battleState = state;
         }
 
-        public void ExecuteReserved()
+        public void ClearBattleState()
         {
-            if(m_reservedSkills.Count > 0)
-                ExecuteImmediate(m_reservedSkills.Dequeue());
+            m_battleState = null;
         }
 
-        public void ExecuteImmediate(BattleSkill skill)
+        public void TriggerBattleState()
         {
-            EntityBase[] targets = skill.GetTargets(owner);
-
-            int cnt = targets?.Length ?? 0;
-            for(int i = 0; i < cnt; ++i)
-                m_GiveDamage(targets[i], skill);
+            m_battleState?.OnBattle();
         }
 
-        public void Clear()
+        public float GetFinalDamage(EntityBase target, float baseDamage)
         {
-            m_reservedSkills.Clear();
-        }
-
-        private void m_GiveDamage(EntityBase target, BattleSkill skill)
-        {
-            // 게임에 진심인 사람은
-            // 나만의 전투 공식을 만드는 데
-            // 로망을 가지고 있다.
             /*
             [용어 설명]
             owner: 전투 모듈을 가지고 있는 Entity (공격자)
@@ -67,15 +51,14 @@ namespace UnchordMetroidvania
             단, (최종데미지)의 최소값은 1이다.
             */
             float finalStrength = owner.strength.finalValue;
-            finalStrength *= skill.baseDamage;
+            finalStrength *= baseDamage;
             float finalDefence = target.defence.finalValue;
             float finalDamage = finalStrength - finalDefence;
 
             if(finalDamage < 1)
                 finalDamage = 1;
 
-            target.Damage(finalDamage);
-            Debug.Log("Damage Given.");
+            return finalDamage;
             // TestDamageUI ui = TestDamageUI.Get(hitUI, dH, target.transform.position);
             // ui.transform.SetParent(damageParent, false);
         }

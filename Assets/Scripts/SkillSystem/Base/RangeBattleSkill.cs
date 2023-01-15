@@ -2,7 +2,7 @@ namespace UnchordMetroidvania
 {
     public abstract class RangeBattleSkill : BattleSkill
     {
-        public TargetSortType sortType;
+        public EntitySortType sortType;
         public bool bCanDetectSelf;
 
         public bool bRangeOnEditor = false;
@@ -11,7 +11,7 @@ namespace UnchordMetroidvania
         public RangeBattleSkill(
             string name, int id, int level,
             int targetCount, float baseDamage,
-            TargetSortType sortType, bool canDetectSelf)
+            EntitySortType sortType, bool canDetectSelf)
         : base(name, id, level, targetCount, baseDamage)
         {
             this.sortType = sortType;

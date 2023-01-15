@@ -34,7 +34,7 @@ namespace UnchordMetroidvania
             player.vm.FreezePositionY();
 
             player.skAttackOnAir.cooltime = data.attackOnAir.cooltime;
-            player.battleModule.Reserve(player.skAttackOnAir, 1);
+            // player.battleModule.Reserve(player.skAttackOnAir, 1);
         }
 
         public override void OnFixedUpdate()
