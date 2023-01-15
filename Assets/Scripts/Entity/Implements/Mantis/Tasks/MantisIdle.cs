@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class MentisIdle : TaskNodeBT<Mentis>
+    public class MantisIdle : TaskNodeBT<Mantis>
     {
-        public MentisIdle(Mentis instance)
+        public MantisIdle(Mantis instance)
         : base(instance)
         {
             

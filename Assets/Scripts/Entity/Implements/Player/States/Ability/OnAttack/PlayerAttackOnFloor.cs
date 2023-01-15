@@ -18,6 +18,7 @@ namespace UnchordMetroidvania
         private int m_targetCount = 7;
         private int m_maxActionPhase = 3;
         private float[] m_baseDamages = new float[]{ 1.0f, 1.1f, 1.25f };
+        private float[] m_moveVelocity = new float[]{ 1.5f, 0.8f, 2.0f };
         private float m_coyoteTime = 2.0f;
         private LTRB m_attackRange = new LTRB()
         {
@@ -38,6 +39,8 @@ namespace UnchordMetroidvania
         private float m_leftCoyoteTime;
         private int m_actionPhase = 0;
         private bool m_bGoNextPhase;
+        private bool m_bAttacked;
+        private float m_lookDirX;
 
         public PlayerAttackOnFloor(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
@@ -60,19 +63,13 @@ namespace UnchordMetroidvania
                 float finalDamage = player.battleModule.GetFinalDamage(target, baseDamage);
                 target.Damage(finalDamage);
             }
+
+            m_bAttacked = true;
         }
 
         public override bool CanAttack()
         {
-            bool canAttack = player.skAttackOnFloor.cooltime <= 0;
-
-            if(!canAttack)
-            {
-                int cur = player.skAttackOnFloor.cooltime;
-                // Debug.Log(string.Format("남은 쿨타임: {0}", cur));
-            }
-
-            return canAttack;
+            return true;
         }
 
         public override void OnStateBegin()
@@ -80,26 +77,49 @@ namespace UnchordMetroidvania
             player.battleModule.SetBattleState(this);
             player.bFixLookDirX = true;
 
-            player.pAnimator.SetInteger("actionPhase", m_actionPhase);
-            base.OnStateBegin();
-
-            player.vm.FreezePositionX();
-
-            player.skAttackOnFloor.cooltime = data.attackOnFloor.cooltime;
-
             m_bCanUpdateCoyoteTime = false;
             m_bGoNextPhase = false;
-            if(m_actionPhase < m_maxActionPhase)
-                ++m_actionPhase;
-            else
-                m_actionPhase = 1;
+            m_bAttacked = false;
+
+            if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
+                m_actionPhase = 0;
+            player.pAnimator.SetInteger("actionPhase", ++m_actionPhase);
+
+            float ix = player.axisInput.x;
+            if(ix < 0) player.lookDir.x = -1;
+            else if(ix > 0) player.lookDir.x = 1;
+            m_lookDirX = player.lookDir.x;
+
+            base.OnStateBegin();
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            player.vm.SetVelocityXY(0.0f, -1.0f);
+            if(m_bAttacked)
+            {
+                player.vm.FreezePosition(true, false);
+                player.vm.SetVelocityXY(0.0f, -1.0f);
+            }
+            else
+            {
+                RaycastHit2D terrain = Physics2D.Raycast(player.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
+                player.moveDir.x = 1.0f;
+
+                if(terrain.normal.y == 0)
+                    player.moveDir.y = 0;
+                else
+                    player.moveDir.y = -terrain.normal.x / terrain.normal.y;
+
+                float speed = m_moveVelocity[m_actionPhase - 1];
+                float vx = m_lookDirX * player.moveDir.x * speed;
+                float vy = m_lookDirX * player.moveDir.y * speed;
+                vy -= (float)Math.Abs(vy * 0.1f);
+
+                player.vm.FreezePosition(false, false);
+                player.vm.SetVelocityXY(vx, vy);
+            }
         }
 
         public override bool OnUpdate()

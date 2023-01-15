@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class MentisUpSlice : TaskNodeBT<Mentis>, IBattleState
+    public class MantisUpSlice : TaskNodeBT<Mantis>, IBattleState
     {
         // property
 
@@ -28,7 +28,7 @@ namespace UnchordMetroidvania
         // variable
         private bool m_bInvoked = false;
 
-        public MentisUpSlice(Mentis instance)
+        public MantisUpSlice(Mantis instance)
         : base(instance)
         {
             m_targets = new List<EntityBase>(m_targetCount);

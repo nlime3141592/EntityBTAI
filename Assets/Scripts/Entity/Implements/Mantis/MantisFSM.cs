@@ -1,8 +1,8 @@
 namespace UnchordMetroidvania
 {
-    public class MentisFSM : FiniteStateMachineNodeBT<Mentis>
+    public class MantisFSM : FiniteStateMachineNodeBT<Mantis>
     {
-        public MentisFSM(Mentis instance)
+        public MantisFSM(Mantis instance)
         : base(instance, 2)
         {
 

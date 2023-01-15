@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public class MentisData
+    public class MantisData
     {
         [Header("Skill Options")]
         public BoxRangeBattleSkillOption upSlice;

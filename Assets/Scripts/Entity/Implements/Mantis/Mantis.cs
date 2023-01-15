@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class Mentis : EntityMonster
+    public class Mantis : EntityMonster
     {
         public Animator mantisAnimator;
         public BattleModule battleModule;
@@ -17,9 +17,9 @@ namespace UnchordMetroidvania
         public Transform originWallLB;
         public Transform originWallRB;
 
-        public MentisIdle idle;
-        public MentisUpSlice upSlice;
-        public MentisFSM fsm;
+        public MantisIdle idle;
+        public MantisUpSlice upSlice;
+        public MantisFSM fsm;
 
         public bool bOnFloor;
         public bool bOnCeil;
@@ -52,8 +52,8 @@ namespace UnchordMetroidvania
         public BoxRangeBattleSkill skBackSlice; // 방향회전베기
         public BoxRangeBattleSkill skJumpSlice; // 도약찍기
 
-        public MentisData data;
-        public MonsterBaseAI<Mentis> ai;
+        public MantisData data;
+        public MonsterBaseAI<Mantis> ai;
 
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
@@ -73,16 +73,16 @@ namespace UnchordMetroidvania
 
             mantisAnimator = GetComponent<Animator>();
             battleModule = GetComponent<BattleModule>();
-            ai = new MonsterBaseAI<Mentis>(this);
+            ai = new MonsterBaseAI<Mantis>(this);
 
             skUpSlice = new BoxRangeBattleSkill("UpSlice", -1, data.upSlice);
 
             skUpSlice.bRangeOnEditor = true;
 
-            idle = new MentisIdle(this);
-            upSlice = new MentisUpSlice(this);
+            idle = new MantisIdle(this);
+            upSlice = new MantisUpSlice(this);
 
-            fsm = new MentisFSM(this);
+            fsm = new MantisFSM(this);
             fsm[0] = idle;
             fsm[1] = upSlice;
 

@@ -38,7 +38,6 @@ namespace UnchordMetroidvania
         public bool bOnLedgeVertical;
         public bool bOnLedge;
 
-        public BoxRangeBattleSkill skAttackOnFloor;
         public BoxRangeBattleSkill skAttackOnAir;
         public BoxRangeBattleSkill skAbilitySword;
         public BoxRangeBattleSkill skAbilityGun;
@@ -111,13 +110,11 @@ namespace UnchordMetroidvania
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 
             state = -1;
-            skAttackOnFloor = new BoxRangeBattleSkill("AttackOnFloor", ++state, data.attackOnFloor);
             skAttackOnAir = new BoxRangeBattleSkill("AttackOnAir", ++state, data.attackOnAir);
             skAbilitySword = new BoxRangeBattleSkill("AbilitySword", ++state, data.abilitySword);
             skAbilityGun = new BoxRangeBattleSkill("AbilityGun", ++state, data.abilityGun);
             
             // For Debugging.
-            skAttackOnFloor.bRangeOnEditor = true;
             skAttackOnAir.bRangeOnEditor = true;
             skAbilitySword.bRangeOnEditor = true;
             skAbilityGun.bRangeOnEditor = true;
@@ -157,15 +154,12 @@ namespace UnchordMetroidvania
             base.p_Debug_OnPostInvoke();
 
             m_FixedUpdateOrigins();
-            skAttackOnFloor.UpdateOptions(data.attackOnFloor);
             skAttackOnAir.UpdateOptions(data.attackOnAir);
             skAbilitySword.UpdateOptions(data.abilitySword);
             skAbilityGun.UpdateOptions(data.abilityGun);
-            // vm.SetVelocityXY(base.axisInput.x * 3.0f, base.axisInput.y * 3.0f);
 
             fsm.OnFixedUpdate();
 
-            skAttackOnFloor.FixedUpdateCooltime();
             skAttackOnAir.FixedUpdateCooltime();
             skAbilitySword.FixedUpdateCooltime();
             skAbilityGun.FixedUpdateCooltime();
