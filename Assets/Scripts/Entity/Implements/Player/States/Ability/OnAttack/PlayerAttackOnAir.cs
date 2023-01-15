@@ -4,24 +4,58 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public class PlayerAttackOnAir : PlayerAttack
+    public class PlayerAttackOnAir : PlayerAttack, IBattleState
     {
+        // property
+        public float baseDamage => m_baseDamage;
+
+        // fixed data
+        private int m_targetCount = 7;
+        private float m_baseDamage = 1.0f;
+        private float m_cooltime = 0.1f;
+        private LTRB m_attackRange = new LTRB()
+        {
+            left = 1.0f,
+            top = 1.0f,
+            right = 1.0f,
+            bottom = 4.0f
+        };
+        private EntitySensorGizmoOption m_attackGizmoOption = new EntitySensorGizmoOption()
+        {
+            bShowGizmo = true,
+            duration = 0.2f,
+            color = Color.magenta
+        };
+
+        // variable
+        private float m_leftCooltime;
+
         public PlayerAttackOnAir(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
         {
 
         }
 
+        void IBattleState.OnBattle()
+        {
+            float baseDamage = m_baseDamage;
+
+            Collider2D[] colTargets = EntitySensor.OverlapBox(player, m_attackRange, m_attackGizmoOption);
+            targets.Clear();
+            targets
+                .FilterFromColliders(player, colTargets, false)
+                .SetTargetCount(m_targetCount);
+
+            foreach(EntityBase target in targets)
+            {
+                float finalDamage = player.battleModule.GetFinalDamage(target, baseDamage);
+                target.Damage(finalDamage);
+            }
+        }
+
         public override bool CanAttack()
         {
-            bool canAttack = player.skAttackOnAir.cooltime <= 0;
-
-            if(!canAttack)
-            {
-                int cur = player.skAttackOnAir.cooltime;
-                // Debug.Log(string.Format("남은 쿨타임: {0}", cur));
-            }
-
+            bool canAttack = m_leftCooltime <= 0;
             return canAttack;
         }
 
@@ -29,12 +63,13 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
+            player.battleModule.SetBattleState(this);
+
             player.bFixLookDirX = true;
             player.vm.FreezePositionX();
             player.vm.FreezePositionY();
 
-            player.skAttackOnAir.cooltime = data.attackOnAir.cooltime;
-            // player.battleModule.Reserve(player.skAttackOnAir, 1);
+            m_leftCooltime = m_cooltime;
         }
 
         public override void OnFixedUpdate()
@@ -50,6 +85,8 @@ namespace UnchordMetroidvania
                 return true;
 
             // NOTE: 디버그용 상태 전환 코드.
+            else if(Input.GetKeyDown(KeyCode.Q))
+                player.battleModule.TriggerBattleState();
             else if(Input.GetKeyDown(KeyCode.W))
                 p_bEndOfAnimation = true;
 
@@ -63,6 +100,12 @@ namespace UnchordMetroidvania
             player.bFixLookDirX = false;
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
+        }
+
+        public void UpdateCooltime()
+        {
+            if(m_leftCooltime > 0)
+                m_leftCooltime -= Time.deltaTime;
         }
     }
 }

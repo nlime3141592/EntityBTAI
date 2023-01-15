@@ -19,6 +19,7 @@ namespace UnchordMetroidvania
         private int m_maxActionPhase = 3;
         private float[] m_baseDamages = new float[]{ 1.0f, 1.1f, 1.25f };
         private float[] m_moveVelocity = new float[]{ 1.5f, 0.8f, 2.0f };
+        private float m_cooltime = 0.1f;
         private float m_coyoteTime = 2.0f;
         private LTRB m_attackRange = new LTRB()
         {
@@ -36,6 +37,7 @@ namespace UnchordMetroidvania
 
         // variable
         private bool m_bCanUpdateCoyoteTime;
+        private float m_leftCooltime;
         private float m_leftCoyoteTime;
         private int m_actionPhase = 0;
         private bool m_bGoNextPhase;
@@ -69,7 +71,8 @@ namespace UnchordMetroidvania
 
         public override bool CanAttack()
         {
-            return true;
+            bool canAttack = m_leftCooltime <= 0;
+            return canAttack;
         }
 
         public override void OnStateBegin()
@@ -90,6 +93,7 @@ namespace UnchordMetroidvania
             else if(ix > 0) player.lookDir.x = 1;
             m_lookDirX = player.lookDir.x;
 
+            m_leftCooltime = m_cooltime;
             base.OnStateBegin();
         }
 
@@ -136,7 +140,7 @@ namespace UnchordMetroidvania
                 player.fsm.Replay();
                 return true;
             }
-            else if(player.skill00)
+            else if(this.CanAttack() && player.skill00)
             {
                 m_bGoNextPhase = true;
             }
@@ -179,6 +183,12 @@ namespace UnchordMetroidvania
             }
 
             player.pAnimator.SetInteger("actionPhase", 0);
+        }
+
+        public void UpdateCooltime()
+        {
+            if(m_leftCooltime > 0)
+                m_leftCooltime -= Time.deltaTime;
         }
     }
 }

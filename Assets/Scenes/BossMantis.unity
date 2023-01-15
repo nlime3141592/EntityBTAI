@@ -680,7 +680,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 560320129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20254ed52c0af514f99146ac4bcb20b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d74abd29971b7548abb33193370f621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   physics: {fileID: 0}
@@ -716,11 +716,11 @@ MonoBehaviour:
     left: 20
     top: 10
     right: 20
-    bottom: 5
+    bottom: 10
   aggroDebugOption:
     bShowGizmo: 1
-    duration: 0.3
-    color: {r: 1, g: 0.5800741, b: 0.51482475, a: 1}
+    duration: 1
+    color: {r: 1, g: 0.4292453, b: 0.4292453, a: 1}
   bPrevAggro: 0
   bAggro: 0
   targetTags:
@@ -751,10 +751,10 @@ MonoBehaviour:
       sortType: 0
       canDetectSelf: 0
       range:
-        left: 5.5
-        top: 5.5
-        right: 15.5
-        bottom: 5.5
+        left: 0
+        top: 0
+        right: 0
+        bottom: 0
       cooltime: 0
     downSlice:
       level: 0

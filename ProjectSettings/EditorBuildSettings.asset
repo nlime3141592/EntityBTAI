@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/PlayerScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/BossMentis.unity
+    path: Assets/Scenes/BossMantis.unity
     guid: e3e1008341cfa1f4ab58d6ba7b740a68
   m_configObjects: {}

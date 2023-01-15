@@ -52,12 +52,5 @@ namespace UnchordMetroidvania
         [Header("Player Dash")]
         public int dashFrame = 7;
         public float dashSpeed = 32.0f;
-
-        [Header("Skill Options")]
-        public BoxRangeBattleSkillOption attackOnFloor; // 기본 공격(바닥)
-        public BoxRangeBattleSkillOption attackOnAir; // 기본 공격(공중)
-        public BoxRangeBattleSkillOption takeDownEarthquake; // 내려 찍기 충격파
-        public BoxRangeBattleSkillOption abilitySword; // 근거리 어빌리티
-        public BoxRangeBattleSkillOption abilityGun; // 원거리 어빌리티
     }
 }

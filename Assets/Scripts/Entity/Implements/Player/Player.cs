@@ -38,10 +38,6 @@ namespace UnchordMetroidvania
         public bool bOnLedgeVertical;
         public bool bOnLedge;
 
-        public BoxRangeBattleSkill skAttackOnAir;
-        public BoxRangeBattleSkill skAbilitySword;
-        public BoxRangeBattleSkill skAbilityGun;
-
         public PlayerData data;
         public PlayerIdle idleLong;
         public PlayerIdleShort idleShort;
@@ -110,16 +106,6 @@ namespace UnchordMetroidvania
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 
             state = -1;
-            skAttackOnAir = new BoxRangeBattleSkill("AttackOnAir", ++state, data.attackOnAir);
-            skAbilitySword = new BoxRangeBattleSkill("AbilitySword", ++state, data.abilitySword);
-            skAbilityGun = new BoxRangeBattleSkill("AbilityGun", ++state, data.abilityGun);
-            
-            // For Debugging.
-            skAttackOnAir.bRangeOnEditor = true;
-            skAbilitySword.bRangeOnEditor = true;
-            skAbilityGun.bRangeOnEditor = true;
-
-            state = -1;
             // data = new PlayerData();
             idleLong = new PlayerIdle(this, data, ++state, "IdleLong");
             idleShort = new PlayerIdleShort(this, data, ++state, "IdleShort");
@@ -154,15 +140,9 @@ namespace UnchordMetroidvania
             base.p_Debug_OnPostInvoke();
 
             m_FixedUpdateOrigins();
-            skAttackOnAir.UpdateOptions(data.attackOnAir);
-            skAbilitySword.UpdateOptions(data.abilitySword);
-            skAbilityGun.UpdateOptions(data.abilityGun);
 
             fsm.OnFixedUpdate();
 
-            skAttackOnAir.FixedUpdateCooltime();
-            skAbilitySword.FixedUpdateCooltime();
-            skAbilityGun.FixedUpdateCooltime();
             // Debug.Log(string.Format("CurrentState: {0}", fsm.state));
         }
 
@@ -196,7 +176,13 @@ namespace UnchordMetroidvania
             }
 
             fsm.OnUpdate();
+
             attackOnFloor.UpdateCoyoteTime();
+
+            attackOnFloor.UpdateCooltime();
+            attackOnAir.UpdateCooltime();
+            abilitySword.UpdateCooltime();
+            abilityGun.UpdateCooltime();
 
             CURRENT_STATE = fsm.state;
         }

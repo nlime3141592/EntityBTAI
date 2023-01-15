@@ -46,12 +46,6 @@ namespace UnchordMetroidvania
             }
         }
 
-        private BoxRangeBattleSkill skAggro; // 플레이어 탐지
-        public BoxRangeBattleSkill skUpSlice; // 올려베기
-        public BoxRangeBattleSkill skDownSlice; // 찍기
-        public BoxRangeBattleSkill skBackSlice; // 방향회전베기
-        public BoxRangeBattleSkill skJumpSlice; // 도약찍기
-
         public MantisData data;
         public MonsterBaseAI<Mantis> ai;
 
@@ -75,10 +69,6 @@ namespace UnchordMetroidvania
             battleModule = GetComponent<BattleModule>();
             ai = new MonsterBaseAI<Mantis>(this);
 
-            skUpSlice = new BoxRangeBattleSkill("UpSlice", -1, data.upSlice);
-
-            skUpSlice.bRangeOnEditor = true;
-
             idle = new MantisIdle(this);
             upSlice = new MantisUpSlice(this);
 
@@ -96,7 +86,6 @@ namespace UnchordMetroidvania
             base.p_Debug_OnPostInvoke();
 
             m_FixedUpdateOrigins();
-            skUpSlice.UpdateOptions(data.upSlice);
 
             ai.Invoke();
         }
