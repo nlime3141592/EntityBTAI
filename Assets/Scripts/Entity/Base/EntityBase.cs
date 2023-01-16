@@ -50,9 +50,11 @@ namespace UnchordMetroidvania
         public Stat maxMana;
         public Stat baseMoveSpeed;
         public Stat baseGravity;
+        public Stat baseMentality;
 
         public float health;
         public float mana;
+        public float groggyValue;
         #endregion
 
         #region Debug

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,6 +62,13 @@ namespace UnchordMetroidvania
             return finalDamage;
             // TestDamageUI ui = TestDamageUI.Get(hitUI, dH, target.transform.position);
             // ui.transform.SetParent(damageParent, false);
+        }
+
+        public float GetFinalGroggy(EntityBase target)
+        {
+            float finalMental = target.baseMentality.finalValue;
+            float finalGroggy = (float)Math.Round(Math.Pow(0.693147, (double)finalMental), 4);
+            return finalGroggy;
         }
     }
 }
