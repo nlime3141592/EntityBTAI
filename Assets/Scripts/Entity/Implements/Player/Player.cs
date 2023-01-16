@@ -59,6 +59,7 @@ namespace UnchordMetroidvania
         public PlayerAttackOnAir attackOnAir;
         public PlayerAbilitySword abilitySword;
         public PlayerAbilityGun abilityGun;
+        public PlayerTakeDown takeDown;
 
         public _PlayerFSM fsm;
 
@@ -127,6 +128,7 @@ namespace UnchordMetroidvania
             attackOnAir = new PlayerAttackOnAir(this, data, ++state, "AttackOnAir");
             abilitySword = new PlayerAbilitySword(this, data, ++state, "AbilitySword");
             abilityGun = new PlayerAbilityGun(this, data, ++state, "AbilityGun");
+            takeDown = new PlayerTakeDown(this, data, ++state, "TakeDown");
 
             fsm = new _PlayerFSM();
 
