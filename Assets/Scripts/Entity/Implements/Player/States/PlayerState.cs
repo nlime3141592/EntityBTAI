@@ -4,13 +4,15 @@ namespace UnchordMetroidvania
 {
     public abstract class PlayerState
     {
-        protected _PlayerFSM fsm => player.fsm;
+        protected PlayerFSM fsm => player.fsm;
 
         protected readonly Player player;
         protected readonly PlayerData data;
         public readonly int id;
         public readonly string name;
 
+        protected bool p_bBeginOfAnimation;
+        protected bool p_bBeginOfAction;
         protected bool p_bEndOfAction;
         protected bool p_bEndOfAnimation;
 
@@ -24,9 +26,10 @@ namespace UnchordMetroidvania
 
         public virtual void OnStateBegin()
         {
+            p_bBeginOfAnimation = false;
+            p_bBeginOfAction = false;
             p_bEndOfAction = false;
             p_bEndOfAnimation = false;
-            player.pAnimator.SetInteger("state", id);
         }
 
         public virtual void OnFixedUpdate()
@@ -41,9 +44,14 @@ namespace UnchordMetroidvania
             return false;
         }
 
-        public virtual void OnStateEnd()
+        public virtual void OnAnimationBegin()
         {
+            p_bBeginOfAnimation = true;
+        }
 
+        public virtual void OnActionBegin()
+        {
+            p_bBeginOfAction = true;
         }
 
         public virtual void OnActionEnd()
@@ -54,6 +62,11 @@ namespace UnchordMetroidvania
         public virtual void OnAnimationEnd()
         {
             p_bEndOfAnimation = true;
+        }
+
+        public virtual void OnStateEnd()
+        {
+
         }
 
         private void m_CheckTerrains()
@@ -90,18 +103,18 @@ namespace UnchordMetroidvania
                 bDetectLedgeVertical = player.sensor.CheckLedgeVerticalDown(player.originLedgeLT.position - Vector3.right * data.ledgerp, data.detectLength * data.ledgeVerticalLengthWeight);
             }
 
-            player.bOnDetectFloor = bDetectFloor;
-            player.bOnFloor = bHitFloor;
-            player.bOnCeil = bHitCeil;
-            player.bOnWallFrontT = bHitWallFrontT;
-            player.bOnWallFrontB = bHitWallFrontB;
-            player.bOnWallFront = bHitWallFrontT && bHitWallFrontB && bDetectLedgeHorizontal;
-            player.bOnWallBackT = bHitWallBackT;
-            player.bOnWallBackB = bHitWallBackB;
-            player.bOnWallBack = bHitWallBackT && bHitWallBackB;
-            player.bOnLedgeHorizontal = bDetectLedgeHorizontal;
-            player.bOnLedgeVertical = bDetectLedgeVertical;
-            player.bOnLedge = !bDetectLedgeHorizontal && bDetectLedgeVertical;
+            player.fsm.bOnDetectFloor = bDetectFloor;
+            player.fsm.bOnFloor = bHitFloor;
+            player.fsm.bOnCeil = bHitCeil;
+            player.fsm.bOnWallFrontT = bHitWallFrontT;
+            player.fsm.bOnWallFrontB = bHitWallFrontB;
+            player.fsm.bOnWallFront = bHitWallFrontT && bHitWallFrontB && bDetectLedgeHorizontal;
+            player.fsm.bOnWallBackT = bHitWallBackT;
+            player.fsm.bOnWallBackB = bHitWallBackB;
+            player.fsm.bOnWallBack = bHitWallBackT && bHitWallBackB;
+            player.fsm.bOnLedgeHorizontal = bDetectLedgeHorizontal;
+            player.fsm.bOnLedgeVertical = bDetectLedgeVertical;
+            player.fsm.bOnLedge = !bDetectLedgeHorizontal && bDetectLedgeVertical;
         }
     }
 }

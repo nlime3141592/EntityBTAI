@@ -27,7 +27,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.axisInput.y == 0)
             {
-                player.fsm.Change(player.idleShort);
+                fsm.Change(fsm.idleShort);
                 return true;
             }
 

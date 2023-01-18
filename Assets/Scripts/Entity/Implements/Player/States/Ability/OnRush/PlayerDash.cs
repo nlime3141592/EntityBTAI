@@ -14,13 +14,13 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            if(player.fsm.nextFps >= data.dashFrame)
+            if(fsm.nextFps >= data.dashFrame)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;
                 return;
             }
-            else if(player.bOnWallFrontB || player.bOnWallFrontT)
+            else if(fsm.bOnWallFrontB || fsm.bOnWallFrontT)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;
@@ -40,9 +40,9 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(player.leftAirJumpCount > 0 && player.jumpDown)
+            else if(fsm.leftAirJumpCount > 0 && player.jumpDown)
             {
-                player.fsm.Change(player.jumpOnAir);
+                fsm.Change(fsm.jumpOnAir);
                 return true;
             }
 

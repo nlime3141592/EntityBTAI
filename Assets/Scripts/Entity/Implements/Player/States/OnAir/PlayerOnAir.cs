@@ -21,43 +21,43 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.axisInput.y < 0 && player.jumpDown)
             {
-                player.fsm.Change(player.takeDown);
+                fsm.Change(fsm.takeDown);
                 return true;
             }
-            else if(player.skill00 && player.attackOnAir.CanAttack())
+            else if(player.skill00 && fsm.attackOnAir.CanAttack())
             {
-                player.fsm.Change(player.attackOnAir);
+                fsm.Change(fsm.attackOnAir);
                 return true;
             }
-            else if(player.leftAirJumpCount > 0 && player.jumpDown)
+            else if(fsm.leftAirJumpCount > 0 && player.jumpDown)
             {
-                player.fsm.Change(player.jumpOnAir);
+                fsm.Change(fsm.jumpOnAir);
                 return true;
             }
             else if(player.rushDown)
             {
-                player.fsm.Change(player.dash);
+                fsm.Change(fsm.dash);
                 return true;
             }
-            else if(player.bOnFloor)
+            else if(fsm.bOnFloor)
             {
-                player.fsm.Change(player.idleShort);
+                fsm.Change(fsm.idleShort);
                 return true;
             }
-            else if(player.bOnDetectFloor)
+            else if(fsm.bOnDetectFloor)
             {
                 return false;
             }
             else if(player.axisInput.x != 0)
             {
-                if(player.bOnLedge)
+                if(fsm.bOnLedge)
                 {
-                    player.fsm.Change(player.climbLedge);
+                    fsm.Change(fsm.climbLedge);
                     return true;
                 }
-                else if(player.bOnWallFront)
+                else if(fsm.bOnWallFront)
                 {
-                    player.fsm.Change(player.idleWallFront);
+                    fsm.Change(fsm.idleWallFront);
                     return true;
                 }
             }

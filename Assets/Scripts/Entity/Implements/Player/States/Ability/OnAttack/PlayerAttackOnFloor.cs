@@ -132,12 +132,12 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.rushDown)
             {
-                player.fsm.Change(player.roll);
+                fsm.Change(fsm.roll);
                 return true;
             }
             else if(p_bEndOfAction && m_bGoNextPhase)
             {
-                player.fsm.Replay();
+                fsm.Replay();
                 return true;
             }
             else if(this.CanAttack() && player.skill00)

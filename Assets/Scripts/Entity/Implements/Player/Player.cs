@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public class Player : EntityBase
     {
-        public static Player instance => m_player;
-        private static Player m_player;
+        public static Player instance => s_m_player;
+        private static Player s_m_player;
 
         public Animator pAnimator;
         public BattleModule battleModule;
@@ -21,47 +21,7 @@ namespace UnchordMetroidvania
         public Transform originLedgeLB;
         public Transform originLedgeRB;
 
-        public bool bIsRun = false;
-        public Vector2 cameraOffset = Vector2.zero;
-        public int leftAirJumpCount = 0;
-
-        public bool bOnDetectFloor;
-        public bool bOnFloor;
-        public bool bOnCeil;
-        public bool bOnWallFrontT;
-        public bool bOnWallFrontB;
-        public bool bOnWallFront;
-        public bool bOnWallBackT;
-        public bool bOnWallBackB;
-        public bool bOnWallBack;
-        public bool bOnLedgeHorizontal;
-        public bool bOnLedgeVertical;
-        public bool bOnLedge;
-
-        public PlayerData data;
-        public PlayerIdle idleLong;
-        public PlayerIdleShort idleShort;
-        public PlayerWalk walk;
-        public PlayerRun run;
-        public _PlayerSit sit;
-        public _PlayerHeadUp headUp;
-        public _PlayerFreeFall freeFall;
-        public _PlayerGliding gliding;
-        public PlayerIdleWallFront idleWallFront;
-        public PlayerSlidingWallFront slidingWallFront;
-        public _PlayerJumpOnFloor jumpOnFloor;
-        public _PlayerJumpOnAir jumpOnAir;
-        public _PlayerJumpOnWallFront jumpOnWallFront;
-        public PlayerRoll roll;
-        public PlayerDash dash;
-        public _PlayerClimbOnLedge climbLedge;
-        public PlayerAttackOnFloor attackOnFloor;
-        public PlayerAttackOnAir attackOnAir;
-        public PlayerAbilitySword abilitySword;
-        public PlayerAbilityGun abilityGun;
-        public PlayerTakeDown takeDown;
-
-        public _PlayerFSM fsm;
+        public PlayerFSM fsm;
 
         public int CURRENT_STATE;
         public EntitySensorGizmoManager rangeGizmoManager;
@@ -76,65 +36,34 @@ namespace UnchordMetroidvania
         public bool skill02;
         #endregion
 
-        public void PublishEndOfAction()
+        public void ChangeAnimation(PlayerState state)
         {
-            fsm.OnActionEnd();
-        }
-
-        public void PublishEndOfAnimation()
-        {
-            fsm.OnAnimationEnd();
+            pAnimator.SetInteger("state", state.id);
         }
 
         protected override void Start()
         {
-            if(m_player != null)
+            if(s_m_player != null)
             {
                 Destroy(this.gameObject);
                 return;
             }
             else
             {
-                m_player = this;
+                s_m_player = this;
             }
 
             base.Start();
 
-            int state = -1;
-
             pAnimator = GetComponent<Animator>();
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
-
-            state = -1;
-            // data = new PlayerData();
-            idleLong = new PlayerIdle(this, data, ++state, "IdleLong");
-            idleShort = new PlayerIdleShort(this, data, ++state, "IdleShort");
-            walk = new PlayerWalk(this, data, ++state, "Walk");
-            run = new PlayerRun(this, data, ++state, "Run");
-            sit = new _PlayerSit(this, data, ++state, "Sit");
-            headUp = new _PlayerHeadUp(this, data, ++state, "HeadUp");
-            freeFall = new _PlayerFreeFall(this, data, ++state, "FreeFall");
-            gliding = new _PlayerGliding(this, data, ++state, "Gliding");
-            idleWallFront = new PlayerIdleWallFront(this, data, ++state, "IdleWallFront");
-            slidingWallFront = new PlayerSlidingWallFront(this, data, ++state, "SlidingWallFront");
-            jumpOnFloor = new _PlayerJumpOnFloor(this, data, ++state, "JumpOnFloor");
-            jumpOnAir = new _PlayerJumpOnAir(this, data, ++state, "JumpOnAir");
-            jumpOnWallFront = new _PlayerJumpOnWallFront(this, data, ++state, "JumpOnWallFront");
-            roll = new PlayerRoll(this, data, ++state, "Roll");
-            dash = new PlayerDash(this, data, ++state, "Dash");
-            climbLedge = new _PlayerClimbOnLedge(this, data, ++state, "ClimeLedge");
-            attackOnFloor = new PlayerAttackOnFloor(this, data, ++state, "AttackOnFloor");
-            attackOnAir = new PlayerAttackOnAir(this, data, ++state, "AttackOnAir");
-            abilitySword = new PlayerAbilitySword(this, data, ++state, "AbilitySword");
-            abilityGun = new PlayerAbilityGun(this, data, ++state, "AbilityGun");
-            takeDown = new PlayerTakeDown(this, data, ++state, "TakeDown");
-
-            fsm = new _PlayerFSM();
+            fsm = GetComponent<PlayerFSM>();
 
             rangeGizmoManager = new EntitySensorGizmoManager();
 
-            fsm.Begin(idleShort);
+            fsm.OnStart();
+            fsm.Begin(fsm.idleShort);
         }
 
         protected override void p_Debug_OnPostInvoke()
@@ -145,7 +74,7 @@ namespace UnchordMetroidvania
 
             fsm.OnFixedUpdate();
 
-            // Debug.Log(string.Format("CurrentState: {0}", fsm.state));
+            Debug.Log(string.Format("CurrentState: {0}", fsm.stateName));
         }
 
         protected override void Update()
@@ -179,14 +108,7 @@ namespace UnchordMetroidvania
 
             fsm.OnUpdate();
 
-            attackOnFloor.UpdateCoyoteTime();
-
-            attackOnFloor.UpdateCooltime();
-            attackOnAir.UpdateCooltime();
-            abilitySword.UpdateCooltime();
-            abilityGun.UpdateCooltime();
-
-            CURRENT_STATE = fsm.state;
+            CURRENT_STATE = fsm.stateID;
         }
 
         private void m_FixedUpdateOrigins()

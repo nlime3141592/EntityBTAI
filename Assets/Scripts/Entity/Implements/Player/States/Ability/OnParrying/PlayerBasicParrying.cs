@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerHeadUp : PlayerStand
+    public class PlayerBasicParrying : PlayerParrying
     {
-        public _PlayerHeadUp(Player player, PlayerData data, int id, string name)
+        public PlayerBasicParrying(Player player, PlayerData data, int id, string name)
         : base(player, data, id, name)
         {
 
@@ -13,7 +13,8 @@ namespace UnchordMetroidvania
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            fsm.cameraOffset = Vector2.up;
+
+            player.vm.SetVelocityXY(0.0f, -1.0f);
         }
     }
 }

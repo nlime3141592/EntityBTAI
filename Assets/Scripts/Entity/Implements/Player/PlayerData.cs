@@ -13,8 +13,8 @@ namespace UnchordMetroidvania
         public float ledgeVerticalLengthWeight = 0.6f;
 
         [Header("Player Move")]
-        public float walkSpeed = 2.0f;
-        public float runSpeed = 6.0f;
+        public float walkSpeed = 6.0f;
+        public float runSpeed = 12.0f;
 
         [Header("Player Idle Short")]
         public int shortIdleFrame = 100;

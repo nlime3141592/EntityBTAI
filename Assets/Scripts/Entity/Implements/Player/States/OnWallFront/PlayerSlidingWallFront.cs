@@ -38,7 +38,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.axisInput.x != 0)
             {
-                player.fsm.Change(player.idleWallFront);
+                fsm.Change(fsm.idleWallFront);
                 return true;
             }
 

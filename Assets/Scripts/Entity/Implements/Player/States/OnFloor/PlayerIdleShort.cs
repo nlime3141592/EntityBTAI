@@ -24,7 +24,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(fsm.nextFps >= data.shortIdleFrame)
             {
-                fsm.Change(player.idleLong);
+                fsm.Change(fsm.idleLong);
                 return true;
             }
 

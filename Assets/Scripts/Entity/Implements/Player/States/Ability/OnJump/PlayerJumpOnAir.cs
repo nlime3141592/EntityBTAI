@@ -16,7 +16,7 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
-            --player.leftAirJumpCount;
+            --(fsm.leftAirJumpCount);
             vy = data.jumpOnAirSpeed;
         }
 
@@ -24,7 +24,7 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            float vx = player.bIsRun ? data.runSpeed : data.walkSpeed;
+            float vx = fsm.bIsRun ? data.runSpeed : data.walkSpeed;
             float ix = player.axisInput.x;
 
             player.moveDir.x = ix;
@@ -47,7 +47,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.rushDown)
             {
-                player.fsm.Change(player.dash);
+                fsm.Change(fsm.dash);
                 return true;
             }
 

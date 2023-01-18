@@ -13,7 +13,7 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            player.leftAirJumpCount = data.maxAirJumpCount;
+            fsm.leftAirJumpCount = data.maxAirJumpCount;
         }
 
         public override bool OnUpdate()
@@ -22,22 +22,22 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.jumpDown)
             {
-                player.fsm.Change(player.jumpOnWallFront);
+                fsm.Change(fsm.jumpOnWallFront);
                 return true;
             }
-            else if(player.bOnDetectFloor)
+            else if(fsm.bOnDetectFloor)
             {
-                player.fsm.Change(player.freeFall);
+                fsm.Change(fsm.freeFall);
                 return true;
             }
             else if(player.axisInput.y < 0 && player.axisInput.x == 0)
             {
-                player.fsm.Change(player.freeFall);
+                fsm.Change(fsm.freeFall);
                 return true;
             }
-            else if(!player.bOnWallFront)
+            else if(!fsm.bOnWallFront)
             {
-                player.fsm.Change(player.freeFall);
+                fsm.Change(fsm.freeFall);
                 return true;
             }
 

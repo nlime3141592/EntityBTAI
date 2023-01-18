@@ -23,10 +23,10 @@ namespace UnchordMetroidvania
                 return true;
             else if(p_bEndOfAbility)
             {
-                if(player.bOnFloor)
-                    player.fsm.Change(player.idleShort);
+                if(fsm.bOnFloor)
+                    fsm.Change(fsm.idleShort);
                 else
-                    player.fsm.Change(player.freeFall);
+                    fsm.Change(fsm.freeFall);
                 return true;
             }
 

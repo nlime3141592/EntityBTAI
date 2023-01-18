@@ -16,13 +16,13 @@ namespace UnchordMetroidvania
 
             RaycastHit2D terrain = Physics2D.Raycast(player.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
 
-            if(player.fsm.nextFps >= data.rollFrame)
+            if(fsm.nextFps >= data.rollFrame)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;
                 return;
             }
-            else if(!terrain || player.bOnWallFrontB || player.bOnWallFrontT)
+            else if(!terrain || fsm.bOnWallFrontB || fsm.bOnWallFrontT)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;
@@ -60,7 +60,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.jumpDown)
             {
-                player.fsm.Change(player.jumpOnFloor);
+                fsm.Change(fsm.jumpOnFloor);
                 return true;
             }
 

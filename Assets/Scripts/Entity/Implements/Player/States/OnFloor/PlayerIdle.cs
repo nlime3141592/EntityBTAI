@@ -27,20 +27,20 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.axisInput.y > 0)
             {
-                player.fsm.Change(player.headUp);
+                fsm.Change(fsm.headUp);
                 return true;
             }
             else if(player.axisInput.y < 0)
             {
-                player.fsm.Change(player.sit);
+                fsm.Change(fsm.sit);
                 return true;
             }
             else if(player.axisInput.x != 0)
             {
-                if(player.bIsRun)
-                    player.fsm.Change(player.run);
+                if(fsm.bIsRun)
+                    fsm.Change(fsm.run);
                 else
-                    player.fsm.Change(player.walk);
+                    fsm.Change(fsm.walk);
                 return true;
             }
 

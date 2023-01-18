@@ -14,7 +14,7 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            float vx = player.bIsRun ? data.runSpeed : data.walkSpeed;
+            float vx = fsm.bIsRun ? data.runSpeed : data.walkSpeed;
             float ix = player.axisInput.x;
 
             player.moveDir.x = ix;
@@ -47,7 +47,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.axisInput.y == 0)
             {
-                player.fsm.Change(player.freeFall);
+                fsm.Change(fsm.freeFall);
                 return true;
             }
 

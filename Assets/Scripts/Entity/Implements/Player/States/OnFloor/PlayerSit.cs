@@ -13,7 +13,7 @@ namespace UnchordMetroidvania
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            player.cameraOffset = Vector2.down;
+            fsm.cameraOffset = Vector2.down;
         }
     }
 }

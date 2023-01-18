@@ -50,7 +50,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(bJumpCanceled && player.rushDown)
             {
-                player.fsm.Change(player.dash);
+                fsm.Change(fsm.dash);
                 return true;
             }
 

@@ -28,17 +28,17 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.axisInput.y < 0 && player.jumpDown)
             {
-                player.fsm.Change(player.takeDown);
+                fsm.Change(fsm.takeDown);
                 return true;
             }
-            else if(player.skill00 && player.attackOnAir.CanAttack())
+            else if(player.skill00 && fsm.attackOnAir.CanAttack())
             {
-                player.fsm.Change(player.attackOnAir);
+                fsm.Change(fsm.attackOnAir);
                 return true;
             }
-            else if(player.bOnCeil)
+            else if(fsm.bOnCeil)
             {
-                player.fsm.Change(player.freeFall);
+                fsm.Change(fsm.freeFall);
                 return true;
             }
             else if(!bJumpCanceled && player.jumpUp)
@@ -47,9 +47,9 @@ namespace UnchordMetroidvania
                 p_OnJumpCanceled();
                 return false;
             }
-            else if(player.leftAirJumpCount > 0 && player.jumpDown)
+            else if(fsm.leftAirJumpCount > 0 && player.jumpDown)
             {
-                player.fsm.Change(player.jumpOnAir);
+                fsm.Change(fsm.jumpOnAir);
                 return true;
             }
 

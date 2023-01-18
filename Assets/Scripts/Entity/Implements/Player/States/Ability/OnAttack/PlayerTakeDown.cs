@@ -93,8 +93,6 @@ namespace UnchordMetroidvania
 
         public override bool OnUpdate()
         {
-            Debug.Log(string.Format("Action Phase: {0}", m_actionPhase));
-
             // NOTE: Test input code.
             if(Input.GetKeyDown(KeyCode.Return))
                 this.OnAnimationEnd();
@@ -103,17 +101,17 @@ namespace UnchordMetroidvania
                 return true;
             else if(m_actionPhase == 1 && p_bEndOfAnimation)
             {
-                player.fsm.Replay();
+                fsm.Replay();
                 return true;
             }
-            else if(m_actionPhase == 2 && player.bOnFloor)
+            else if(m_actionPhase == 2 && fsm.bOnFloor)
             {
-                player.fsm.Replay();
+                fsm.Replay();
                 return true;
             }
             else if(m_actionPhase == 3 && p_bEndOfAnimation)
             {
-                player.fsm.Change(player.idleShort);
+                fsm.Change(fsm.idleShort);
                 return true;
             }
 

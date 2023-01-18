@@ -81,7 +81,7 @@ namespace UnchordMetroidvania
             else if(p_bEndOfAnimation)
             {
                 player.transform.position = playerTeleportPosition;
-                player.fsm.Change(player.freeFall);
+                fsm.Change(fsm.freeFall);
                 return true;
             }
 

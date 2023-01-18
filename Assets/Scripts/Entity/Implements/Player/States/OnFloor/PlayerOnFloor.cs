@@ -13,7 +13,7 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            player.leftAirJumpCount = data.maxAirJumpCount;
+            fsm.leftAirJumpCount = data.maxAirJumpCount;
         }
 
         public override void OnFixedUpdate()
@@ -25,34 +25,34 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(player.skill01 && player.abilitySword.CanAttack())
+            else if(player.skill01 && fsm.abilitySword.CanAttack())
             {
-                player.fsm.Change(player.abilitySword);
+                player.fsm.Change(fsm.abilitySword);
                 return true;
             }
-            else if(player.skill02 && player.abilityGun.CanAttack())
+            else if(player.skill02 && fsm.abilityGun.CanAttack())
             {
-                player.fsm.Change(player.abilityGun);
+                player.fsm.Change(fsm.abilityGun);
                 return true;
             }
-            else if(player.skill00 && player.attackOnFloor.CanAttack())
+            else if(player.skill00 && fsm.attackOnFloor.CanAttack())
             {
-                player.fsm.Change(player.attackOnFloor);
+                player.fsm.Change(fsm.attackOnFloor);
                 return true;
             }
             else if(player.jumpDown)
             {
-                player.fsm.Change(player.jumpOnFloor);
+                player.fsm.Change(fsm.jumpOnFloor);
                 return true;
             }
             else if(player.rushDown)
             {
-                player.fsm.Change(player.roll);
+                player.fsm.Change(fsm.roll);
                 return true;
             }
-            else if(!player.bOnFloor)
+            else if(!fsm.bOnFloor)
             {
-                player.fsm.Change(player.freeFall);
+                player.fsm.Change(fsm.freeFall);
                 return true;
             }
 

@@ -24,9 +24,9 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(!player.bIsRun)
+            else if(!fsm.bIsRun)
             {
-                player.fsm.Change(player.walk);
+                fsm.Change(fsm.walk);
                 return true;
             }
 

@@ -37,17 +37,17 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.axisInput.y > 0)
             {
-                player.fsm.Change(player.headUp);
+                fsm.Change(fsm.headUp);
                 return true;
             }
             else if(player.axisInput.y < 0)
             {
-                player.fsm.Change(player.sit);
+                fsm.Change(fsm.sit);
                 return true;
             }
             else if(player.axisInput.x == 0)
             {
-                player.fsm.Change(player.idleShort);
+                fsm.Change(fsm.idleShort);
                 return true;
             }
 
