@@ -130,6 +130,11 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
+            else if(p_bEndOfAction && player.parryingDown)
+            {
+                fsm.Change(fsm.emergencyParrying);
+                return true;
+            }
             else if(player.rushDown)
             {
                 fsm.Change(fsm.roll);

@@ -22,13 +22,7 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            RaycastHit2D terrain = Physics2D.Raycast(player.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
-            player.moveDir.x = 1.0f;
-
-            if(terrain.normal.y == 0)
-                player.moveDir.y = 0;
-            else
-                player.moveDir.y = -terrain.normal.x / terrain.normal.y;
+            player.SetMoveDirOnFloor();
         }
 
         public override bool OnUpdate()

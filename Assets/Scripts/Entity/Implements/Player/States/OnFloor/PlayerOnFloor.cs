@@ -25,34 +25,39 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
+            else if(player.skill00 && fsm.attackOnFloor.CanAttack())
+            {
+                fsm.Change(fsm.attackOnFloor);
+                return true;
+            }
             else if(player.skill01 && fsm.abilitySword.CanAttack())
             {
-                player.fsm.Change(fsm.abilitySword);
+                fsm.Change(fsm.abilitySword);
                 return true;
             }
             else if(player.skill02 && fsm.abilityGun.CanAttack())
             {
-                player.fsm.Change(fsm.abilityGun);
+                fsm.Change(fsm.abilityGun);
                 return true;
             }
-            else if(player.skill00 && fsm.attackOnFloor.CanAttack())
+            else if(player.parryingDown)
             {
-                player.fsm.Change(fsm.attackOnFloor);
+                fsm.Change(fsm.basicParrying);
                 return true;
             }
             else if(player.jumpDown)
             {
-                player.fsm.Change(fsm.jumpOnFloor);
+                fsm.Change(fsm.jumpOnFloor);
                 return true;
             }
             else if(player.rushDown)
             {
-                player.fsm.Change(fsm.roll);
+                fsm.Change(fsm.roll);
                 return true;
             }
             else if(!fsm.bOnFloor)
             {
-                player.fsm.Change(fsm.freeFall);
+                fsm.Change(fsm.freeFall);
                 return true;
             }
 

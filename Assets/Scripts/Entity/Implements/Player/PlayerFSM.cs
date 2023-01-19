@@ -50,6 +50,8 @@ namespace UnchordMetroidvania
         public PlayerAbilitySword abilitySword;
         public PlayerAbilityGun abilityGun;
         public PlayerTakeDown takeDown;
+        public PlayerBasicParrying basicParrying;
+        public PlayerEmergencyParrying emergencyParrying;
 
         public bool bIsRun = false;
         public int leftAirJumpCount = 0;
@@ -91,6 +93,8 @@ namespace UnchordMetroidvania
             abilitySword = new PlayerAbilitySword(m_player, data, ++idx, "AbilitySword");
             abilityGun = new PlayerAbilityGun(m_player, data, ++idx, "AbilityGun");
             takeDown = new PlayerTakeDown(m_player, data, ++idx, "TakeDown");
+            basicParrying = new PlayerBasicParrying(m_player, data, ++idx, "BasicParrying");
+            emergencyParrying = new PlayerEmergencyParrying(m_player, data, ++idx, "EmergencyParrying");
 
             defaultState = idleShort;
         }

@@ -31,6 +31,8 @@ namespace UnchordMetroidvania
         public bool jumpUp;
         public bool rushDown;
         public bool rushUp;
+        public bool parryingDown;
+        public bool parryingUp;
         public bool skill00;
         public bool skill01;
         public bool skill02;
@@ -39,6 +41,17 @@ namespace UnchordMetroidvania
         public void ChangeAnimation(PlayerState state)
         {
             pAnimator.SetInteger("state", state.id);
+        }
+
+        public void SetMoveDirOnFloor()
+        {
+            RaycastHit2D terrain = Physics2D.Raycast(originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
+            moveDir.x = 1.0f;
+
+            if(terrain.normal.y == 0)
+                moveDir.y = 0;
+            else
+                moveDir.y = -terrain.normal.x / terrain.normal.y;
         }
 
         protected override void Start()
@@ -85,6 +98,8 @@ namespace UnchordMetroidvania
             {
                 base.axisInput.x = Input.GetAxisRaw("Horizontal");
                 base.axisInput.y = Input.GetAxisRaw("Vertical");
+                this.parryingDown = Input.GetKeyDown(KeyCode.V);
+                this.parryingUp = Input.GetKeyUp(KeyCode.V);
                 this.jumpDown = Input.GetKeyDown(KeyCode.Space);
                 this.jumpUp = Input.GetKeyUp(KeyCode.Space);
                 this.rushDown = Input.GetKeyDown(KeyCode.LeftShift);
@@ -97,6 +112,7 @@ namespace UnchordMetroidvania
             {
                 base.axisInput.x = 0;
                 base.axisInput.y = 0;
+                this.parryingDown = false;
                 this.jumpDown = false;
                 this.jumpUp = false;
                 this.rushDown = false;

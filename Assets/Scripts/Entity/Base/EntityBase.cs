@@ -54,7 +54,10 @@ namespace UnchordMetroidvania
 
         public float health;
         public float mana;
-        public float groggyValue;
+        public float groggyValue = 0.0f;
+
+        public bool bInvincibility = false;
+        public float fixTakenDamage = 0.0f;
         #endregion
 
         #region Debug

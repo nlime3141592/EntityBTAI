@@ -109,10 +109,18 @@ namespace UnchordMetroidvania
                 fsm.Replay();
                 return true;
             }
-            else if(m_actionPhase == 3 && p_bEndOfAnimation)
+            else if(m_actionPhase == 3)
             {
-                fsm.Change(fsm.idleShort);
-                return true;
+                if(p_bEndOfAnimation)
+                {
+                    fsm.Change(fsm.idleShort);
+                    return true;
+                }
+                if(p_bEndOfAction && player.parryingDown)
+                {
+                    fsm.Change(fsm.emergencyParrying);
+                    return true;
+                }
             }
 
             return false;

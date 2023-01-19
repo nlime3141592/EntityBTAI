@@ -83,6 +83,12 @@ namespace UnchordMetroidvania
             if(base.OnUpdate())
                 return true;
 
+            else if(p_bEndOfAction && player.parryingDown)
+            {
+                fsm.Change(fsm.emergencyParrying);
+                return true;
+            }
+
             // NOTE: 디버그용 상태 전환 코드.
             else if(Input.GetKeyDown(KeyCode.Q))
                 player.battleModule.TriggerBattleState();

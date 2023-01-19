@@ -51,6 +51,11 @@ namespace UnchordMetroidvania
             (최종데미지) = (공격자의 공격력) * (스킬 계수) - (피해자의 방어력)
             단, (최종데미지)의 최소값은 1이다.
             */
+            if(target.bInvincibility)
+                return 0;
+            else if(target.fixTakenDamage > 0)
+                return target.fixTakenDamage;
+
             float finalStrength = owner.strength.finalValue;
             finalStrength *= baseDamage;
             float finalDefence = target.defence.finalValue;
@@ -67,8 +72,11 @@ namespace UnchordMetroidvania
         public float GetFinalGroggy(EntityBase target)
         {
             float finalMental = target.baseMentality.finalValue;
-            float finalGroggy = (float)Math.Round(Math.Pow(0.693147, (double)finalMental), 4);
-            return finalGroggy;
+
+            if(finalMental < 0.001f)
+                return 0.001f;
+
+            return finalMental;
         }
     }
-}
+} 
