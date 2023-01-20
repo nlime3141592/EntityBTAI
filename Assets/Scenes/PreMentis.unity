@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 40287500}
+  - component: {fileID: 40287501}
   m_Layer: 6
   m_Name: Terrains
   m_TagString: Untagged
@@ -159,6 +160,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &40287501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40287499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0599582de93e33642b0ebd3949b0caac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camModule: {fileID: 0}
+  gamePage: {fileID: 0}
+  menuPage: {fileID: 0}
 --- !u!1 &274966696
 GameObject:
   m_ObjectHideFlags: 0
@@ -300,11 +316,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physics: {fileID: 560320133}
+  hitColliders: []
   bFixLookDirX: 0
   bFixLookDirY: 1
   lookDir: {x: 1, y: 1}
   moveDir: {x: 0, y: 0}
   lastInvokeResult: 0
+  bBeginOfEntity: 0
   bEndOfEntity: 0
   canInput: 1
   axisInput: {x: 0, y: 0}
@@ -320,8 +338,16 @@ MonoBehaviour:
     baseValue: 0
   baseGravity:
     baseValue: 0
+  baseMentality:
+    baseValue: 0
   health: 15000
   mana: 0
+  groggyValue: 0
+  bInvincibility: 0
+  fixTakenDamage: 0
+  aController: {fileID: 0}
+  currentInvocation: 0
+  value: 0
 --- !u!50 &560320133
 Rigidbody2D:
   serializedVersion: 4
@@ -377,7 +403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &618249428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,43 +416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20254ed52c0af514f99146ac4bcb20b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  physics: {fileID: 0}
-  bFixLookDirX: 0
-  bFixLookDirY: 1
-  lookDir: {x: 1, y: 1}
-  moveDir: {x: 0, y: 0}
-  lastInvokeResult: 0
-  bEndOfEntity: 0
-  canInput: 1
-  axisInput: {x: 0, y: 0}
-  strength:
-    baseValue: 0
-  defence:
-    baseValue: 0
-  maxHealth:
-    baseValue: 200
-  maxMana:
-    baseValue: 0
-  baseMoveSpeed:
-    baseValue: 0
-  baseGravity:
-    baseValue: 0
-  health: 200
-  mana: 0
-  waitSecondOnChangeAggro: 0.75
-  waitDiffSecondOnChangeAggro: 0.25
-  waitSecondOnChangeAction: 1.5
-  waitDiffSecondOnChangeAction: 0.5
-  aggroRange:
-    left: 1.5
-    top: 5.5
-    right: 8
-    bottom: 2
-  bPrevAggro: 0
-  bAggro: 0
-  targetTags:
-  - Player
-  targets: []
 --- !u!61 &618249429
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -491,7 +480,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1075045073
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b96a7f81ffe463248b79fa69eb20124e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1155,6 +1144,8 @@ GameObject:
   - component: {fileID: 1704644182}
   - component: {fileID: 1704644184}
   - component: {fileID: 1704644185}
+  - component: {fileID: 1704644187}
+  - component: {fileID: 1704644186}
   m_Layer: 7
   m_Name: SandBag Entity
   m_TagString: Untagged
@@ -1190,11 +1181,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physics: {fileID: 1704644183}
+  hitColliders: []
   bFixLookDirX: 0
   bFixLookDirY: 1
   lookDir: {x: 1, y: 1}
   moveDir: {x: 0, y: 0}
   lastInvokeResult: 0
+  bBeginOfEntity: 0
   bEndOfEntity: 0
   canInput: 1
   axisInput: {x: 0, y: 0}
@@ -1210,8 +1203,16 @@ MonoBehaviour:
     baseValue: 0
   baseGravity:
     baseValue: 0
+  baseMentality:
+    baseValue: 0
   health: 9999999
   mana: 0
+  groggyValue: 0
+  bInvincibility: 0
+  fixTakenDamage: 0
+  aController: {fileID: 0}
+  currentInvocation: 0
+  value: 0
 --- !u!50 &1704644183
 Rigidbody2D:
   serializedVersion: 4
@@ -1271,7 +1272,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1075045073
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b96a7f81ffe463248b79fa69eb20124e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1310,6 +1311,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 5}
   m_EdgeRadius: 0
+--- !u!114 &1704644186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704644180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
+--- !u!95 &1704644187
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704644180}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1727446037
 GameObject:
   m_ObjectHideFlags: 0

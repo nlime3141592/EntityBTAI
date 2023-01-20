@@ -14,7 +14,7 @@ namespace UnchordMetroidvania
             if(aController.bBeginOfAnimation)
                 return InvokeResult.Success;
             else
-                return InvokeResult.Running;
+                return InvokeResult.Failure;
         }
     }
 }
