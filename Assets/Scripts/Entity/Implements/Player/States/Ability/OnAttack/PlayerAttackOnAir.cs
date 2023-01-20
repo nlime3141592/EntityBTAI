@@ -88,7 +88,7 @@ namespace UnchordMetroidvania
             else if(Input.GetKeyDown(KeyCode.Q))
                 player.battleModule.TriggerBattleState();
             else if(Input.GetKeyDown(KeyCode.W))
-                p_bEndOfAnimation = true;
+                player.aController.bEndOfAnimation = true;
 
             return false;
         }

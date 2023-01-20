@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 254749480}
   - component: {fileID: 254749483}
   - component: {fileID: 254749484}
+  - component: {fileID: 254749485}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -468,7 +469,8 @@ MonoBehaviour:
   health: 100
   mana: 0
   groggyValue: 0
-  pAnimator: {fileID: 0}
+  bInvincibility: 0
+  fixTakenDamage: 0
   battleModule: {fileID: 0}
   hCol: {fileID: 0}
   originFloor: {fileID: 371345137}
@@ -482,11 +484,14 @@ MonoBehaviour:
   originLedgeLB: {fileID: 1539210310}
   originLedgeRB: {fileID: 1375081707}
   fsm: {fileID: 0}
+  aController: {fileID: 0}
   CURRENT_STATE: 0
   jumpDown: 0
   jumpUp: 0
   rushDown: 0
   rushUp: 0
+  parryingDown: 0
+  parryingUp: 0
   skill00: 0
   skill01: 0
   skill02: 0
@@ -722,6 +727,18 @@ MonoBehaviour:
   bIsRun: 1
   leftAirJumpCount: 0
   cameraOffset: {x: 0, y: 0}
+--- !u!114 &254749485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254749474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &291051158
 GameObject:
   m_ObjectHideFlags: 0

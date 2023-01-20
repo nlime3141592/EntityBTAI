@@ -58,7 +58,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(p_bEndOfAction && player.parryingDown)
+            else if(player.aController.bEndOfAction && player.parryingDown)
             {
                 fsm.Change(fsm.emergencyParrying);
                 return true;

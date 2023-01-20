@@ -22,11 +22,10 @@ namespace UnchordMetroidvania
         public Vector2 moveDir;
         public InvokeResult lastInvokeResult;
         public bool bBeginOfEntity = false;
-        public bool bEndOfEntity = false;
+        public bool bEndOfEntity = false; // 사망 조건을 만족한 상태에서 이 변수가 true가 되는 순간 엔티티 게임오브젝트가 파괴됩니다.
 
         private object m_root;
         private Func<InvokeResult> m_func_rootInvoke;
-        // private bool m_bHasAI = false;
         #endregion
 
         #region Entity Events
@@ -192,7 +191,7 @@ namespace UnchordMetroidvania
             vm = new VelocityModule2D(physics);
         }
 
-        private void FixedUpdate()
+        protected virtual void FixedUpdate()
         {
             // Rotation Logic
             if(lookDir.x < 0)
@@ -200,17 +199,6 @@ namespace UnchordMetroidvania
             else if(lookDir.x > 0)
                 transform.eulerAngles = Vector3.zero;
 
-            p_Debug_OnPostInvoke();
-        }
-
-        protected virtual void p_Debug_OnPostInvoke()
-        {
-            lookDir.x = m_GetNextLookDir(axisInput.x, lookDir.x, 1, bFixLookDirX);
-            lookDir.y = m_GetNextLookDir(axisInput.y, lookDir.y, 1, bFixLookDirY);
-        }
-
-        protected virtual void p_OnPreInvoke()
-        {
             lookDir.x = m_GetNextLookDir(axisInput.x, lookDir.x, 1, bFixLookDirX);
             lookDir.y = m_GetNextLookDir(axisInput.y, lookDir.y, 1, bFixLookDirY);
         }

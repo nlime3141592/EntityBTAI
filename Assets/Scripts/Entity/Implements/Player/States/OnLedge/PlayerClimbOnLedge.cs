@@ -78,7 +78,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(p_bEndOfAnimation)
+            else if(player.aController.bEndOfAnimation)
             {
                 player.transform.position = playerTeleportPosition;
                 fsm.Change(fsm.freeFall);
@@ -89,7 +89,7 @@ namespace UnchordMetroidvania
             // NOTE: 테스트 코드.
             else if(Input.GetKeyDown(KeyCode.Return))
             {
-                p_bEndOfAnimation = true;
+                player.aController.bEndOfAnimation = true;
                 return false;
             }
 

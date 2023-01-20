@@ -587,6 +587,7 @@ GameObject:
   - component: {fileID: 560320132}
   - component: {fileID: 560320135}
   - component: {fileID: 560320136}
+  - component: {fileID: 560320137}
   m_Layer: 7
   m_Name: Mantis
   m_TagString: Boss
@@ -706,8 +707,13 @@ MonoBehaviour:
     baseValue: 0
   baseGravity:
     baseValue: 0
+  baseMentality:
+    baseValue: 0
   health: 2000
   mana: 0
+  groggyValue: 0
+  bInvincibility: 0
+  fixTakenDamage: 0
   waitSecondOnChangeAggro: 0.75
   waitDiffSecondOnChangeAggro: 0.25
   waitSecondOnChangeAction: 1.5
@@ -743,55 +749,6 @@ MonoBehaviour:
   bOnWallFront: 0
   bOnWallBack: 0
   attackCount: 0
-  data:
-    upSlice:
-      level: 0
-      targetCount: 1
-      baseDamage: 1
-      sortType: 0
-      canDetectSelf: 0
-      range:
-        left: 0
-        top: 0
-        right: 0
-        bottom: 0
-      cooltime: 0
-    downSlice:
-      level: 0
-      targetCount: 1
-      baseDamage: 1
-      sortType: 0
-      canDetectSelf: 0
-      range:
-        left: 0
-        top: 0
-        right: 0
-        bottom: 0
-      cooltime: 0
-    backSlice:
-      level: 0
-      targetCount: 1
-      baseDamage: 1
-      sortType: 0
-      canDetectSelf: 0
-      range:
-        left: 0
-        top: 0
-        right: 0
-        bottom: 0
-      cooltime: 0
-    jumpSlice:
-      level: 0
-      targetCount: 1
-      baseDamage: 1
-      sortType: 0
-      canDetectSelf: 0
-      range:
-        left: 0
-        top: 0
-        right: 0
-        bottom: 0
-      cooltime: 0
 --- !u!50 &560320133
 Rigidbody2D:
   serializedVersion: 4
@@ -863,6 +820,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &560320137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560320129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &739923700
 GameObject:
   m_ObjectHideFlags: 0

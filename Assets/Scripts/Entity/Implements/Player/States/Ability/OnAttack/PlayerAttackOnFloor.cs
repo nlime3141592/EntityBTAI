@@ -40,6 +40,8 @@ namespace UnchordMetroidvania
         private float m_leftCooltime;
         private float m_leftCoyoteTime;
         private int m_actionPhase = 0;
+        private bool m_bParryingDown;
+        private bool m_bRushDown;
         private bool m_bGoNextPhase;
         private bool m_bAttacked;
         private float m_lookDirX;
@@ -81,12 +83,14 @@ namespace UnchordMetroidvania
             player.bFixLookDirX = true;
 
             m_bCanUpdateCoyoteTime = false;
+            m_bParryingDown = false;
+            m_bRushDown = false;
             m_bGoNextPhase = false;
             m_bAttacked = false;
 
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;
-            player.pAnimator.SetInteger("actionPhase", ++m_actionPhase);
+            player.aController.ChangeActionPhase(++m_actionPhase);
 
             float ix = player.axisInput.x;
             if(ix < 0) player.lookDir.x = -1;
@@ -130,24 +134,35 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(p_bEndOfAction && player.parryingDown)
+
+            if(player.aController.bBeginOfAction)
             {
-                fsm.Change(fsm.emergencyParrying);
-                return true;
+                Debug.Log("출력 중");
+                if(player.parryingDown)
+                    m_bParryingDown = true;
+                if(player.rushDown)
+                    m_bRushDown = true;
+                if(this.CanAttack() && player.skill00)
+                    m_bGoNextPhase = true;
             }
-            else if(player.rushDown)
+
+            if(player.aController.bEndOfAction)
             {
-                fsm.Change(fsm.roll);
-                return true;
-            }
-            else if(p_bEndOfAction && m_bGoNextPhase)
-            {
-                fsm.Replay();
-                return true;
-            }
-            else if(this.CanAttack() && player.skill00)
-            {
-                m_bGoNextPhase = true;
+                if(m_bParryingDown)
+                {
+                    fsm.Change(fsm.emergencyParrying);
+                    return true;
+                }
+                else if(m_bRushDown)
+                {
+                    fsm.Change(fsm.roll);
+                    return true;
+                }
+                else if(m_bGoNextPhase)
+                {
+                    fsm.Replay();
+                    return true;
+                }
             }
 
             return false;
@@ -187,7 +202,7 @@ namespace UnchordMetroidvania
                 m_leftCoyoteTime = m_coyoteTime;
             }
 
-            player.pAnimator.SetInteger("actionPhase", 0);
+            player.aController.ChangeActionPhase(0);
         }
 
         public void UpdateCooltime()

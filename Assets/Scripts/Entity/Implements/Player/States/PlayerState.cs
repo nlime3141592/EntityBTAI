@@ -11,11 +11,6 @@ namespace UnchordMetroidvania
         public readonly int id;
         public readonly string name;
 
-        protected bool p_bBeginOfAnimation;
-        protected bool p_bBeginOfAction;
-        protected bool p_bEndOfAction;
-        protected bool p_bEndOfAnimation;
-
         public PlayerState(Player player, PlayerData data, int id, string name)
         {
             this.player = player;
@@ -26,10 +21,7 @@ namespace UnchordMetroidvania
 
         public virtual void OnStateBegin()
         {
-            p_bBeginOfAnimation = false;
-            p_bBeginOfAction = false;
-            p_bEndOfAction = false;
-            p_bEndOfAnimation = false;
+            player.aController.Reset();
         }
 
         public virtual void OnFixedUpdate()
@@ -44,25 +36,10 @@ namespace UnchordMetroidvania
             return false;
         }
 
-        public virtual void OnAnimationBegin()
-        {
-            p_bBeginOfAnimation = true;
-        }
-
-        public virtual void OnActionBegin()
-        {
-            p_bBeginOfAction = true;
-        }
-
-        public virtual void OnActionEnd()
-        {
-            p_bEndOfAction = true;
-        }
-
-        public virtual void OnAnimationEnd()
-        {
-            p_bEndOfAnimation = true;
-        }
+        public virtual void OnAnimationBegin() {}
+        public virtual void OnActionBegin() {}
+        public virtual void OnActionEnd() {}
+        public virtual void OnAnimationEnd() {}
 
         public virtual void OnStateEnd()
         {

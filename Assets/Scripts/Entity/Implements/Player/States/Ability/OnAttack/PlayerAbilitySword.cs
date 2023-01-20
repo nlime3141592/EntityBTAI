@@ -83,7 +83,7 @@ namespace UnchordMetroidvania
             if(base.OnUpdate())
                 return true;
 
-            else if(p_bEndOfAction && player.parryingDown)
+            else if(player.aController.bEndOfAction && player.parryingDown)
             {
                 fsm.Change(fsm.emergencyParrying);
                 return true;
@@ -93,7 +93,7 @@ namespace UnchordMetroidvania
             else if(Input.GetKeyDown(KeyCode.Q))
                 player.battleModule.TriggerBattleState();
             else if(Input.GetKeyDown(KeyCode.W))
-                p_bEndOfAnimation = true;
+                player.aController.bEndOfAnimation = true;
 
             return false;
         }

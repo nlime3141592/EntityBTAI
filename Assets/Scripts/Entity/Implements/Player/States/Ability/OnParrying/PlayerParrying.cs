@@ -21,7 +21,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(player.parryingUp || p_bEndOfAnimation)
+            else if(player.parryingUp || player.aController.bEndOfAnimation)
             {
                 fsm.Change(fsm.idleShort);
                 return true;

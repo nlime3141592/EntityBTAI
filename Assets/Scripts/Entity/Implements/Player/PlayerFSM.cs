@@ -127,7 +127,7 @@ namespace UnchordMetroidvania
             fps = -1;
             currentState = initState;
             currentState.OnStateBegin();
-            m_player?.ChangeAnimation(currentState);
+            m_player?.aController.ChangeAnimation(currentState.id);
         }
 
         public void Change(PlayerState nextState)
@@ -139,7 +139,7 @@ namespace UnchordMetroidvania
             fps = -1;
             currentState = nextState;
             currentState.OnStateBegin();
-            m_player?.ChangeAnimation(currentState);
+            m_player?.aController.ChangeAnimation(currentState.id);
         }
 
         public void Replay()
@@ -149,7 +149,7 @@ namespace UnchordMetroidvania
             currentState.OnStateEnd();
             fps = -1;
             currentState.OnStateBegin();
-            m_player?.ChangeAnimation(currentState);
+            m_player?.aController.ChangeAnimation(currentState.id);
         }
 
         public void End()
@@ -159,19 +159,7 @@ namespace UnchordMetroidvania
 
             currentState.OnStateEnd();
             currentState = null;
-            m_player?.ChangeAnimation(defaultState);
+            m_player?.aController.ChangeAnimation(currentState.id);
         }
-
-        // 선딜레이 시작 지점
-        public void TriggerBeginOfAnimation() => currentState.OnAnimationBegin();
-
-        // 로직 시작 지점
-        public void TriggerBeginOfAction() => currentState.OnActionBegin();
-
-        // 후딜레이 시작 지점
-        public void TriggerEndOfAction() => currentState.OnActionEnd();
-
-        // 애니메이션 종료 지점
-        public void TriggerEndOfAnimation() => currentState.OnAnimationEnd();
     }
 }

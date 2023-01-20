@@ -31,11 +31,6 @@ namespace UnchordMetroidvania
             animationResult = InvokeResult.Success;
         }
 
-        protected override void p_Debug_OnPostInvoke()
-        {
-            base.p_Debug_OnPostInvoke();
-        }
-
         public virtual void OnAggroBegin()
         {
 

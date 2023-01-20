@@ -66,7 +66,7 @@ namespace UnchordMetroidvania
 
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;
-            player.pAnimator.SetInteger("actionPhase", ++m_actionPhase);
+            player.aController.ChangeActionPhase(++m_actionPhase);
             player.vm.FreezePosition(m_actionPhase != 2, m_actionPhase == 1);
 
             // NOTE: Test battle trigger.
@@ -99,7 +99,7 @@ namespace UnchordMetroidvania
 
             if(base.OnUpdate())
                 return true;
-            else if(m_actionPhase == 1 && p_bEndOfAnimation)
+            else if(m_actionPhase == 1 && player.aController.bEndOfAnimation)
             {
                 fsm.Replay();
                 return true;
@@ -111,12 +111,12 @@ namespace UnchordMetroidvania
             }
             else if(m_actionPhase == 3)
             {
-                if(p_bEndOfAnimation)
+                if(player.aController.bEndOfAnimation)
                 {
                     fsm.Change(fsm.idleShort);
                     return true;
                 }
-                if(p_bEndOfAction && player.parryingDown)
+                if(player.aController.bEndOfAction && player.parryingDown)
                 {
                     fsm.Change(fsm.emergencyParrying);
                     return true;

@@ -7,7 +7,6 @@ namespace UnchordMetroidvania
         public static Player instance => s_m_player;
         private static Player s_m_player;
 
-        public Animator pAnimator;
         public BattleModule battleModule;
         public ElongatedHexagonCollider2D hCol;
         public Transform originFloor;
@@ -22,6 +21,7 @@ namespace UnchordMetroidvania
         public Transform originLedgeRB;
 
         public PlayerFSM fsm;
+        public AnimationController aController;
 
         public int CURRENT_STATE;
         public EntitySensorGizmoManager rangeGizmoManager;
@@ -37,11 +37,6 @@ namespace UnchordMetroidvania
         public bool skill01;
         public bool skill02;
         #endregion
-
-        public void ChangeAnimation(PlayerState state)
-        {
-            pAnimator.SetInteger("state", state.id);
-        }
 
         public void SetMoveDirOnFloor()
         {
@@ -68,25 +63,24 @@ namespace UnchordMetroidvania
 
             base.Start();
 
-            pAnimator = GetComponent<Animator>();
+            aController = GetComponent<AnimationController>();
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
             fsm = GetComponent<PlayerFSM>();
 
             rangeGizmoManager = new EntitySensorGizmoManager();
 
+            aController.OnStart();
             fsm.OnStart();
+
             fsm.Begin(fsm.idleShort);
         }
 
-        protected override void p_Debug_OnPostInvoke()
+        protected override void FixedUpdate()
         {
-            base.p_Debug_OnPostInvoke();
-
+            base.FixedUpdate();
             m_FixedUpdateOrigins();
-
             fsm.OnFixedUpdate();
-
             Debug.Log(string.Format("CurrentState: {0}", fsm.stateName));
         }
 

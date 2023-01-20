@@ -5,7 +5,7 @@ namespace UnchordMetroidvania
 {
     public class Mantis : EntityMonster
     {
-        public Animator mantisAnimator;
+        public AnimationController aController;
         public BattleModule battleModule;
         public BoxCollider2D terrainCollider; // 할당 필요
         public Transform originFloorL;
@@ -65,7 +65,7 @@ namespace UnchordMetroidvania
             m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
             GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
 
-            mantisAnimator = GetComponent<Animator>();
+            aController = GetComponent<AnimationController>();
             battleModule = GetComponent<BattleModule>();
             ai = new MonsterBaseAI<Mantis>(this);
 
@@ -76,17 +76,17 @@ namespace UnchordMetroidvania
             fsm[0] = idle;
             fsm[1] = upSlice;
 
+            aController.OnStart();
+
             ai.Set(fsm);
 
             hitColliders.Add(GetComponent<BoxCollider2D>());
         }
 
-        protected override void p_Debug_OnPostInvoke()
+        protected override void FixedUpdate()
         {
-            base.p_Debug_OnPostInvoke();
-
+            base.FixedUpdate();
             m_FixedUpdateOrigins();
-
             ai.Invoke();
         }
 

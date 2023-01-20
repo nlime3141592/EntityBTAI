@@ -31,7 +31,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(p_bEndOfAnimation)
+            else if(player.aController.bEndOfAnimation)
             {
                 if(fsm.bOnFloor)
                     fsm.Change(fsm.idleShort);

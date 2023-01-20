@@ -61,19 +61,22 @@ namespace UnchordMetroidvania
             base.p_OnInvokeBegin();
 
             instance.bFixLookDirX = true;
-            instance.mantisAnimator.SetInteger("state", 1);
+            instance.aController.ChangeAnimation(1);
         }
 
         protected override InvokeResult p_Invoke()
         {
-            return instance.animationResult;
+            if(instance.aController.bEndOfAnimation)
+                return InvokeResult.Success;
+            else
+                return InvokeResult.Running;
         }
 
         protected override void p_OnSuccess()
         {
             base.p_OnSuccess();
 
-            instance.mantisAnimator.SetInteger("state", 0);
+            instance.aController.ChangeAnimation(0);
             instance.animationResult = InvokeResult.Running;
             instance.bFixLookDirX = false;
             m_bInvoked = false;
