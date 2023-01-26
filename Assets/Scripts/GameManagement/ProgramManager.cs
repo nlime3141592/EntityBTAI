@@ -43,7 +43,7 @@ namespace UnchordMetroidvania
             Process cur = Process.GetCurrentProcess();
             int id = cur.Id;
             bool response = cur.Responding;
-            response = Window.Topmost;
+            // response = Window.Topmost;
             char cResponse = response ? 'T' : 'F';
             Console.Write($"[{id}..{cResponse}] ");
         }
