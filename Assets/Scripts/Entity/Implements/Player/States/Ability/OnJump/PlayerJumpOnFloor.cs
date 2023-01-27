@@ -2,19 +2,19 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerJumpOnFloor : _PlayerJump
+    public class PlayerJumpOnFloor : PlayerJump
     {
         private float vy;
 
-        public _PlayerJumpOnFloor(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerJumpOnFloor(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
+            base.p_OnStateBegin();
 
             vy = data.jumpOnFloorSpeed;
         }
@@ -23,7 +23,7 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            float vx = fsm.bIsRun ? data.runSpeed : data.walkSpeed;
+            float vx = player.bIsRun ? data.runSpeed : data.walkSpeed;
             float ix = player.axisInput.x;
 
             player.moveDir.x = ix;

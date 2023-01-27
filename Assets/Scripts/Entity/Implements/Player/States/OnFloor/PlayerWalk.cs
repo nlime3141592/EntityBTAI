@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public class PlayerWalk : PlayerMove
     {
-        public PlayerWalk(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerWalk(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -24,7 +24,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(fsm.bIsRun)
+            else if(player.bIsRun)
             {
                 fsm.Change(fsm.run);
                 return true;

@@ -46,8 +46,8 @@ namespace UnchordMetroidvania
         private bool m_bAttacked;
         private float m_lookDirX;
 
-        public PlayerAttackOnFloor(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerAttackOnFloor(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -77,8 +77,10 @@ namespace UnchordMetroidvania
             return canAttack;
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
+            base.p_OnStateBegin();
+
             player.battleModule.SetBattleState(this);
             player.bFixLookDirX = true;
 
@@ -90,7 +92,6 @@ namespace UnchordMetroidvania
 
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;
-            player.aController.ChangeActionPhase(++m_actionPhase);
 
             float ix = player.axisInput.x;
             if(ix < 0) player.lookDir.x = -1;
@@ -98,7 +99,13 @@ namespace UnchordMetroidvania
             m_lookDirX = player.lookDir.x;
 
             m_leftCooltime = m_cooltime;
-            base.OnStateBegin();
+        }
+
+        protected override void p_OnChangeAnimation()
+        {
+            // NOTE: 함수 호출 순서 중요. 섞지 말 것.
+            instance.aController.ChangeActionPhase(++m_actionPhase);
+            base.p_OnChangeAnimation();
         }
 
         public override void OnFixedUpdate()
@@ -112,7 +119,7 @@ namespace UnchordMetroidvania
             }
             else
             {
-                RaycastHit2D terrain = Physics2D.Raycast(player.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
+                RaycastHit2D terrain = Physics2D.Raycast(player.senseData.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
                 player.moveDir.x = 1.0f;
 
                 if(terrain.normal.y == 0)

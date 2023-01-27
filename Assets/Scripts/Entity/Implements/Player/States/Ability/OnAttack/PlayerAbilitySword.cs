@@ -30,8 +30,8 @@ namespace UnchordMetroidvania
         // variable
         private float m_leftCooltime;
 
-        public PlayerAbilitySword(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerAbilitySword(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -59,9 +59,9 @@ namespace UnchordMetroidvania
             return canAttack;
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
+            base.p_OnStateBegin();
 
             player.battleModule.SetBattleState(this);
 

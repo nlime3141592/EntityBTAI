@@ -2,15 +2,10 @@ namespace UnchordMetroidvania
 {
     public class PlayerIdleShort : PlayerIdle
     {
-        public PlayerIdleShort(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerIdleShort(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
-        }
-
-        public override void OnStateBegin()
-        {
-            base.OnStateBegin();
         }
 
         public override void OnFixedUpdate()
@@ -22,7 +17,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(fsm.nextFps >= data.shortIdleFrame)
+            else if(fsm.nextFixedFrameNumber >= data.shortIdleFrame)
             {
                 fsm.Change(fsm.idleLong);
                 return true;

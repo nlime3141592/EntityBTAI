@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public abstract class _PlayerOnAir : PlayerState
+    public abstract class PlayerOnAir : PlayerState
     {
-        public _PlayerOnAir(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerOnAir(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -29,7 +29,7 @@ namespace UnchordMetroidvania
                 fsm.Change(fsm.attackOnAir);
                 return true;
             }
-            else if(fsm.leftAirJumpCount > 0 && player.jumpDown)
+            else if(player.leftAirJumpCount > 0 && player.jumpDown)
             {
                 fsm.Change(fsm.jumpOnAir);
                 return true;
@@ -39,23 +39,23 @@ namespace UnchordMetroidvania
                 fsm.Change(fsm.dash);
                 return true;
             }
-            else if(fsm.bOnFloor)
+            else if(player.senseData.bOnFloor)
             {
                 fsm.Change(fsm.idleShort);
                 return true;
             }
-            else if(fsm.bOnDetectFloor)
+            else if(player.senseData.bOnDetectFloor)
             {
                 return false;
             }
             else if(player.axisInput.x != 0)
             {
-                if(fsm.bOnLedge)
+                if(player.senseData.bOnLedge)
                 {
                     fsm.Change(fsm.climbLedge);
                     return true;
                 }
-                else if(fsm.bOnWallFront)
+                else if(player.senseData.bOnWallFront)
                 {
                     fsm.Change(fsm.idleWallFront);
                     return true;

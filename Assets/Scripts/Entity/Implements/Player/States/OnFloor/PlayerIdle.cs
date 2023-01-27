@@ -1,16 +1,17 @@
 namespace UnchordMetroidvania
 {
-    public class PlayerIdle : _PlayerOnFloor
+    public class PlayerIdle : PlayerOnFloor
     {
-        public PlayerIdle(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerIdle(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
+            base.p_OnStateBegin();
+
             player.vm.FreezePositionX();
             player.vm.MeltPositionY();
         }
@@ -37,7 +38,7 @@ namespace UnchordMetroidvania
             }
             else if(player.axisInput.x != 0)
             {
-                if(fsm.bIsRun)
+                if(player.bIsRun)
                     fsm.Change(fsm.run);
                 else
                     fsm.Change(fsm.walk);

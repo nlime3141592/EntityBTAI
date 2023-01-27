@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerOnLedge : PlayerState
+    public class PlayerOnLedge : PlayerState
     {
-        public _PlayerOnLedge(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerOnLedge(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }

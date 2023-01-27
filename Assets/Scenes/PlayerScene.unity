@@ -420,7 +420,6 @@ GameObject:
   - component: {fileID: 254749479}
   - component: {fileID: 254749480}
   - component: {fileID: 254749483}
-  - component: {fileID: 254749484}
   - component: {fileID: 254749485}
   m_Layer: 7
   m_Name: Player
@@ -442,6 +441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physics: {fileID: 254749478}
+  aController: {fileID: 0}
   hitColliders: []
   bFixLookDirX: 0
   bFixLookDirY: 1
@@ -473,18 +473,55 @@ MonoBehaviour:
   fixTakenDamage: 0
   battleModule: {fileID: 0}
   hCol: {fileID: 0}
-  originFloor: {fileID: 371345137}
-  originCeil: {fileID: 2045168507}
-  originWallLT: {fileID: 1450964779}
-  originWallRT: {fileID: 967353354}
-  originWallLB: {fileID: 1330391875}
-  originWallRB: {fileID: 1199461150}
-  originLedgeLT: {fileID: 641603062}
-  originLedgeRT: {fileID: 1571468204}
-  originLedgeLB: {fileID: 1539210310}
-  originLedgeRB: {fileID: 1375081707}
-  fsm: {fileID: 0}
-  aController: {fileID: 0}
+  senseData:
+    originFloor: {fileID: 371345137}
+    originCeil: {fileID: 2045168507}
+    originWallLT: {fileID: 1450964779}
+    originWallRT: {fileID: 967353354}
+    originWallLB: {fileID: 1330391875}
+    originWallRB: {fileID: 1199461150}
+    originLedgeLT: {fileID: 641603062}
+    originLedgeRT: {fileID: 1571468204}
+    originLedgeLB: {fileID: 1539210310}
+    originLedgeRB: {fileID: 1375081707}
+    bOnDetectFloor: 0
+    bOnFloor: 0
+    bOnCeil: 0
+    bOnWallFrontT: 0
+    bOnWallFrontB: 0
+    bOnWallFront: 0
+    bOnWallBackT: 0
+    bOnWallBackB: 0
+    bOnWallBack: 0
+    bOnLedgeHorizontal: 0
+    bOnLedgeVertical: 0
+    bOnLedge: 0
+  data:
+    detectLength: 0.5
+    hitLength: 0.06
+    ledgerp: 0.1
+    ledgeVerticalLengthWeight: 0.6
+    walkSpeed: 6
+    runSpeed: 12
+    shortIdleFrame: 100
+    minFreeFallSpeed: -12
+    gravity: -49.5
+    glidingSpeed: -3
+    glidingAirForce: 20
+    minSlidingWallFrontSpeed: -6
+    slidingWallGravity: -9.81
+    jumpOnFloorForce: 49.5
+    jumpOnFloorSpeed: 16
+    jumpOnAirForce: 49.5
+    jumpOnAirSpeed: 20
+    maxAirJumpCount: 1
+    jumpOnWallForce: 49.5
+    jumpOnWallSpeedX: 3
+    jumpOnWallSpeedY: 16
+    rollFrame: 15
+    rollSpeed: 16
+    dashFrame: 7
+    dashSpeed: 32
   CURRENT_STATE: 0
   jumpDown: 0
   jumpUp: 0
@@ -495,6 +532,9 @@ MonoBehaviour:
   skill00: 0
   skill01: 0
   skill02: 0
+  bIsRun: 1
+  leftAirJumpCount: 0
+  cameraOffset: {x: 0, y: 0}
 --- !u!114 &254749476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -674,59 +714,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canInput: 0
---- !u!114 &254749484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254749474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54cada733dd7847429a152db4e568342, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bOnDetectFloor: 0
-  bOnFloor: 0
-  bOnCeil: 0
-  bOnWallFrontT: 0
-  bOnWallFrontB: 0
-  bOnWallFront: 0
-  bOnWallBackT: 0
-  bOnWallBackB: 0
-  bOnWallBack: 0
-  bOnLedgeHorizontal: 0
-  bOnLedgeVertical: 0
-  bOnLedge: 0
-  data:
-    detectLength: 0.5
-    hitLength: 0.06
-    ledgerp: 0.1
-    ledgeVerticalLengthWeight: 0.6
-    walkSpeed: 6
-    runSpeed: 12
-    shortIdleFrame: 100
-    minFreeFallSpeed: -12
-    gravity: -49.5
-    glidingSpeed: -3
-    glidingAirForce: 20
-    minSlidingWallFrontSpeed: -6
-    slidingWallGravity: -9.81
-    jumpOnFloorForce: 49.5
-    jumpOnFloorSpeed: 16
-    jumpOnAirForce: 49.5
-    jumpOnAirSpeed: 20
-    maxAirJumpCount: 1
-    jumpOnWallForce: 49.5
-    jumpOnWallSpeedX: 3
-    jumpOnWallSpeedY: 16
-    rollFrame: 15
-    rollSpeed: 16
-    dashFrame: 7
-    dashSpeed: 32
-  bIsRun: 1
-  leftAirJumpCount: 0
-  cameraOffset: {x: 0, y: 0}
 --- !u!114 &254749485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +726,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
 --- !u!1 &291051158
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,7 +780,7 @@ GameObject:
   m_Component:
   - component: {fileID: 371345137}
   m_Layer: 7
-  m_Name: fOrigin
+  m_Name: originFloor
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1363,7 +1354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 641603062}
   m_Layer: 7
-  m_Name: hlOrigin
+  m_Name: originLedgeLT
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1693,7 +1684,7 @@ GameObject:
   m_Component:
   - component: {fileID: 967353354}
   m_Layer: 7
-  m_Name: rtOrigin
+  m_Name: originWallRT
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1885,7 +1876,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1199461150}
   m_Layer: 7
-  m_Name: rbOrigin
+  m_Name: originWallRB
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2116,7 +2107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1330391875}
   m_Layer: 7
-  m_Name: lbOrigin
+  m_Name: originWallLB
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2291,7 +2282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1375081707}
   m_Layer: 7
-  m_Name: frOrigin
+  m_Name: originLedgeRB
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2354,7 +2345,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1450964779}
   m_Layer: 7
-  m_Name: ltOrigin
+  m_Name: originWallLT
   m_TagString: Untagged
   m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2420,7 +2411,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1539210310}
   m_Layer: 7
-  m_Name: flOrigin
+  m_Name: originLedgeLB
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2526,7 +2517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1571468204}
   m_Layer: 7
-  m_Name: hrOrigin
+  m_Name: originLedgeRT
   m_TagString: Untagged
   m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -2721,7 +2712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2045168507}
   m_Layer: 7
-  m_Name: hOrigin
+  m_Name: originCeil
   m_TagString: Untagged
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

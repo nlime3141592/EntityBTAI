@@ -2,17 +2,17 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public abstract class PlayerMove : _PlayerOnFloor
+    public abstract class PlayerMove : PlayerOnFloor
     {
-        public PlayerMove(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerMove(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
+            base.p_OnStateBegin();
 
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
@@ -21,8 +21,7 @@ namespace UnchordMetroidvania
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-
-            player.SetMoveDirOnFloor();
+            player.senseData.UpdateMoveDir(player);
         }
 
         public override bool OnUpdate()

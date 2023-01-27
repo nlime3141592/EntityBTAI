@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerGliding : _PlayerOnAir
+    public class PlayerGliding : PlayerOnAir
     {
-        public _PlayerGliding(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerGliding(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -14,7 +14,7 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            float vx = fsm.bIsRun ? data.runSpeed : data.walkSpeed;
+            float vx = player.bIsRun ? data.runSpeed : data.walkSpeed;
             float ix = player.axisInput.x;
 
             player.moveDir.x = ix;

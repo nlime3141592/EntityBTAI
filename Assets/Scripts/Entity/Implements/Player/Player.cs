@@ -9,19 +9,10 @@ namespace UnchordMetroidvania
 
         public BattleModule battleModule;
         public ElongatedHexagonCollider2D hCol;
-        public Transform originFloor;
-        public Transform originCeil;
-        public Transform originWallLT;
-        public Transform originWallRT;
-        public Transform originWallLB;
-        public Transform originWallRB;
-        public Transform originLedgeLT;
-        public Transform originLedgeRT;
-        public Transform originLedgeLB;
-        public Transform originLedgeRB;
 
-        public PlayerFSM fsm;
-        public AnimationController aController;
+        public PlayerTerrainSenseData senseData;
+        public PlayerData data;
+        public PlayerFsm fsm;
 
         public int CURRENT_STATE;
         public EntitySensorGizmoManager rangeGizmoManager;
@@ -38,16 +29,9 @@ namespace UnchordMetroidvania
         public bool skill02;
         #endregion
 
-        public void SetMoveDirOnFloor()
-        {
-            RaycastHit2D terrain = Physics2D.Raycast(originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
-            moveDir.x = 1.0f;
-
-            if(terrain.normal.y == 0)
-                moveDir.y = 0;
-            else
-                moveDir.y = -terrain.normal.x / terrain.normal.y;
-        }
+        public bool bIsRun = false;
+        public int leftAirJumpCount = 0;
+        public Vector2 cameraOffset = Vector2.zero;
 
         protected override void Start()
         {
@@ -63,15 +47,11 @@ namespace UnchordMetroidvania
 
             base.Start();
 
-            aController = GetComponent<AnimationController>();
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
-            fsm = GetComponent<PlayerFSM>();
+            fsm = new PlayerFsm(this);
 
             rangeGizmoManager = new EntitySensorGizmoManager();
-
-            aController.OnStart();
-            fsm.OnStart();
 
             fsm.Begin(fsm.idleShort);
         }
@@ -79,7 +59,7 @@ namespace UnchordMetroidvania
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
-            m_FixedUpdateOrigins();
+            senseData.UpdateOrigins(hCol.head.bounds, hCol.feet.bounds);
             fsm.OnFixedUpdate();
             Debug.Log(string.Format("CurrentState: {0}", fsm.stateName));
         }
@@ -118,26 +98,7 @@ namespace UnchordMetroidvania
 
             fsm.OnUpdate();
 
-            CURRENT_STATE = fsm.stateID;
-        }
-
-        private void m_FixedUpdateOrigins()
-        {
-            Bounds head = hCol.head.bounds;
-            Bounds feet = hCol.feet.bounds;
-
-            originFloor.position = new Vector2(feet.center.x, feet.min.y);
-            originCeil.position = new Vector2(head.center.x, head.max.y);
-
-            originWallLT.position = new Vector2(head.min.x, head.center.y);
-            originWallRT.position = new Vector2(head.max.x, head.center.y);
-            originWallLB.position = new Vector2(feet.min.x, feet.center.y);
-            originWallRB.position = new Vector2(feet.max.x, feet.center.y);
-
-            originLedgeLT.position = new Vector2(head.min.x, head.max.y);
-            originLedgeRT.position = new Vector2(head.max.x, head.max.y);
-            originLedgeLB.position = new Vector2(feet.min.x, feet.min.y);
-            originLedgeRB.position = new Vector2(feet.max.x, feet.min.y);
+            CURRENT_STATE = fsm.stateId;
         }
     }
 }

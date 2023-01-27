@@ -2,18 +2,19 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public abstract class _PlayerOnFloor : PlayerState
+    public abstract class PlayerOnFloor : PlayerState
     {
-        public _PlayerOnFloor(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerOnFloor(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
-            fsm.leftAirJumpCount = data.maxAirJumpCount;
+            base.p_OnStateBegin();
+
+            player.leftAirJumpCount = player.data.maxAirJumpCount;
         }
 
         public override void OnFixedUpdate()
@@ -55,7 +56,7 @@ namespace UnchordMetroidvania
                 fsm.Change(fsm.roll);
                 return true;
             }
-            else if(!fsm.bOnFloor)
+            else if(!player.senseData.bOnFloor)
             {
                 fsm.Change(fsm.freeFall);
                 return true;

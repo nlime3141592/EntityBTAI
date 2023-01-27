@@ -4,7 +4,6 @@ namespace UnchordMetroidvania
     {
         public SandBagHard stateHard;
         public SandBagSoft stateSoft;
-        public AnimationController aController;
 
         public SandBagState currentState = null;
         public InvokeResult currentInvocation = InvokeResult.Failure;

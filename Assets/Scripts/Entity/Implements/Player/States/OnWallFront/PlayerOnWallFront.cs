@@ -4,16 +4,17 @@ namespace UnchordMetroidvania
 {
     public abstract class PlayerOnWallFront : PlayerState
     {
-        public PlayerOnWallFront(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerOnWallFront(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
-            fsm.leftAirJumpCount = data.maxAirJumpCount;
+            base.p_OnStateBegin();
+
+            player.leftAirJumpCount = data.maxAirJumpCount;
         }
 
         public override bool OnUpdate()
@@ -25,7 +26,7 @@ namespace UnchordMetroidvania
                 fsm.Change(fsm.jumpOnWallFront);
                 return true;
             }
-            else if(fsm.bOnDetectFloor)
+            else if(player.senseData.bOnDetectFloor)
             {
                 fsm.Change(fsm.freeFall);
                 return true;
@@ -35,7 +36,7 @@ namespace UnchordMetroidvania
                 fsm.Change(fsm.freeFall);
                 return true;
             }
-            else if(!fsm.bOnWallFront)
+            else if(!player.senseData.bOnWallFront)
             {
                 fsm.Change(fsm.freeFall);
                 return true;

@@ -1,19 +1,18 @@
 namespace UnchordMetroidvania
 {
-    public abstract class _PlayerAbility : PlayerState
+    public abstract class PlayerAbility : PlayerState
     {
         protected bool p_bEndOfAbility;
 
-        public _PlayerAbility(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerAbility(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
-
+            base.p_OnStateBegin();
             p_bEndOfAbility = false;
         }
 
@@ -23,7 +22,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(p_bEndOfAbility)
             {
-                if(fsm.bOnFloor)
+                if(player.senseData.bOnFloor)
                     fsm.Change(fsm.idleShort);
                 else
                     fsm.Change(fsm.freeFall);

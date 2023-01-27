@@ -22,7 +22,7 @@ namespace UnchordMetroidvania
 
         public virtual void OnStateBegin() {}
         public virtual void OnFixedUpdate() {}
-        public virtual void OnUpdate() {}
+        public virtual bool OnUpdate() { return false; }
         public virtual void OnLateUpdate() {}
 
         public virtual void OnStateEnd()

@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerSit : PlayerStand
+    public class PlayerSit : PlayerStand
     {
-        public _PlayerSit(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerSit(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -13,7 +13,7 @@ namespace UnchordMetroidvania
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            fsm.cameraOffset = Vector2.down;
+            player.cameraOffset = Vector2.down;
         }
     }
 }

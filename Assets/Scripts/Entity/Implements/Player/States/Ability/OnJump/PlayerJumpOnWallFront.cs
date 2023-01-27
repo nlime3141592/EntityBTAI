@@ -2,19 +2,19 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerJumpOnWallFront : _PlayerJump
+    public class PlayerJumpOnWallFront : PlayerJump
     {
         private float vy;
 
-        public _PlayerJumpOnWallFront(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerJumpOnWallFront(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
+            base.p_OnStateBegin();
 
             player.bFixLookDirX = true;
             vy = data.jumpOnWallSpeedY;

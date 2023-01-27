@@ -1,11 +1,9 @@
-using UnityEngine;
-
 namespace UnchordMetroidvania
 {
-    public class PlayerDash : _PlayerAbility
+    public class PlayerDash : PlayerRush
     {
-        public PlayerDash(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerDash(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -14,13 +12,13 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            if(fsm.nextFps >= data.dashFrame)
+            if(fsm.nextFixedFrameNumber >= data.dashFrame)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;
                 return;
             }
-            else if(fsm.bOnWallFrontB || fsm.bOnWallFrontT)
+            else if(player.senseData.bOnWallFrontB || player.senseData.bOnWallFrontT)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;
@@ -40,7 +38,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(fsm.leftAirJumpCount > 0 && player.jumpDown)
+            else if(player.leftAirJumpCount > 0 && player.jumpDown)
             {
                 fsm.Change(fsm.jumpOnAir);
                 return true;

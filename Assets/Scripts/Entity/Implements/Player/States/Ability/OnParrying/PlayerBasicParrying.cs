@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public class PlayerBasicParrying : PlayerParrying
     {
-        public PlayerBasicParrying(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerBasicParrying(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }

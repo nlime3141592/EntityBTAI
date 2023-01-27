@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public abstract class PlayerParrying : _PlayerAbility
+    public abstract class PlayerParrying : PlayerAbility
     {
-        public PlayerParrying(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerParrying(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -14,7 +14,7 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            // player.SetMoveDirOnFloor();
+            // player.senseData.UpdateMoveDir(player);
         }
 
         public override bool OnUpdate()

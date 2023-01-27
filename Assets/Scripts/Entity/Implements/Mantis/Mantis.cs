@@ -5,7 +5,6 @@ namespace UnchordMetroidvania
 {
     public class Mantis : EntityMonster
     {
-        public AnimationController aController;
         public BattleModule battleModule;
         public BoxCollider2D terrainCollider; // 할당 필요
         public Transform originFloorL;

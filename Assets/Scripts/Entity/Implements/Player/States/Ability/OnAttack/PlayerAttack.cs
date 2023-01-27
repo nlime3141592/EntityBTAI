@@ -5,22 +5,17 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public abstract class PlayerAttack : _PlayerAbility
+    public abstract class PlayerAttack : PlayerAbility
     {
         protected readonly List<EntityBase> targets;
 
-        public PlayerAttack(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerAttack(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
-            targets = new List<EntityBase>(20);
+            targets = new List<EntityBase>(16);
         }
 
         public abstract bool CanAttack();
-
-        public override void OnStateBegin()
-        {
-            base.OnStateBegin();
-        }
 
         public override void OnFixedUpdate()
         {
@@ -33,7 +28,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(player.aController.bEndOfAnimation)
             {
-                if(fsm.bOnFloor)
+                if(player.senseData.bOnFloor)
                     fsm.Change(fsm.idleShort);
                 else
                     fsm.Change(fsm.freeFall);

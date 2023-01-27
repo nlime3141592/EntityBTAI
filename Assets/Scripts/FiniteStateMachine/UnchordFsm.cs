@@ -26,9 +26,9 @@ namespace UnchordMetroidvania
 
         }
 
-        public override void OnUpdate()
+        public override bool OnUpdate()
         {
-            m_currentState.OnUpdate();
+            return m_currentState.OnUpdate();
         }
 
         public override void OnFixedUpdate()

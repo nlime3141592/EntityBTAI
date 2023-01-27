@@ -8,10 +8,10 @@ namespace UnchordMetroidvania
     {
         #region Components
         [Header("Entity Components")]
-        public Rigidbody2D physics;
-        public TerrainSensor sensor;
-        public VelocityModule2D vm;
+        [HideInInspector] public Rigidbody2D physics;
+        [HideInInspector] public AnimationController aController;
         public List<Collider2D> hitColliders;
+        public VelocityModule2D vm;
         #endregion
 
         #region Entity AI
@@ -63,14 +63,6 @@ namespace UnchordMetroidvania
         [Header("Debug Options")]
         public EntitySensorGizmoManager skillRangeGizmoManager;
         #endregion
-
-        private void OnValidate()
-        {
-            if(!Application.isEditor || Application.isPlaying)
-                return;
-
-            p_OnValidate();
-        }
 
         public float Heal(float dHealth)
         {
@@ -171,6 +163,14 @@ namespace UnchordMetroidvania
 
         }
 
+        private void OnValidate()
+        {
+            if(!Application.isEditor || Application.isPlaying)
+                return;
+
+            p_OnValidate();
+        }
+
         protected virtual void p_OnValidate()
         {
             if(maxHealth != null) health = maxHealth.finalValue;
@@ -187,8 +187,10 @@ namespace UnchordMetroidvania
             skillRangeGizmoManager = new EntitySensorGizmoManager();
             hitColliders = new List<Collider2D>();
             TryGetComponent<Rigidbody2D>(out physics);
-            sensor = new TerrainSensor();
             vm = new VelocityModule2D(physics);
+            TryGetComponent<AnimationController>(out aController);
+
+            aController.OnStart();
         }
 
         protected virtual void FixedUpdate()

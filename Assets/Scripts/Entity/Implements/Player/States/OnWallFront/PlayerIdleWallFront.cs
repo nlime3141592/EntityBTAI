@@ -2,15 +2,15 @@ namespace UnchordMetroidvania
 {
     public class PlayerIdleWallFront : PlayerOnWallFront
     {
-        public PlayerIdleWallFront(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerIdleWallFront(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
+            base.p_OnStateBegin();
 
             player.vm.FreezePositionX();
             player.vm.MeltPositionY();

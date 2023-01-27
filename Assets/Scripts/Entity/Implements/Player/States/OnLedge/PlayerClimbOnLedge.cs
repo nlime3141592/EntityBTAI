@@ -2,21 +2,21 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _PlayerClimbOnLedge : _PlayerOnLedge
+    public class PlayerClimbOnLedge : PlayerOnLedge
     {
         private Vector2 playerPosition;
         private Vector2 playerTeleportPosition;
         private bool bInitState;
 
-        public _PlayerClimbOnLedge(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerClimbOnLedge(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
+            base.p_OnStateBegin();
 
             player.vm.FreezePositionX();
             player.vm.FreezePositionY();
@@ -41,15 +41,15 @@ namespace UnchordMetroidvania
 
             if(player.lookDir.x < 0)
             {
-                rayOriginX = player.originWallLT.position;
-                rayOriginY = player.originLedgeLT.position;
+                rayOriginX = player.senseData.originWallLT.position;
+                rayOriginY = player.senseData.originLedgeLT.position;
                 dirX = Vector2.left;
                 dirY = Vector2.down;
             }
             else
             {
-                rayOriginX = player.originWallRT.position;
-                rayOriginY = player.originLedgeRT.position;
+                rayOriginX = player.senseData.originWallRT.position;
+                rayOriginY = player.senseData.originLedgeRT.position;
                 dirX = Vector2.right;
                 dirY = Vector2.down;
             }
@@ -57,7 +57,7 @@ namespace UnchordMetroidvania
             hitX = Physics2D.Raycast(rayOriginX, dirX, dLength, layerMask);
             hitY = Physics2D.Raycast(rayOriginY + dirX * ledgerp, dirY, dLength, layerMask);
             dtPosition = (Vector2)player.transform.position - rayOriginX;
-            dfPosition = player.transform.position - player.originFloor.position;
+            dfPosition = player.transform.position - player.senseData.originFloor.position;
             handPosition.x = hitX.point.x;
             handPosition.y = hitY.point.y;
 

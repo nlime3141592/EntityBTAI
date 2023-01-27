@@ -2,10 +2,10 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class PlayerRoll : _PlayerAbility
+    public class PlayerRoll : PlayerRush
     {
-        public PlayerRoll(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerRoll(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
@@ -14,15 +14,15 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            RaycastHit2D terrain = Physics2D.Raycast(player.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
+            RaycastHit2D terrain = Physics2D.Raycast(player.senseData.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
 
-            if(fsm.nextFps >= data.rollFrame)
+            if(fsm.nextFixedFrameNumber >= data.rollFrame)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;
                 return;
             }
-            else if(!terrain || fsm.bOnWallFrontB || fsm.bOnWallFrontT)
+            else if(!terrain || player.senseData.bOnWallFrontB || player.senseData.bOnWallFrontT)
             {
                 if(!p_bEndOfAbility)
                     p_bEndOfAbility = true;

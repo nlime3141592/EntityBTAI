@@ -2,19 +2,19 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public abstract class _PlayerJump : _PlayerAbility
+    public abstract class PlayerJump : PlayerAbility
     {
         protected bool bJumpCanceled;
 
-        public _PlayerJump(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerJump(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
 
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
-            base.OnStateBegin();
+            base.p_OnStateBegin();
 
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
@@ -36,7 +36,7 @@ namespace UnchordMetroidvania
                 fsm.Change(fsm.attackOnAir);
                 return true;
             }
-            else if(fsm.bOnCeil)
+            else if(player.senseData.bOnCeil)
             {
                 fsm.Change(fsm.freeFall);
                 return true;
@@ -47,7 +47,7 @@ namespace UnchordMetroidvania
                 p_OnJumpCanceled();
                 return false;
             }
-            else if(fsm.leftAirJumpCount > 0 && player.jumpDown)
+            else if(player.leftAirJumpCount > 0 && player.jumpDown)
             {
                 fsm.Change(fsm.jumpOnAir);
                 return true;

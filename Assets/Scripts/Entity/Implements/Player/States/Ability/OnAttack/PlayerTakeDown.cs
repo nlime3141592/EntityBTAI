@@ -5,7 +5,7 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public class PlayerTakeDown : _PlayerAbility, IBattleState
+    public class PlayerTakeDown : PlayerAbility, IBattleState
     {
         // property
         public int targetCount => m_targetCount;
@@ -36,10 +36,10 @@ namespace UnchordMetroidvania
         private int m_actionPhase;
         private float m_leftCooltime;
 
-        public PlayerTakeDown(Player player, PlayerData data, int id, string name)
-        : base(player, data, id, name)
+        public PlayerTakeDown(Player _player, int _id, string _name)
+        : base(_player, _id, _name)
         {
-            m_targets = new List<EntityBase>(m_targetCount);
+
         }
 
         void IBattleState.OnBattle()
@@ -59,14 +59,16 @@ namespace UnchordMetroidvania
             }
         }
 
-        public override void OnStateBegin()
+        protected override void p_OnStateBegin()
         {
+            base.p_OnStateBegin();
+
             player.battleModule.SetBattleState(this);
             player.bFixLookDirX = true;
 
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;
-            player.aController.ChangeActionPhase(++m_actionPhase);
+
             player.vm.FreezePosition(m_actionPhase != 2, m_actionPhase == 1);
 
             // NOTE: Test battle trigger.
@@ -74,7 +76,12 @@ namespace UnchordMetroidvania
             if(m_actionPhase == 3) player.battleModule.TriggerBattleState();
 
             m_leftCooltime = m_cooltime;
-            base.OnStateBegin();
+        }
+
+        protected override void p_OnChangeAnimation()
+        {
+            player.aController.ChangeActionPhase(++m_actionPhase);
+            base.p_OnChangeAnimation();
         }
 
         public override void OnFixedUpdate()
@@ -104,7 +111,7 @@ namespace UnchordMetroidvania
                 fsm.Replay();
                 return true;
             }
-            else if(m_actionPhase == 2 && fsm.bOnFloor)
+            else if(m_actionPhase == 2 && player.senseData.bOnFloor)
             {
                 fsm.Replay();
                 return true;
