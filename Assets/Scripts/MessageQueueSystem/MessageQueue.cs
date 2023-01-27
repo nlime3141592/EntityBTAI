@@ -38,12 +38,14 @@ namespace UnchordMetroidvania
             if(m_messages.Count == 0)
                 return false;
 
+            m_bCanPass = false;
             m_messages.Dequeue();
             return true;
         }
 
         public IMessage<T> Peek()
         {
+            m_bCanPass = true;
             return m_messages.Peek() ?? null;
         }
     }
