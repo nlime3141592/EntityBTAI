@@ -59,7 +59,7 @@ namespace UnchordMetroidvania
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
-            senseData.UpdateOrigins(hCol.head.bounds, hCol.feet.bounds);
+            senseData.UpdateOrigins(this);
             fsm.OnFixedUpdate();
             Debug.Log(string.Format("CurrentState: {0}", fsm.stateName));
         }

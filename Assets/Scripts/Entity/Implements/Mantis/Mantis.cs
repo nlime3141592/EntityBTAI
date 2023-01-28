@@ -19,6 +19,7 @@ namespace UnchordMetroidvania
         public MantisIdle idle;
         public MantisUpSlice upSlice;
         public MantisFSM fsm;
+        public MantisTerrainSenseData senseData;
 
         public bool bOnFloor;
         public bool bOnCeil;

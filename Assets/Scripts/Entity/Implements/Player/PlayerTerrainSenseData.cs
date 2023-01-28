@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public class PlayerTerrainSenseData
+    public class PlayerTerrainSenseData : TerrainSenseData<Player>
     {
         // NOTE: Should allocate on hierarchy.
         public Transform originFloor;
@@ -41,8 +41,11 @@ namespace UnchordMetroidvania
         private bool m_tmp_bDetectLedgeHorizontal = true;
         private bool m_tmp_bDetectLedgeVertical;
 
-        public void UpdateOrigins(Bounds head, Bounds feet)
+        public override void UpdateOrigins(Player player)
         {
+            Bounds head = player.hCol.head.bounds;
+            Bounds feet = player.hCol.feet.bounds;
+
             originFloor.position = new Vector2(feet.center.x, feet.min.y);
             originCeil.position = new Vector2(head.center.x, head.max.y);
 
@@ -57,32 +60,33 @@ namespace UnchordMetroidvania
             originLedgeRB.position = new Vector2(feet.max.x, feet.min.y);
         }
 
-        public void UpdateData(Player player)
+        public override void UpdateData(Player player)
         {
             PlayerData data = player.data;
+            float lx = player.lookDir.x;
 
             m_tmp_bDetectFloor = TerrainSensor.CheckFloor(originFloor.transform.position, data.detectLength);
             m_tmp_bHitFloor = TerrainSensor.CheckFloor(originFloor.transform.position, data.hitLength);
             m_tmp_bHitCeil = TerrainSensor.CheckCeil(originCeil.transform.position, data.hitLength);
 
-            if(player.lookDir.x > 0)
+            if(lx > 0)
             {
-                m_tmp_bHitWallFrontT = TerrainSensor.CheckWallFront(originWallRT.position, data.hitLength, player.lookDir.x);
-                m_tmp_bHitWallFrontB = TerrainSensor.CheckWallFront(originWallRB.position, data.hitLength, player.lookDir.x);
-                m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallLT.position, data.hitLength, player.lookDir.x);
-                m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallLB.position, data.hitLength, player.lookDir.x);
+                m_tmp_bHitWallFrontT = TerrainSensor.CheckWallFront(originWallRT.position, data.hitLength, lx);
+                m_tmp_bHitWallFrontB = TerrainSensor.CheckWallFront(originWallRB.position, data.hitLength, lx);
+                m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallLT.position, data.hitLength, lx);
+                m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallLB.position, data.hitLength, lx);
 
-                m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeRT.position, data.detectLength, player.lookDir.x);
+                m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeRT.position, data.detectLength, lx);
                 m_tmp_bDetectLedgeVertical = TerrainSensor.CheckLedgeVerticalDown(originLedgeRT.position + Vector3.right * data.ledgerp, data.detectLength * data.ledgeVerticalLengthWeight);
             }
             else if(player.lookDir.x < 0)
             {
-                m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallRT.position, data.hitLength, player.lookDir.x);
-                m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallRB.position, data.hitLength, player.lookDir.x);
-                m_tmp_bHitWallFrontT = TerrainSensor.CheckWallFront(originWallLT.position, data.hitLength, player.lookDir.x);
-                m_tmp_bHitWallFrontB = TerrainSensor.CheckWallFront(originWallLB.position, data.hitLength, player.lookDir.x);
+                m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallRT.position, data.hitLength, lx);
+                m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallRB.position, data.hitLength, lx);
+                m_tmp_bHitWallFrontT = TerrainSensor.CheckWallFront(originWallLT.position, data.hitLength, lx);
+                m_tmp_bHitWallFrontB = TerrainSensor.CheckWallFront(originWallLB.position, data.hitLength, lx);
 
-                m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeLT.position, data.detectLength, player.lookDir.x);
+                m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeLT.position, data.detectLength, lx);
                 m_tmp_bDetectLedgeVertical = TerrainSensor.CheckLedgeVerticalDown(originLedgeLT.position - Vector3.right * data.ledgerp, data.detectLength * data.ledgeVerticalLengthWeight);
             }
 
@@ -100,7 +104,7 @@ namespace UnchordMetroidvania
             bOnLedge = !m_tmp_bDetectLedgeHorizontal && m_tmp_bDetectLedgeVertical;
         }
 
-        public void UpdateMoveDir(Player player)
+        public override void UpdateMoveDir(Player player)
         {
             RaycastHit2D terrain = Physics2D.Raycast(originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
             player.moveDir.x = 1.0f;
