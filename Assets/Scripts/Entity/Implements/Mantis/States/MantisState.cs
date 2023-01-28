@@ -1,6 +1,6 @@
 namespace UnchordMetroidvania
 {
-    public abstract class MantisState : EntityState<Mantis>
+    public abstract class MantisState : MonsterState<Mantis>
     {
         protected Mantis mantis => instance;
         // protected MantisFsm fsm => instance.fsm;
