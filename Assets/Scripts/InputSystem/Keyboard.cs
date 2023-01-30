@@ -10,6 +10,14 @@ namespace UnchordMetroidvania
 
         private readonly static byte[] s_m_histories = new byte[0x100];
 
+        public static float GetAxis(bool bNegative, bool bPositive)
+        {
+            float axis = 0;
+            if(bNegative) axis -= 1;
+            if(bPositive) axis += 1;
+            return axis;
+        }
+
         public static bool GetKeyDown(KeyboardKey vKey, params KeyboardKey[] requires)
         {
             byte nextState = s_m_UpdateHistory(vKey);

@@ -685,7 +685,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   physics: {fileID: 0}
-  hitColliders: []
+  aController: {fileID: 0}
+  hitColliders:
+  - {fileID: 560320130}
+  spRenderers:
+  - {fileID: 560320131}
   bFixLookDirX: 0
   bFixLookDirY: 1
   lookDir: {x: 1, y: 1}
@@ -729,26 +733,35 @@ MonoBehaviour:
     color: {r: 1, g: 0.4292453, b: 0.4292453, a: 1}
   bPrevAggro: 0
   bAggro: 0
+  bUpdateAggroDirX: 1
+  bUpdateAggroDirY: 0
   targetTags:
   - Player
-  targets: []
-  animationResult: -1
-  mantisAnimator: {fileID: 0}
+  aggroTargets: []
   battleModule: {fileID: 0}
   terrainCollider: {fileID: 1692038689}
-  originFloorL: {fileID: 469754235}
-  originFloorR: {fileID: 383711956}
-  originCeilL: {fileID: 424448367}
-  originCeilR: {fileID: 1291517947}
-  originWallLT: {fileID: 1312413066}
-  originWallRT: {fileID: 1530392800}
-  originWallLB: {fileID: 1328607266}
-  originWallRB: {fileID: 1301721449}
+  senseData:
+    originFloorL: {fileID: 469754235}
+    originFloorR: {fileID: 383711956}
+    originCeilL: {fileID: 424448367}
+    originCeilR: {fileID: 1291517947}
+    originWallLT: {fileID: 1312413066}
+    originWallRT: {fileID: 1530392800}
+    originWallLB: {fileID: 1328607266}
+    originWallRB: {fileID: 1301721449}
+    bOnFloor: 0
+    bOnCeil: 0
+    bOnWallFront: 0
+    bOnWallBack: 0
   bOnFloor: 0
   bOnCeil: 0
   bOnWallFront: 0
   bOnWallBack: 0
   attackCount: 0
+  data:
+    wallDetectLength: 12
+    hitLength: 0.06
+    walkSpeed: 6
 --- !u!50 &560320133
 Rigidbody2D:
   serializedVersion: 4
@@ -832,6 +845,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
 --- !u!1 &739923700
 GameObject:
   m_ObjectHideFlags: 0

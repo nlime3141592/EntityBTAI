@@ -86,7 +86,29 @@ namespace UnchordMetroidvania
 
         public override void UpdateMoveDir(Mantis mantis)
         {
+            int layerMask = 1 << LayerMask.NameToLayer("Terrain");
+            RaycastHit2D terrainL = Physics2D.Raycast(originFloorL.position, Vector2.down, 0.5f, layerMask);
+            RaycastHit2D terrainR = Physics2D.Raycast(originFloorR.position, Vector2.down, 0.5f, layerMask);
+            RaycastHit2D terrain;
 
+            mantis.moveDir.x = 1.0f;
+
+            if(terrainL && terrainR)
+                if(mantis.lookDir.x < 0)
+                    terrain = terrainL;
+                else
+                    terrain = terrainR;
+            else if(terrainL)
+                terrain = terrainL;
+            else if(terrainR)
+                terrain = terrainR;
+            else
+                terrain = default(RaycastHit2D);
+
+            if(terrain.normal.y == 0)
+                mantis.moveDir.y = 0;
+            else
+                mantis.moveDir.y = -terrain.normal.x / terrain.normal.y;
         }
     }
 }

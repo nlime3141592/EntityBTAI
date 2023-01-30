@@ -7,5 +7,23 @@ namespace UnchordMetroidvania
         {
             
         }
+
+        protected override void p_OnStateBegin()
+        {
+            base.p_OnStateBegin();
+        }
+
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
+        }
+
+        public override bool OnUpdate()
+        {
+            if(base.OnUpdate())
+                return true;
+
+            return false;
+        }
     }
 }

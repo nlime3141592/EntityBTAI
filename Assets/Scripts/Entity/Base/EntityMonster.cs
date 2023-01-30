@@ -10,25 +10,29 @@ namespace UnchordMetroidvania
         public float waitDiffSecondOnChangeAggro = 0.25f;
         public float waitSecondOnChangeAction = 1.5f;
         public float waitDiffSecondOnChangeAction = 0.5f;
+
+        [Header("Aggro Options")]
         public LTRB aggroRange;
         public EntitySensorGizmoOption aggroDebugOption;
         public bool bPrevAggro = false;
         public bool bAggro = false;
+        public bool bUpdateAggroDirX = true;
+        public bool bUpdateAggroDirY = false;
         public List<string> targetTags;
-        public List<EntityBase> targets;
-        public InvokeResult animationResult = InvokeResult.Running;
+        public List<EntityBase> aggroTargets;
+
+        public System.Random prng { get; private set; }
 
         protected override void Start()
         {
             base.Start();
-
-            targets = new List<EntityBase>(4);
+            aggroTargets = new List<EntityBase>(4);
+            prng = new System.Random();
         }
 
-        public void PublishEndOfAnimation()
+        protected override void FixedUpdate()
         {
-            Debug.Log("End Animation.");
-            animationResult = InvokeResult.Success;
+            base.FixedUpdate();
         }
 
         public virtual void OnAggroBegin()

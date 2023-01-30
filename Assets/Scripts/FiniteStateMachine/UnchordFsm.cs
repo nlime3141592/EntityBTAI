@@ -28,12 +28,12 @@ namespace UnchordMetroidvania
 
         public override bool OnUpdate()
         {
-            return m_currentState.OnUpdate();
+            return m_currentState?.OnUpdate() ?? false;
         }
 
         public override void OnFixedUpdate()
         {
-            m_currentState.OnFixedUpdate();
+            m_currentState?.OnFixedUpdate();
         }
 
         public bool Begin(UnchordState<T> first)

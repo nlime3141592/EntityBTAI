@@ -419,7 +419,6 @@ GameObject:
   - component: {fileID: 254749475}
   - component: {fileID: 254749479}
   - component: {fileID: 254749480}
-  - component: {fileID: 254749483}
   - component: {fileID: 254749485}
   m_Layer: 7
   m_Name: Player
@@ -442,7 +441,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   physics: {fileID: 254749478}
   aController: {fileID: 0}
-  hitColliders: []
+  hitColliders:
+  - {fileID: 254749479}
+  spRenderers:
+  - {fileID: 254749481}
   bFixLookDirX: 0
   bFixLookDirY: 1
   lookDir: {x: 1, y: 1}
@@ -701,19 +703,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &254749483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254749474}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb4ffb0e2a214bf4597e3e79cbca5939, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canInput: 0
 --- !u!114 &254749485
 MonoBehaviour:
   m_ObjectHideFlags: 0

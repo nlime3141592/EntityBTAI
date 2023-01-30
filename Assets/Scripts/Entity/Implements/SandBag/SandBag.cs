@@ -1,3 +1,4 @@
+/*
 namespace UnchordMetroidvania
 {
     public class SandBag : EntityBase
@@ -31,3 +32,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/

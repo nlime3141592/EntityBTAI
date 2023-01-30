@@ -11,6 +11,7 @@ namespace UnchordMetroidvania
         [HideInInspector] public Rigidbody2D physics;
         [HideInInspector] public AnimationController aController;
         public List<Collider2D> hitColliders;
+        public List<SpriteRenderer> spRenderers;
         public VelocityModule2D vm;
         #endregion
 
@@ -185,7 +186,7 @@ namespace UnchordMetroidvania
         protected virtual void Start()
         {
             skillRangeGizmoManager = new EntitySensorGizmoManager();
-            hitColliders = new List<Collider2D>();
+            // hitColliders = new List<Collider2D>();
             TryGetComponent<Rigidbody2D>(out physics);
             vm = new VelocityModule2D(physics);
             TryGetComponent<AnimationController>(out aController);
@@ -195,14 +196,7 @@ namespace UnchordMetroidvania
 
         protected virtual void FixedUpdate()
         {
-            // Rotation Logic
-            if(lookDir.x < 0)
-                transform.eulerAngles = Vector3.up * 180;
-            else if(lookDir.x > 0)
-                transform.eulerAngles = Vector3.zero;
 
-            lookDir.x = m_GetNextLookDir(axisInput.x, lookDir.x, 1, bFixLookDirX);
-            lookDir.y = m_GetNextLookDir(axisInput.y, lookDir.y, 1, bFixLookDirY);
         }
 
         protected virtual void Update()
@@ -217,20 +211,6 @@ namespace UnchordMetroidvania
         {
             if(skillRangeGizmoManager != null)
                 skillRangeGizmoManager.OnDrawGizmos(Time.deltaTime);
-        }
-
-        private float m_GetNextLookDir(float axisInputValue, float curLookDir, float defaultLookDir, bool bFixLookDir)
-        {
-            if(curLookDir != -1 && curLookDir != 1)
-                return defaultLookDir;
-            else if(bFixLookDir)
-                return curLookDir;
-            else if(axisInputValue < 0)
-                return -1;
-            else if(axisInputValue > 0)
-                return 1;
-            else
-                return curLookDir;
         }
     }
 }

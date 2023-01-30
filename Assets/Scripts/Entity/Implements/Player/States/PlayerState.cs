@@ -14,6 +14,7 @@ namespace UnchordMetroidvania
 
         public override void OnFixedUpdate()
         {
+            base.OnFixedUpdate();
             instance.senseData.UpdateData(instance);
         }
     }

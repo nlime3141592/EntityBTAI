@@ -1,3 +1,4 @@
+/*
 namespace UnchordMetroidvania
 {
     public class MantisChop : _MantisAttack
@@ -9,3 +10,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/
