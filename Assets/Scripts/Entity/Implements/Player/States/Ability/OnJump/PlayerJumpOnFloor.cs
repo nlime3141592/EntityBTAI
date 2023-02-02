@@ -21,6 +21,9 @@ namespace UnchordMetroidvania
 
         public override void OnFixedUpdate()
         {
+            if(!player.aController.bBeginOfAction)
+                return;
+
             base.OnFixedUpdate();
 
             float vx = player.bIsRun ? data.runSpeed : data.walkSpeed;

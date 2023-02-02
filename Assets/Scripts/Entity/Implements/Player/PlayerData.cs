@@ -50,7 +50,7 @@ namespace UnchordMetroidvania
         public float rollSpeed = 16.0f;
 
         [Header("Player Dash")]
-        public int dashFrame = 7;
+        public int dashFrame = 35;
         public float dashSpeed = 32.0f;
     }
 }

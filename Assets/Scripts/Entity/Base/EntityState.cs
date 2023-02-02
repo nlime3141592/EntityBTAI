@@ -14,8 +14,8 @@ namespace UnchordMetroidvania
         public sealed override void OnStateBegin()
         {
             base.OnStateBegin();
-            p_OnStateBegin();
             instance.aController.Reset();
+            p_OnStateBegin();
             p_OnChangeAnimation();
         }
 

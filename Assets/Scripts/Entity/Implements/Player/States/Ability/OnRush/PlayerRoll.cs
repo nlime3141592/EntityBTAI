@@ -58,6 +58,11 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
+            else if(player.aController.bEndOfAnimation)
+            {
+                fsm.Change(fsm.idleShort);
+                return true;
+            }
             else if(player.aController.bEndOfAction && player.parryingDown)
             {
                 fsm.Change(fsm.emergencyParrying);

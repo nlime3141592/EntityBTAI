@@ -2,28 +2,32 @@ namespace UnchordMetroidvania
 {
     public class PlayerDash : PlayerRush
     {
+        private int m_leftDashFrame = 0;
+
         public PlayerDash(Player _player, int _id, string _name)
         : base(_player, _id, _name)
         {
 
         }
 
+        protected override void p_OnStateBegin()
+        {
+            base.p_OnStateBegin();
+            m_leftDashFrame = data.dashFrame;
+        }
+
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            if(fsm.nextFixedFrameNumber >= data.dashFrame)
+            if(player.senseData.bOnWallFrontB || player.senseData.bOnWallFrontT)
             {
-                if(!p_bEndOfAbility)
-                    p_bEndOfAbility = true;
+                m_leftDashFrame = 0;
                 return;
             }
-            else if(player.senseData.bOnWallFrontB || player.senseData.bOnWallFrontT)
-            {
-                if(!p_bEndOfAbility)
-                    p_bEndOfAbility = true;
-                return;
-            }
+
+            if(m_leftDashFrame > 0)
+                --m_leftDashFrame;
 
             player.moveDir.x = 1;
             player.moveDir.y = 0;
@@ -38,6 +42,11 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
+            else if(m_leftDashFrame <= 0)
+            {
+                fsm.Change(fsm.freeFall);
+                return true;
+            }
             else if(player.leftAirJumpCount > 0 && player.jumpDown)
             {
                 fsm.Change(fsm.jumpOnAir);

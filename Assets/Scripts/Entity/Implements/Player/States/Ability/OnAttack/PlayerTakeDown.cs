@@ -16,7 +16,7 @@ namespace UnchordMetroidvania
         private List<EntityBase> m_targets;
         private int m_targetCount = 7;
         private int m_maxActionPhase = 3;
-        private float m_baseDamage = 1.0f;
+        private float m_baseDamage = 0.7f;
         private float m_cooltime;
         private LTRB m_attackRange = new LTRB()
         {
@@ -39,7 +39,7 @@ namespace UnchordMetroidvania
         public PlayerTakeDown(Player _player, int _id, string _name)
         : base(_player, _id, _name)
         {
-
+            m_targets = new List<EntityBase>(m_targetCount);
         }
 
         void IBattleState.OnBattle()
@@ -69,18 +69,17 @@ namespace UnchordMetroidvania
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;
 
-            player.vm.FreezePosition(m_actionPhase != 2, m_actionPhase == 1);
+            ++m_actionPhase;
 
-            // NOTE: Test battle trigger.
-            // 애니메이션 이벤트에 BattleModule.TriggerBattleState()를 등록해야 함.
-            if(m_actionPhase == 3) player.battleModule.TriggerBattleState();
+            player.vm.FreezePosition(m_actionPhase != 2, m_actionPhase == 1);
 
             m_leftCooltime = m_cooltime;
         }
 
         protected override void p_OnChangeAnimation()
         {
-            player.aController.ChangeActionPhase(++m_actionPhase);
+            // NOTE: 함수 호출 순서 중요함. 섞지 말 것.
+            player.aController.ChangeActionPhase(m_actionPhase);
             base.p_OnChangeAnimation();
         }
 
@@ -100,10 +99,6 @@ namespace UnchordMetroidvania
 
         public override bool OnUpdate()
         {
-            // NOTE: Test input code.
-            if(Input.GetKeyDown(KeyCode.Return))
-                this.OnAnimationEnd();
-
             if(base.OnUpdate())
                 return true;
             else if(m_actionPhase == 1 && player.aController.bEndOfAnimation)
