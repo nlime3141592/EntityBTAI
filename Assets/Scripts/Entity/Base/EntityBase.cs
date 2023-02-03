@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(AnimationController))]
     public class EntityBase : MonoBehaviour
     {
         #region Components
