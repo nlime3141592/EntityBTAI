@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace UnchordMetroidvania
 {
-    public abstract class _MantisAttack : MantisAbility
+    public abstract class MantisAttack : MantisAbility
     {
         protected readonly List<EntityBase> targets;
 
-        public _MantisAttack(Mantis _mantis, int _id, string _name)
+        public MantisAttack(Mantis _mantis, int _id, string _name)
         : base(_mantis, _id, _name)
         {
 

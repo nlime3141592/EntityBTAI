@@ -22,12 +22,6 @@ namespace UnchordMetroidvania
                 return true;
             else if(p_bEndOfAbility)
             {
-                /*
-                if(player.senseData.bOnFloor)
-                    fsm.Change(fsm.idle);
-                else
-                    fsm.Change(fsm.freeFall);
-                */
                 return true;
             }
 

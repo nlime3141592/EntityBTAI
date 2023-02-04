@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _MantisUpSlice : _MantisAttack, IBattleState
+    public class MantisUpSlice : MantisAttack, IBattleState
     {
         // fixed data
         private int m_targetCount = 12;
@@ -26,7 +26,7 @@ namespace UnchordMetroidvania
         private float m_leftCooltime;
         private bool m_bAttacked;
 
-        public _MantisUpSlice(Mantis _mantis, int _id, string _name)
+        public MantisUpSlice(Mantis _mantis, int _id, string _name)
         : base(_mantis, _id, _name)
         {
             

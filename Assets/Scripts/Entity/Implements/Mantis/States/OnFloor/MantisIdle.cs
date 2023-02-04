@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class _MantisIdle : MantisOnFloor
+    public class MantisIdle : MantisOnFloor
     {
         // fixed data
         private int m_minIdleTime = 60;
@@ -13,7 +13,7 @@ namespace UnchordMetroidvania
         private int m_leftIdleTime = 0;
         private int m_leftIxDelayTime = 0;
 
-        public _MantisIdle(Mantis _mantis, int _id, string _name)
+        public MantisIdle(Mantis _mantis, int _id, string _name)
         : base(_mantis, _id, _name)
         {
 
