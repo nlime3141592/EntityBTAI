@@ -7,6 +7,8 @@ namespace UnchordMetroidvania
     {
         public BattleModule battleModule;
         public BoxCollider2D terrainCollider; // 할당 필요
+        public Transform aiCenter; // 할당 필요
+        public Vector2 aiCenterOffset;
 
         public MantisFsm fsm;
         public MantisTerrainSenseData senseData;
@@ -68,6 +70,7 @@ namespace UnchordMetroidvania
         protected override void FixedUpdate()
         {
             base.FixedUpdate();
+            aiCenter.localPosition = aiCenterOffset;
             senseData.UpdateOrigins(this);
             fsm.OnFixedUpdate();
         }

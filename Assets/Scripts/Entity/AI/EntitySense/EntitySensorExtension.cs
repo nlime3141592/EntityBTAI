@@ -12,6 +12,8 @@ namespace UnchordMetroidvania
             GameObject obj = null;
             EntityBase entity = null;
 
+            entities.Clear(); // 넣을지 말지 고민하기.
+
             for(int i = 0; i < colliders.Length; ++i)
             {
                 obj = colliders[i].gameObject;

@@ -13,6 +13,8 @@ namespace UnchordMetroidvania
         public const int c_st_BACK_SLICE = 6;
         public const int c_st_CHOP = 7;
         public const int c_st_JUMP_CHOP = 8;
+        public const int c_st_POUNCE = 9;
+        public const int c_st_GROGGY = 10;
 
         public _MantisIdle idle;
         public MantisWalkFront walkFront;

@@ -19,10 +19,11 @@ namespace UnchordMetroidvania
             base.p_OnStateBegin();
 
             mantis.vm.FreezePosition(false, false);
-            m_leftMoveFrame = m_moveFrame;
 
-            // NOTE: 테스트 로직.
-            mantis.axisInput.x = mantis.prng.Next(2) == 0 ? -1 : 1;
+            mantis.bUpdateAggroDirX = false;
+            mantis.bFixLookDirX = true;
+
+            m_leftMoveFrame = m_moveFrame;
         }
 
         public override void OnFixedUpdate()
@@ -38,10 +39,7 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-            else if(
-                instance.aController.bEndOfAnimation ||
-                m_leftMoveFrame <= 0
-            )
+            else if(m_leftMoveFrame <= 0)
             {
                 fsm.Change(fsm.idle);
                 return true;
@@ -53,7 +51,9 @@ namespace UnchordMetroidvania
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            mantis.axisInput.x = 0;
+
+            mantis.bUpdateAggroDirX = true;
+            mantis.bFixLookDirX = false;
         }
     }
 }

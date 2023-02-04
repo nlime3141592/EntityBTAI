@@ -23,7 +23,14 @@ namespace UnchordMetroidvania
         private void m_CheckAggro()
         {
             instance.bPrevAggro = instance.bAggro;
+            m_DetectTargets();
+            instance.bAggro = instance.aggroTargets.Count > 0;
+            if(!instance.bAggro) return;
+            m_UpdateLookDirs();
+        }
 
+        private void m_DetectTargets()
+        {
             Collider2D[] colTargets = EntitySensor.OverlapBox(
                 instance,
                 instance.aggroRange,
@@ -32,26 +39,26 @@ namespace UnchordMetroidvania
 
             instance.aggroTargets.FilterFromColliders(instance, colTargets, false, instance.targetTags.ToArray());
             p_OverrideAggroPriority();
+        }
 
-            instance.bAggro = instance.aggroTargets.Count > 0;
-
-            if(!instance.bAggro)
-                return;
-
+        private void m_UpdateLookDirs()
+        {
             float begX = instance.transform.position.x;
             float begY = instance.transform.position.y;
             float endX = instance.aggroTargets[0].transform.position.x;
             float endY = instance.aggroTargets[0].transform.position.y;
 
-            if(instance.bUpdateAggroDirX)
-                instance.lookDir.x = m_GetLookDir(begX, endX);
-            if(instance.bUpdateAggroDirY)
-                instance.lookDir.y = m_GetLookDir(begY, endY);
+            instance.lookDir.x = m_GetLookDir(begX, endX, instance.lookDir.x, 1, instance.bUpdateAggroDirX);
+            instance.lookDir.y = m_GetLookDir(begY, endY, instance.lookDir.y, 1, instance.bUpdateAggroDirY);
         }
 
-        private float m_GetLookDir(float basePosition, float targetPosition)
+        private float m_GetLookDir(float basePosition, float targetPosition, float currentLookDir, float defaultLookDir, bool bFixed)
         {
-            if(targetPosition < basePosition)
+            if(bFixed)
+                return currentLookDir;
+            else if(currentLookDir != 1 && currentLookDir != -1)
+                return defaultLookDir;
+            else if(targetPosition - basePosition < 0)
                 return -1;
             else
                 return 1;

@@ -3,9 +3,9 @@ namespace UnchordMetroidvania
     public class _MantisIdle : MantisOnFloor
     {
         // fixed data
-        private int m_minIdleTime = 200;
-        private int m_maxIdleTime = 400;
-        private int m_ixDelayTime = 100; // 좌, 우 반전을 너무 자주 하면 안 됨.
+        private int m_minIdleTime = 60;
+        private int m_maxIdleTime = 120;
+        private int m_ixDelayTime = 30; // 좌, 우 반전을 너무 자주 하면 안 됨.
 
         // variable
         private int m_leftIdleTime = 0;
@@ -26,6 +26,7 @@ namespace UnchordMetroidvania
 
             m_leftIdleTime = mantis.prng.Next(m_minIdleTime, m_maxIdleTime + 1);
             m_leftIxDelayTime = 0;
+            mantis.lookDir.x = -mantis.lookDir.x;
         }
 
         public override void OnFixedUpdate()
@@ -53,13 +54,26 @@ namespace UnchordMetroidvania
                 return true;
             if(m_leftIdleTime <= 0)
             {
-                // NOTE: 테스트 로직
-                int weight = mantis.prng.Next(100);
-                int lw = mantis.prng.Next(2);
-                if(weight < 30 && !mantis.senseData.bOnWallBack || mantis.senseData.bOnWallFront)
+                if(mantis.senseData.bOnWallFront)
+                {
                     fsm.Change(fsm.walkBack);
-                else
+                    return true;
+                }
+                else if(mantis.senseData.bOnWallBack)
+                {
                     fsm.Change(fsm.walkFront);
+                    return true;
+                }
+                else if(mantis.prng.Next(0, 100) < 50)
+                {
+                    fsm.Change(fsm.walkFront);
+                    return true;
+                }
+                else
+                {
+                    fsm.Change(fsm.walkBack);
+                    return true;
+                }
             }
 
             return false;
