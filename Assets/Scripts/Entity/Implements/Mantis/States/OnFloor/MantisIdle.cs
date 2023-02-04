@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
     public class _MantisIdle : MantisOnFloor
@@ -25,7 +27,7 @@ namespace UnchordMetroidvania
             mantis.vm.MeltPositionY();
 
             m_leftIdleTime = mantis.prng.Next(m_minIdleTime, m_maxIdleTime + 1);
-            m_leftIxDelayTime = 0;
+            m_leftIxDelayTime = m_ixDelayTime / 2;
             mantis.lookDir.x = -mantis.lookDir.x;
         }
 

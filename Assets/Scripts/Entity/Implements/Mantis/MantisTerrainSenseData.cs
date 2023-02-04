@@ -67,7 +67,7 @@ namespace UnchordMetroidvania
                 m_tmp_bOnWallRB = TerrainSensor.CheckWallFront(originWallRB.position, data.wallDetectLength, lx);
 
                 bOnWallFront = m_tmp_bOnWallRT || m_tmp_bOnWallRB;
-                bOnWallBack = m_tmp_bOnWallLT || m_tmp_bOnWallRT;
+                bOnWallBack = m_tmp_bOnWallLT || m_tmp_bOnWallLB;
             }
             else
             {
@@ -76,7 +76,7 @@ namespace UnchordMetroidvania
                 m_tmp_bOnWallRT = TerrainSensor.CheckWallBack(originWallRT.position, data.wallDetectLength, lx);
                 m_tmp_bOnWallRB = TerrainSensor.CheckWallBack(originWallRB.position, data.wallDetectLength, lx);
 
-                bOnWallFront = m_tmp_bOnWallLT || m_tmp_bOnWallRT;
+                bOnWallFront = m_tmp_bOnWallLT || m_tmp_bOnWallLB;
                 bOnWallBack = m_tmp_bOnWallRT || m_tmp_bOnWallRB;
             }
 

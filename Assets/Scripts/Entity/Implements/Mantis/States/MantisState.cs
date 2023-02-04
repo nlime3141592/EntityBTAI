@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UnchordMetroidvania
 {
     public abstract class MantisState : MonsterState<Mantis>
@@ -25,23 +23,6 @@ namespace UnchordMetroidvania
         {
             if(base.OnUpdate())
                 return true;
-
-            // NOTE: 테스트 로직.
-            else if(Input.GetKeyDown(KeyCode.F1))
-            {
-                fsm.Change(fsm.idle);
-                return true;
-            }
-            else if(Input.GetKeyDown(KeyCode.F2))
-            {
-                fsm.Change(fsm.walkFront);
-                return true;
-            }
-            else if(Input.GetKeyDown(KeyCode.F3))
-            {
-                fsm.Change(fsm.walkBack);
-                return true;
-            }
 
             return false;
         }

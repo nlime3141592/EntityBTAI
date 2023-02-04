@@ -52,9 +52,9 @@ namespace UnchordMetroidvania
             instance.lookDir.y = m_GetLookDir(begY, endY, instance.lookDir.y, 1, instance.bUpdateAggroDirY);
         }
 
-        private float m_GetLookDir(float basePosition, float targetPosition, float currentLookDir, float defaultLookDir, bool bFixed)
+        private float m_GetLookDir(float basePosition, float targetPosition, float currentLookDir, float defaultLookDir, bool bCanUpdate)
         {
-            if(bFixed)
+            if(!bCanUpdate)
                 return currentLookDir;
             else if(currentLookDir != 1 && currentLookDir != -1)
                 return defaultLookDir;

@@ -13,11 +13,6 @@ namespace UnchordMetroidvania
         public MantisFsm fsm;
         public MantisTerrainSenseData senseData;
 
-        public bool bOnFloor;
-        public bool bOnCeil;
-        public bool bOnWallFront;
-        public bool bOnWallBack;
-
         public int attackCount;
 
         public void PublishAttackCommand()
