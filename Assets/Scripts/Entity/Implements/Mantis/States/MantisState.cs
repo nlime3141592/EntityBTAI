@@ -21,7 +21,12 @@ namespace UnchordMetroidvania
 
         public override bool OnUpdate()
         {
-            if(base.OnUpdate())
+            if(mantis.health <= 0)
+            {
+                fsm.Change(fsm.die);
+                return true;
+            }
+            else if(base.OnUpdate())
                 return true;
 
             return false;

@@ -18,6 +18,14 @@ namespace UnchordMetroidvania
             m_CheckAggro();
         }
 
+        public override bool OnUpdate()
+        {
+            if(base.OnUpdate())
+                return true;
+
+            return false;
+        }
+
         protected virtual void p_OverrideAggroPriority() {}
 
         private void m_CheckAggro()

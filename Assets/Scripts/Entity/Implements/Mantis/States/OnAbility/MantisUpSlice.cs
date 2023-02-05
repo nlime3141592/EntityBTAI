@@ -10,21 +10,23 @@ namespace UnchordMetroidvania
         private float m_cooltime = 0.1f;
         private LTRB m_attackRange = new LTRB()
         {
-            left = 5.5f,
-            top = 5.5f,
-            right = 15.5f,
-            bottom = 5.5f
+            left = 0.0f,
+            top = 16.0f,
+            right = 17.5f,
+            bottom = 4.0f
         };
         private EntitySensorGizmoOption m_attackGizmoOption = new EntitySensorGizmoOption()
         {
             bShowGizmo = true,
-            duration = 0.2f,
+            duration = 2.0f,
             color = Color.magenta
         };
 
         // variables
         private float m_leftCooltime;
         private bool m_bAttacked;
+
+        // TODO: 포효콤보 관련 로직을 추가해야 함.
 
         public MantisUpSlice(Mantis _mantis, int _id, string _name)
         : base(_mantis, _id, _name)
@@ -60,7 +62,6 @@ namespace UnchordMetroidvania
             base.p_OnStateBegin();
 
             mantis.battleModule.SetBattleState(this);
-            mantis.bFixLookDirX = true;
 
             m_leftCooltime = m_cooltime;
             m_bAttacked = false;
@@ -90,7 +91,7 @@ namespace UnchordMetroidvania
                 return true;
             else if(mantis.aController.bEndOfAnimation)
             {
-                // NOTE: 상태 전이하는 코드 집어넣기.
+                fsm.Change(fsm.idle);
                 return true;
             }
 

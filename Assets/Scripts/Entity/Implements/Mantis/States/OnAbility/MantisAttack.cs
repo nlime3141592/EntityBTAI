@@ -10,21 +10,25 @@ namespace UnchordMetroidvania
         public MantisAttack(Mantis _mantis, int _id, string _name)
         : base(_mantis, _id, _name)
         {
+            targets = new List<EntityBase>(16);
+        }
 
+        protected override void p_OnStateBegin()
+        {
+            base.p_OnStateBegin();
+
+            mantis.bUpdateAggroDirX = false;
+            mantis.bFixLookDirX = true;
         }
 
         public abstract bool CanAttack();
 
-        public override bool OnUpdate()
+        public override void OnStateEnd()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(mantis.aController.bEndOfAnimation)
-            {
-                return true;
-            }
+            base.OnStateEnd();
 
-            return false;
+            mantis.bUpdateAggroDirX = true;
+            mantis.bFixLookDirX = false;
         }
     }
 }

@@ -473,6 +473,12 @@ MonoBehaviour:
   groggyValue: 0
   bInvincibility: 0
   fixTakenDamage: 0
+  bDebugLTRB: 0
+  debugLTRB:
+    left: 0
+    top: 0
+    right: 0
+    bottom: 0
   battleModule: {fileID: 0}
   hCol: {fileID: 0}
   senseData:

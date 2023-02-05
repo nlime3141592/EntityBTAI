@@ -12,7 +12,7 @@ namespace UnchordMetroidvania
         [Header("Entity Components")]
         [HideInInspector] public Rigidbody2D physics;
         [HideInInspector] public AnimationController aController;
-        public List<Collider2D> hitColliders;
+        public List<Collider2D> hitColliders; // NOTE: EntitySensor가 감지해야 하는 Collider2D를 Inspector에서 할당하세요.
         public List<SpriteRenderer> spRenderers;
         public VelocityModule2D vm;
         #endregion
@@ -65,6 +65,8 @@ namespace UnchordMetroidvania
         #region Debug
         [Header("Debug Options")]
         public EntitySensorGizmoManager skillRangeGizmoManager;
+        public bool bDebugLTRB = false;
+        public LTRB debugLTRB;
         #endregion
 
         public float Heal(float dHealth)
@@ -209,10 +211,27 @@ namespace UnchordMetroidvania
                 hitColliders[i].enabled = health > 0;
         }
 
+        protected virtual void LateUpdate()
+        {
+            if(bEndOfEntity)
+                Destroy(this.gameObject);
+        }
+
         protected virtual void OnDrawGizmos()
         {
             if(skillRangeGizmoManager != null)
                 skillRangeGizmoManager.OnDrawGizmos(Time.deltaTime);
+
+            if(bDebugLTRB)
+            {
+                Vector2 start = transform.position;
+                Vector2 end = start;
+
+                start -= new Vector2(debugLTRB.left, debugLTRB.bottom);
+                end += new Vector2(debugLTRB.right, debugLTRB.top);
+
+                Gizmos.DrawWireCube((start + end) / 2, (end - start));
+            }
         }
     }
 }

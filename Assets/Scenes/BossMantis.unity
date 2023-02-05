@@ -1496,6 +1496,12 @@ MonoBehaviour:
   groggyValue: 0
   bInvincibility: 0
   fixTakenDamage: 0
+  bDebugLTRB: 0
+  debugLTRB:
+    left: 0
+    top: 4
+    right: 17.5
+    bottom: 7.5
   waitSecondOnChangeAggro: 0.75
   waitDiffSecondOnChangeAggro: 0.25
   waitSecondOnChangeAction: 1.5
@@ -1533,10 +1539,6 @@ MonoBehaviour:
     bOnCeil: 0
     bOnWallFront: 0
     bOnWallBack: 0
-  bOnFloor: 0
-  bOnCeil: 0
-  bOnWallFront: 0
-  bOnWallBack: 0
   attackCount: 0
   data:
     wallDetectLength: 0.06
@@ -2474,6 +2476,12 @@ MonoBehaviour:
   groggyValue: 0
   bInvincibility: 0
   fixTakenDamage: 0
+  bDebugLTRB: 0
+  debugLTRB:
+    left: 0
+    top: 0
+    right: 0
+    bottom: 0
   waitSecondOnChangeAggro: 0.75
   waitDiffSecondOnChangeAggro: 0.25
   waitSecondOnChangeAction: 1.5
