@@ -2,15 +2,15 @@ namespace UnchordMetroidvania
 {
     public abstract class MantisAbility : MantisState
     {
-        public MantisAbility(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisAbility(Mantis _mantis)
+        : base(_mantis)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
         }
     }
 }

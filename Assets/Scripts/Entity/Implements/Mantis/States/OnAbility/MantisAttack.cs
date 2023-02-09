@@ -7,21 +7,19 @@ namespace UnchordMetroidvania
     {
         protected readonly List<EntityBase> targets;
 
-        public MantisAttack(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisAttack(Mantis _mantis)
+        : base(_mantis)
         {
             targets = new List<EntityBase>(16);
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             mantis.bUpdateAggroDirX = false;
             mantis.bFixLookDirX = true;
         }
-
-        public abstract bool CanAttack();
 
         public override void OnStateEnd()
         {

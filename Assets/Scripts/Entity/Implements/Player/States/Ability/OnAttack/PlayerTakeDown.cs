@@ -36,8 +36,8 @@ namespace UnchordMetroidvania
         private int m_actionPhase;
         private float m_leftCooltime;
 
-        public PlayerTakeDown(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerTakeDown(Player _player)
+        : base(_player)
         {
             m_targets = new List<EntityBase>(m_targetCount);
         }
@@ -59,9 +59,9 @@ namespace UnchordMetroidvania
             }
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.battleModule.SetBattleState(this);
             player.bFixLookDirX = true;
@@ -69,18 +69,11 @@ namespace UnchordMetroidvania
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;
 
-            ++m_actionPhase;
+            player.aPhase = ++m_actionPhase;
 
             player.vm.FreezePosition(m_actionPhase != 2, m_actionPhase == 1);
 
             m_leftCooltime = m_cooltime;
-        }
-
-        protected override void p_OnChangeAnimation()
-        {
-            // NOTE: 함수 호출 순서 중요함. 섞지 말 것.
-            player.aController.ChangeActionPhase(m_actionPhase);
-            base.p_OnChangeAnimation();
         }
 
         public override void OnFixedUpdate()
@@ -97,35 +90,25 @@ namespace UnchordMetroidvania
                 player.vm.SetVelocityY(-1.0f);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit == FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(m_actionPhase == 1 && player.aController.bEndOfAnimation)
-            {
-                fsm.Replay();
-                return true;
-            }
+                return PlayerFsm.c_st_TAKE_DOWN;
             else if(m_actionPhase == 2 && player.senseData.bOnFloor)
-            {
-                fsm.Replay();
-                return true;
-            }
+                return PlayerFsm.c_st_TAKE_DOWN;
             else if(m_actionPhase == 3)
             {
                 if(player.aController.bEndOfAnimation)
-                {
-                    fsm.Change(fsm.idleShort);
-                    return true;
-                }
+                    return PlayerFsm.c_st_IDLE_SHORT;
                 if(player.aController.bEndOfAction && player.parryingDown)
-                {
-                    fsm.Change(fsm.emergencyParrying);
-                    return true;
-                }
+                    return PlayerFsm.c_st_EMERGENCY_PARRYING;
             }
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

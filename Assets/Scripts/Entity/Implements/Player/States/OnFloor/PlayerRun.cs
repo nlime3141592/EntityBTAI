@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public class PlayerRun : PlayerMove
     {
-        public PlayerRun(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerRun(Player _player)
+        : base(_player)
         {
 
         }
@@ -20,17 +20,16 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(vx, vy);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(!player.bIsRun)
-            {
-                fsm.Change(fsm.walk);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(!player.bIsRun)
+                return PlayerFsm.c_st_WALK;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

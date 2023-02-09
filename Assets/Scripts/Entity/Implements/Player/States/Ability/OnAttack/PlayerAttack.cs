@@ -9,33 +9,32 @@ namespace UnchordMetroidvania
     {
         protected readonly List<EntityBase> targets;
 
-        public PlayerAttack(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerAttack(Player _player)
+        : base(_player)
         {
             targets = new List<EntityBase>(16);
         }
-
-        public abstract bool CanAttack();
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(player.aController.bEndOfAnimation)
             {
                 if(player.senseData.bOnFloor)
-                    fsm.Change(fsm.idleShort);
+                    return PlayerFsm.c_st_IDLE_SHORT;
                 else
-                    fsm.Change(fsm.freeFall);
-                return true;
+                    return PlayerFsm.c_st_FREE_FALL;
             }
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

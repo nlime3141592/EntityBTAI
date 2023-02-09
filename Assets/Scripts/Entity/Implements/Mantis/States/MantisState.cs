@@ -7,8 +7,8 @@ namespace UnchordMetroidvania
         protected Mantis mantis => instance;
         // protected MantisFsm fsm => instance.fsm;
 
-        public MantisState(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisState(Mantis _mantis)
+        : base(_mantis)
         {
             
         }
@@ -19,17 +19,16 @@ namespace UnchordMetroidvania
             mantis.senseData.UpdateData(mantis);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(mantis.health <= 0)
-            {
-                fsm.Change(fsm.die);
-                return true;
-            }
-            else if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
 
-            return false;
+            if(mantis.health <= 0)
+                return MantisFsm.c_st_DIE;
+            else if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

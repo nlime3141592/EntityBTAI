@@ -4,15 +4,15 @@ namespace UnchordMetroidvania
     {
         private bool m_bRotated;
 
-        public MantisBackSlice(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisBackSlice(Mantis _mantis)
+        : base(_mantis)
         {
             
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             m_bRotated = false;
 
@@ -32,11 +32,6 @@ namespace UnchordMetroidvania
                 mantis.lookDir.x = -mantis.lookDir.x;
             }
 */
-        }
-
-        public override bool CanAttack()
-        {
-            return true;
         }
     }
 }

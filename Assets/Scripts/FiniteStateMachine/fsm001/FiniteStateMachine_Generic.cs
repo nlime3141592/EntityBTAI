@@ -1,8 +1,10 @@
 using System;
 
+using UnityEngine; // 디버그
+
 namespace UnchordMetroidvania
 {
-    public class FiniteStateMachine<T> : FiniteState<T>
+    public abstract class FiniteStateMachine<T> : FiniteState<T>
     {
         public FiniteState<T> this[int index]
         {
@@ -19,13 +21,39 @@ namespace UnchordMetroidvania
 
         public int current { get; private set; } = c_st_MACHINE_HALT;
 
-        public FiniteStateMachine(T _instance, int _capacity = 1)
+        public FiniteStateMachine(T _instance, int _capacity)
         : base(_instance)
         {
             // capacity = max(1, _capacity);
             capacity = _capacity < 1 ? 1 : _capacity;
             states = new FiniteState<T>[capacity];
             current = c_st_MACHINE_HALT;
+        }
+
+        public override void OnFixedUpdateAlways()
+        {
+            base.OnFixedUpdateAlways();
+            for(int i = 0; i < capacity; ++i)
+                states[i].OnFixedUpdateAlways();
+        }
+
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
+            states[current].OnFixedUpdate();
+        }
+
+        public override void OnUpdateAlways()
+        {
+            base.OnUpdateAlways();
+            for(int i = 0; i < capacity; ++i)
+                states[i].OnUpdateAlways();
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+            states[current].OnUpdate();
         }
 
         public override bool CanTransit()
@@ -39,10 +67,11 @@ namespace UnchordMetroidvania
                 return current;
 
             int next = states[current]?.Transit() ?? c_st_MACHINE_HALT;
-
+Debug.Log(string.Format("next: {0}", next));
             if(next >= 0 && next < capacity) // 상태 전이
-                if(!Change(next))
-                    Stop();
+            {
+                if(!Change(next)) Stop();
+            }
             else if(next == c_st_MACHINE_HALT) // 머신 종료
                 Stop();
             else if(next == c_st_STATE_CONTINUE || next == c_st_BASE_IGNORE) // 상태 유지

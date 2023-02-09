@@ -18,15 +18,15 @@ namespace UnchordMetroidvania
         private int m_leftIxDelayTime = 0;
         private int m_rangeCode = -1;
 
-        public MantisIdle(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisIdle(Mantis _mantis)
+        : base(_mantis)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             mantis.vm.FreezePositionX();
             mantis.vm.MeltPositionY();
@@ -53,21 +53,23 @@ namespace UnchordMetroidvania
                 --m_leftIxDelayTime;
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(!mantis.bAggro)
-                return false;
+                return FiniteStateMachine.c_st_STATE_CONTINUE;
             else if(m_leftIdleTime <= 0)
             {
                 EntityBase target = mantis.aggroTargets[0];
                 m_rangeCode = m_GetRangeCode(target, mantis, m_rangeX1, m_rangeX2, m_rangeY1, m_rangeY2);
 
-                if(fsm.phase == 1 && m_ChangeStateByRangeCodePhase1(m_rangeCode))
-                    return true;
-                else if(fsm.phase == 2 && m_ChangeStateByRangeCodePhase2(m_rangeCode))
-                    return true;
+                if(fsm.mode == 1)
+                    return m_ChangeStateByRangeCodePhase1(m_rangeCode);
+                else if(fsm.mode == 2)
+                    return m_ChangeStateByRangeCodePhase2(m_rangeCode);
 
                 // NOTE: 테스트 코드.
                 /*
@@ -83,7 +85,7 @@ namespace UnchordMetroidvania
                 */
             }
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()
@@ -119,125 +121,109 @@ namespace UnchordMetroidvania
                 return code + 6;
         }
 
-        private bool m_ChangeStateByRangeCodePhase1(int code)
+        private int m_ChangeStateByRangeCodePhase1(int code)
         {
             int rNumber = mantis.prng.Next(0, 10000);
 
             switch(code)
             {
                 case 0:
-                    if(rNumber < 2000)              fsm.Change(fsm.walkFront);
-                    else                            fsm.Change(fsm.backSlice);
-                    return true;
+                    if(rNumber < 2000)              return MantisFsm.c_st_WALK_FRONT;
+                    else                            return MantisFsm.c_st_BACK_SLICE;
 
                 case 1:
-                    if(rNumber < 5000)              fsm.Change(fsm.upSlice);
-                    else if(rNumber < 8000)         fsm.Change(fsm.chop);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 5000)              return MantisFsm.c_st_UP_SLICE;
+                    else if(rNumber < 8000)         return MantisFsm.c_st_CHOP;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 case 2:
-                    if(rNumber < 5000)              fsm.Change(fsm.chop);
-                    else if(rNumber < 7000)         fsm.Change(fsm.upSlice);
-                    else if(rNumber < 9000)         fsm.Change(fsm.walkBack);
-                    else                            fsm.Change(fsm.walkFront);
-                    return true;
+                    if(rNumber < 5000)              return MantisFsm.c_st_CHOP;
+                    else if(rNumber < 7000)         return MantisFsm.c_st_UP_SLICE;
+                    else if(rNumber < 9000)         return MantisFsm.c_st_WALK_BACK;
+                    else                            return MantisFsm.c_st_WALK_FRONT;
 
                 case 3:
                 case 6:
                 case 9:
-                    if(rNumber < 7000)              fsm.Change(fsm.walkFront);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 7000)              return MantisFsm.c_st_WALK_FRONT;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 case 4:
-                    if(rNumber < 7000)              fsm.Change(fsm.upSlice);
-                    else if(rNumber < 8000)         fsm.Change(fsm.chop);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 7000)              return MantisFsm.c_st_UP_SLICE;
+                    else if(rNumber < 8000)         return MantisFsm.c_st_CHOP;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 case 5:
-                    if(rNumber < 4000)              fsm.Change(fsm.chop);
-                    else if(rNumber < 7000)         fsm.Change(fsm.upSlice);
-                    else if(rNumber < 9000)         fsm.Change(fsm.walkBack);
-                    else                            fsm.Change(fsm.walkFront);
-                    return true;
+                    if(rNumber < 4000)              return MantisFsm.c_st_CHOP;
+                    else if(rNumber < 7000)         return MantisFsm.c_st_UP_SLICE;
+                    else if(rNumber < 9000)         return MantisFsm.c_st_WALK_BACK;
+                    else                            return MantisFsm.c_st_WALK_FRONT;
 
                 case 7:
-                    if(rNumber < 4000)              fsm.Change(fsm.upSlice);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 4000)              return MantisFsm.c_st_UP_SLICE;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 case 8:
-                    if(rNumber < 5000)              fsm.Change(fsm.upSlice);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 5000)              return MantisFsm.c_st_UP_SLICE;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 default:
-                    return false;
+                    return FiniteStateMachine.c_st_MACHINE_HALT;
             }
         }
 
-        private bool m_ChangeStateByRangeCodePhase2(int code)
+        private int m_ChangeStateByRangeCodePhase2(int code)
         {
             int rNumber = mantis.prng.Next(0, 10000);
 
             switch(code)
             {
                 case 0:
-                    if(rNumber < 2000)              fsm.Change(fsm.walkFront);
-                    else                            fsm.Change(fsm.backSlice);
-                    return true;
+                    if(rNumber < 2000)              return MantisFsm.c_st_WALK_FRONT;
+                    else                            return MantisFsm.c_st_BACK_SLICE;
 
                 case 1:
-                    if(rNumber < 4000)              fsm.Change(fsm.upSlice);
-                    else if(rNumber < 6000)         fsm.Change(fsm.chop); // TODO: 포효콤보로 변경
-                    else if(rNumber < 9000)         fsm.Change(fsm.chop);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 4000)              return MantisFsm.c_st_UP_SLICE;
+                    else if(rNumber < 6000)         return MantisFsm.c_st_CHOP; // TODO: 포효콤보로 변경
+                    else if(rNumber < 9000)         return MantisFsm.c_st_CHOP;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 case 2:
-                    if(rNumber < 4000)              fsm.Change(fsm.chop);
-                    else if(rNumber < 6000)         fsm.Change(fsm.chop); // TODO: 포효콤보로 변경
-                    else if(rNumber < 8000)         fsm.Change(fsm.upSlice);
-                    else if(rNumber < 9000)         fsm.Change(fsm.walkBack);
-                    else                            fsm.Change(fsm.walkFront);
-                    return true;
+                    if(rNumber < 4000)              return MantisFsm.c_st_CHOP;
+                    else if(rNumber < 6000)         return MantisFsm.c_st_CHOP; // TODO: 포효콤보로 변경
+                    else if(rNumber < 8000)         return MantisFsm.c_st_UP_SLICE;
+                    else if(rNumber < 9000)         return MantisFsm.c_st_WALK_BACK;
+                    else                            return MantisFsm.c_st_WALK_FRONT;
 
                 case 3:
                 case 6:
                 case 9:
-                    if(rNumber < 3000)              fsm.Change(fsm.walkFront);
-                    else                            fsm.Change(fsm.jumpChop);
-                    return true;
+                    if(rNumber < 3000)              return MantisFsm.c_st_WALK_FRONT;
+                    else                            return MantisFsm.c_st_JUMP_CHOP;
 
                 case 4:
-                    if(rNumber < 5000)              fsm.Change(fsm.upSlice);
-                    else if(rNumber < 7000)         fsm.Change(fsm.chop); // TODO: 포효콤보로 변경
-                    else if(rNumber < 8000)         fsm.Change(fsm.chop);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 5000)              return MantisFsm.c_st_UP_SLICE;
+                    else if(rNumber < 7000)         return MantisFsm.c_st_CHOP; // TODO: 포효콤보로 변경
+                    else if(rNumber < 8000)         return MantisFsm.c_st_CHOP;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 case 5:
-                    if(rNumber < 3000)              fsm.Change(fsm.chop);
-                    else if(rNumber < 5000)         fsm.Change(fsm.upSlice); // TODO: 포효콤보로 변경
-                    else if(rNumber < 8000)         fsm.Change(fsm.upSlice);
-                    else if(rNumber < 9000)         fsm.Change(fsm.walkBack);
-                    else                            fsm.Change(fsm.walkFront);
-                    return true;
+                    if(rNumber < 3000)              return MantisFsm.c_st_CHOP;
+                    else if(rNumber < 5000)         return MantisFsm.c_st_UP_SLICE; // TODO: 포효콤보로 변경
+                    else if(rNumber < 8000)         return MantisFsm.c_st_UP_SLICE;
+                    else if(rNumber < 9000)         return MantisFsm.c_st_WALK_BACK;
+                    else                            return MantisFsm.c_st_WALK_FRONT;
 
                 case 7:
-                    if(rNumber < 4000)              fsm.Change(fsm.upSlice);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 4000)              return MantisFsm.c_st_UP_SLICE;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 case 8:
-                    if(rNumber < 5000)              fsm.Change(fsm.upSlice);
-                    else                            fsm.Change(fsm.walkBack);
-                    return true;
+                    if(rNumber < 5000)              return MantisFsm.c_st_UP_SLICE;
+                    else                            return MantisFsm.c_st_WALK_BACK;
 
                 default:
-                    return false;
+                    return FiniteStateMachine.c_st_MACHINE_HALT;
             }
         }
     }

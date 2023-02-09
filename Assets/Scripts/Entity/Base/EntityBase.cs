@@ -27,6 +27,8 @@ namespace UnchordMetroidvania
         public bool bBeginOfEntity = false;
         public bool bEndOfEntity = false; // 사망 조건을 만족한 상태에서 이 변수가 true가 되는 순간 엔티티 게임오브젝트가 파괴됩니다.
 
+        public int aPhase = -1;
+        public int aState = -1;
         private object m_root;
         private Func<InvokeResult> m_func_rootInvoke;
         #endregion

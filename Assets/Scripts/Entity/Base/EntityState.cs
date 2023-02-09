@@ -2,28 +2,13 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public abstract class EntityState<T> : UnchordState<T>
+    public abstract class EntityState<T> : FiniteState<T>
     where T : EntityBase
     {
-        public EntityState(T _instance, int _id, string _name)
-        : base(_instance, _id, _name)
+        public EntityState(T _instance)
+        : base(_instance)
         {
 
-        }
-
-        public sealed override void OnStateBegin()
-        {
-            base.OnStateBegin();
-            instance.aController.Reset();
-            p_OnStateBegin();
-            p_OnChangeAnimation();
-        }
-
-        protected virtual void p_OnStateBegin() {}
-
-        protected virtual void p_OnChangeAnimation()
-        {
-            instance.aController.ChangeAnimation(base.id);
         }
 
         public override void OnFixedUpdate()

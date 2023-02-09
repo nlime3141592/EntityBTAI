@@ -5,8 +5,8 @@ namespace UnchordMetroidvania
     public abstract class MonsterState<T> : EntityState<T>
     where T : EntityMonster
     {
-        public MonsterState(T _monster, int _id, string _name)
-        : base(_monster, _id, _name)
+        public MonsterState(T _monster)
+        : base(_monster)
         {
             
         }
@@ -16,14 +16,6 @@ namespace UnchordMetroidvania
             base.OnFixedUpdate();
 
             m_CheckAggro();
-        }
-
-        public override bool OnUpdate()
-        {
-            if(base.OnUpdate())
-                return true;
-
-            return false;
         }
 
         protected virtual void p_OverrideAggroPriority() {}

@@ -30,8 +30,8 @@ namespace UnchordMetroidvania
         // variable
         private float m_leftCooltime;
 
-        public PlayerAbilitySword(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerAbilitySword(Player _player)
+        : base(_player)
         {
 
         }
@@ -53,15 +53,15 @@ namespace UnchordMetroidvania
             }
         }
 
-        public override bool CanAttack()
+        public override bool CanTransit()
         {
             bool canAttack = m_leftCooltime <= 0;
             return canAttack;
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.battleModule.SetBattleState(this);
 
@@ -78,16 +78,14 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(0.0f, -1.0f);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
 
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(player.aController.bEndOfAction && player.parryingDown)
-            {
-                fsm.Change(fsm.emergencyParrying);
-                return true;
-            }
+                return PlayerFsm.c_st_EMERGENCY_PARRYING;
 
             // NOTE: 디버그용 상태 전환 코드.
             else if(Input.GetKeyDown(KeyCode.Q))
@@ -95,7 +93,7 @@ namespace UnchordMetroidvania
             else if(Input.GetKeyDown(KeyCode.W))
                 player.aController.bEndOfAnimation = true;
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

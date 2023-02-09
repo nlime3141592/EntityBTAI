@@ -2,7 +2,7 @@ using System;
 
 namespace UnchordMetroidvania
 {
-    public class MantisFsm : UnchordFsm<Mantis>
+    public class MantisFsm : EntityFsm<Mantis>
     {
         public const int c_st_IDLE                       = 0;
         public const int c_st_WALK_FRONT                 = 1;
@@ -28,31 +28,28 @@ namespace UnchordMetroidvania
         public MantisGroggy groggy;
         public MantisDie die;
 
-        public int phase = 1;
+        public int mode = 1;
 
-        public MantisFsm(Mantis _mantis)
-        : base(_mantis)
+        public MantisFsm(Mantis _mantis, int _capacity)
+        : base(_mantis, _capacity)
         {
             MantisData data = _mantis.data;
 
-            idle = new MantisIdle(_mantis, c_st_IDLE, "Idle");
-            walkFront = new MantisWalkFront(_mantis, c_st_WALK_FRONT, "WalkFront");
-            walkBack = new MantisWalkBack(_mantis, c_st_WALK_BACK, "WalkBack");
-            shout = new MantisShout(_mantis, c_st_SHOUT, "Shout");
-            knifeGrinding = new MantisKnifeGrinding(_mantis, c_st_KNIFE_GRINDING, "KnifeGrinding");
-            upSlice = new MantisUpSlice(_mantis, c_st_UP_SLICE, "UpSlice");
-            backSlice = new MantisBackSlice(_mantis, c_st_BACK_SLICE, "BackSlice");
-            chop = new MantisChop(_mantis, c_st_CHOP, "Chop");
-            jumpChop = new MantisJumpChop(_mantis, c_st_JUMP_CHOP, "JumpChop");
-            groggy = new MantisGroggy(_mantis, c_st_GROGGY, "Groggy");
-            die = new MantisDie(_mantis, c_st_DIE, "Die");
+            int idx = -1;
 
-            phase = 1;
-        }
+            this[++idx] = new MantisIdle(_mantis);
+            this[++idx] = new MantisWalkFront(_mantis);
+            this[++idx] = new MantisWalkBack(_mantis);
+            this[++idx] = new MantisShout(_mantis);
+            this[++idx] = new MantisKnifeGrinding(_mantis);
+            this[++idx] = new MantisUpSlice(_mantis);
+            this[++idx] = new MantisBackSlice(_mantis);
+            this[++idx] = new MantisChop(_mantis);
+            this[++idx] = new MantisJumpChop(_mantis);
+            this[++idx] = new MantisGroggy(_mantis);
+            this[++idx] = new MantisDie(_mantis);
 
-        public override bool OnUpdate()
-        {
-            return base.OnUpdate();
+            mode = 1;
         }
     }
 }

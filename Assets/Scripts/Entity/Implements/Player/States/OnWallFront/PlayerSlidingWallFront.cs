@@ -4,15 +4,15 @@ namespace UnchordMetroidvania
 {
     public class PlayerSlidingWallFront : PlayerOnWallFront
     {
-        public PlayerSlidingWallFront(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerSlidingWallFront(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.vm.FreezePositionX();
             player.vm.MeltPositionY();
@@ -32,17 +32,16 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(0.0f, vy);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(player.axisInput.x != 0)
-            {
-                fsm.Change(fsm.idleWallFront);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(player.axisInput.x != 0)
+                return PlayerFsm.c_st_IDLE_WALL_FRONT;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

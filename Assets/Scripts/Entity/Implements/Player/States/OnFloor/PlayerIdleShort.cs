@@ -1,34 +1,42 @@
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
     public class PlayerIdleShort : PlayerIdle
     {
-        public PlayerIdleShort(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        private float m_idleTime = 10.0f;
+        private float m_leftIdleTime;
+
+        public PlayerIdleShort(Player _player)
+        : base(_player)
         {
 
         }
 
-        public override void OnFixedUpdate()
+        public override void OnStateBegin()
         {
-            base.OnFixedUpdate();
+            base.OnStateBegin();
+            m_leftIdleTime = m_idleTime;            
         }
 
-        public override bool OnUpdate()
+        public override void OnUpdate()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(fsm.nextFixedFrameNumber >= data.shortIdleFrame)
-            {
-                fsm.Change(fsm.idleLong);
-                return true;
-            }
+            base.OnUpdate();
 
-            return false;
+            if(m_leftIdleTime > 0)
+                m_leftIdleTime -= Time.deltaTime;
         }
 
-        public override void OnStateEnd()
+        public override int Transit()
         {
-            base.OnStateEnd();
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(m_leftIdleTime <= 0)
+                return PlayerFsm.c_st_IDLE_LONG;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

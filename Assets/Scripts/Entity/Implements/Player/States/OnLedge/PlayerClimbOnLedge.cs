@@ -8,15 +8,15 @@ namespace UnchordMetroidvania
         private Vector2 playerTeleportPosition;
         private bool bInitState;
 
-        public PlayerClimbOnLedge(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerClimbOnLedge(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.vm.FreezePositionX();
             player.vm.FreezePositionY();
@@ -74,26 +74,24 @@ namespace UnchordMetroidvania
             }
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(player.aController.bEndOfAnimation)
-            {
-                player.transform.position = playerTeleportPosition;
-                fsm.Change(fsm.freeFall);
-                return true;
-            }
+            int transit = base.Transit();
 
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
 
             // NOTE: 테스트 코드.
-            else if(Input.GetKeyDown(KeyCode.Return))
-            {
+            if(Input.GetKeyDown(KeyCode.Return))
                 player.aController.bEndOfAnimation = true;
-                return false;
+
+            if(player.aController.bEndOfAnimation)
+            {
+                player.transform.position = playerTeleportPosition;
+                return PlayerFsm.c_st_FREE_FALL;
             }
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

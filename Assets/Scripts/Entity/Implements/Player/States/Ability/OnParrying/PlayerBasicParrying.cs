@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public class PlayerBasicParrying : PlayerParrying
     {
-        public PlayerBasicParrying(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerBasicParrying(Player _player)
+        : base(_player)
         {
 
         }
@@ -13,7 +13,6 @@ namespace UnchordMetroidvania
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-
             player.vm.SetVelocityXY(0.0f, -1.0f);
         }
     }

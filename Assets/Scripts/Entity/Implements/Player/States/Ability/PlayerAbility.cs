@@ -4,32 +4,33 @@ namespace UnchordMetroidvania
     {
         protected bool p_bEndOfAbility;
 
-        public PlayerAbility(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerAbility(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
             p_bEndOfAbility = false;
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(p_bEndOfAbility)
             {
                 if(player.senseData.bOnFloor)
-                    fsm.Change(fsm.idleShort);
+                    return PlayerFsm.c_st_IDLE_SHORT;
                 else
-                    fsm.Change(fsm.freeFall);
-                return true;
+                    return PlayerFsm.c_st_FREE_FALL;
             }
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

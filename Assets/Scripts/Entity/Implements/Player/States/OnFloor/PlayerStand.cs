@@ -2,15 +2,15 @@ namespace UnchordMetroidvania
 {
     public abstract class PlayerStand : PlayerOnFloor
     {
-        public PlayerStand(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerStand(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.vm.FreezePositionX();
             player.vm.MeltPositionY();
@@ -22,17 +22,16 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityY(-1.0f);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(player.axisInput.y == 0)
-            {
-                fsm.Change(fsm.idleShort);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(player.axisInput.y == 0)
+                return PlayerFsm.c_st_IDLE_SHORT;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

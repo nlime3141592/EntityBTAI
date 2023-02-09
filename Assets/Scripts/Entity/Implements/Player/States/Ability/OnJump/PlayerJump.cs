@@ -6,15 +6,15 @@ namespace UnchordMetroidvania
     {
         protected bool bJumpCanceled;
 
-        public PlayerJump(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerJump(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
@@ -22,38 +22,28 @@ namespace UnchordMetroidvania
             bJumpCanceled = false;
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(player.axisInput.y < 0 && player.jumpDown)
-            {
-                fsm.Change(fsm.takeDown);
-                return true;
-            }
-            else if(player.skill00 && fsm.attackOnAir.CanAttack())
-            {
-                fsm.Change(fsm.attackOnAir);
-                return true;
-            }
+                return PlayerFsm.c_st_TAKE_DOWN;
+            else if(player.skill00 && fsm[PlayerFsm.c_st_ATTACK_ON_AIR].CanTransit())
+                return PlayerFsm.c_st_ATTACK_ON_AIR;
             else if(player.senseData.bOnCeil)
-            {
-                fsm.Change(fsm.freeFall);
-                return true;
-            }
+                return PlayerFsm.c_st_FREE_FALL;
             else if(!bJumpCanceled && player.jumpUp)
             {
                 bJumpCanceled = true;
                 p_OnJumpCanceled();
-                return false;
+                return FiniteStateMachine.c_st_STATE_CONTINUE;
             }
             else if(player.leftAirJumpCount > 0 && player.jumpDown)
-            {
-                fsm.Change(fsm.jumpOnAir);
-                return true;
-            }
+                return PlayerFsm.c_st_JUMP_ON_AIR;
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         protected virtual void p_OnJumpCanceled()

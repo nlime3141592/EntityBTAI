@@ -1475,6 +1475,8 @@ MonoBehaviour:
   lastInvokeResult: 0
   bBeginOfEntity: 0
   bEndOfEntity: 0
+  aPhase: -1
+  aState: -1
   canInput: 1
   axisInput: {x: 0, y: 0}
   strength:
@@ -1544,6 +1546,7 @@ MonoBehaviour:
     wallDetectLength: 0.06
     hitLength: 0.06
     walkSpeed: 6
+  CURRENT_STATE: 0
 --- !u!50 &560320133
 Rigidbody2D:
   serializedVersion: 4
@@ -2439,7 +2442,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1249816858}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8ae442d4f6496c40b61c82d0f913c80, type: 3}
   m_Name: 
@@ -2455,6 +2458,8 @@ MonoBehaviour:
   lastInvokeResult: 0
   bBeginOfEntity: 0
   bEndOfEntity: 0
+  aPhase: -1
+  aState: -1
   canInput: 1
   axisInput: {x: 0, y: 0}
   strength:

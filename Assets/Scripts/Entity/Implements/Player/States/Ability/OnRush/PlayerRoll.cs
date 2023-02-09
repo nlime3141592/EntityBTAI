@@ -4,10 +4,19 @@ namespace UnchordMetroidvania
 {
     public class PlayerRoll : PlayerRush
     {
-        public PlayerRoll(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        private int m_frame = 45;
+        private int m_leftFrame;
+
+        public PlayerRoll(Player _player)
+        : base(_player)
         {
 
+        }
+
+        public override void OnStateBegin()
+        {
+            base.OnStateBegin();
+            m_leftFrame = m_frame;
         }
 
         public override void OnFixedUpdate()
@@ -16,12 +25,8 @@ namespace UnchordMetroidvania
 
             RaycastHit2D terrain = Physics2D.Raycast(player.senseData.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
 
-            if(fsm.nextFixedFrameNumber >= data.rollFrame)
-            {
-                if(!p_bEndOfAbility)
-                    p_bEndOfAbility = true;
-                return;
-            }
+            if(m_leftFrame > 0)
+                --m_leftFrame;
             else if(!terrain || player.senseData.bOnWallFrontB || player.senseData.bOnWallFrontT)
             {
                 if(!p_bEndOfAbility)
@@ -54,27 +59,20 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(vx, vy);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(player.aController.bEndOfAnimation)
-            {
-                fsm.Change(fsm.idleShort);
-                return true;
-            }
-            else if(player.aController.bEndOfAction && player.parryingDown)
-            {
-                fsm.Change(fsm.emergencyParrying);
-                return true;
-            }
-            else if(player.jumpDown)
-            {
-                fsm.Change(fsm.jumpOnFloor);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(player.aController.bEndOfAnimation)
+                return PlayerFsm.c_st_IDLE_SHORT;
+            else if(player.aController.bEndOfAction && player.parryingDown)
+                return PlayerFsm.c_st_EMERGENCY_PARRYING;
+            else if(player.jumpDown)
+                return PlayerFsm.c_st_JUMP_ON_FLOOR;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public abstract class PlayerParrying : PlayerAbility
     {
-        public PlayerParrying(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerParrying(Player _player)
+        : base(_player)
         {
 
         }
@@ -17,17 +17,16 @@ namespace UnchordMetroidvania
             // player.senseData.UpdateMoveDir(player);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(player.parryingUp || player.aController.bEndOfAnimation)
-            {
-                fsm.Change(fsm.idleShort);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(player.parryingUp || player.aController.bEndOfAnimation)
+                return PlayerFsm.c_st_IDLE_SHORT;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

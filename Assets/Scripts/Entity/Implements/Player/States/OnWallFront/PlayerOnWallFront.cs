@@ -4,45 +4,35 @@ namespace UnchordMetroidvania
 {
     public abstract class PlayerOnWallFront : PlayerState
     {
-        public PlayerOnWallFront(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerOnWallFront(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.leftAirJumpCount = data.maxAirJumpCount;
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(player.jumpDown)
-            {
-                fsm.Change(fsm.jumpOnWallFront);
-                return true;
-            }
-            else if(player.senseData.bOnDetectFloor)
-            {
-                fsm.Change(fsm.freeFall);
-                return true;
-            }
-            else if(player.axisInput.y < 0 && player.axisInput.x == 0)
-            {
-                fsm.Change(fsm.freeFall);
-                return true;
-            }
-            else if(!player.senseData.bOnWallFront)
-            {
-                fsm.Change(fsm.freeFall);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(player.jumpDown)
+                return PlayerFsm.c_st_JUMP_ON_WALL_FRONT;
+            else if(player.senseData.bOnDetectFloor)
+                return PlayerFsm.c_st_FREE_FALL;
+            else if(player.axisInput.y < 0 && player.axisInput.x == 0)
+                return PlayerFsm.c_st_FREE_FALL;
+            else if(!player.senseData.bOnWallFront)
+                return PlayerFsm.c_st_FREE_FALL;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

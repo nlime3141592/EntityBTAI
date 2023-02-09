@@ -4,15 +4,15 @@ namespace UnchordMetroidvania
     {
         private int m_leftDashFrame = 0;
 
-        public PlayerDash(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerDash(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
             m_leftDashFrame = data.dashFrame;
         }
 
@@ -38,22 +38,18 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(vx, vy);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(m_leftDashFrame <= 0)
-            {
-                fsm.Change(fsm.freeFall);
-                return true;
-            }
-            else if(player.leftAirJumpCount > 0 && player.jumpDown)
-            {
-                fsm.Change(fsm.jumpOnAir);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(m_leftDashFrame <= 0)
+                return PlayerFsm.c_st_FREE_FALL;
+            else if(player.leftAirJumpCount > 0 && player.jumpDown)
+                return PlayerFsm.c_st_JUMP_ON_AIR;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }
