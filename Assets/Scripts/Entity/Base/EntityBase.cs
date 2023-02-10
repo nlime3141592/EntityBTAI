@@ -29,6 +29,7 @@ namespace UnchordMetroidvania
 
         public int aPhase = -1;
         public int aState = -1;
+        public bool bParrying = false;
         private object m_root;
         private Func<InvokeResult> m_func_rootInvoke;
         #endregion

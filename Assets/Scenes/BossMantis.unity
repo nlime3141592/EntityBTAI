@@ -1386,7 +1386,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -5, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.425, y: 0.36}
@@ -1397,7 +1397,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 30, y: 6.5}
+  m_Size: {x: 19.5, y: 6.5}
   m_EdgeRadius: 0
 --- !u!212 &560320131
 SpriteRenderer:
@@ -1477,6 +1477,7 @@ MonoBehaviour:
   bEndOfEntity: 0
   aPhase: -1
   aState: -1
+  bParrying: 0
   canInput: 1
   axisInput: {x: 0, y: 0}
   strength:
@@ -1492,7 +1493,7 @@ MonoBehaviour:
   baseGravity:
     baseValue: 0
   baseMentality:
-    baseValue: 0
+    baseValue: 0.34
   health: 2000
   mana: 0
   groggyValue: 0
@@ -1599,6 +1600,10 @@ MonoBehaviour:
   damageParent: {fileID: 0}
   hitUI: {fileID: 0}
   healUI: {fileID: 0}
+  battleRangeGizmo:
+    bShowGizmo: 1
+    duration: 1
+    color: {r: 1, g: 0.7302213, b: 0.3160377, a: 1}
 --- !u!95 &560320136
 Animator:
   serializedVersion: 3
@@ -2460,6 +2465,7 @@ MonoBehaviour:
   bEndOfEntity: 0
   aPhase: -1
   aState: -1
+  bParrying: 0
   canInput: 1
   axisInput: {x: 0, y: 0}
   strength:

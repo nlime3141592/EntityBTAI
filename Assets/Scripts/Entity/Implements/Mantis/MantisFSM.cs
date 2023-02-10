@@ -16,18 +16,6 @@ namespace UnchordMetroidvania
         public const int c_st_GROGGY                     = 9;
         public const int c_st_DIE                        = 10;
 
-        public MantisIdle idle;
-        public MantisWalkFront walkFront;
-        public MantisWalkBack walkBack;
-        public MantisShout shout;
-        public MantisKnifeGrinding knifeGrinding;
-        public MantisUpSlice upSlice;
-        public MantisBackSlice backSlice;
-        public MantisChop chop;
-        public MantisJumpChop jumpChop;
-        public MantisGroggy groggy;
-        public MantisDie die;
-
         public int mode = 1;
 
         public MantisFsm(Mantis _mantis, int _capacity)

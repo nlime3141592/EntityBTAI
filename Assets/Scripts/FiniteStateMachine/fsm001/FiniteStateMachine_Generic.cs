@@ -1,7 +1,5 @@
 using System;
 
-using UnityEngine; // 디버그
-
 namespace UnchordMetroidvania
 {
     public abstract class FiniteStateMachine<T> : FiniteState<T>
@@ -67,7 +65,7 @@ namespace UnchordMetroidvania
                 return current;
 
             int next = states[current]?.Transit() ?? c_st_MACHINE_HALT;
-Debug.Log(string.Format("next: {0}", next));
+
             if(next >= 0 && next < capacity) // 상태 전이
             {
                 if(!Change(next)) Stop();

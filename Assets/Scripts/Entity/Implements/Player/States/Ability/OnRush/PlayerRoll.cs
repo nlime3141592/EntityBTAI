@@ -7,6 +7,8 @@ namespace UnchordMetroidvania
         private int m_frame = 45;
         private int m_leftFrame;
 
+        private bool m_bParryingDown;
+
         public PlayerRoll(Player _player)
         : base(_player)
         {
@@ -17,6 +19,8 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
             m_leftFrame = m_frame;
+
+            m_bParryingDown = false;
         }
 
         public override void OnFixedUpdate()
@@ -59,6 +63,25 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(vx, vy);
         }
 
+        public override void OnUpdateAlways()
+        {
+            base.OnUpdateAlways();
+            if(player.parryingDown)
+                m_bParryingDown = true;
+            if(player.aController.bEndOfAction)
+            {
+                // TODO: 이 블럭 안에 패링 입력을 받을지 고민해보기.
+            }
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            // TODO: 플레이어에게 일정 시간 동안 무적 효과 부여.
+            // player.(무적인가?) = player.aController.bBeginOfAction && !player.aController.bEndOfAction;
+        }
+
         public override int Transit()
         {
             int transit = base.Transit();
@@ -67,7 +90,7 @@ namespace UnchordMetroidvania
                 return transit;
             else if(player.aController.bEndOfAnimation)
                 return PlayerFsm.c_st_IDLE_SHORT;
-            else if(player.aController.bEndOfAction && player.parryingDown)
+            else if(m_bParryingDown)
                 return PlayerFsm.c_st_EMERGENCY_PARRYING;
             else if(player.jumpDown)
                 return PlayerFsm.c_st_JUMP_ON_FLOOR;

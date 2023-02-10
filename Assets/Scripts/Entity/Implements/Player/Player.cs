@@ -50,7 +50,7 @@ namespace UnchordMetroidvania
 
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
-            fsm = new PlayerFsm(this, 40);
+            fsm = new PlayerFsm(this, 23);
 
             rangeGizmoManager = new EntitySensorGizmoManager();
             iManager = new PlayerInputManager(this);
@@ -62,6 +62,7 @@ namespace UnchordMetroidvania
         {
             base.FixedUpdate();
             senseData.UpdateOrigins(this);
+            fsm.OnFixedUpdateAlways();
             fsm.OnFixedUpdate();
             // Debug.Log(string.Format("CurrentState: {0}", fsm.stateName));
         }
@@ -71,6 +72,7 @@ namespace UnchordMetroidvania
             base.Update();
 
             iManager.UpdateInputs(canInput);
+            fsm.OnUpdateAlways();
             fsm.OnUpdate();
             CURRENT_STATE = fsm.Transit();
         }

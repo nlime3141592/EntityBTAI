@@ -10,11 +10,23 @@ namespace UnchordMetroidvania
 
         }
 
+        public override void OnStateBegin()
+        {
+            base.OnStateBegin();
+            player.bParrying = false;
+        }
+
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
             // player.senseData.UpdateMoveDir(player);
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+            player.bParrying = player.aController.bBeginOfAction && !player.aController.bEndOfAction;
         }
 
         public override int Transit()
@@ -27,6 +39,12 @@ namespace UnchordMetroidvania
                 return PlayerFsm.c_st_IDLE_SHORT;
 
             return FiniteStateMachine.c_st_BASE_IGNORE;
+        }
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+            player.bParrying = false;
         }
     }
 }

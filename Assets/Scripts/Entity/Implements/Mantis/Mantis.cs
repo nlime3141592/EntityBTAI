@@ -56,7 +56,7 @@ namespace UnchordMetroidvania
             aController = GetComponent<AnimationController>();
             battleModule = GetComponent<BattleModule>();
 
-            fsm = new MantisFsm(this, 20);
+            fsm = new MantisFsm(this, 11);
 
             aController.OnStart();
             fsm.Start(MantisFsm.c_st_IDLE);

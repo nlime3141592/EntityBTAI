@@ -11,6 +11,12 @@ namespace UnchordMetroidvania
 
         }
 
+        public override void OnStateBegin()
+        {
+            base.OnStateBegin();
+            instance.aController.Reset();
+        }
+
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
