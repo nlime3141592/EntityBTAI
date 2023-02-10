@@ -2,25 +2,10 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class MantisUpSlice : MantisAttack, IBattleState
+    public class MantisUpSlice : MantisAttack
     {
         // fixed data
-        private int m_targetCount = 12;
-        private float m_baseDamage = 1.0f;
         private float m_cooltime = 0.1f;
-        private LTRB m_attackRange = new LTRB()
-        {
-            left = 0.0f,
-            top = 16.0f,
-            right = 17.5f,
-            bottom = 4.0f
-        };
-        private EntitySensorGizmoOption m_attackGizmoOption = new EntitySensorGizmoOption()
-        {
-            bShowGizmo = true,
-            duration = 2.0f,
-            color = Color.magenta
-        };
 
         // variables
         private float m_leftCooltime;
@@ -28,38 +13,29 @@ namespace UnchordMetroidvania
 
         // TODO: 포효콤보 관련 로직을 추가해야 함.
 
-        public MantisUpSlice(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisUpSlice(Mantis _mantis)
+        : base(_mantis)
         {
-            
-        }
-
-        void IBattleState.OnBattle()
-        {
-            float baseDamage = m_baseDamage;
-
-            Collider2D[] colTargets = EntitySensor.OverlapBox(instance, m_attackRange, m_attackGizmoOption);
-            targets.Clear();
-            targets
-                .FilterFromColliders(instance, colTargets, false, "Player")
-                .SetTargetCount(m_targetCount);
-
-            foreach(EntityBase target in targets)
+            base.attackRange = new LTRB()
             {
-                float finalDamage = instance.battleModule.GetFinalDamage(target, baseDamage);
-                target.Damage(finalDamage);
-            }
+                left = 0.0f,
+                top = 16.0f,
+                right = 17.5f,
+                bottom = 4.0f
+            };
+            base.targetCount = 12;
+            base.baseDamage = 1.0f;
         }
 
-        public override bool CanAttack()
+        public override bool CanTransit()
         {
             bool canAttack = m_leftCooltime <= 0;
             return canAttack;
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             mantis.battleModule.SetBattleState(this);
 
@@ -85,17 +61,16 @@ namespace UnchordMetroidvania
             }
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(mantis.aController.bEndOfAnimation)
-            {
-                fsm.Change(fsm.idle);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(mantis.aController.bEndOfAnimation)
+                return MantisFsm.c_st_IDLE;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

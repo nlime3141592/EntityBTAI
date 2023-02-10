@@ -5,63 +5,38 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public class PlayerTakeDown : PlayerAbility, IBattleState
+    public class PlayerTakeDown : PlayerAttack
     {
         // property
-        public int targetCount => m_targetCount;
         public int maxActionPhase => m_maxActionPhase;
-        public float baseDamage => m_baseDamage;
 
         // fixed data
-        private List<EntityBase> m_targets;
-        private int m_targetCount = 7;
         private int m_maxActionPhase = 3;
-        private float m_baseDamage = 0.7f;
         private float m_cooltime;
-        private LTRB m_attackRange = new LTRB()
-        {
-            left = 3.0f,
-            top = 0.5f,
-            right = 3.0f,
-            bottom = 3.0f
-        };
-        private EntitySensorGizmoOption m_attackGizmoOption = new EntitySensorGizmoOption()
-        {
-            bShowGizmo = true,
-            duration = 0.2f,
-            color = Color.magenta
-        };
 
         // variable
         private int m_actionPhase;
         private float m_leftCooltime;
 
-        public PlayerTakeDown(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        private bool m_bParryingDown;
+
+        public PlayerTakeDown(Player _player)
+        : base(_player)
         {
-            m_targets = new List<EntityBase>(m_targetCount);
-        }
-
-        void IBattleState.OnBattle()
-        {
-            float baseDamage = m_baseDamage;
-
-            Collider2D[] colTargets = EntitySensor.OverlapBox(player, m_attackRange, m_attackGizmoOption);
-            m_targets.Clear();
-            m_targets
-                .FilterFromColliders(player, colTargets, false)
-                .SetTargetCount(m_targetCount);
-
-            foreach(EntityBase target in m_targets)
+            base.attackRange = new LTRB()
             {
-                float finalDamage = player.battleModule.GetFinalDamage(target, baseDamage);
-                target.Damage(finalDamage);
-            }
+                left = 3.0f,
+                top = 0.5f,
+                right = 3.0f,
+                bottom = 3.0f
+            };
+            base.targetCount = 7;
+            base.baseDamage = 0.7f;
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.battleModule.SetBattleState(this);
             player.bFixLookDirX = true;
@@ -70,17 +45,13 @@ namespace UnchordMetroidvania
                 m_actionPhase = 0;
 
             ++m_actionPhase;
+            player.aPhase = m_actionPhase;
 
             player.vm.FreezePosition(m_actionPhase != 2, m_actionPhase == 1);
 
             m_leftCooltime = m_cooltime;
-        }
 
-        protected override void p_OnChangeAnimation()
-        {
-            // NOTE: 함수 호출 순서 중요함. 섞지 말 것.
-            player.aController.ChangeActionPhase(m_actionPhase);
-            base.p_OnChangeAnimation();
+            m_bParryingDown = false;
         }
 
         public override void OnFixedUpdate()
@@ -97,35 +68,34 @@ namespace UnchordMetroidvania
                 player.vm.SetVelocityY(-1.0f);
         }
 
-        public override bool OnUpdate()
+        public override void OnUpdate()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(m_actionPhase == 1 && player.aController.bEndOfAnimation)
+            base.OnUpdate();
+
+            if(player.aController.bEndOfAction)
             {
-                fsm.Replay();
-                return true;
+                if(player.parryingDown)
+                    m_bParryingDown = true;
             }
+        }
+
+        public override int Transit()
+        {
+            if(m_actionPhase == 1 && player.aController.bEndOfAnimation)
+                return PlayerFsm.c_st_TAKE_DOWN;
             else if(m_actionPhase == 2 && player.senseData.bOnFloor)
-            {
-                fsm.Replay();
-                return true;
-            }
+                return PlayerFsm.c_st_TAKE_DOWN;
             else if(m_actionPhase == 3)
             {
-                if(player.aController.bEndOfAnimation)
-                {
-                    fsm.Change(fsm.idleShort);
-                    return true;
-                }
-                if(player.aController.bEndOfAction && player.parryingDown)
-                {
-                    fsm.Change(fsm.emergencyParrying);
-                    return true;
-                }
+                int transit = base.Transit();
+
+                if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                    return transit;
+                else if(m_bParryingDown)
+                    return PlayerFsm.c_st_EMERGENCY_PARRYING;
             }
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

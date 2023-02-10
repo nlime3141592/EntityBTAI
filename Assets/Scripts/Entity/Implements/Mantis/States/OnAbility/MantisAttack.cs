@@ -3,25 +3,32 @@ using System.Collections.Generic;
 
 namespace UnchordMetroidvania
 {
-    public abstract class MantisAttack : MantisAbility
+    public abstract class MantisAttack : MantisAbility, IBattleState
     {
-        protected readonly List<EntityBase> targets;
+        EntityBase IBattleState.attacker => mantis;
+        List<EntityBase> IBattleState.targets => this.targets;
+        LTRB IBattleState.range => attackRange;
+        int IBattleState.targetCount => this.targetCount;
+        float IBattleState.baseDamage => this.baseDamage;
 
-        public MantisAttack(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        protected readonly List<EntityBase> targets;
+        public LTRB attackRange;
+        public int targetCount;
+        public float baseDamage;
+
+        public MantisAttack(Mantis _mantis)
+        : base(_mantis)
         {
             targets = new List<EntityBase>(16);
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
-
+            base.OnStateBegin();
+            mantis.battleModule.SetBattleState(this);
             mantis.bUpdateAggroDirX = false;
             mantis.bFixLookDirX = true;
         }
-
-        public abstract bool CanAttack();
 
         public override void OnStateEnd()
         {

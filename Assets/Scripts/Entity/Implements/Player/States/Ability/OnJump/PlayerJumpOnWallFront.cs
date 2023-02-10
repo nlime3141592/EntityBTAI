@@ -6,15 +6,15 @@ namespace UnchordMetroidvania
     {
         private float vy;
 
-        public PlayerJumpOnWallFront(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerJumpOnWallFront(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.bFixLookDirX = true;
             vy = data.jumpOnWallSpeedY;
@@ -44,17 +44,16 @@ namespace UnchordMetroidvania
             vy -= (data.jumpOnWallForce * Time.fixedDeltaTime);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(bJumpCanceled && player.rushDown)
-            {
-                fsm.Change(fsm.dash);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(bJumpCanceled && player.rushDown)
+                return PlayerFsm.c_st_DASH;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

@@ -452,6 +452,9 @@ MonoBehaviour:
   lastInvokeResult: 0
   bBeginOfEntity: 0
   bEndOfEntity: 0
+  aPhase: -1
+  aState: -1
+  bParrying: 0
   canInput: 1
   axisInput: {x: 0, y: 0}
   strength:
@@ -575,6 +578,10 @@ MonoBehaviour:
   damageParent: {fileID: 0}
   hitUI: {fileID: 0}
   healUI: {fileID: 0}
+  battleRangeGizmo:
+    bShowGizmo: 1
+    duration: 2
+    color: {r: 0.2028302, g: 0.7639362, b: 1, a: 1}
 --- !u!50 &254749478
 Rigidbody2D:
   serializedVersion: 4

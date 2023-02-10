@@ -8,15 +8,15 @@ namespace UnchordMetroidvania
         // variables
         private int m_leftMoveFrame = 0;
 
-        public MantisMove(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisMove(Mantis _mantis)
+        : base(_mantis)
         {
             
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             mantis.vm.FreezePosition(false, false);
 
@@ -35,17 +35,16 @@ namespace UnchordMetroidvania
                 --m_leftMoveFrame;
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(m_leftMoveFrame <= 0)
-            {
-                fsm.Change(fsm.idle);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(m_leftMoveFrame <= 0)
+                return MantisFsm.c_st_IDLE;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

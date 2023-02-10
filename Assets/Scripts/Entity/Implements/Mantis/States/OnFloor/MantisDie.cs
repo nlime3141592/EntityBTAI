@@ -4,18 +4,18 @@ namespace UnchordMetroidvania
 {
     public class MantisDie : MantisOnFloor
     {
-        public MantisDie(Mantis instance, int id, string name)
-        : base(instance, id, name)
+        public MantisDie(Mantis instance)
+        : base(instance)
         {
 
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
             if(mantis.aController.bEndOfAnimation)
-                fsm.End();
+                return FiniteStateMachine.c_st_MACHINE_HALT;
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

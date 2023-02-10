@@ -5,37 +5,51 @@ using UnityEngine;
 namespace UnchordMetroidvania
 {
     [Serializable]
-    public abstract class PlayerAttack : PlayerAbility
+    public abstract class PlayerAttack : PlayerAbility, IBattleState
     {
-        protected readonly List<EntityBase> targets;
+        EntityBase IBattleState.attacker => player;
+        List<EntityBase> IBattleState.targets => this.targets;
+        LTRB IBattleState.range => attackRange;
+        int IBattleState.targetCount => this.targetCount;
+        float IBattleState.baseDamage => this.baseDamage;
 
-        public PlayerAttack(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        protected readonly List<EntityBase> targets;
+        public LTRB attackRange;
+        public int targetCount;
+        public float baseDamage;
+
+        public PlayerAttack(Player _player)
+        : base(_player)
         {
             targets = new List<EntityBase>(16);
         }
 
-        public abstract bool CanAttack();
+        public override void OnStateBegin()
+        {
+            base.OnStateBegin();
+            player.battleModule.SetBattleState(this);
+        }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(player.aController.bEndOfAnimation)
             {
                 if(player.senseData.bOnFloor)
-                    fsm.Change(fsm.idleShort);
+                    return PlayerFsm.c_st_IDLE_SHORT;
                 else
-                    fsm.Change(fsm.freeFall);
-                return true;
+                    return PlayerFsm.c_st_FREE_FALL;
             }
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()

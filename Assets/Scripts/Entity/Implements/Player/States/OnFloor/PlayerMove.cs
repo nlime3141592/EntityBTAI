@@ -4,15 +4,15 @@ namespace UnchordMetroidvania
 {
     public abstract class PlayerMove : PlayerOnFloor
     {
-        public PlayerMove(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerMove(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
@@ -24,27 +24,20 @@ namespace UnchordMetroidvania
             player.senseData.UpdateMoveDir(player);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(player.axisInput.y > 0)
-            {
-                fsm.Change(fsm.headUp);
-                return true;
-            }
-            else if(player.axisInput.y < 0)
-            {
-                fsm.Change(fsm.sit);
-                return true;
-            }
-            else if(player.axisInput.x == 0)
-            {
-                fsm.Change(fsm.idleShort);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(player.axisInput.y > 0)
+                return PlayerFsm.c_st_HEAD_UP;
+            else if(player.axisInput.y < 0)
+                return PlayerFsm.c_st_SIT;
+            else if(player.axisInput.x == 0)
+                return PlayerFsm.c_st_IDLE_SHORT;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

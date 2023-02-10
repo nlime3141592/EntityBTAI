@@ -14,6 +14,8 @@ namespace UnchordMetroidvania
         public TestDamageUI hitUI;
         public TestDamageUI healUI;
 
+        public EntitySensorGizmoOption battleRangeGizmo;
+
         private IBattleState m_battleState;
 
         private void OnValidate()
@@ -38,7 +40,31 @@ namespace UnchordMetroidvania
 
         public void TriggerBattleState()
         {
-            m_battleState?.OnBattle();
+            EntityBase attacker = m_battleState.attacker;
+            List<EntityBase> targets = m_battleState.targets;
+            LTRB range = m_battleState.range;
+            int targetCount = m_battleState.targetCount;
+            float baseDamage = m_battleState.baseDamage;
+            bool bGetGroggyValue = false;
+
+            Collider2D[] colTargets = EntitySensor.OverlapBox(attacker, range, battleRangeGizmo);
+            targets.Clear();
+            targets
+                .FilterFromColliders(attacker, colTargets, false)
+                .SetTargetCount(targetCount);
+
+            foreach(EntityBase target in targets)
+            {
+                float finalDamage = this.GetFinalDamage(target, baseDamage);
+
+                bGetGroggyValue |= target.bParrying;
+
+                if(!target.bParrying)
+                    target.Damage(finalDamage);
+            }
+
+            if(bGetGroggyValue)
+                attacker.groggyValue += attacker.baseMentality.finalValue;
         }
 
         public float GetFinalDamage(EntityBase target, float baseDamage)

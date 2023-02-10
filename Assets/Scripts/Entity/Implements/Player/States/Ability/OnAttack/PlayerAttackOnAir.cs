@@ -6,62 +6,35 @@ namespace UnchordMetroidvania
     [Serializable]
     public class PlayerAttackOnAir : PlayerAttack, IBattleState
     {
-        // property
-        public float baseDamage => m_baseDamage;
-
         // fixed data
-        private int m_targetCount = 7;
-        private float m_baseDamage = 1.0f;
         private float m_cooltime = 0.1f;
-        private LTRB m_attackRange = new LTRB()
-        {
-            left = 1.0f,
-            top = 1.0f,
-            right = 1.0f,
-            bottom = 4.0f
-        };
-        private EntitySensorGizmoOption m_attackGizmoOption = new EntitySensorGizmoOption()
-        {
-            bShowGizmo = true,
-            duration = 0.2f,
-            color = Color.magenta
-        };
 
         // variable
         private float m_leftCooltime;
 
-        public PlayerAttackOnAir(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerAttackOnAir(Player _player)
+        : base(_player)
         {
-
-        }
-
-        void IBattleState.OnBattle()
-        {
-            float baseDamage = m_baseDamage;
-
-            Collider2D[] colTargets = EntitySensor.OverlapBox(player, m_attackRange, m_attackGizmoOption);
-            targets.Clear();
-            targets
-                .FilterFromColliders(player, colTargets, false)
-                .SetTargetCount(m_targetCount);
-
-            foreach(EntityBase target in targets)
+            base.attackRange = new LTRB()
             {
-                float finalDamage = player.battleModule.GetFinalDamage(target, baseDamage);
-                target.Damage(finalDamage);
-            }
+                left = 1.0f,
+                top = 1.0f,
+                right = 1.0f,
+                bottom = 4.0f
+            };
+            base.targetCount = 7;
+            base.baseDamage = 1.0f;
         }
 
-        public override bool CanAttack()
+        public override bool CanTransit()
         {
             bool canAttack = m_leftCooltime <= 0;
             return canAttack;
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.battleModule.SetBattleState(this);
 
@@ -79,10 +52,12 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(0.0f, -1.0f);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
 
             // NOTE: 디버그용 상태 전환 코드.
             else if(Input.GetKeyDown(KeyCode.Q))
@@ -90,7 +65,13 @@ namespace UnchordMetroidvania
             else if(Input.GetKeyDown(KeyCode.W))
                 player.aController.bEndOfAnimation = true;
 
-            return false;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
+        }
+
+        public override void OnUpdateAlways()
+        {
+            base.OnUpdateAlways();
+            m_UpdateCooltime();
         }
 
         public override void OnStateEnd()
@@ -102,7 +83,7 @@ namespace UnchordMetroidvania
             player.vm.MeltPositionY();
         }
 
-        public void UpdateCooltime()
+        private void m_UpdateCooltime()
         {
             if(m_leftCooltime > 0)
                 m_leftCooltime -= Time.deltaTime;

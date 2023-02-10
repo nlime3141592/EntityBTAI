@@ -4,15 +4,15 @@ namespace UnchordMetroidvania
     {
         private float m_ix;
 
-        public MantisWalkFront(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisWalkFront(Mantis _mantis)
+        : base(_mantis)
         {
             
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
             m_ix = mantis.lookDir.x;
         }
 
@@ -26,16 +26,16 @@ namespace UnchordMetroidvania
             mantis.vm.SetVelocityXY(vx, vy);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(mantis.senseData.bOnWallFront)
-            {
-                fsm.Change(fsm.idle);
-                return true;
-            }
-            return false;
+                return MantisFsm.c_st_IDLE;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

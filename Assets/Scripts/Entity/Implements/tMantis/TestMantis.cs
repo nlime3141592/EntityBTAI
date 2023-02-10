@@ -18,8 +18,8 @@ namespace UnchordMetroidvania
         {
             base.Start();
 
-            fsm = new tMantisFsm(this);
-            fsm.Begin(fsm.idle);
+            fsm = new tMantisFsm(this, 2);
+            fsm.Start(0);
         }
 
         protected override void FixedUpdate()
@@ -35,16 +35,16 @@ namespace UnchordMetroidvania
         }
     }
 
-    public class tMantisFsm : UnchordFsm<TestMantis>
+    public class tMantisFsm : EntityFsm<TestMantis>
     {
-        public tMantisIdle idle;
-        public tMantisWalk walk;
+        public const int c_st_IDLE = 0;
+        public const int c_st_WALK = 1;
 
-        public tMantisFsm(TestMantis instance)
-        : base(instance, -1, "tMantisFsm")
+        public tMantisFsm(TestMantis _instance, int _capacity)
+        : base(_instance, _capacity)
         {
-            idle = new tMantisIdle(instance, 0, "tMantisIdle");
-            walk = new tMantisWalk(instance, 1, "tMantisWalk");
+            this[0] = new tMantisIdle(_instance);
+            this[1] = new tMantisWalk(_instance);
         }
     }
 
@@ -55,8 +55,8 @@ namespace UnchordMetroidvania
 
         private int m_leftFrame;
 
-        public tMantisState(TestMantis instance, int id, string name)
-        : base(instance, id, name)
+        public tMantisState(TestMantis _instance)
+        : base(_instance)
         {
 
         }
@@ -66,15 +66,15 @@ namespace UnchordMetroidvania
     {
         private int m_leftFrame;
 
-        public tMantisIdle(TestMantis instance, int id, string name)
-        : base(instance, id, name)
+        public tMantisIdle(TestMantis _instance)
+        : base(_instance)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
             m_leftFrame = tMantis.prng.Next(tMantis.idleMinFrame, tMantis.idleMaxFrame + 1);
 
             tMantis.vm.FreezePosition(true, false);
@@ -89,16 +89,16 @@ namespace UnchordMetroidvania
             --m_leftFrame;
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(m_leftFrame <= 0)
-            {
-                fsm.Change(fsm.walk);
-                return true;
-            }
-            return false;
+                return tMantisFsm.c_st_WALK;
+                
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 
@@ -106,15 +106,15 @@ namespace UnchordMetroidvania
     {
         private int m_leftFrame;
 
-        public tMantisWalk(TestMantis instance, int id, string name)
-        : base(instance, id, name)
+        public tMantisWalk(TestMantis _instance)
+        : base(_instance)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
             tMantis.axisInput.x = tMantis.prng.Next(-100, 101) < 0 ? -1 : 1;
             m_leftFrame = tMantis.prng.Next(tMantis.walkMinFrame, tMantis.walkMaxFrame + 1);
 
@@ -131,19 +131,20 @@ namespace UnchordMetroidvania
 
             tMantis.vm.SetVelocityXY(vx, vy);
 
-            --m_leftFrame;
+            if(m_leftFrame > 0)
+                --m_leftFrame;
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(m_leftFrame <= 0)
-            {
-                fsm.Change(fsm.idle);
-                return true;
-            }
-            return false;
+                return tMantisFsm.c_st_IDLE;
+            
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

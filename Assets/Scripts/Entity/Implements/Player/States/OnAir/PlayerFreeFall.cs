@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public class PlayerFreeFall : PlayerOnAir
     {
-        public PlayerFreeFall(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerFreeFall(Player _player)
+        : base(_player)
         {
 
         }
@@ -31,17 +31,16 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(vx, vy);
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
-            else if(player.axisInput.y > 0)
-            {
-                fsm.Change(fsm.gliding);
-                return true;
-            }
+            int transit = base.Transit();
 
-            return false;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(player.axisInput.y > 0)
+                return PlayerFsm.c_st_GLIDING;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

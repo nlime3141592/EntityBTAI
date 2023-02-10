@@ -2,23 +2,21 @@ namespace UnchordMetroidvania
 {
     public abstract class PlayerRush : PlayerAbility
     {
-        public PlayerRush(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerRush(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
-
+            base.OnStateBegin();
             player.bFixLookDirX = true;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-
             player.bFixLookDirX = false;
         }
     }

@@ -8,15 +8,15 @@ namespace UnchordMetroidvania
         private Vector2 playerTeleportPosition;
         private bool bInitState;
 
-        public PlayerClimbOnLedge(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerClimbOnLedge(Player _player)
+        : base(_player)
         {
 
         }
 
-        protected override void p_OnStateBegin()
+        public override void OnStateBegin()
         {
-            base.p_OnStateBegin();
+            base.OnStateBegin();
 
             player.vm.FreezePositionX();
             player.vm.FreezePositionY();
@@ -63,43 +63,25 @@ namespace UnchordMetroidvania
 
             playerPosition = handPosition + dtPosition;
             playerTeleportPosition = handPosition + dfPosition + dirX * ledgerp;
-            bInitState = true;
+            player.transform.position = playerPosition;
         }
 
-        public override void OnFixedUpdate()
+        public override int Transit()
         {
-            if(bInitState)
-            {
-                player.transform.position = playerPosition;
-            }
-        }
+            int transit = base.Transit();
 
-        public override bool OnUpdate()
-        {
-            if(base.OnUpdate())
-                return true;
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(player.aController.bEndOfAnimation)
-            {
-                player.transform.position = playerTeleportPosition;
-                fsm.Change(fsm.freeFall);
-                return true;
-            }
-
-
-            // NOTE: 테스트 코드.
-            else if(Input.GetKeyDown(KeyCode.Return))
-            {
-                player.aController.bEndOfAnimation = true;
-                return false;
-            }
-
-            return false;
+                return PlayerFsm.c_st_FREE_FALL;
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
 
+            player.transform.position = playerTeleportPosition;
             player.bFixLookDirX = false;
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();

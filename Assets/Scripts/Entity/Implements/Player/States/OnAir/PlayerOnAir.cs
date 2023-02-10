@@ -4,8 +4,8 @@ namespace UnchordMetroidvania
 {
     public abstract class PlayerOnAir : PlayerState
     {
-        public PlayerOnAir(Player _player, int _id, string _name)
-        : base(_player, _id, _name)
+        public PlayerOnAir(Player _player)
+        : base(_player)
         {
 
         }
@@ -15,53 +15,33 @@ namespace UnchordMetroidvania
             base.OnFixedUpdate();
         }
 
-        public override bool OnUpdate()
+        public override int Transit()
         {
-            if(base.OnUpdate())
-                return true;
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
             else if(player.axisInput.y < 0 && player.jumpDown)
-            {
-                fsm.Change(fsm.takeDown);
-                return true;
-            }
-            else if(player.skill00 && fsm.attackOnAir.CanAttack())
-            {
-                fsm.Change(fsm.attackOnAir);
-                return true;
-            }
+                return PlayerFsm.c_st_TAKE_DOWN;
+            else if(player.skill00 && fsm[PlayerFsm.c_st_ATTACK_ON_AIR].CanTransit())
+                return PlayerFsm.c_st_ATTACK_ON_AIR;
             else if(player.leftAirJumpCount > 0 && player.jumpDown)
-            {
-                fsm.Change(fsm.jumpOnAir);
-                return true;
-            }
+                return PlayerFsm.c_st_JUMP_ON_AIR;
             else if(player.rushDown)
-            {
-                fsm.Change(fsm.dash);
-                return true;
-            }
+                return PlayerFsm.c_st_DASH;
             else if(player.senseData.bOnFloor)
-            {
-                fsm.Change(fsm.idleShort);
-                return true;
-            }
+                return PlayerFsm.c_st_IDLE_SHORT;
             else if(player.senseData.bOnDetectFloor)
-            {
-                return false;
-            }
+                return FiniteStateMachine.c_st_BASE_IGNORE;
             else if(player.axisInput.x != 0)
             {
                 if(player.senseData.bOnLedge)
-                {
-                    fsm.Change(fsm.climbLedge);
-                    return true;
-                }
+                    return PlayerFsm.c_st_CLIMB_LEDGE;
                 else if(player.senseData.bOnWallFront)
-                {
-                    fsm.Change(fsm.idleWallFront);
-                    return true;
-                }
+                    return PlayerFsm.c_st_IDLE_WALL_FRONT;
             }
-            return false;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }
 }

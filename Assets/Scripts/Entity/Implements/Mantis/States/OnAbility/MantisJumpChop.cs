@@ -2,15 +2,10 @@ namespace UnchordMetroidvania
 {
     public class MantisJumpChop : MantisAttack
     {
-        public MantisJumpChop(Mantis _mantis, int _id, string _name)
-        : base(_mantis, _id, _name)
+        public MantisJumpChop(Mantis _mantis)
+        : base(_mantis)
         {
             
-        }
-
-        public override bool CanAttack()
-        {
-            return true;
         }
     }
 }
