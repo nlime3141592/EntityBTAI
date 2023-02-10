@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UnchordMetroidvania
@@ -33,6 +34,7 @@ namespace UnchordMetroidvania
         public bool bIsRun = false;
         public int leftAirJumpCount = 0;
         public Vector2 cameraOffset = Vector2.zero;
+        public List<Slab> sitSlabs;
 
         protected override void Start()
         {
@@ -50,7 +52,7 @@ namespace UnchordMetroidvania
 
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
-            fsm = new PlayerFsm(this, 23);
+            fsm = new PlayerFsm(this, 24);
 
             rangeGizmoManager = new EntitySensorGizmoManager();
             iManager = new PlayerInputManager(this);
@@ -75,6 +77,13 @@ namespace UnchordMetroidvania
             fsm.OnUpdateAlways();
             fsm.OnUpdate();
             CURRENT_STATE = fsm.Transit();
+        }
+
+        protected override void OnDrawGizmos()
+        {
+            base.OnDrawGizmos();
+            ((PlayerJumpDown)(fsm[PlayerFsm.c_st_JUMP_DOWN])).m_sitRange.Draw(transform.position, false, false, Color.red);
+            ((PlayerJumpDown)(fsm[PlayerFsm.c_st_JUMP_DOWN])).m_slabRange.Draw(transform.position, false, false, Color.cyan);
         }
     }
 }

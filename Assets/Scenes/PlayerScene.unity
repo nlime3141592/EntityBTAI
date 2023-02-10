@@ -420,6 +420,7 @@ GameObject:
   - component: {fileID: 254749479}
   - component: {fileID: 254749480}
   - component: {fileID: 254749485}
+  - component: {fileID: 254749483}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -533,6 +534,8 @@ MonoBehaviour:
     rollSpeed: 16
     dashFrame: 7
     dashSpeed: 32
+    jumpDownSpeed: 5.5
+    jumpDownForce: 49.5
   CURRENT_STATE: 0
   jumpDown: 0
   jumpUp: 0
@@ -546,6 +549,7 @@ MonoBehaviour:
   bIsRun: 1
   leftAirJumpCount: 0
   cameraOffset: {x: 0, y: 0}
+  sitSlabs: []
 --- !u!114 &254749476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,6 +720,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &254749483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254749474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3116a758f86d445bde65f363b1d94f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bShow: 0
+  flipX: 0
+  flipY: 0
+  ltrbs:
+  - color: {r: 0.495283, g: 0.883674, b: 1, a: 1}
+    ltrb:
+      left: 0.6
+      top: 2.5
+      right: 0.6
+      bottom: 1.93
 --- !u!114 &254749485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1110,7 +1136,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 247
+    m_Bits: 1271
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -6,12 +6,25 @@ namespace UnchordMetroidvania
     public static class TerrainSensor
     {
         private static int s_m_layerMask => 1 << LayerMask.NameToLayer("Terrain");
+        private static int s_m_slabLayer => 1 << LayerMask.NameToLayer("Slab");
 
         public static bool CheckFloor(Vector2 origin, float checkLength)
         {
-            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, checkLength, s_m_layerMask);
+            int layer = s_m_layerMask;
+            layer |= s_m_slabLayer;
+
+            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, checkLength, layer);
             Debug.DrawLine(origin, origin + Vector2.down * checkLength, Color.white);
-            return hit;
+
+            bool bHit = hit;
+            Slab slab;
+
+            if(!bHit)
+                return bHit;
+            else if(hit.collider.gameObject.TryGetComponent<Slab>(out slab))
+                return !slab.bIgnored;
+            else
+                return bHit;
         }
 
         public static bool CheckCeil(Vector2 origin, float checkLength)

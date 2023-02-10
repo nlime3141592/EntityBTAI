@@ -27,6 +27,7 @@ namespace UnchordMetroidvania
         public const int c_st_TAKE_DOWN                     = 20;
         public const int c_st_BASIC_PARRYING                = 21;
         public const int c_st_EMERGENCY_PARRYING            = 22;
+        public const int c_st_JUMP_DOWN                     = 23;
 
         public PlayerFsm(Player _player, int _capacity)
         : base(_player, _capacity)
@@ -57,6 +58,7 @@ namespace UnchordMetroidvania
             this[++idx] = new PlayerTakeDown(_player);
             this[++idx] = new PlayerBasicParrying(_player);
             this[++idx] = new PlayerEmergencyParrying(_player);
+            this[++idx] = new PlayerJumpDown(_player);
         }
     }
 }

@@ -6,6 +6,36 @@ namespace UnchordMetroidvania
 {
     public static class EntitySensorExtension
     {
+        public static List<T> GetComponentsFromColliders<T>(this List<T> collection, Transform origin, Collider2D[] colliders, bool bCanDetectSelf, params string[] tags)
+        where T : MonoBehaviour
+        {
+            bool contains = false;
+            GameObject obj = null;
+            T behaviour = null;
+
+            collection.Clear(); // 넣을지 말지 고민하기
+
+            for(int i = 0; i < colliders.Length; ++i)
+            {
+                obj = colliders[i].gameObject;
+                contains = false;
+
+                for(int j = 0; j < collection.Count && !contains; ++j)
+                    contains = (obj == collection[j].gameObject);
+
+                if(contains)
+                    continue;
+                else if(tags != null && !s_m_bCheckTag(obj, tags))
+                    continue;
+                else if(!bCanDetectSelf && obj == origin.gameObject)
+                    continue;
+                else if(obj.TryGetComponent<T>(out behaviour))
+                    collection.Add(behaviour);
+            }
+
+            return collection;
+        }
+
         public static List<EntityBase> FilterFromColliders(this List<EntityBase> entities, EntityBase origin, Collider2D[] colliders, bool bCanDetectSelf, params string[] tags)
         {
             bool contains = false;

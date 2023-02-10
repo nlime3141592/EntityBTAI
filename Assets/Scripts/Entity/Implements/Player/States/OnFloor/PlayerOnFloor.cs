@@ -13,6 +13,13 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
+            foreach(Slab slab in player.sitSlabs)
+            {
+                slab.AcceptCollision(player.hCol.head);
+                slab.AcceptCollision(player.hCol.body);
+                slab.AcceptCollision(player.hCol.feet);
+            }
+            player.sitSlabs.Clear();
             player.leftAirJumpCount = player.data.maxAirJumpCount;
         }
 
@@ -30,8 +37,6 @@ namespace UnchordMetroidvania
                 return PlayerFsm.c_st_ABILITY_GUN;
             else if(player.parryingDown)
                 return PlayerFsm.c_st_BASIC_PARRYING;
-            else if(player.jumpDown)
-                return PlayerFsm.c_st_JUMP_ON_FLOOR;
             else if(player.rushDown)
                 return PlayerFsm.c_st_ROLL;
             else if(!player.senseData.bOnFloor)

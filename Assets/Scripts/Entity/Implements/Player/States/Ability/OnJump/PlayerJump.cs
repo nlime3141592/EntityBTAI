@@ -22,6 +22,17 @@ namespace UnchordMetroidvania
             bJumpCanceled = false;
         }
 
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            if(!bJumpCanceled && player.jumpUp)
+            {
+                bJumpCanceled = true;
+                p_OnJumpCanceled();
+            }
+        }
+
         public override int Transit()
         {
             int transit = base.Transit();
@@ -34,12 +45,6 @@ namespace UnchordMetroidvania
                 return PlayerFsm.c_st_ATTACK_ON_AIR;
             else if(player.senseData.bOnCeil)
                 return PlayerFsm.c_st_FREE_FALL;
-            else if(!bJumpCanceled && player.jumpUp)
-            {
-                bJumpCanceled = true;
-                p_OnJumpCanceled();
-                return FiniteStateMachine.c_st_STATE_CONTINUE;
-            }
             else if(player.leftAirJumpCount > 0 && player.jumpDown)
                 return PlayerFsm.c_st_JUMP_ON_AIR;
 

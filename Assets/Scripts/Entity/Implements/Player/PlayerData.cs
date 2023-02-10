@@ -52,5 +52,9 @@ namespace UnchordMetroidvania
         [Header("Player Dash")]
         public int dashFrame = 35;
         public float dashSpeed = 32.0f;
+
+        [Header("Player Jump Down")]
+        public float jumpDownSpeed = 5.5f;
+        public float jumpDownForce = 49.5f;
     }
 }

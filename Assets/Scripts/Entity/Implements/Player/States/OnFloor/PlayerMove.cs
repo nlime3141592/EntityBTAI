@@ -30,6 +30,8 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
+            else if(player.jumpDown)
+                return PlayerFsm.c_st_JUMP_ON_FLOOR;
             else if(player.axisInput.y > 0)
                 return PlayerFsm.c_st_HEAD_UP;
             else if(player.axisInput.y < 0)

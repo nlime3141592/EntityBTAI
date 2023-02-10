@@ -14,6 +14,13 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
+            foreach(Slab slab in player.sitSlabs)
+            {
+                slab.AcceptCollision(player.hCol.head);
+                slab.AcceptCollision(player.hCol.body);
+                slab.AcceptCollision(player.hCol.feet);
+            }
+            player.sitSlabs.Clear();
             player.leftAirJumpCount = data.maxAirJumpCount;
         }
 
