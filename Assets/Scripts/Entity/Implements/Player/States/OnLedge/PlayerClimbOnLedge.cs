@@ -63,15 +63,7 @@ namespace UnchordMetroidvania
 
             playerPosition = handPosition + dtPosition;
             playerTeleportPosition = handPosition + dfPosition + dirX * ledgerp;
-            bInitState = true;
-        }
-
-        public override void OnFixedUpdate()
-        {
-            if(bInitState)
-            {
-                player.transform.position = playerPosition;
-            }
+            player.transform.position = playerPosition;
         }
 
         public override int Transit()
@@ -80,17 +72,8 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
-
-            // NOTE: 테스트 코드.
-            if(Input.GetKeyDown(KeyCode.Return))
-                player.aController.bEndOfAnimation = true;
-
-            if(player.aController.bEndOfAnimation)
-            {
-                player.transform.position = playerTeleportPosition;
+            else if(player.aController.bEndOfAnimation)
                 return PlayerFsm.c_st_FREE_FALL;
-            }
-
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
@@ -98,6 +81,7 @@ namespace UnchordMetroidvania
         {
             base.OnStateEnd();
 
+            player.transform.position = playerTeleportPosition;
             player.bFixLookDirX = false;
             player.vm.MeltPositionX();
             player.vm.MeltPositionY();
