@@ -82,8 +82,11 @@ namespace UnchordMetroidvania
         protected override void OnDrawGizmos()
         {
             base.OnDrawGizmos();
-            ((PlayerJumpDown)(fsm[PlayerFsm.c_st_JUMP_DOWN])).m_sitRange.Draw(transform.position, false, false, Color.red);
-            ((PlayerJumpDown)(fsm[PlayerFsm.c_st_JUMP_DOWN])).m_slabRange.Draw(transform.position, false, false, Color.cyan);
+            if(Application.isPlaying)
+            {
+                ((PlayerJumpDown)(fsm[PlayerFsm.c_st_JUMP_DOWN])).m_sitRange.Draw(transform.position, false, false, Color.red);
+                ((PlayerJumpDown)(fsm[PlayerFsm.c_st_JUMP_DOWN])).m_slabRange.Draw(transform.position, false, false, Color.cyan);
+            }
         }
     }
 }

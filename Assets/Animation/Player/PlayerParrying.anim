@@ -29,6 +29,8 @@ AnimationClip:
       value: {fileID: 21300000, guid: 858bdb374be654941b4468bbc0eddcf5, type: 3}
     - time: 0.33333334
       value: {fileID: 21300000, guid: c67ff9aad38bb7d479eb2dc25ca1a80e, type: 3}
+    - time: 0.41666666
+      value: {fileID: 21300000, guid: c67ff9aad38bb7d479eb2dc25ca1a80e, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -53,12 +55,13 @@ AnimationClip:
     - {fileID: 21300000, guid: e251a7c7af79b204fba0068e06050f38, type: 3}
     - {fileID: 21300000, guid: 858bdb374be654941b4468bbc0eddcf5, type: 3}
     - {fileID: 21300000, guid: c67ff9aad38bb7d479eb2dc25ca1a80e, type: 3}
+    - {fileID: 21300000, guid: c67ff9aad38bb7d479eb2dc25ca1a80e, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.35000002
+    m_StopTime: 0.43333334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -99,7 +102,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
+  - time: 0.41666666
     functionName: TriggerEndOfAnimation
     data: 
     objectReferenceParameter: {fileID: 0}

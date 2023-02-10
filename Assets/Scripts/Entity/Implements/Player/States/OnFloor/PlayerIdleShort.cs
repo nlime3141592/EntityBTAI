@@ -16,14 +16,18 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            m_leftIdleTime = m_idleTime;            
+            m_leftIdleTime = m_idleTime;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
 
-            if(m_leftIdleTime > 0)
+            bool bGameStarted = GameManager.instance.bGameStarted;
+
+            if(!bGameStarted)
+                m_leftIdleTime = m_idleTime;
+            else if(m_leftIdleTime > 0)
                 m_leftIdleTime -= Time.deltaTime;
         }
 
