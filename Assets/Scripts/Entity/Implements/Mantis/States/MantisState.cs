@@ -24,7 +24,12 @@ namespace UnchordMetroidvania
             int transit = base.Transit();
 
             if(mantis.health <= 0)
-                return MantisFsm.c_st_DIE;
+            {
+                if(fsm.mode == 1)
+                    return MantisFsm.c_st_SHOUT;
+                else if(fsm.mode == 2)
+                    return MantisFsm.c_st_DIE;
+            }
             else if(mantis.groggyValue >= 1.0f)
                 return MantisFsm.c_st_GROGGY;
             else if(transit != FiniteStateMachine.c_st_BASE_IGNORE)

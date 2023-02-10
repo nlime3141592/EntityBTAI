@@ -36,6 +36,7 @@ namespace UnchordMetroidvania
         public MantisData data;
 
         public int CURRENT_STATE;
+        public int BOSS_PHASE;
 
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
@@ -77,6 +78,7 @@ namespace UnchordMetroidvania
             base.Update();
             fsm.OnUpdate();
             CURRENT_STATE = fsm.Transit();
+            BOSS_PHASE = fsm.mode;
             // Debug.Log(string.Format("Current State: {0}", fsm.stateId));
         }
 
