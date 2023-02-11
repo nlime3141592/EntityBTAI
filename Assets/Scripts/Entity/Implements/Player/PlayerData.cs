@@ -20,7 +20,7 @@ namespace UnchordMetroidvania
         public int shortIdleFrame = 100;
 
         [Header("Player Free Fall")]
-        public float minFreeFallSpeed = -12.0f;
+        public float minFreeFallSpeed = -35.0f;
         public float gravity = -49.5f;
 
         [Header("Player Gliding")]

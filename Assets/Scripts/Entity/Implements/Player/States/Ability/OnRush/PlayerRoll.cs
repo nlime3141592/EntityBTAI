@@ -33,8 +33,7 @@ namespace UnchordMetroidvania
                 --m_leftFrame;
             else if(!terrain || player.senseData.bOnWallFrontB || player.senseData.bOnWallFrontT)
             {
-                if(!p_bEndOfAbility)
-                    p_bEndOfAbility = true;
+                m_leftFrame = 0;
                 return;
             }
 

@@ -7,10 +7,16 @@ namespace UnchordMetroidvania
     public class PlayerAttackOnAir : PlayerAttack, IBattleState
     {
         // fixed data
+        private int m_maxActionPhase = 2;
         private float m_cooltime = 0.1f;
+        private float[] m_baseDamages = new float[] { 1.0f, 1.0f };
+        private float m_coyoteTime = 2.0f;
 
         // variable
         private float m_leftCooltime;
+        private int m_actionPhase = 0;
+
+        private float m_lookDirX;
 
         public PlayerAttackOnAir(Player _player)
         : base(_player)
@@ -26,12 +32,6 @@ namespace UnchordMetroidvania
             base.baseDamage = 1.0f;
         }
 
-        public override bool CanTransit()
-        {
-            bool canAttack = m_leftCooltime <= 0;
-            return canAttack;
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
@@ -42,6 +42,18 @@ namespace UnchordMetroidvania
             player.vm.FreezePositionX();
             player.vm.FreezePositionY();
 
+            if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
+                m_actionPhase = 0;
+
+            ++m_actionPhase;
+            player.aPhase = m_actionPhase;
+            base.baseDamage = m_baseDamages[m_actionPhase - 1];
+
+            float ix = player.axisInput.x;
+            if(ix < 0) player.lookDir.x = -1;
+            else if(ix > 0) player.lookDir.x = 1;
+            m_lookDirX = player.lookDir.x;
+
             m_leftCooltime = m_cooltime;
         }
 
@@ -50,6 +62,12 @@ namespace UnchordMetroidvania
             base.OnFixedUpdate();
 
             player.vm.SetVelocityXY(0.0f, -1.0f);
+        }
+
+        public override bool CanTransit()
+        {
+            bool canAttack = m_leftCooltime <= 0;
+            return canAttack;
         }
 
         public override int Transit()

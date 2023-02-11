@@ -516,7 +516,7 @@ MonoBehaviour:
     walkSpeed: 6
     runSpeed: 12
     shortIdleFrame: 100
-    minFreeFallSpeed: -12
+    minFreeFallSpeed: -35
     gravity: -49.5
     glidingSpeed: -3
     glidingAirForce: 20
@@ -1472,7 +1472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &696754109
 RectTransform:
   m_ObjectHideFlags: 0
