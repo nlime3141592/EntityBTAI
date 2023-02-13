@@ -68,7 +68,10 @@ namespace UnchordMetroidvania
 
             if(next >= 0 && next < capacity) // 상태 전이
             {
-                if(!Change(next)) Stop();
+                if(!states[next].CanTransit()) // 상태 전이에 실패하면 상태 유지
+                    return current;
+                else if(!Change(next))
+                    Stop();
             }
             else if(next == c_st_MACHINE_HALT) // 머신 종료
                 Stop();

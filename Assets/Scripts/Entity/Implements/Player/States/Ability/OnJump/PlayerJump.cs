@@ -41,7 +41,7 @@ namespace UnchordMetroidvania
                 return transit;
             else if(player.axisInput.y < 0 && player.jumpDown)
                 return PlayerFsm.c_st_TAKE_DOWN;
-            else if(player.skill00 && fsm[PlayerFsm.c_st_ATTACK_ON_AIR].CanTransit())
+            else if(player.skill00)
                 return PlayerFsm.c_st_ATTACK_ON_AIR;
             else if(player.senseData.bOnCeil)
                 return PlayerFsm.c_st_FREE_FALL;

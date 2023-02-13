@@ -34,6 +34,7 @@ namespace UnchordMetroidvania
 
         public bool bIsRun = false;
         public int leftAirJumpCount = 0;
+        public int leftDashCount = 0;
         public int leftAirAttackCount = 0;
         public Vector2 cameraOffset = Vector2.zero;
         public List<Slab> sitSlabs;
@@ -58,6 +59,12 @@ namespace UnchordMetroidvania
 
             rangeGizmoManager = new EntitySensorGizmoManager();
             iManager = new PlayerInputManager(this);
+
+            // NOTE: FSM initialization from here.
+
+            leftAirJumpCount = data.maxAirJumpCount;
+            leftDashCount = data.maxDashCount;
+            leftAirAttackCount = data.maxAirAttackCount;
 
             fsm.Start(PlayerFsm.c_st_IDLE_SHORT);
         }

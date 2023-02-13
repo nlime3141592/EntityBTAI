@@ -12,6 +12,5 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
         }
-
     }
 }

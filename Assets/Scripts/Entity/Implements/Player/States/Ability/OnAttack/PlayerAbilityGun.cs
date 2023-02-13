@@ -59,14 +59,8 @@ namespace UnchordMetroidvania
                 return transit;
             else if(player.aController.bEndOfAction && player.parryingDown)
                 return PlayerFsm.c_st_EMERGENCY_PARRYING;
-
-            // NOTE: 디버그용 상태 전환 코드.
-            else if(Input.GetKeyDown(KeyCode.Q))
-                player.battleModule.TriggerBattleState();
-            else if(Input.GetKeyDown(KeyCode.W))
-                player.aController.bEndOfAnimation = true;
-
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            else
+                return FiniteStateMachine.c_st_BASE_IGNORE;
         }
 
         public override void OnUpdateAlways()

@@ -22,6 +22,7 @@ namespace UnchordMetroidvania
             }
             player.sitSlabs.Clear();
             player.leftAirJumpCount = data.maxAirJumpCount;
+            player.leftDashCount = data.maxDashCount;
             player.leftAirAttackCount = data.maxAirAttackCount;
         }
 

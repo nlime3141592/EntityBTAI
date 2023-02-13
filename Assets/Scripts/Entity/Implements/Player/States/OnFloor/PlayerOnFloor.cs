@@ -21,6 +21,7 @@ namespace UnchordMetroidvania
             }
             player.sitSlabs.Clear();
             player.leftAirJumpCount = player.data.maxAirJumpCount;
+            player.leftDashCount = data.maxDashCount;
             player.leftAirAttackCount = data.maxAirAttackCount;
         }
 
@@ -30,11 +31,11 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
-            else if(player.skill00 && fsm[PlayerFsm.c_st_ATTACK_ON_FLOOR].CanTransit())
+            else if(player.skill00)
                 return PlayerFsm.c_st_ATTACK_ON_FLOOR;
-            else if(player.skill01 && fsm[PlayerFsm.c_st_ABILITY_SWORD].CanTransit())
+            else if(player.skill01)
                 return PlayerFsm.c_st_ABILITY_SWORD;
-            else if(player.skill02 && fsm[PlayerFsm.c_st_ABILITY_GUN].CanTransit())
+            else if(player.skill02)
                 return PlayerFsm.c_st_ABILITY_GUN;
             else if(player.parryingDown)
                 return PlayerFsm.c_st_BASIC_PARRYING;

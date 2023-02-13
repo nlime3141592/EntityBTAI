@@ -13,6 +13,7 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
+            --player.leftDashCount;
             m_leftDashFrame = data.dashFrame;
         }
 
@@ -36,6 +37,11 @@ namespace UnchordMetroidvania
             float vy = 0;
 
             player.vm.SetVelocityXY(vx, vy);
+        }
+
+        public override bool CanTransit()
+        {
+            return base.CanTransit() && player.leftDashCount > 0;
         }
 
         public override int Transit()
