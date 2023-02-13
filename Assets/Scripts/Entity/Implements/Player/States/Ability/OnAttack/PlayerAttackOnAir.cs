@@ -7,14 +7,12 @@ namespace UnchordMetroidvania
     public class PlayerAttackOnAir : PlayerAttack, IBattleState
     {
         // fixed data
-        private int m_maxActionPhase = 2;
-        private float m_cooltime = 0.1f;
         private float[] m_baseDamages = new float[] { 1.0f, 1.0f };
-        private float m_coyoteTime = 2.0f;
+        private PhaseController m_phaser;
+        private Timer m_cooltimer;
 
         // variable
-        private float m_leftCooltime;
-        private int m_actionPhase = 0;
+        private bool m_bAttackDown;
 
         private float m_lookDirX;
 
@@ -30,6 +28,11 @@ namespace UnchordMetroidvania
             };
             base.targetCount = 7;
             base.baseDamage = 1.0f;
+
+            m_phaser = new PhaseController(2, 2.0f);
+            m_cooltimer = new Timer(0.1f);
+
+            m_phaser.onFirst += OnFirstPhase;
         }
 
         public override void OnStateBegin()
@@ -37,24 +40,26 @@ namespace UnchordMetroidvania
             base.OnStateBegin();
 
             player.battleModule.SetBattleState(this);
-
             player.bFixLookDirX = true;
-            player.vm.FreezePositionX();
-            player.vm.FreezePositionY();
+            player.vm.FreezePosition(true, true);
 
-            if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
-                m_actionPhase = 0;
+            m_bAttackDown = false;
 
-            ++m_actionPhase;
-            player.aPhase = m_actionPhase;
-            base.baseDamage = m_baseDamages[m_actionPhase - 1];
+            m_phaser.canUpdate = false;
+
+            player.aPhase = m_phaser.Next();
+            base.baseDamage = m_baseDamages[m_phaser.current];
+            m_cooltimer.Reset();
 
             float ix = player.axisInput.x;
             if(ix < 0) player.lookDir.x = -1;
             else if(ix > 0) player.lookDir.x = 1;
             m_lookDirX = player.lookDir.x;
+        }
 
-            m_leftCooltime = m_cooltime;
+        public virtual void OnFirstPhase()
+        {
+            --player.leftAirAttackCount;
         }
 
         public override void OnFixedUpdate()
@@ -64,10 +69,44 @@ namespace UnchordMetroidvania
             player.vm.SetVelocityXY(0.0f, -1.0f);
         }
 
+        public override void OnUpdateAlways()
+        {
+            base.OnUpdateAlways();
+            m_cooltimer.OnUpdate();
+            m_phaser.OnUpdate();
+
+            player.DEBUG_COYOTE = m_phaser.leftCoyoteTime;
+
+            if(!m_phaser.bEndOfCoyoteTime && player.leftAirAttackCount == data.maxAirAttackCount)
+                m_phaser.Reset();
+            if(m_phaser.canUpdate && m_phaser.bEndOfCoyoteTime)
+                m_phaser.Reset();
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            if(!m_bAttackDown && player.skill00)
+                m_bAttackDown = true;
+        }
+
         public override bool CanTransit()
         {
-            bool canAttack = m_leftCooltime <= 0;
-            return canAttack;
+            if(!m_cooltimer.bEndOfTimer)
+                return false;
+            else if(m_phaser.bRunning)
+                return true;
+            else
+                return player.leftAirAttackCount > 0;
+        }
+
+        public override void OnActionEnd()
+        {
+            base.OnActionEnd();
+            
+            m_phaser.canUpdate = true;
+            m_phaser.SetCoyote();
         }
 
         public override int Transit()
@@ -76,20 +115,10 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
-
-            // NOTE: 디버그용 상태 전환 코드.
-            else if(Input.GetKeyDown(KeyCode.Q))
-                player.battleModule.TriggerBattleState();
-            else if(Input.GetKeyDown(KeyCode.W))
-                player.aController.bEndOfAnimation = true;
+            else if(m_bAttackDown)
+                return PlayerFsm.c_st_ATTACK_ON_AIR;
 
             return FiniteStateMachine.c_st_BASE_IGNORE;
-        }
-
-        public override void OnUpdateAlways()
-        {
-            base.OnUpdateAlways();
-            m_UpdateCooltime();
         }
 
         public override void OnStateEnd()
@@ -97,14 +126,13 @@ namespace UnchordMetroidvania
             base.OnStateEnd();
 
             player.bFixLookDirX = false;
-            player.vm.MeltPositionX();
-            player.vm.MeltPositionY();
-        }
+            player.vm.FreezePosition(false, false);
 
-        private void m_UpdateCooltime()
-        {
-            if(m_leftCooltime > 0)
-                m_leftCooltime -= Time.deltaTime;
+            if(!m_phaser.canUpdate)
+            {
+                m_phaser.SetCoyote();
+                m_phaser.canUpdate = true;
+            }
         }
     }
 }

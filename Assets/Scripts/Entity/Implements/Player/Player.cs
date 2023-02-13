@@ -17,6 +17,7 @@ namespace UnchordMetroidvania
         public PlayerInputManager iManager;
 
         public int CURRENT_STATE;
+        public float DEBUG_COYOTE;
         public EntitySensorGizmoManager rangeGizmoManager;
 
         #region Player Inputs
@@ -33,6 +34,7 @@ namespace UnchordMetroidvania
 
         public bool bIsRun = false;
         public int leftAirJumpCount = 0;
+        public int leftAirAttackCount = 0;
         public Vector2 cameraOffset = Vector2.zero;
         public List<Slab> sitSlabs;
 

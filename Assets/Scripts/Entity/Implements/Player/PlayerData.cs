@@ -53,6 +53,12 @@ namespace UnchordMetroidvania
         public int dashFrame = 35;
         public float dashSpeed = 32.0f;
 
+        [Header("Player Attack On Air")]
+        public int maxAirAttackCount = 1;
+
+        [Header("Player Take Down")]
+        public float takeDownSpeed = -65.0f;
+
         [Header("Player Jump Down")]
         public float jumpDownSpeed = 5.5f;
         public float jumpDownForce = 49.5f;

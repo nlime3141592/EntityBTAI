@@ -63,7 +63,7 @@ namespace UnchordMetroidvania
             if(m_actionPhase == 1)
                 player.vm.SetVelocityY(0.0f);
             else if(m_actionPhase == 2)
-                player.vm.SetVelocityY(-30.0f);
+                player.vm.SetVelocityY(data.takeDownSpeed);
             else if(m_actionPhase == 3)
                 player.vm.SetVelocityY(-1.0f);
         }

@@ -21,6 +21,7 @@ namespace UnchordMetroidvania
             }
             player.sitSlabs.Clear();
             player.leftAirJumpCount = player.data.maxAirJumpCount;
+            player.leftAirAttackCount = data.maxAirAttackCount;
         }
 
         public override int Transit()
