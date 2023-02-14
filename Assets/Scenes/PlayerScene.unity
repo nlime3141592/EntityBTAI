@@ -532,11 +532,15 @@ MonoBehaviour:
     jumpOnWallSpeedY: 16
     rollFrame: 15
     rollSpeed: 16
+    maxDashCount: 1
     dashFrame: 7
     dashSpeed: 32
+    maxAirAttackCount: 1
+    takeDownSpeed: -65
     jumpDownSpeed: 5.5
     jumpDownForce: 49.5
   CURRENT_STATE: 0
+  DEBUG_COYOTE: 0
   jumpDown: 0
   jumpUp: 0
   rushDown: 0
@@ -548,6 +552,8 @@ MonoBehaviour:
   skill02: 0
   bIsRun: 1
   leftAirJumpCount: 0
+  leftDashCount: 0
+  leftAirAttackCount: 0
   cameraOffset: {x: 0, y: 0}
   sitSlabs: []
 --- !u!114 &254749476
@@ -2035,6 +2041,8 @@ MonoBehaviour:
   camModule: {fileID: 720584615}
   gamePage: {fileID: 692903277}
   menuPage: {fileID: 1200592999}
+  firstMap: 1
+  firstSpawnPoint: {x: 18, y: 13}
 --- !u!1 &1324474066
 GameObject:
   m_ObjectHideFlags: 0

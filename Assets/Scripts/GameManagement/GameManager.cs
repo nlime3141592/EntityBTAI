@@ -13,6 +13,9 @@ namespace UnchordMetroidvania
         public GamePage gamePage;
         public MenuPage menuPage;
 
+        public int firstMap;
+        public Vector2 firstSpawnPoint;
+
         public bool bGameStarted { get; private set; }
 
         public LinkedList<EntitySpawnData> generatedBoss;
@@ -54,9 +57,9 @@ namespace UnchordMetroidvania
         {
             menuPage.gameObject.SetActive(false);
             yield return FadeManager.FadeOut(0.7f);
-            yield return MapManager.Open(1);
+            yield return MapManager.Open(firstMap);
             Player player = Player.instance;
-            player.transform.position = new Vector3(18, 13, 0);
+            player.transform.position = firstSpawnPoint;
             camModule.Alloc(player.transform);
             yield return new WaitForSeconds(0.5f);
             gamePage.gameObject.SetActive(true);

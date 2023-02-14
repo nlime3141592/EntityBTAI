@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BossMantis.unity
     guid: e3e1008341cfa1f4ab58d6ba7b740a68
+  - enabled: 1
+    path: Assets/Scenes/BossHub.unity
+    guid: d3cc2bde7e19e074eb345adc7845c041
   m_configObjects: {}
