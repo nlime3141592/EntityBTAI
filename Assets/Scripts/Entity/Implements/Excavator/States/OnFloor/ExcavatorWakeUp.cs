@@ -1,11 +1,11 @@
 namespace UnchordMetroidvania
 {
-    public class ExcavatorStamping : ExcavatorAttack
+    public class ExcavatorWakeUp : ExcavatorIdle
     {
-        public ExcavatorStamping(Excavator _instance)
+        public ExcavatorWakeUp(Excavator _instance)
         : base(_instance)
         {
-
+            
         }
 
         public override int Transit()
@@ -14,9 +14,9 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
-            else if(excavator.aController.bEndOfAnimation)
+            else if(excavator.bAggro)
                 return ExcavatorFsm.c_st_IDLE;
-            
+
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }

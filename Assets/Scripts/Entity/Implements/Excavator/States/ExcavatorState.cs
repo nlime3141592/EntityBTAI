@@ -6,6 +6,10 @@ namespace UnchordMetroidvania
 {
     public class ExcavatorState : EntityState<Excavator>
     {
+        protected Excavator excavator => instance;
+        protected ExcavatorFsm fsm => instance.fsm;
+        protected ExcavatorData data => instance.data;
+
         public ExcavatorState(Excavator _instance)
         : base(_instance)
         {

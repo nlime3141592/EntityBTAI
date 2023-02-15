@@ -6,6 +6,8 @@ namespace UnchordMetroidvania
 {
     public class Excavator : EntityMonster
     {
-        
+        public ExcavatorFsm fsm;
+        public ExcavatorData data;
+        public ExcavatorTerrainSenseData senseData;
     }
 }
