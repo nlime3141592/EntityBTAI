@@ -7,5 +7,17 @@ namespace UnchordMetroidvania
         {
 
         }
+
+        public override int Transit()
+        {
+            int transit = base.Transit();
+
+            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                return transit;
+            else if(excavator.senseData.bOnFloor)
+                return ExcavatorFsm.c_st_BASIC_LANDING;
+
+            return FiniteStateMachine.c_st_BASE_IGNORE;
+        }
     }
 }

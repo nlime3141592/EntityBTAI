@@ -17,6 +17,9 @@ namespace UnchordMetroidvania
         public event Action onEndOfAction;
         public event Action onEndOfAnimation;
 
+        public int id { get; private set; }
+        public int phase { get; private set; }
+
         private Animator m_animator;
 
         private void OnValidate()
@@ -33,11 +36,13 @@ namespace UnchordMetroidvania
 
         public void ChangeAnimation(int id)
         {
+            this.id = id;
             m_animator.SetInteger("state", id);
         }
 
         public void ChangeActionPhase(int phase)
         {
+            this.phase = phase;
             m_animator.SetInteger("actionPhase", phase);
         }
 

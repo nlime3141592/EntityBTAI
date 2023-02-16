@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 namespace UnchordMetroidvania
 {
@@ -18,10 +16,28 @@ namespace UnchordMetroidvania
         public const int c_st_BREAK_GROUND              = 9;
         public const int c_st_BASIC_LANDING             = 10;
 
+        public int mode = 1;
+
         public ExcavatorFsm(Excavator _instance, int _capacity)
         : base(_instance, _capacity)
         {
+            ExcavatorData data = _instance.data;
 
+            int idx = -1;
+
+            this[++idx] = new ExcavatorSleep(_instance);
+            this[++idx] = new ExcavatorWakeUp(_instance);
+            this[++idx] = new ExcavatorIdle(_instance);
+            this[++idx] = new ExcavatorWalkFront(_instance);
+            this[++idx] = new ExcavatorFreeFall(_instance);
+            this[++idx] = new ExcavatorStamping(_instance);
+            this[++idx] = new ExcavatorAnchoring(_instance);
+            this[++idx] = new ExcavatorShockWave(_instance);
+            this[++idx] = new ExcavatorShootMissile(_instance);
+            this[++idx] = new ExcavatorBreakFloor(_instance);
+            this[++idx] = new ExcavatorLanding(_instance);
+
+            mode = 1;
         }
     }
 }

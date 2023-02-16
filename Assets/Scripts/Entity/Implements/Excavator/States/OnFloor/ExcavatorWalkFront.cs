@@ -1,8 +1,10 @@
 namespace UnchordMetroidvania
 {
-    public abstract class ExcavatorMove : ExcavatorOnFloor
+    public class ExcavatorWalkFront : ExcavatorMove
     {
-        public ExcavatorMove(Excavator _instance)
+        private float m_ix;
+
+        public ExcavatorWalkFront(Excavator _instance)
         : base(_instance)
         {
             
@@ -11,17 +13,17 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-
-            excavator.vm.FreezePosition(false, false);
-
-            excavator.bUpdateAggroDirX = false;
-            excavator.bFixLookDirX = true;
+            m_ix = excavator.lookDir.x;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            excavator.senseData.UpdateMoveDir(excavator);
+
+            float vx = m_ix * excavator.moveDir.x * data.walkSpeed;
+            float vy = m_ix * excavator.moveDir.y * data.walkSpeed - 0.1f;
+
+            excavator.vm.SetVelocityXY(vx, vy);
         }
 
         public override int Transit()
@@ -32,17 +34,8 @@ namespace UnchordMetroidvania
                 return transit;
             else if(excavator.aController.bEndOfAnimation)
                 return ExcavatorFsm.c_st_IDLE;
-            // else if(excavator.senseData.bOnWallFront) return ExcavatorFsm.c_st_IDLE;
 
             return FiniteStateMachine.c_st_BASE_IGNORE;
-        }
-
-        public override void OnStateEnd()
-        {
-            base.OnStateEnd();
-
-            excavator.bUpdateAggroDirX = true;
-            excavator.bFixLookDirX = false;
         }
     }
 }

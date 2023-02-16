@@ -1,6 +1,6 @@
 namespace UnchordMetroidvania
 {
-    public class ExcavatorWakeUp : ExcavatorIdle
+    public class ExcavatorWakeUp : ExcavatorIdleBase
     {
         public ExcavatorWakeUp(Excavator _instance)
         : base(_instance)
