@@ -20,6 +20,7 @@ namespace UnchordMetroidvania
         public bool bUpdateAggroDirY = false;
         public List<string> targetTags;
         public List<EntityBase> aggroTargets;
+        public int targetLayerMask;
 
         public System.Random prng { get; private set; }
 

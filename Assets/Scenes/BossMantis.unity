@@ -1525,6 +1525,7 @@ MonoBehaviour:
   targetTags:
   - Player
   aggroTargets: []
+  targetLayerMask: 128
   battleModule: {fileID: 0}
   terrainCollider: {fileID: 1692038689}
   aiCenter: {fileID: 753402328}
@@ -1604,6 +1605,7 @@ MonoBehaviour:
     bShowGizmo: 1
     duration: 1
     color: {r: 1, g: 0.7302213, b: 0.3160377, a: 1}
+  targetLayerMask: 128
 --- !u!95 &560320136
 Animator:
   serializedVersion: 3
@@ -2634,6 +2636,7 @@ MonoBehaviour:
   bUpdateAggroDirY: 0
   targetTags: []
   aggroTargets: []
+  targetLayerMask: 0
   idleMinFrame: 30
   idleMaxFrame: 50
   walkMinFrame: 30

@@ -216,7 +216,7 @@ namespace UnchordMetroidvania
 
         protected virtual void LateUpdate()
         {
-            if(bEndOfEntity)
+            if(health <= 0 && bEndOfEntity)
                 Destroy(this.gameObject);
         }
 

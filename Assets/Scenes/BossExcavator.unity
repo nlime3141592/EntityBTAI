@@ -973,6 +973,7 @@ MonoBehaviour:
     bShowGizmo: 0
     duration: 0
     color: {r: 0, g: 0, b: 0, a: 0}
+  targetLayerMask: 0
 --- !u!1 &440417751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,7 +1087,7 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0}
   lastInvokeResult: 0
   bBeginOfEntity: 0
-  bEndOfEntity: 0
+  bEndOfEntity: 1
   aPhase: -1
   aState: -1
   bParrying: 0
@@ -1097,7 +1098,7 @@ MonoBehaviour:
   defence:
     baseValue: 0
   maxHealth:
-    baseValue: 0
+    baseValue: 1
   maxMana:
     baseValue: 0
   baseMoveSpeed:
@@ -1106,7 +1107,7 @@ MonoBehaviour:
     baseValue: 0
   baseMentality:
     baseValue: 0
-  health: 0
+  health: 1
   mana: 0
   groggyValue: 0
   bInvincibility: 0
@@ -2088,6 +2089,7 @@ MonoBehaviour:
   - Player
   - Terrain
   aggroTargets: []
+  targetLayerMask: 128
   battleModule: {fileID: 0}
   terrainCollider: {fileID: 981176478}
   aiCenter: {fileID: 2143323979}
@@ -2212,8 +2214,9 @@ MonoBehaviour:
   healUI: {fileID: 0}
   battleRangeGizmo:
     bShowGizmo: 0
-    duration: 0
-    color: {r: 0, g: 0, b: 0, a: 0}
+    duration: 1
+    color: {r: 1, g: 0.82250714, b: 0.3537736, a: 1}
+  targetLayerMask: 128
 --- !u!114 &795348657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2226,16 +2229,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3116a758f86d445bde65f363b1d94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bShow: 0
+  bShow: 1
   flipX: 0
   flipY: 0
   ltrbs:
   - color: {r: 1, g: 0.6321163, b: 0.514151, a: 1}
     ltrb:
-      left: 15
-      top: 10
-      right: 15
-      bottom: 10
+      left: 0.5
+      top: -8.5
+      right: 0.5
+      bottom: 9.5
 --- !u!1 &868322910
 GameObject:
   m_ObjectHideFlags: 0

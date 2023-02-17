@@ -34,7 +34,8 @@ namespace UnchordMetroidvania
             Collider2D[] colTargets = EntitySensor.OverlapBox(
                 instance,
                 instance.aggroRange,
-                instance.aggroDebugOption
+                instance.aggroDebugOption,
+                instance.targetLayerMask
             );
 
             instance.aggroTargets.FilterFromColliders(instance, colTargets, false, instance.targetTags.ToArray());

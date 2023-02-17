@@ -15,6 +15,7 @@ namespace UnchordMetroidvania
         public TestDamageUI healUI;
 
         public EntitySensorGizmoOption battleRangeGizmo;
+        public int targetLayerMask;
 
         private IBattleState m_battleState;
 
@@ -47,7 +48,7 @@ namespace UnchordMetroidvania
             float baseDamage = m_battleState.baseDamage;
             bool bGetGroggyValue = false;
 
-            Collider2D[] colTargets = EntitySensor.OverlapBox(attacker, range, battleRangeGizmo);
+            Collider2D[] colTargets = EntitySensor.OverlapBox(attacker, range, battleRangeGizmo, targetLayerMask);
             targets.Clear();
             targets
                 .FilterFromColliders(attacker, colTargets, false)
