@@ -7,5 +7,11 @@ namespace UnchordMetroidvania
         {
             
         }
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+            excavator.vm.SetVelocityXY(0, 0);
+        }
     }
 }

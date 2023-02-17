@@ -14,7 +14,7 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
-            else if(excavator.bAggro)
+            else if(excavator.aController.bEndOfAnimation)
                 return ExcavatorFsm.c_st_IDLE;
 
             return FiniteStateMachine.c_st_BASE_IGNORE;

@@ -1142,7 +1142,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1271
+    m_Bits: 3319
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2041,7 +2041,7 @@ MonoBehaviour:
   camModule: {fileID: 720584615}
   gamePage: {fileID: 692903277}
   menuPage: {fileID: 1200592999}
-  firstMap: 1
+  firstMap: 2
   firstSpawnPoint: {x: 18, y: 13}
 --- !u!1 &1324474066
 GameObject:

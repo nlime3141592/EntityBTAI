@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UnchordMetroidvania
 {
-    public class ExcavatorState : EntityState<Excavator>
+    public class ExcavatorState : MonsterState<Excavator>
     {
         protected Excavator excavator => instance;
         protected ExcavatorFsm fsm => instance.fsm;
@@ -14,6 +14,12 @@ namespace UnchordMetroidvania
         : base(_instance)
         {
             
+        }
+
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
+            excavator.senseData.UpdateData(excavator);
         }
 
         public override int Transit()

@@ -15,6 +15,7 @@ namespace UnchordMetroidvania
         public const int c_st_SHOOT_MISSILE             = 8;
         public const int c_st_BREAK_GROUND              = 9;
         public const int c_st_BASIC_LANDING             = 10;
+        public const int c_st_DIE                       = 11;
 
         public int mode = 1;
 

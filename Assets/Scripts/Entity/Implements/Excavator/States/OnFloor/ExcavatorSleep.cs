@@ -39,7 +39,8 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
-            // else if(excavator.bAggro) return ExcavatorFsm.c_st_WAKE_UP;
+            else if(excavator.bAggro)
+                return ExcavatorFsm.c_st_WAKE_UP;
 
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }

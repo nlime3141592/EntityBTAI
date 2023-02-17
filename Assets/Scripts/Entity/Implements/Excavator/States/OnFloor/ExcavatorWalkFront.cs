@@ -1,6 +1,6 @@
 namespace UnchordMetroidvania
 {
-    public class ExcavatorWalkFront : ExcavatorMove
+    public class ExcavatorWalkFront : ExcavatorWalk
     {
         private float m_ix;
 

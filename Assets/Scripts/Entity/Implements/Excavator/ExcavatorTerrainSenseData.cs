@@ -18,10 +18,10 @@ namespace UnchordMetroidvania
         public float hitLength = 0.06f;
         public float wallDetectLength = 0.06f;
 
-        [HideInInspector] public bool bOnFloor;
-        [HideInInspector] public bool bOnCeil;
-        [HideInInspector] public bool bOnWallFront;
-        [HideInInspector] public bool bOnWallBack;
+        public bool bOnFloor;
+        public bool bOnCeil;
+        public bool bOnWallFront;
+        public bool bOnWallBack;
 
         private bool m_tmp_bOnFloorL;
         private bool m_tmp_bOnFloorR;

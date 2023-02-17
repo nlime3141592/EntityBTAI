@@ -16,7 +16,7 @@ namespace UnchordMetroidvania
                 return transit;
             else if(excavator.aController.bEndOfAnimation)
                 return ExcavatorFsm.c_st_IDLE;
-            
+
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }
     }

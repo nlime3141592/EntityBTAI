@@ -54,6 +54,16 @@ namespace UnchordMetroidvania
 
         protected override void Update()
         {
+            // NOTE: test input code
+            float ixn = Input.GetKeyDown(KeyCode.J) ? -1 : 0;
+            float ixp = Input.GetKeyDown(KeyCode.L) ? 1 : 0;
+            float iyn = Input.GetKeyDown(KeyCode.I) ? -1 : 0;
+            float iyp = Input.GetKeyDown(KeyCode.K) ? 1 : 0;
+            float ix = ixn + ixp;
+            float iy = iyn + iyp;
+            axisInput.x = ix;
+            axisInput.y = iy;
+
             base.Update();
             fsm.OnUpdate();
             CURRENT_STATE = fsm.Transit();

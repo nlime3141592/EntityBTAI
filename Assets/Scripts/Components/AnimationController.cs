@@ -54,6 +54,14 @@ namespace UnchordMetroidvania
             bEndOfAnimation = false;
         }
 
+        public void TriggerBeginOfAnimationLoop()
+        {
+            bBeginOfAction = false;
+            bEndOfAction = false;
+            bEndOfAnimation = false;
+            TriggerBeginOfAnimation();
+        }
+
         public void TriggerBeginOfAnimation()
         {
             bBeginOfAnimation = true;
