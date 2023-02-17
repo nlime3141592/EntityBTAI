@@ -21,8 +21,23 @@ namespace UnchordMetroidvania
             {
                 m_bInput = false;
                 m_bTriggered = true;
-                excavator.projectile.Ignore(excavator.terrainCollider, excavator.projVelocity);
+
+                float ang = 30.0f;
+                float beg = -ang / 2;
+                float d = beg / 2;
+
+                for(int i = 0; i < 5; ++i)
+                    TEST_ShootProjectile(Quaternion.Euler(0, 0, beg + i * d) * excavator.projVelocity);
             }
+        }
+
+        private void TEST_ShootProjectile(Vector2 velocity)
+        {
+            Projectile proj = excavator.projectile.Copy();
+            proj.InitIgnore(excavator.terrainCollider);
+            proj.InitVelocity(velocity);
+            proj.InitPosition(excavator.transform.position);
+            proj.InitShow();
         }
 
         public override void OnUpdate()

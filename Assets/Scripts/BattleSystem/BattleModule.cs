@@ -25,7 +25,7 @@ namespace UnchordMetroidvania
 
         private void Start()
         {
-
+            TryGetComponent<EntityBase>(out m_owner);
         }
 
         public void SetBattleState(IBattleState state)

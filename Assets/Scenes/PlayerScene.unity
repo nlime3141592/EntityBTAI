@@ -2042,7 +2042,7 @@ MonoBehaviour:
   gamePage: {fileID: 692903277}
   menuPage: {fileID: 1200592999}
   firstMap: 2
-  firstSpawnPoint: {x: 18, y: 13}
+  firstSpawnPoint: {x: -30, y: 75}
 --- !u!1 &1324474066
 GameObject:
   m_ObjectHideFlags: 0
