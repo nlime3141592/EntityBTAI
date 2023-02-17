@@ -1163,7 +1163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40, y: 22.5, z: -10}
+  m_LocalPosition: {x: 40, y: 20, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1479,7 +1479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &696754109
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1576,7 +1576,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 720584612}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 40, y: 22.5, z: -10}
+  m_LocalPosition: {x: 40, y: 20, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1135420059}
@@ -2043,7 +2043,7 @@ MonoBehaviour:
   gamePage: {fileID: 692903277}
   menuPage: {fileID: 1200592999}
   firstMap: 3
-  firstSpawnPoint: {x: -30, y: 75}
+  firstSpawnPoint: {x: -30, y: 145}
 --- !u!1 &1324474066
 GameObject:
   m_ObjectHideFlags: 0
