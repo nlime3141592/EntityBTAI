@@ -11,9 +11,6 @@ namespace UnchordMetroidvania
         {
             Vector3 pos = MainCamera.instance.transform.position;
             transform.position = pos;
-
-            foreach(ParallaxObject pobj in GetComponentsInChildren<ParallaxObject>())
-                pobj.OnUpdate(center, pos);
         }
     }
 }

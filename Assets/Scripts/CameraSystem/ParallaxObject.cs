@@ -4,48 +4,24 @@ namespace UnchordMetroidvania
 {
     public class ParallaxObject : MonoBehaviour
     {
-        public float xValue;
-        public float yValue;
+        [Range(0, 1)] public float parallaxEffectX = 0.1f;
+        [Range(0, 1)] public float parallaxEffectY = 0.1f;
+        public GameObject cam;
 
-        public bool xFix;
-        public bool yFix;
-        private Vector3 m_pos;
+        public Vector3 startPosition;
+        private Vector3 m_applyPosition;
 
-        public bool useMinX;
-        public float minX;
-        public bool useMaxX;
-        public float maxX;
-
-        public bool useMinY;
-        public float minY;
-        public bool useMaxY;
-        public float maxY;
-
-        public void OnUpdate(Vector2 center, Vector2 position)
+        private void Start()
         {
-            float dx = m_GetDelta(center.x, position.x, xValue, xFix, useMinX, minX, useMaxX, maxX);
-            float dy = m_GetDelta(center.y, position.y, yValue, yFix, useMinY, minY, useMaxY, maxY);
-            float dz = transform.localPosition.z;
-
-            m_pos.x = dx;
-            m_pos.y = dy;
-            m_pos.z = dz;
-
-            transform.localPosition = m_pos;
+            startPosition = transform.position;
         }
 
-        private float m_GetDelta(float c, float p, float pv, bool bFix, bool bMin, float vMin, bool bMax, float vMax)
+        private void Update()
         {
-            float d = c - p;
-
-            if(bFix)
-                return d;
-            else if(bMin && p < vMin)
-                return (c - vMin) * pv + (vMin - p);
-            else if(bMax && p > vMax)
-                return (c - vMax) * pv + (vMax - p);
-            else
-                return d * pv;
+            float dx = cam.transform.position.x * parallaxEffectX;
+            float dy = cam.transform.position.y * parallaxEffectY;
+            m_applyPosition.Set(startPosition.x + dx, startPosition.y + dy, startPosition.z);
+            transform.position = m_applyPosition;
         }
     }
 }
