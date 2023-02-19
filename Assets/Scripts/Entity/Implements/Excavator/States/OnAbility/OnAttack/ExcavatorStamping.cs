@@ -5,7 +5,15 @@ namespace UnchordMetroidvania
         public ExcavatorStamping(Excavator _instance)
         : base(_instance)
         {
-
+            base.attackRange = new LTRB()
+            {
+                left = 0.0f,
+                top = 0.0f,
+                right = 10.5f,
+                bottom = 8.0f
+            };
+            base.targetCount = 12;
+            base.baseDamage = 1.0f;
         }
 
         public override int Transit()

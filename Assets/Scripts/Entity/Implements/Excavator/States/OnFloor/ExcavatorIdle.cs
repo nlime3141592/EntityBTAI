@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
     public class ExcavatorIdle : ExcavatorIdleBase
@@ -28,6 +30,10 @@ namespace UnchordMetroidvania
                 return transit;
             else if(excavator.axisInput.x != 0)
                 return ExcavatorFsm.c_st_WALK;
+
+            // NOTE: 테스트 코드.
+            else if(Input.GetKeyDown(KeyCode.F8))
+                return ExcavatorFsm.c_st_STAMPING;
 
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }

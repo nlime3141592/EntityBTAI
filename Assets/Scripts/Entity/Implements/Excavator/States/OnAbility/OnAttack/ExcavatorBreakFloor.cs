@@ -30,8 +30,8 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
-            else if(excavator.aController.bEndOfAnimation || !excavator.senseData.bOnFloor)
-                return ExcavatorFsm.c_st_IDLE;
+            else if(excavator.aController.bEndOfAnimation)
+                return ExcavatorFsm.c_st_FREE_FALL;
             
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }

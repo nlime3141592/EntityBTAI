@@ -5,7 +5,7 @@ namespace UnchordMetroidvania
         public ExcavatorAnchoring(Excavator _instance)
         : base(_instance)
         {
-
+            
         }
 
         public override int Transit()
