@@ -22,11 +22,27 @@ namespace UnchordMetroidvania
 
         private void m_CheckAggro()
         {
-            instance.bPrevAggro = instance.bAggro;
+            bool prev = instance.bAggro;
+            instance.bPrevAggro = prev;
+
             m_DetectTargets();
-            instance.bAggro = instance.aggroTargets.Count > 0;
-            if(!instance.bAggro) return;
-            m_UpdateLookDirs();
+
+            bool current = instance.aggroTargets.Count > 0;
+            instance.bAggro = current;
+
+            if(current)
+            {
+                if(!prev)
+                {
+                    instance.OnAggroBegin();
+                }
+
+                m_UpdateLookDirs();
+            }
+            else if(prev)
+            {
+                instance.OnAggroEnd();
+            }
         }
 
         private void m_DetectTargets()
