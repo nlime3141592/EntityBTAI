@@ -16,6 +16,13 @@ namespace UnchordMetroidvania
             base.baseDamage = 1.0f;
         }
 
+        public override void OnStateBegin()
+        {
+            base.OnStateBegin();
+            excavator.bUpdateAggroDirX = false;
+            excavator.bFixLookDirX = true;
+        }
+
         public override int Transit()
         {
             int transit = base.Transit();

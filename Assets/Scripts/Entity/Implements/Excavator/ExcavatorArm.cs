@@ -24,6 +24,7 @@ namespace UnchordMetroidvania
         private List<int> m_sortIdxs;
         private List<int> m_tmp_sortIdxs;
         private List<int> m_tmp_mergeIdxs;
+        private Vector3 m_startPos;
         #endregion
 
         #region Unity Event Functions
@@ -32,6 +33,7 @@ namespace UnchordMetroidvania
             m_sortIdxs = new List<int>(joints.Capacity);
             m_tmp_sortIdxs = new List<int>(joints.Capacity);
             m_tmp_mergeIdxs = new List<int>(joints.Capacity);
+            m_startPos = transform.localPosition;
         }
 
         private void Update()
@@ -40,6 +42,11 @@ namespace UnchordMetroidvania
             m_SyncList<int>(m_tmp_sortIdxs);
             m_SyncList<int>(m_tmp_mergeIdxs);
             m_SortIdxs();
+
+            transform.localPosition = m_startPos;
+
+            if(targetTransform == null)
+                return;
 
             selectedJoint = m_SelectJoint(targetTransform.position);
             m_Trace(targetTransform.position, selectedJoint);

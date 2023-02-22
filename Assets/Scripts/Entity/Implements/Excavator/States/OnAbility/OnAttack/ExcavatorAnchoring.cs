@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace UnchordMetroidvania
 {
     public class ExcavatorAnchoring : ExcavatorAttack
@@ -26,14 +28,31 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
-            excavator.bFixLookDirX = true;
+            excavator.bUpdateAggroDirX = true;
+            excavator.bFixLookDirX = false;
+            // excavator.bFixLookDirX = true;
 
             m_phaser.canUpdate = false;
 
             int aPhase = m_phaser.Next();
             excavator.aPhase = aPhase;
+
             if(aPhase == 1)
+            {
                 m_anchorTimer.Reset();
+                excavator.arm.targetTransform = excavator.aggroTargets[0].transform;
+                excavator.armObj.SetActive(true);
+            }
+            if(aPhase == 2)
+            {
+                excavator.hand.Clear();
+                excavator.hand.bStart = true;
+            }
+        }
+
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
         }
 
         public override void OnUpdate()
@@ -52,12 +71,26 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
-            else if(!m_phaser.bIsLast)
+            else if(m_phaser.current == 0 && excavator.aController.bEndOfAnimation)
                 return ExcavatorFsm.c_st_ANCHORING;
-            else if(excavator.aController.bEndOfAnimation)
+            else if(m_phaser.current == 1 && m_anchorTimer.bEndOfTimer)
+                return ExcavatorFsm.c_st_ANCHORING;
+            else if(m_phaser.current == 2 && excavator.hand.bReturn)
+                return ExcavatorFsm.c_st_ANCHORING;
+            else if(m_phaser.current == 3 && excavator.aController.bEndOfAnimation)
                 return ExcavatorFsm.c_st_IDLE;
-            
+
             return FiniteStateMachine.c_st_BASE_IGNORE;
+        }
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+
+            if(m_phaser.current == 1)
+                excavator.arm.targetTransform = null;
+            if(m_phaser.current == 2)
+                excavator.armObj.SetActive(false);
         }
 
         private void m_TraceArm()

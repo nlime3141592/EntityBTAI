@@ -25,8 +25,6 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
             excavator.battleModule.SetBattleState(this);
-            excavator.bUpdateAggroDirX = false;
-            excavator.bFixLookDirX = true;
         }
 
         public override void OnStateEnd()

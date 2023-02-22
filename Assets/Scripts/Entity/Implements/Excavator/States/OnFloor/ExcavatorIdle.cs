@@ -34,6 +34,10 @@ namespace UnchordMetroidvania
             // NOTE: 테스트 코드.
             else if(Input.GetKeyDown(KeyCode.F8))
                 return ExcavatorFsm.c_st_STAMPING;
+            else if(Input.GetKeyDown(KeyCode.F9))
+                return ExcavatorFsm.c_st_ANCHORING;
+            else if(Input.GetKeyDown(KeyCode.F10))
+                return ExcavatorFsm.c_st_SHOOT_MISSILE;
 
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }

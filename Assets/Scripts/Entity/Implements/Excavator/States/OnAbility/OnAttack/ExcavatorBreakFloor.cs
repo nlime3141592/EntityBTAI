@@ -21,6 +21,8 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
+            excavator.bUpdateAggroDirX = false;
+            excavator.bFixLookDirX = true;
             excavator.battleModule.targetLayerMask |= 1 << LayerMask.NameToLayer("Terrain");
         }
 

@@ -10,6 +10,10 @@ namespace UnchordMetroidvania
         public Transform aiCenter; // Inspector에서 값 할당 필요
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
+        public ExcavatorArm arm;
+        public ExcavatorHand hand;
+        public GameObject armObj;
+
         public ExcavatorFsm fsm;
         public ExcavatorData data;
         public ExcavatorTerrainSenseData senseData;
@@ -38,6 +42,10 @@ namespace UnchordMetroidvania
 
             battleModule = GetComponent<BattleModule>();
 
+            arm = GetComponentInChildren<ExcavatorArm>();
+            hand = GetComponentInChildren<ExcavatorHand>();
+            armObj.SetActive(false);
+
             fsm = new ExcavatorFsm(this, 11);
             fsm.Start(ExcavatorFsm.c_st_SLEEP);
 
@@ -65,6 +73,7 @@ namespace UnchordMetroidvania
             axisInput.y = iy;
 
             base.Update();
+            arm.yAngle = transform.eulerAngles.y;
             fsm.OnUpdate();
             CURRENT_STATE = fsm.Transit();
         }
