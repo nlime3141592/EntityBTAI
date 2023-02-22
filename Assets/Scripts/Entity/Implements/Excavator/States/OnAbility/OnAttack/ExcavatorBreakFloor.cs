@@ -24,6 +24,8 @@ namespace UnchordMetroidvania
             excavator.bUpdateAggroDirX = false;
             excavator.bFixLookDirX = true;
             excavator.battleModule.targetLayerMask |= 1 << LayerMask.NameToLayer("Terrain");
+            excavator.AllowHitFromBattleModule(false);
+            excavator.health = excavator.maxHealth.finalValue;
         }
 
         public override int Transit()

@@ -46,7 +46,7 @@ namespace UnchordMetroidvania
             hand = GetComponentInChildren<ExcavatorHand>();
             armObj.SetActive(false);
 
-            fsm = new ExcavatorFsm(this, 11);
+            fsm = new ExcavatorFsm(this, 13);
             fsm.Start(ExcavatorFsm.c_st_SLEEP);
 
             hitColliders.Add(GetComponent<BoxCollider2D>());

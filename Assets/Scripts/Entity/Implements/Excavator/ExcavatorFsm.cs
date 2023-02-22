@@ -16,6 +16,7 @@ namespace UnchordMetroidvania
         public const int c_st_BREAK_GROUND              = 9;
         public const int c_st_BASIC_LANDING             = 10;
         public const int c_st_DIE                       = 11;
+        public const int c_st_GROGGY                    = 12;
 
         public int mode = 1;
 
@@ -37,6 +38,8 @@ namespace UnchordMetroidvania
             this[++idx] = new ExcavatorShootMissile(_instance);
             this[++idx] = new ExcavatorBreakFloor(_instance);
             this[++idx] = new ExcavatorLanding(_instance);
+            this[++idx] = new ExcavatorDie(_instance);
+            this[++idx] = new ExcavatorGroggy(_instance);
 
             mode = 1;
         }

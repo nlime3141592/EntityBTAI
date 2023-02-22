@@ -2423,6 +2423,8 @@ MonoBehaviour:
   armObj: {fileID: 15922143}
   data:
     walkSpeed: 12
+    gravity: -49.5
+    minFreeFallSpeed: -42
   senseData:
     originFloorL: {fileID: 72686111}
     originFloorR: {fileID: 440417752}
@@ -2556,14 +2558,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3116a758f86d445bde65f363b1d94f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bShow: 1
+  bShow: 0
   flipX: 0
   flipY: 0
   ltrbs:
   - color: {r: 1, g: 0.624446, b: 0.16509432, a: 1}
     ltrb:
       left: 0
-      top: 0
+      top: 4
       right: 10.5
       bottom: 8
 --- !u!1 &835034720

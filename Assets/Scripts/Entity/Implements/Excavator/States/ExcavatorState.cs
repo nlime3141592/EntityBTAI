@@ -28,6 +28,15 @@ namespace UnchordMetroidvania
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
                 return transit;
+            else if(excavator.health <= 0.0f)
+            {
+                if(++fsm.mode <= 3)
+                    return ExcavatorFsm.c_st_BREAK_GROUND;
+                else if(fsm.current != ExcavatorFsm.c_st_DIE)
+                    return ExcavatorFsm.c_st_DIE;
+            }
+            else if(excavator.groggyValue >= 1.0f)
+                return ExcavatorFsm.c_st_GROGGY;
 
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }

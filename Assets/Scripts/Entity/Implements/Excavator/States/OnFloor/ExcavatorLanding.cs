@@ -19,5 +19,11 @@ namespace UnchordMetroidvania
 
             return FiniteStateMachine.c_st_BASE_IGNORE;
         }
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+            excavator.AllowHitFromBattleModule(true);
+        }
     }
 }

@@ -171,6 +171,12 @@ namespace UnchordMetroidvania
 
         }
 
+        public void AllowHitFromBattleModule(bool value)
+        {
+            for(int i = 0; i < hitColliders.Count; ++i)
+                hitColliders[i].enabled = value;
+        }
+
         private void OnValidate()
         {
             if(!Application.isEditor || Application.isPlaying)
@@ -209,9 +215,6 @@ namespace UnchordMetroidvania
         protected virtual void Update()
         {
             canInput = GameManager.instance.bGameStarted;
-
-            for(int i = 0; i < hitColliders.Count; ++i)
-                hitColliders[i].enabled = health > 0;
         }
 
         protected virtual void LateUpdate()
