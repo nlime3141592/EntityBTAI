@@ -24,6 +24,9 @@ namespace UnchordMetroidvania
         public Projectile projectile;
         public Vector2 projVelocity;
 
+        public ShockWave shockwave;
+        public LTRB shockRange;
+
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
 

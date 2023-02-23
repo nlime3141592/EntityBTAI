@@ -46,10 +46,7 @@ namespace UnchordMetroidvania
             int transit = base.Transit();
 
             if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
-            {
-                Debug.Log(string.Format("반환: {0}", transit));
                 return transit;
-            }
             else if(m_idleTimer.bEndOfTimer)
             {
                 EntityBase target = excavator.aggroTargets[0];

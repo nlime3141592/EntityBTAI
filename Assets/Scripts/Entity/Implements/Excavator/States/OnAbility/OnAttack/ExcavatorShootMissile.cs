@@ -57,7 +57,7 @@ namespace UnchordMetroidvania
         private void m_ShootProjectile(Vector2 velocity)
         {
             Projectile proj = excavator.projectile.Copy();
-            proj.InitIgnore(excavator.terrainCollider);
+            proj.InitIgnore(excavator.hitColliders);
             proj.InitVelocity(velocity);
             proj.InitPosition(excavator.transform.position);
             proj.InitShow();

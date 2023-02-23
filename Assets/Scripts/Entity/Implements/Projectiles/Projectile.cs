@@ -98,11 +98,9 @@ namespace UnchordMetroidvania
             return proj;
         }
 
-        public void InitIgnore(Collider2D other)
+        public void InitIgnore(List<Collider2D> ignores)
         {
-            if(colliders == null)
-                colliders = new List<Collider2D>(3);
-            colliders.Add(other);
+            colliders = ignores;
         }
 
         public void InitVelocity(Vector2 velocity)
@@ -118,6 +116,7 @@ namespace UnchordMetroidvania
         public void InitShow()
         {
             cpy = true;
+            battleModule.SetIgnoreColliders(colliders);
             gameObject.SetActive(true);
         }
 

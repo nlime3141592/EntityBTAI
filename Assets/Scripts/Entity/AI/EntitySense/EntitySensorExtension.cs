@@ -36,7 +36,7 @@ namespace UnchordMetroidvania
             return collection;
         }
 
-        public static List<EntityBase> FilterFromColliders(this List<EntityBase> entities, EntityBase origin, Collider2D[] colliders, bool bCanDetectSelf, params string[] tags)
+        public static List<EntityBase> FilterFromColliders(this List<EntityBase> entities, EntityBase origin, Collider2D[] colliders, bool bCanDetectSelf, List<Collider2D> ignores = null, params string[] tags)
         {
             bool contains = false;
             GameObject obj = null;
@@ -48,6 +48,11 @@ namespace UnchordMetroidvania
             {
                 obj = colliders[i].gameObject;
                 contains = false;
+
+                if(ignores != null)
+                    for(int j = 0; j < ignores.Count && !contains; ++j)
+                        if(colliders[i] == ignores[j])
+                            contains = true;
 
                 for(int j = 0; j < entities.Count && !contains; ++j)
                     contains = (obj == entities[j].gameObject);

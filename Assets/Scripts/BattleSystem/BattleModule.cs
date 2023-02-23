@@ -18,6 +18,7 @@ namespace UnchordMetroidvania
         public int targetLayerMask;
 
         private IBattleState m_battleState;
+        private List<Collider2D> m_ignores;
 
         private void OnValidate()
         {
@@ -32,6 +33,11 @@ namespace UnchordMetroidvania
         public void SetBattleState(IBattleState state)
         {
             m_battleState = state;
+        }
+
+        public void SetIgnoreColliders(List<Collider2D> ignores)
+        {
+            m_ignores = ignores;
         }
 
         public void ClearBattleState()
@@ -51,7 +57,7 @@ namespace UnchordMetroidvania
             Collider2D[] colTargets = EntitySensor.OverlapBox(attacker, range, battleRangeGizmo, targetLayerMask);
             targets.Clear();
             targets
-                .FilterFromColliders(attacker, colTargets, false)
+                .FilterFromColliders(attacker, colTargets, false, m_ignores)
                 .SetTargetCount(targetCount);
 
             foreach(EntityBase target in targets)

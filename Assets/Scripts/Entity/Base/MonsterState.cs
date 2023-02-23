@@ -54,7 +54,7 @@ namespace UnchordMetroidvania
                 instance.targetLayerMask
             );
 
-            instance.aggroTargets.FilterFromColliders(instance, colTargets, false, instance.targetTags.ToArray());
+            instance.aggroTargets.FilterFromColliders(instance, colTargets, false, null, instance.targetTags.ToArray());
             p_OverrideAggroPriority();
         }
 

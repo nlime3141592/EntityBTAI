@@ -459,7 +459,7 @@ MonoBehaviour:
   canInput: 1
   axisInput: {x: 0, y: 0}
   strength:
-    baseValue: 100
+    baseValue: 300
   defence:
     baseValue: 0
   maxHealth:
