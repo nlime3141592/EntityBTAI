@@ -12,14 +12,16 @@ namespace UnchordMetroidvania
         {
             s_m_operation = operation;
             s_m_operation.allowSceneActivation = false;
+            s_m_operation.completed += (op) =>
+            {
+                s_m_operation = null;
+            };
 
             while(s_m_operation.progress < 0.9f)
                 yield return null;
 
             s_m_operation.allowSceneActivation = true;
-
-            yield return new WaitForSeconds(1.0f);
-            s_m_operation = null;
+            yield return new WaitUntil(() => s_m_operation == null);
         }
 
         public static IEnumerator Close(int map)

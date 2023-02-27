@@ -39,7 +39,8 @@ namespace UnchordMetroidvania
 
         private void Update()
         {
-            
+            if(Input.GetKeyDown(KeyCode.Escape))
+                Application.Quit();
         }
 
         private IEnumerator m_OnProgramStart()

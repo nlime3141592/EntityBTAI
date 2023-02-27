@@ -21,6 +21,10 @@ namespace UnchordMetroidvania
             m_leftFrame = m_frame;
 
             m_bParryingDown = false;
+
+            float ix = player.axisInput.x;
+            if(ix < 0) player.lookDir.x = -1;
+            else if(ix > 0) player.lookDir.x = 1;
         }
 
         public override void OnFixedUpdate()

@@ -17,6 +17,7 @@ namespace UnchordMetroidvania
         private bool m_bJumpDown;
         private bool m_bRushDown;
         private bool m_bAttackDown;
+        private bool m_bMove;
 
         private float m_lookDirX;
 
@@ -33,7 +34,7 @@ namespace UnchordMetroidvania
             base.targetCount = 7;
             base.baseDamage = 1.0f;
 
-            m_phaser = new PhaseController(3, 2.0f);
+            m_phaser = new PhaseController(3, 1.0f);
             m_cooltimer = new Timer(0.1f);
         }
 
@@ -48,6 +49,7 @@ namespace UnchordMetroidvania
             m_bJumpDown = false;
             m_bRushDown = false;
             m_bAttackDown = false;
+            m_bMove = false;
 
             m_phaser.canUpdate = false;
 
@@ -55,15 +57,24 @@ namespace UnchordMetroidvania
             base.baseDamage = m_baseDamages[m_phaser.current];
             m_cooltimer.Reset();
 
+/*
+            // 상태 시작 시 입력 방향을 감지하고 방향 전환을 함.
             float ix = player.axisInput.x;
             if(ix < 0) player.lookDir.x = -1;
             else if(ix > 0) player.lookDir.x = 1;
             m_lookDirX = player.lookDir.x;
+*/
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
+
+            // 피격 판정 시에만 방향 전환 고정.
+            float ix = player.axisInput.x;
+            if(!player.aController.bBeginOfAction || player.aController.bEndOfAction)
+                player.lookDir.x = ix < 0 ? -1 : 1;
+            m_lookDirX = player.lookDir.x;
 
             if(player.aController.bEndOfAction)
             {
@@ -114,6 +125,8 @@ namespace UnchordMetroidvania
                     m_bRushDown = true;
                 if(this.CanTransit() && player.skill00)
                     m_bAttackDown = true;
+                if(player.axisInput.x != 0)
+                    m_bMove = true;
             }
         }
 
@@ -139,6 +152,13 @@ namespace UnchordMetroidvania
                     return PlayerFsm.c_st_ROLL;
                 else if(m_bAttackDown)
                     return PlayerFsm.c_st_ATTACK_ON_FLOOR;
+                else if(m_bMove)
+                {
+                    if(player.bIsRun)
+                        return PlayerFsm.c_st_RUN;
+                    else
+                        return PlayerFsm.c_st_WALK;
+                }
             }
 
             return FiniteStateMachine.c_st_BASE_IGNORE;

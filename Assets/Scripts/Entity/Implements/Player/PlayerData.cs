@@ -56,6 +56,8 @@ namespace UnchordMetroidvania
 
         [Header("Player Attack On Air")]
         public int maxAirAttackCount = 1;
+        public float jumpOnAirAttackSpeed = 1.5f;
+        public float gravityOnAirAttack = -49.5f;
 
         [Header("Player Take Down")]
         public float takeDownSpeed = -65.0f;

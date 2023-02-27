@@ -15,6 +15,7 @@ namespace UnchordMetroidvania
         private bool m_bAttackDown;
 
         private float m_lookDirX;
+        private float m_speed;
 
         public PlayerAttackOnAir(Player _player)
         : base(_player)
@@ -41,7 +42,7 @@ namespace UnchordMetroidvania
 
             player.battleModule.SetBattleState(this);
             player.bFixLookDirX = true;
-            player.vm.FreezePosition(true, true);
+            player.vm.FreezePosition(true, false);
 
             m_bAttackDown = false;
 
@@ -51,10 +52,14 @@ namespace UnchordMetroidvania
             base.baseDamage = m_baseDamages[m_phaser.current];
             m_cooltimer.Reset();
 
+/*
+            // 상태 시작 시 입력 방향을 감지하고 방향 전환을 함.
             float ix = player.axisInput.x;
             if(ix < 0) player.lookDir.x = -1;
             else if(ix > 0) player.lookDir.x = 1;
             m_lookDirX = player.lookDir.x;
+*/
+            m_speed = data.jumpOnAirAttackSpeed;
         }
 
         public virtual void OnFirstPhase()
@@ -66,7 +71,16 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
+            // 피격 판정 시에만 방향 전환 고정.
+            float ix = player.axisInput.x;
+            if(!player.aController.bBeginOfAction || player.aController.bEndOfAction)
+                player.lookDir.x = ix < 0 ? -1 : 1;
+            m_lookDirX = player.lookDir.x;
+
             player.vm.SetVelocityXY(0.0f, -1.0f);
+
+            m_speed += data.gravityOnAirAttack * Time.fixedDeltaTime;
+            player.vm.SetVelocityY(m_speed);
         }
 
         public override void OnUpdateAlways()
