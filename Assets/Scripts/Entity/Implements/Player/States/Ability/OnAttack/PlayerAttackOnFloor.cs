@@ -73,7 +73,10 @@ namespace UnchordMetroidvania
             // 피격 판정 시에만 방향 전환 고정.
             float ix = player.axisInput.x;
             if(!player.aController.bBeginOfAction || player.aController.bEndOfAction)
-                player.lookDir.x = ix < 0 ? -1 : 1;
+            {
+                if(ix < 0) player.lookDir.x = -1;
+                else if(ix > 0) player.lookDir.x = 1;
+            }
             m_lookDirX = player.lookDir.x;
 
             if(player.aController.bEndOfAction)

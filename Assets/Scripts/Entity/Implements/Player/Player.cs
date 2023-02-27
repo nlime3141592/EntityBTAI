@@ -86,6 +86,9 @@ namespace UnchordMetroidvania
             fsm.OnUpdateAlways();
             fsm.OnUpdate();
             CURRENT_STATE = fsm.Transit();
+
+            if(Input.GetKeyDown(KeyCode.F5))
+                bIsRun = !bIsRun;
         }
 
         protected override void OnDrawGizmos()
