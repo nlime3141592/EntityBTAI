@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [RequireComponent(typeof(Animator))]
     public class AnimationController : MonoBehaviour
@@ -38,12 +38,6 @@ namespace UnchordMetroidvania
         {
             this.id = id;
             m_animator.SetInteger("state", id);
-        }
-
-        public void ChangeActionPhase(int phase)
-        {
-            this.phase = phase;
-            m_animator.SetInteger("actionPhase", phase);
         }
 
         public void Reset()

@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class BattleModule : MonoBehaviour
     {
-        public EntityBase owner => m_owner;
-        private EntityBase m_owner;
+        public Entity owner => m_owner;
+        private Entity m_owner;
 
         public Transform damageParent;
         public TestDamageUI hitUI;
@@ -22,12 +22,12 @@ namespace UnchordMetroidvania
 
         private void OnValidate()
         {
-            TryGetComponent<EntityBase>(out m_owner);
+            TryGetComponent<Entity>(out m_owner);
         }
 
         private void Start()
         {
-            TryGetComponent<EntityBase>(out m_owner);
+            TryGetComponent<Entity>(out m_owner);
         }
 
         public void SetBattleState(IBattleState state)
@@ -47,8 +47,8 @@ namespace UnchordMetroidvania
 
         public void TriggerBattleState()
         {
-            EntityBase attacker = m_battleState.attacker;
-            List<EntityBase> targets = m_battleState.targets;
+            Entity attacker = m_battleState.attacker;
+            List<Entity> targets = m_battleState.targets;
             LTRB range = m_battleState.range;
             int targetCount = m_battleState.targetCount;
             float baseDamage = m_battleState.baseDamage;
@@ -60,7 +60,7 @@ namespace UnchordMetroidvania
                 .FilterFromColliders(attacker, colTargets, false, m_ignores)
                 .SetTargetCount(targetCount);
 
-            foreach(EntityBase target in targets)
+            foreach(Entity target in targets)
             {
                 float finalDamage = this.GetFinalDamage(target, baseDamage);
 
@@ -74,7 +74,7 @@ namespace UnchordMetroidvania
                 attacker.groggyValue += attacker.baseMentality.finalValue;
         }
 
-        public float GetFinalDamage(EntityBase target, float baseDamage)
+        public float GetFinalDamage(Entity target, float baseDamage)
         {
             /*
             [용어 설명]
@@ -102,7 +102,7 @@ namespace UnchordMetroidvania
             // ui.transform.SetParent(damageParent, false);
         }
 
-        public float GetFinalGroggy(EntityBase target)
+        public float GetFinalGroggy(Entity target)
         {
             float finalMental = target.baseMentality.finalValue;
 

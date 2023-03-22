@@ -1,16 +1,11 @@
 using UnityEngine;
+using UnchordMetroidvania;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public abstract class MonsterState<T> : EntityState<T>
     where T : EntityMonster
     {
-        public MonsterState(T _monster)
-        : base(_monster)
-        {
-            
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
@@ -65,20 +60,51 @@ namespace UnchordMetroidvania
             float endX = instance.aggroTargets[0].transform.position.x;
             float endY = instance.aggroTargets[0].transform.position.y;
 
-            instance.lookDir.x = m_GetLookDir(begX, endX, instance.lookDir.x, 1, instance.bUpdateAggroDirX);
-            instance.lookDir.y = m_GetLookDir(begY, endY, instance.lookDir.y, 1, instance.bUpdateAggroDirY);
+            instance.lookDir.x = m_GetLookDir(begX, endX, instance.lookDir.x, Direction.Positive, instance.bUpdateAggroDirX);
+            instance.lookDir.y = m_GetLookDir(begY, endY, instance.lookDir.y, Direction.Positive, instance.bUpdateAggroDirY);
         }
 
-        private float m_GetLookDir(float basePosition, float targetPosition, float currentLookDir, float defaultLookDir, bool bCanUpdate)
+        private Direction m_GetLookDir(float basePosition, float targetPosition, Direction currentLookDir, Direction defaultLookDir, bool bCanUpdate)
         {
             if(!bCanUpdate)
                 return currentLookDir;
-            else if(currentLookDir != 1 && currentLookDir != -1)
+            else if(currentLookDir != Direction.Positive && currentLookDir != Direction.Negative)
                 return defaultLookDir;
             else if(targetPosition - basePosition < 0)
-                return -1;
+                return Direction.Negative;
             else
-                return 1;
+                return Direction.Positive;
+        }
+
+        private int m_GetAreaCode(Vector2 origin, Vector2 target, float rangeX1, float rangeX2, float rangeY1, float rangeY2)
+        {
+            int code = 0;
+
+            float dx = target.x - origin.x;
+            float dy = target.y - origin.y;
+
+            if(dx < 0)
+            {
+                code += 10;
+                dx = -dx;
+            }
+            if(dy < 0)
+            {
+                code += 20;
+                dy = -dy;
+            }
+
+            if(dx >= rangeX2)
+                code += 2;
+            else if(dy >= rangeX1)
+                code += 1;
+
+            if(dy >= rangeY2)
+                code += 6;
+            else if(dy >= rangeY1)
+                code += 3;
+
+            return code;
         }
     }
 }

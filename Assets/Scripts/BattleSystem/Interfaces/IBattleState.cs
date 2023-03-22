@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public interface IBattleState
     {
-        EntityBase attacker { get; }
-        List<EntityBase> targets { get; }
+        Entity attacker { get; }
+        List<Entity> targets { get; }
         LTRB range { get; }
         int targetCount { get; }
         float baseDamage { get; }

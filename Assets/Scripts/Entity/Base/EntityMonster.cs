@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+using UnchordMetroidvania;
+
+namespace Unchord
 {
-    public abstract class EntityMonster : EntityBase
+    public abstract class EntityMonster : Entity
     {
         [Header("AI Options")]
         public float waitSecondOnChangeAggro = 0.75f;
@@ -19,31 +21,19 @@ namespace UnchordMetroidvania
         public bool bUpdateAggroDirX = true;
         public bool bUpdateAggroDirY = false;
         public List<string> targetTags;
-        public List<EntityBase> aggroTargets;
+        public List<Entity> aggroTargets;
         public int targetLayerMask;
 
         public System.Random prng { get; private set; }
 
-        protected override void Start()
+        protected override void InitMiscellaneous()
         {
-            base.Start();
-            aggroTargets = new List<EntityBase>(4);
-            prng = new System.Random();
+            base.InitMiscellaneous();
+
+            aggroTargets = new List<Entity>(4);
         }
 
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-        }
-
-        public virtual void OnAggroBegin()
-        {
-
-        }
-
-        public virtual void OnAggroEnd()
-        {
-            
-        }
+        public virtual void OnAggroBegin() {}
+        public virtual void OnAggroEnd() {}
     }
 }

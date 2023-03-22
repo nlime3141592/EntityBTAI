@@ -1,3 +1,4 @@
+/*
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,11 @@ namespace UnchordMetroidvania
     [RequireComponent(typeof(AnimationController))]
     public class EntityBase : MonoBehaviour
     {
+        // Entity, Non-Tile object.
+        // 위치, 방향,
+        // 속도, 질량, 부피,
+        // 강도
+
         #region Components
         [Header("Entity Components")]
         [HideInInspector] public Rigidbody2D physics;
@@ -241,3 +247,4 @@ namespace UnchordMetroidvania
         }
     }
 }
+*/
