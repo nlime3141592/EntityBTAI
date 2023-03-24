@@ -1,13 +1,9 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerOnLedge : PlayerState
     {
-        public PlayerOnLedge(Player _player)
-        : base(_player)
-        {
 
-        }
     }
 }

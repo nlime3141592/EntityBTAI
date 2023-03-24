@@ -39,6 +39,11 @@ namespace Unchord
         private bool m_bRegisteredMachineEvent;
         public IStateMachineRemote machineInterface;
 
+#region 아직 정리 안 함.
+        public VelocityModule2D vm;
+        public bool bParrying;
+#endregion
+
 #region Entity Events
         // MonoBehaviour.Awake()
         protected virtual bool InitSingletonInstance() => true;

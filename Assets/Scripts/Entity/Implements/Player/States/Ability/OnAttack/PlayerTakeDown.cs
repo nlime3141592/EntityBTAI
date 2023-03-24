@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public class PlayerTakeDown : PlayerAttack
@@ -38,16 +38,16 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
-            player.battleModule.SetBattleState(this);
-            player.bFixLookDirX = true;
+            instance.battleModule.SetBattleState(this);
+            instance.bFixLookDirX = true;
 
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;
 
             ++m_actionPhase;
-            player.aPhase = m_actionPhase;
+            instance.aPhase = m_actionPhase;
 
-            player.vm.FreezePosition(m_actionPhase != 2, m_actionPhase == 1);
+            instance.vm.FreezePosition(m_actionPhase != 2, m_actionPhase == 1);
 
             m_leftCooltime = m_cooltime;
 
@@ -58,44 +58,44 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            player.vm.SetVelocityX(0.0f);
+            instance.vm.SetVelocityX(0.0f);
 
             if(m_actionPhase == 1)
-                player.vm.SetVelocityY(0.0f);
+                instance.vm.SetVelocityY(0.0f);
             else if(m_actionPhase == 2)
-                player.vm.SetVelocityY(data.takeDownSpeed);
+                instance.vm.SetVelocityY(instance.speed_TakeDown);
             else if(m_actionPhase == 3)
-                player.vm.SetVelocityY(-1.0f);
+                instance.vm.SetVelocityY(-1.0f);
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
 
-            if(player.aController.bEndOfAction)
+            if(instance.aController.bEndOfAction)
             {
-                if(player.parryingDown)
+                if(instance.parryingDown)
                     m_bParryingDown = true;
             }
         }
 
         public override int Transit()
         {
-            if(m_actionPhase == 1 && player.aController.bEndOfAnimation)
-                return PlayerFsm.c_st_TAKE_DOWN;
-            else if(m_actionPhase == 2 && player.senseData.bOnFloor)
-                return PlayerFsm.c_st_TAKE_DOWN;
+            if(m_actionPhase == 1 && instance.aController.bEndOfAnimation)
+                return Player.c_st_TAKE_DOWN;
+            else if(m_actionPhase == 2 && instance.senseData.bOnFloor)
+                return Player.c_st_TAKE_DOWN;
             else if(m_actionPhase == 3)
             {
                 int transit = base.Transit();
 
-                if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+                if(transit != MachineConstant.c_lt_PASS)
                     return transit;
                 else if(m_bParryingDown)
-                    return PlayerFsm.c_st_EMERGENCY_PARRYING;
+                    return Player.c_st_EMERGENCY_PARRYING;
             }
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
@@ -103,7 +103,7 @@ namespace UnchordMetroidvania
             base.OnStateEnd();
 
             if(m_actionPhase == 3)
-                player.bFixLookDirX = false;
+                instance.bFixLookDir.x = false;
         }
 
         public void UpdateCooltime()

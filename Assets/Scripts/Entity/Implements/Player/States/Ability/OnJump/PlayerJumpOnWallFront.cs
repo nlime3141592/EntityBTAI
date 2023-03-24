@@ -1,68 +1,62 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerJumpOnWallFront : PlayerJump
     {
         private float vy;
 
-        public PlayerJumpOnWallFront(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            player.bFixLookDirX = true;
-            vy = data.jumpOnWallSpeedY;
+            instance.bFixLookDir.x = true;
+            vy = instance.speed_JumpOnWall_Y;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float vx = data.jumpOnWallSpeedX;
-            float ix = -player.lookDir.x;
+            float vx = instance.speed_JumpOnWall_X;
+            float ix = -instance.lookDir.fx;
 
             if(bJumpCanceled)
-                ix = player.axisInput.x;
+                ix = instance.axis.x;
 
-            player.moveDir.x = ix;
-            player.moveDir.y = 0;
+            instance.moveDir.x = ix;
+            instance.moveDir.y = 0;
             vx *= ix;
 
-            player.vm.SetVelocityXY(vx, vy);
+            instance.vm.SetVelocityXY(vx, vy);
             if(vy > 0)
-                vy -= (data.jumpOnAirForce * Time.fixedDeltaTime);
+                vy -= (instance.force_JumpOnWall * Time.fixedDeltaTime);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(bJumpCanceled && player.rushDown)
-                return PlayerFsm.c_st_DASH;
+            else if(bJumpCanceled && instance.rushDown)
+                return Player.c_st_DASH;
             else if(vy <= 0)
-                return PlayerFsm.c_st_FREE_FALL;
+                return Player.c_st_FREE_FALL;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            player.bFixLookDirX = false;
+            instance.bFixLookDir.x = false;
         }
 
         protected override void p_OnJumpCanceled()
         {
             base.p_OnJumpCanceled();
-            player.bFixLookDirX = false;
+            instance.bFixLookDir.x = false;
             vy /= 2;
         }
     }

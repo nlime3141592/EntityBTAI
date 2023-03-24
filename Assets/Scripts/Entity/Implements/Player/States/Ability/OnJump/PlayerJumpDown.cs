@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerJumpDown : PlayerJump
     {
@@ -13,9 +13,10 @@ namespace UnchordMetroidvania
         public LTRB m_sitRange;
         public LTRB m_slabRange;
 
-        public PlayerJumpDown(Player _player)
-        : base(_player)
+        public override void OnMachineBegin(Player _instance, int _id)
         {
+            base.OnMachineBegin(_instance, _id);
+
             curSlabs = new List<Slab>(4);
             prevSlabs = new List<Slab>(4);
 
@@ -38,21 +39,21 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            vy = data.jumpDownSpeed;
-            player.sitSlabs.Clear();
+            vy = instance.speed_JumpDown;
+            instance.sitSlabs.Clear();
             Collider2D[] colliders = OverlapBox(
-                player.transform.position,
-                player.lookDir.x < 0,
+                instance.transform.position,
+                instance.lookDir.x < 0,
                 false,
                 m_sitRange,
                 1 << LayerMask.NameToLayer("Slab"));
-            player.sitSlabs.GetComponentsFromColliders<Slab>(player.transform, colliders, false);
+            instance.sitSlabs.GetComponentsFromColliders<Slab>(instance.transform, colliders, false);
 
-            for(int i = 0; i < player.sitSlabs.Count; ++i)
+            for(int i = 0; i < instance.sitSlabs.Count; ++i)
             {
-                player.sitSlabs[i].IgnoreCollision(player.hCol.head);
-                player.sitSlabs[i].IgnoreCollision(player.hCol.body);
-                player.sitSlabs[i].IgnoreCollision(player.hCol.feet);
+                instance.sitSlabs[i].IgnoreCollision(instance.hCol.head);
+                instance.sitSlabs[i].IgnoreCollision(instance.hCol.body);
+                instance.sitSlabs[i].IgnoreCollision(instance.hCol.feet);
             }
         }
 
@@ -62,17 +63,17 @@ namespace UnchordMetroidvania
 
             curSlabs.Clear();
             Collider2D[] colliders = OverlapBox(
-                player.transform.position,
-                player.lookDir.x < 0,
+                instance.transform.position,
+                instance.lookDir.x < 0,
                 false,
                 m_slabRange,
                 1 << LayerMask.NameToLayer("Slab"));
-            curSlabs.GetComponentsFromColliders<Slab>(player.transform, colliders, false);
+            curSlabs.GetComponentsFromColliders<Slab>(instance.transform, colliders, false);
 
-            for(int i = player.sitSlabs.Count - 1; i >= 0; --i)
+            for(int i = instance.sitSlabs.Count - 1; i >= 0; --i)
             {
-                if(curSlabs.Contains(player.sitSlabs[i]))
-                    player.sitSlabs.RemoveAt(i);
+                if(curSlabs.Contains(instance.sitSlabs[i]))
+                    instance.sitSlabs.RemoveAt(i);
             }
 
             for(int i = 0; i < curSlabs.Count; ++i)
@@ -80,9 +81,9 @@ namespace UnchordMetroidvania
                 if(!prevSlabs.Contains(curSlabs[i]))
                 {
                     // curSlabs[i]가 이번 프레임에 인식됨.
-                    curSlabs[i].IgnoreCollision(player.hCol.head);
-                    curSlabs[i].IgnoreCollision(player.hCol.body);
-                    curSlabs[i].IgnoreCollision(player.hCol.feet);
+                    curSlabs[i].IgnoreCollision(instance.hCol.head);
+                    curSlabs[i].IgnoreCollision(instance.hCol.body);
+                    curSlabs[i].IgnoreCollision(instance.hCol.feet);
                 }
             }
             for(int i = 0; i < prevSlabs.Count; ++i)
@@ -90,9 +91,9 @@ namespace UnchordMetroidvania
                 if(!curSlabs.Contains(prevSlabs[i]))
                 {
                     // prevSlabs[i]가 이번 프레임에 나감.
-                    prevSlabs[i].AcceptCollision(player.hCol.head);
-                    prevSlabs[i].AcceptCollision(player.hCol.body);
-                    prevSlabs[i].AcceptCollision(player.hCol.feet);
+                    prevSlabs[i].AcceptCollision(instance.hCol.head);
+                    prevSlabs[i].AcceptCollision(instance.hCol.body);
+                    prevSlabs[i].AcceptCollision(instance.hCol.feet);
                 }
             }
 
@@ -105,29 +106,29 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            float vx = player.bIsRun ? data.runSpeed : data.walkSpeed;
-            float ix = player.axisInput.x;
+            float vx = instance.bIsRun ? instance.speed_Run : instance.speed_Walk;
+            float ix = instance.axis.x;
 
-            player.moveDir.x = ix;
-            player.moveDir.y = 0;
+            instance.moveDir.x = ix;
+            instance.moveDir.y = 0;
             vx *= ix;
 
-            player.vm.SetVelocityXY(vx, vy);
+            instance.vm.SetVelocityXY(vx, vy);
 
             if(vy > 0)
-                vy -= (data.jumpDownForce * Time.fixedDeltaTime);
+                vy -= (instance.force_JumpDown * Time.fixedDeltaTime);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
             else if(vy <= 0)
-                return PlayerFsm.c_st_FREE_FALL;
+                return Player.c_st_FREE_FALL;
             
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         private static Collider2D[] OverlapBox(Vector2 origin, bool flipX, bool flipY, LTRB range, int layerMask)

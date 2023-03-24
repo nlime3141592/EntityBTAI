@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerClimbOnLedge : PlayerOnLedge
     {
@@ -8,29 +8,23 @@ namespace UnchordMetroidvania
         private Vector2 playerTeleportPosition;
         private bool bInitState;
 
-        public PlayerClimbOnLedge(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            player.vm.FreezePositionX();
-            player.vm.FreezePositionY();
+            instance.vm.FreezePositionX();
+            instance.vm.FreezePositionY();
 
             bInitState = false;
-            player.bFixLookDirX = true;
+            instance.bFixLookDir.x = true;
 
             Vector2 rayOriginX = Vector2.zero;
             Vector2 rayOriginY = Vector2.zero;
             Vector2 dirX = Vector2.zero;
             Vector2 dirY = Vector2.zero;
-            float dLength = data.detectLength;
-            float ledgerp = data.ledgerp;
-            float lWeight = data.ledgeVerticalLengthWeight;
+            float dLength = instance.detectLength;
+            float ledgerp = instance.ledgerp;
+            float lWeight = instance.ledgeVerticalLengthWeight;
             int layerMask = 1 << LayerMask.NameToLayer("Terrain");
 
             RaycastHit2D hitX = default(RaycastHit2D);
@@ -39,52 +33,52 @@ namespace UnchordMetroidvania
             Vector2 dfPosition = Vector2.zero;
             Vector2 handPosition = Vector2.zero;
 
-            if(player.lookDir.x < 0)
+            if(instance.lookDir.x < 0)
             {
-                rayOriginX = player.senseData.originWallLT.position;
-                rayOriginY = player.senseData.originLedgeLT.position;
+                rayOriginX = instance.senseData.originWallLT.position;
+                rayOriginY = instance.senseData.originLedgeLT.position;
                 dirX = Vector2.left;
                 dirY = Vector2.down;
             }
             else
             {
-                rayOriginX = player.senseData.originWallRT.position;
-                rayOriginY = player.senseData.originLedgeRT.position;
+                rayOriginX = instance.senseData.originWallRT.position;
+                rayOriginY = instance.senseData.originLedgeRT.position;
                 dirX = Vector2.right;
                 dirY = Vector2.down;
             }
 
             hitX = Physics2D.Raycast(rayOriginX, dirX, dLength, layerMask);
             hitY = Physics2D.Raycast(rayOriginY + dirX * ledgerp, dirY, dLength, layerMask);
-            dtPosition = (Vector2)player.transform.position - rayOriginX;
-            dfPosition = player.transform.position - player.senseData.originFloor.position;
+            dtPosition = (Vector2)instance.transform.position - rayOriginX;
+            dfPosition = instance.transform.position - instance.senseData.originFloor.position;
             handPosition.x = hitX.point.x;
             handPosition.y = hitY.point.y;
 
             playerPosition = handPosition + dtPosition;
             playerTeleportPosition = handPosition + dfPosition + dirX * ledgerp;
-            player.transform.position = playerPosition;
+            instance.transform.position = playerPosition;
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.aController.bEndOfAnimation)
-                return PlayerFsm.c_st_FREE_FALL;
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            else if(instance.aController.bEndOfAnimation)
+                return Player.c_st_FREE_FALL;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
 
-            player.transform.position = playerTeleportPosition;
-            player.bFixLookDirX = false;
-            player.vm.MeltPositionX();
-            player.vm.MeltPositionY();
+            instance.transform.position = playerTeleportPosition;
+            instance.bFixLookDir.x = false;
+            instance.vm.MeltPositionX();
+            instance.vm.MeltPositionY();
         }
     }
 }

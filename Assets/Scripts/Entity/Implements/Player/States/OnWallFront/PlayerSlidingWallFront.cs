@@ -1,55 +1,49 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerSlidingWallFront : PlayerOnWallFront
     {
-        public PlayerSlidingWallFront(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            player.vm.FreezePositionX();
-            player.vm.MeltPositionY();
+            instance.vm.FreezePositionX();
+            instance.vm.MeltPositionY();
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float vy = player.vm.y;
-            float dV = data.slidingWallGravity * Time.fixedDeltaTime;
+            float vy = instance.vm.y;
+            float dV = instance.gravity_WallSlidingFront * Time.fixedDeltaTime;
 
             vy += dV;
-            if(vy < data.minSlidingWallFrontSpeed)
-                vy = data.minSlidingWallFrontSpeed;
+            if(vy < instance.speedMin_WallSlidingFront)
+                vy = instance.speedMin_WallSlidingFront;
 
-            player.vm.SetVelocityXY(0.0f, vy);
+            instance.vm.SetVelocityXY(0.0f, vy);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.axisInput.x != 0)
-                return PlayerFsm.c_st_IDLE_WALL_FRONT;
+            else if(instance.axis.x != 0)
+                return Player.c_st_IDLE_WALL_FRONT;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
 
-            player.vm.MeltPositionX();
-            player.vm.MeltPositionY();
+            instance.vm.MeltPositionX();
+            instance.vm.MeltPositionY();
         }
     }
 }

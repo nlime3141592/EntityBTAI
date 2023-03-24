@@ -1,35 +1,29 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerWalk : PlayerMove
     {
-        public PlayerWalk(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float vx = player.axisInput.x * player.moveDir.x * data.walkSpeed;
-            float vy = player.axisInput.x * player.moveDir.y * data.walkSpeed - 0.1f;
+            float vx = instance.axis.x * instance.moveDir.x * instance.speed_Walk;
+            float vy = instance.axis.x * instance.moveDir.y * instance.speed_Walk - 0.1f;
 
-            player.vm.SetVelocityXY(vx, vy);
+            instance.vm.SetVelocityXY(vx, vy);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.bIsRun)
-                return PlayerFsm.c_st_RUN;
+            else if(instance.bIsRun)
+                return Player.c_st_RUN;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

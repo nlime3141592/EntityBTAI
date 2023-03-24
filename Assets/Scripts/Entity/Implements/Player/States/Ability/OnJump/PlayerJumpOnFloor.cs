@@ -1,55 +1,49 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerJumpOnFloor : PlayerJump
     {
         private float vy;
 
-        public PlayerJumpOnFloor(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            vy = data.jumpOnFloorSpeed;
+            vy = instance.force_JumpOnFloor;
         }
 
         public override void OnFixedUpdate()
         {
-            if(!player.aController.bBeginOfAction)
+            if(!instance.aController.bBeginOfAction)
                 return;
 
             base.OnFixedUpdate();
 
-            float vx = player.bIsRun ? data.runSpeed : data.walkSpeed;
-            float ix = player.axisInput.x;
+            float vx = instance.bIsRun ? instance.speed_Run : instance.speed_Walk;
+            float ix = instance.axis.x;
 
-            player.moveDir.x = ix;
-            player.moveDir.y = 0;
+            instance.moveDir.x = ix;
+            instance.moveDir.y = 0;
             vx *= ix;
 
-            player.vm.SetVelocityXY(vx, vy);
+            instance.vm.SetVelocityXY(vx, vy);
 
             if(vy > 0)
-                vy -= (data.jumpOnFloorForce * Time.fixedDeltaTime);
+                vy -= (instance.force_JumpOnFloor * Time.fixedDeltaTime);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.rushDown)
-                return PlayerFsm.c_st_DASH;
+            else if(instance.rushDown)
+                return Player.c_st_DASH;
             else if(vy <= 0)
-                return PlayerFsm.c_st_FREE_FALL;
+                return Player.c_st_FREE_FALL;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         protected override void p_OnJumpCanceled()

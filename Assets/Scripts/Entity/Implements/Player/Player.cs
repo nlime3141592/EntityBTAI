@@ -14,7 +14,7 @@ namespace Unchord
         public const int c_st_SIT                           = 4;
         public const int c_st_HEAD_UP                       = 5;
         public const int c_st_FREE_FALL                     = 6;
-        public const int c_st_GLIDING                       = 7;
+
         public const int c_st_IDLE_WALL_FRONT               = 8;
         public const int c_st_SLIDING_WALL_FRONT            = 9;
         public const int c_st_JUMP_ON_FLOOR                 = 10;
@@ -47,6 +47,11 @@ namespace Unchord
 #endregion
 
 #region Player Datas
+        public float detectLength = 0.04f;
+        public float ledgerp = 0.06f;
+        public float ledgeVerticalLengthWeight = 0.5f;
+        public Vector2 moveDir;
+
         public float speed_Walk = 6.0f;
         public float speed_Run = 12.0f;
         public float speed_JumpOnFloor = 16.0f;
@@ -150,7 +155,6 @@ namespace Unchord
             root[++index_root] = new PlayerSit();
             root[++index_root] = new PlayerHeadUp();
             root[++index_root] = new PlayerFreeFall();
-            root[++index_root] = new PlayerGliding();
             root[++index_root] = new PlayerIdleWallFront();
             root[++index_root] = new PlayerSlidingWallFront();
             root[++index_root] = new PlayerJumpOnFloor();

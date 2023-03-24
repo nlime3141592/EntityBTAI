@@ -1,46 +1,38 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerFreeFall : PlayerOnAir
     {
-        public PlayerFreeFall(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float vx = player.bIsRun ? data.runSpeed : data.walkSpeed;
-            float ix = player.axisInput.x;
+            float vx = instance.bIsRun ? instance.speed_Run : instance.speed_Walk;
+            float ix = instance.axis.x;
 
-            player.moveDir.x = ix;
-            player.moveDir.y = 0;
+            instance.moveDir.x = ix;
+            instance.moveDir.y = 0;
             vx *= ix;
 
-            float vy = player.vm.y;
-            float dV = data.gravity * Time.fixedDeltaTime;
+            float vy = instance.vm.y;
+            float dV = instance.gravity_FreeFall * Time.fixedDeltaTime;
 
             vy += dV;
-            if(vy < data.minFreeFallSpeed)
-                vy = data.minFreeFallSpeed;
+            if(vy < instance.speedMin_FreeFall)
+                vy = instance.speedMin_FreeFall;
 
-            player.vm.SetVelocityXY(vx, vy);
+            instance.vm.SetVelocityXY(vx, vy);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.axisInput.y > 0)
-                return PlayerFsm.c_st_GLIDING;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

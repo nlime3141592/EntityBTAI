@@ -1,47 +1,41 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public abstract class PlayerOnWallFront : PlayerState
     {
-        public PlayerOnWallFront(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            foreach(Slab slab in player.sitSlabs)
+            foreach(Slab slab in instance.sitSlabs)
             {
-                slab.AcceptCollision(player.hCol.head);
-                slab.AcceptCollision(player.hCol.body);
-                slab.AcceptCollision(player.hCol.feet);
+                slab.AcceptCollision(instance.hCol.head);
+                slab.AcceptCollision(instance.hCol.body);
+                slab.AcceptCollision(instance.hCol.feet);
             }
-            player.sitSlabs.Clear();
-            player.leftAirJumpCount = data.maxAirJumpCount;
-            player.leftDashCount = data.maxDashCount;
-            player.leftAirAttackCount = data.maxAirAttackCount;
+            instance.sitSlabs.Clear();
+            instance.countLeft_JumpOnAir = instance.count_JumpOnAir;
+            instance.countLeft_Dash = instance.count_Dash;
+            instance.countLeft_AttackOnAir = instance.count_AttackOnAir;
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.jumpDown)
-                return PlayerFsm.c_st_JUMP_ON_WALL_FRONT;
-            else if(player.senseData.bOnDetectFloor)
-                return PlayerFsm.c_st_FREE_FALL;
-            else if(player.axisInput.y < 0 && player.axisInput.x == 0)
-                return PlayerFsm.c_st_FREE_FALL;
-            else if(!player.senseData.bOnWallFront)
-                return PlayerFsm.c_st_FREE_FALL;
+            else if(instance.jumpDown)
+                return Player.c_st_JUMP_ON_WALL_FRONT;
+            else if(instance.senseData.bOnDetectFloor)
+                return Player.c_st_FREE_FALL;
+            else if(instance.axis.y < 0 && instance.axis.x == 0)
+                return Player.c_st_FREE_FALL;
+            else if(!instance.senseData.bOnWallFront)
+                return Player.c_st_FREE_FALL;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

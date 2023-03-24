@@ -1,24 +1,18 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerSit : PlayerStand
     {
         private bool m_bOnSlab;
         private Slab m_slab;
 
-        public PlayerSit(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            player.cameraOffset = Vector2.down;
+            instance.offset_StandCamera = Vector2.down;
 
-            RaycastHit2D hit = Physics2D.Raycast(player.senseData.originFloor.position, Vector2.down, 0.1f, 1 << LayerMask.NameToLayer("Slab"));
+            RaycastHit2D hit = Physics2D.Raycast(instance.senseData.originFloor.position, Vector2.down, 0.1f, 1 << LayerMask.NameToLayer("Slab"));
             if(hit)
                 m_bOnSlab = hit.collider.gameObject.TryGetComponent<Slab>(out m_slab);
             else
@@ -29,12 +23,12 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(m_bOnSlab && player.jumpDown)
-                return PlayerFsm.c_st_JUMP_DOWN;
+            else if(m_bOnSlab && instance.jumpDown)
+                return Player.c_st_JUMP_DOWN;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

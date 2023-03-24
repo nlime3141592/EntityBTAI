@@ -1,45 +1,40 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public abstract class PlayerMove : PlayerOnFloor
     {
-        public PlayerMove(Player _player)
-        : base(_player)
-        {
-
-        }
 
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            player.vm.MeltPositionX();
-            player.vm.MeltPositionY();
+            instance.vm.MeltPositionX();
+            instance.vm.MeltPositionY();
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            player.senseData.UpdateMoveDir(player);
+            instance.senseData.UpdateMoveDir(instance);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.jumpDown)
-                return PlayerFsm.c_st_JUMP_ON_FLOOR;
-            else if(player.axisInput.y > 0)
-                return PlayerFsm.c_st_HEAD_UP;
-            else if(player.axisInput.y < 0)
-                return PlayerFsm.c_st_SIT;
-            else if(player.axisInput.x == 0)
-                return PlayerFsm.c_st_IDLE_SHORT;
+            else if(instance.jumpDown)
+                return Player.c_st_JUMP_ON_FLOOR;
+            else if(instance.axis.y > 0)
+                return Player.c_st_HEAD_UP;
+            else if(instance.axis.y < 0)
+                return Player.c_st_SIT;
+            else if(instance.axis.x == 0)
+                return Player.c_st_IDLE_SHORT;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

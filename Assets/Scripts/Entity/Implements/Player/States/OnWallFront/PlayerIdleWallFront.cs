@@ -1,45 +1,39 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerIdleWallFront : PlayerOnWallFront
     {
-        public PlayerIdleWallFront(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            player.vm.FreezePositionX();
-            player.vm.MeltPositionY();
+            instance.vm.FreezePositionX();
+            instance.vm.MeltPositionY();
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            player.vm.SetVelocityXY(0.0f, 0.0f);
+            instance.vm.SetVelocityXY(0.0f, 0.0f);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.axisInput.x == 0)
-                return PlayerFsm.c_st_SLIDING_WALL_FRONT;
+            else if(instance.axis.x == 0)
+                return Player.c_st_SLIDING_WALL_FRONT;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
 
-            player.vm.MeltPositionX();
-            player.vm.MeltPositionY();
+            instance.vm.MeltPositionX();
+            instance.vm.MeltPositionY();
         }
     }
 }

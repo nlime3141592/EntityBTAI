@@ -1,6 +1,6 @@
 using System;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public struct DirectionVector2

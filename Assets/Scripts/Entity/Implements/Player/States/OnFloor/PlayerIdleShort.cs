@@ -1,17 +1,11 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerIdleShort : PlayerIdle
     {
         private float m_idleTime = 10.0f;
         private float m_leftIdleTime;
-
-        public PlayerIdleShort(Player _player)
-        : base(_player)
-        {
-
-        }
 
         public override void OnStateBegin()
         {
@@ -35,12 +29,12 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
             else if(m_leftIdleTime <= 0)
-                return PlayerFsm.c_st_IDLE_LONG;
+                return Player.c_st_IDLE_LONG;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

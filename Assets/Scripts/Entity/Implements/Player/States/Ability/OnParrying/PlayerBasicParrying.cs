@@ -1,19 +1,13 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class PlayerBasicParrying : PlayerParrying
     {
-        public PlayerBasicParrying(Player _player)
-        : base(_player)
-        {
-
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            player.vm.SetVelocityXY(0.0f, -1.0f);
+            instance.vm.SetVelocityXY(0.0f, -1.0f);
         }
     }
 }
