@@ -1,60 +1,54 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class ExcavatorShockWave : ExcavatorAttack
     {
-        public ExcavatorShockWave(Excavator _instance)
-        : base(_instance)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            excavator.bUpdateAggroDirX = false;
-            excavator.bFixLookDirX = true;
-            excavator.aController.onBeginOfAction += m_OnActionBegin;
+            instance.bUpdateAggroDirX = false;
+            instance.bFixLookDir.x = true;
+            instance.aController.onBeginOfAction += m_OnActionBegin;
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(excavator.aController.bEndOfAnimation)
-                return ExcavatorFsm.c_st_IDLE;
+            else if(instance.aController.bEndOfAnimation)
+                return Excavator.c_st_IDLE;
             
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            excavator.aController.onBeginOfAction -= m_OnActionBegin;
+            instance.aController.onBeginOfAction -= m_OnActionBegin;
         }
 
         private void m_OnActionBegin()
         {
-            ShockWave lw = excavator.shockwave.Copy();
-            ShockWave rw = excavator.shockwave.Copy();
-            float dx = (excavator.shockRange.left + excavator.shockRange.right) * 0.5f;
+            ShockWave lw = instance.shockwave.Copy();
+            ShockWave rw = instance.shockwave.Copy();
+            float dx = (instance.shockRange.left + instance.shockRange.right) * 0.5f;
 
-            lw.InitIgnore(excavator.hitColliders);
+            lw.InitIgnore(instance.hitColliders);
             lw.InitBaseDamage(1.0f);
             lw.InitDirection(-1);
-            lw.InitPosition(excavator.aiCenter.position - new Vector3(dx, 0, 0));
-            lw.InitRange(excavator.shockRange);
+            lw.InitPosition(instance.aiCenter.position - new Vector3(dx, 0, 0));
+            lw.InitRange(instance.shockRange);
             lw.InitLeftWave(15);
             lw.InitShow();
 
-            rw.InitIgnore(excavator.hitColliders);
+            rw.InitIgnore(instance.hitColliders);
             rw.InitBaseDamage(1.0f);
             rw.InitDirection(1);
-            rw.InitPosition(excavator.aiCenter.position + new Vector3(dx, 0, 0));
-            rw.InitRange(excavator.shockRange);
+            rw.InitPosition(instance.aiCenter.position + new Vector3(dx, 0, 0));
+            rw.InitRange(instance.shockRange);
             rw.InitLeftWave(15);
             rw.InitShow();
         }

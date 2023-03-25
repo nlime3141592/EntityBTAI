@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class ExcavatorIdle : ExcavatorIdleBase
     {
@@ -14,9 +14,9 @@ namespace UnchordMetroidvania
         // variable
         private int m_rangeCode = -1;
 
-        public ExcavatorIdle(Excavator _instance)
-        : base(_instance)
+        public override void OnConstruct()
         {
+            base.OnConstruct();
             m_idleTimer = new Timer(1.2f);
         }
 
@@ -30,7 +30,7 @@ namespace UnchordMetroidvania
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            excavator.vm.SetVelocityXY(0.0f, -1.0f);
+            instance.vm.SetVelocityXY(0.0f, -1.0f);
         }
 
         public override void OnUpdate()
@@ -45,28 +45,28 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
             else if(m_idleTimer.bEndOfTimer)
             {
-                EntityBase target = excavator.aggroTargets[0];
-                m_rangeCode = m_GetRangeCode(target, excavator, m_rangeX1, m_rangeX2, m_rangeY1, m_rangeY2);
+                Entity target = instance.aggroTargets[0];
+                m_rangeCode = m_GetRangeCode(target, instance, m_rangeX1, m_rangeX2, m_rangeY1, m_rangeY2);
 
-                if(fsm.mode == 1)
+                if(instance.monsterPhase == 1)
                     return m_ChangeStateByRangeCodePhase1(m_rangeCode);
-                else if(fsm.mode == 2)
+                else if(instance.monsterPhase == 2)
                     return m_ChangeStateByRangeCodePhase2(m_rangeCode);
-                else if(fsm.mode == 3)
+                else if(instance.monsterPhase == 3)
                     return m_ChangeStateByRangeCodePhase3(m_rangeCode);
             }
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
-        private int m_GetRangeCode(EntityBase target, Excavator excavator, float rx1, float rx2, float ry1, float ry2)
+        private int m_GetRangeCode(Entity target, Excavator excaavtor, float rx1, float rx2, float ry1, float ry2)
         {
-            Vector2 tDir = target.transform.position - excavator.aiCenter.position;
-            float dx = tDir.x * excavator.lookDir.x;
+            Vector2 tDir = target.transform.position - instance.aiCenter.position;
+            float dx = tDir.x * instance.lookDir.fx;
             float dy = tDir.y;
             int code = 0;
 
@@ -92,126 +92,126 @@ namespace UnchordMetroidvania
 
         private int m_ChangeStateByRangeCodePhase1(int code)
         {
-            int rNumber = excavator.prng.Next(0, 10000);
+            int rNumber = instance.prng.Next(0, 10000);
 
             switch(code)
             {
                 case 0:
-                    return FiniteStateMachine.c_st_STATE_CONTINUE;
+                    return MachineConstant.c_lt_CONTINUE;
                 case 1:
                 case 4:
                 case 7:
-                    return ExcavatorFsm.c_st_STAMPING;
+                    return Excavator.c_st_STAMPING;
                 case 2:
                 case 9:
-                    if(rNumber < 3000) return ExcavatorFsm.c_st_WALK;
-                    else return ExcavatorFsm.c_st_ANCHORING;
+                    if(rNumber < 3000) return Excavator.c_st_WALK;
+                    else return Excavator.c_st_ANCHORING;
                 case 3:
-                    if(rNumber < 5000) return ExcavatorFsm.c_st_WALK;
-                    else return ExcavatorFsm.c_st_ANCHORING;
+                    if(rNumber < 5000) return Excavator.c_st_WALK;
+                    else return Excavator.c_st_ANCHORING;
                 case 5:
                 case 8:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else return ExcavatorFsm.c_st_ANCHORING;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else return Excavator.c_st_ANCHORING;
                 case 6:
-                    if(rNumber < 4000) return ExcavatorFsm.c_st_WALK;
-                    else return ExcavatorFsm.c_st_ANCHORING;
+                    if(rNumber < 4000) return Excavator.c_st_WALK;
+                    else return Excavator.c_st_ANCHORING;
                 default:
-                    return FiniteStateMachine.c_st_MACHINE_HALT;
+                    return MachineConstant.c_lt_END;
             }
         }
 
         private int m_ChangeStateByRangeCodePhase2(int code)
         {
-            int rNumber = excavator.prng.Next(0, 10000);
+            int rNumber = instance.prng.Next(0, 10000);
 
             switch(code)
             {
                 case 0:
-                    return FiniteStateMachine.c_st_STATE_CONTINUE;
+                    return MachineConstant.c_lt_CONTINUE;
                 case 1:
-                    if(rNumber < 6000) return ExcavatorFsm.c_st_STAMPING;
-                    else return ExcavatorFsm.c_st_SHOCK_WAVE;
+                    if(rNumber < 6000) return Excavator.c_st_STAMPING;
+                    else return Excavator.c_st_SHOCK_WAVE;
                 case 2:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 6000) return ExcavatorFsm.c_st_ANCHORING;
-                    else return ExcavatorFsm.c_st_SHOCK_WAVE;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else if(rNumber < 6000) return Excavator.c_st_ANCHORING;
+                    else return Excavator.c_st_SHOCK_WAVE;
                 case 3:
                 case 6:
-                    if(rNumber < 3000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 7000) return ExcavatorFsm.c_st_ANCHORING;
-                    else return ExcavatorFsm.c_st_SHOCK_WAVE;
+                    if(rNumber < 3000) return Excavator.c_st_WALK;
+                    else if(rNumber < 7000) return Excavator.c_st_ANCHORING;
+                    else return Excavator.c_st_SHOCK_WAVE;
                 case 4:
-                    if(rNumber < 7000) return ExcavatorFsm.c_st_STAMPING;
-                    else return ExcavatorFsm.c_st_SHOCK_WAVE;
+                    if(rNumber < 7000) return Excavator.c_st_STAMPING;
+                    else return Excavator.c_st_SHOCK_WAVE;
                 case 5:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 7000) return ExcavatorFsm.c_st_ANCHORING;
-                    else return ExcavatorFsm.c_st_SHOCK_WAVE;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else if(rNumber < 7000) return Excavator.c_st_ANCHORING;
+                    else return Excavator.c_st_SHOCK_WAVE;
                 case 7:
-                    if(rNumber < 8000) return ExcavatorFsm.c_st_STAMPING;
-                    else return ExcavatorFsm.c_st_SHOCK_WAVE;
+                    if(rNumber < 8000) return Excavator.c_st_STAMPING;
+                    else return Excavator.c_st_SHOCK_WAVE;
                 case 8:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 8000) return ExcavatorFsm.c_st_ANCHORING;
-                    else return ExcavatorFsm.c_st_SHOCK_WAVE;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else if(rNumber < 8000) return Excavator.c_st_ANCHORING;
+                    else return Excavator.c_st_SHOCK_WAVE;
                 case 9:
-                    if(rNumber < 3000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 8000) return ExcavatorFsm.c_st_ANCHORING;
-                    else return ExcavatorFsm.c_st_SHOCK_WAVE;
+                    if(rNumber < 3000) return Excavator.c_st_WALK;
+                    else if(rNumber < 8000) return Excavator.c_st_ANCHORING;
+                    else return Excavator.c_st_SHOCK_WAVE;
                 default:
-                    return FiniteStateMachine.c_st_MACHINE_HALT;
+                    return MachineConstant.c_lt_HALT;
             }
         }
         
         private int m_ChangeStateByRangeCodePhase3(int code)
         {
-            int rNumber = excavator.prng.Next(0, 10000);
+            int rNumber = instance.prng.Next(0, 10000);
 
             switch(code)
             {
                 case 0:
-                    return FiniteStateMachine.c_st_STATE_CONTINUE;
+                    return MachineConstant.c_lt_CONTINUE;
                 case 1:
-                    if(rNumber < 6000) return ExcavatorFsm.c_st_STAMPING;
-                    else if(rNumber < 9000) return ExcavatorFsm.c_st_SHOCK_WAVE;
-                    else return ExcavatorFsm.c_st_SHOOT_MISSILE;
+                    if(rNumber < 6000) return Excavator.c_st_STAMPING;
+                    else if(rNumber < 9000) return Excavator.c_st_SHOCK_WAVE;
+                    else return Excavator.c_st_SHOOT_MISSILE;
                 case 2:
                 case 5:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 5000) return ExcavatorFsm.c_st_ANCHORING;
-                    else if(rNumber < 8000) return ExcavatorFsm.c_st_SHOCK_WAVE;
-                    else return ExcavatorFsm.c_st_SHOOT_MISSILE;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else if(rNumber < 5000) return Excavator.c_st_ANCHORING;
+                    else if(rNumber < 8000) return Excavator.c_st_SHOCK_WAVE;
+                    else return Excavator.c_st_SHOOT_MISSILE;
                 case 3:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 4000) return ExcavatorFsm.c_st_ANCHORING;
-                    else if(rNumber < 7000) return ExcavatorFsm.c_st_SHOCK_WAVE;
-                    else return ExcavatorFsm.c_st_SHOOT_MISSILE;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else if(rNumber < 4000) return Excavator.c_st_ANCHORING;
+                    else if(rNumber < 7000) return Excavator.c_st_SHOCK_WAVE;
+                    else return Excavator.c_st_SHOOT_MISSILE;
                 case 4:
-                    if(rNumber < 5000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 8000) return ExcavatorFsm.c_st_SHOCK_WAVE;
-                    else return ExcavatorFsm.c_st_SHOOT_MISSILE;
+                    if(rNumber < 5000) return Excavator.c_st_WALK;
+                    else if(rNumber < 8000) return Excavator.c_st_SHOCK_WAVE;
+                    else return Excavator.c_st_SHOOT_MISSILE;
                 case 6:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 5000) return ExcavatorFsm.c_st_ANCHORING;
-                    else if(rNumber < 7000) return ExcavatorFsm.c_st_SHOCK_WAVE;
-                    else return ExcavatorFsm.c_st_SHOOT_MISSILE;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else if(rNumber < 5000) return Excavator.c_st_ANCHORING;
+                    else if(rNumber < 7000) return Excavator.c_st_SHOCK_WAVE;
+                    else return Excavator.c_st_SHOOT_MISSILE;
                 case 7:
-                    if(rNumber < 5000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 7000) return ExcavatorFsm.c_st_SHOCK_WAVE;
-                    else return ExcavatorFsm.c_st_SHOOT_MISSILE;
+                    if(rNumber < 5000) return Excavator.c_st_WALK;
+                    else if(rNumber < 7000) return Excavator.c_st_SHOCK_WAVE;
+                    else return Excavator.c_st_SHOOT_MISSILE;
                 case 8:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 6000) return ExcavatorFsm.c_st_ANCHORING;
-                    else if(rNumber < 8000) return ExcavatorFsm.c_st_SHOCK_WAVE;
-                    else return ExcavatorFsm.c_st_SHOOT_MISSILE;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else if(rNumber < 6000) return Excavator.c_st_ANCHORING;
+                    else if(rNumber < 8000) return Excavator.c_st_SHOCK_WAVE;
+                    else return Excavator.c_st_SHOOT_MISSILE;
                 case 9:
-                    if(rNumber < 2000) return ExcavatorFsm.c_st_WALK;
-                    else if(rNumber < 6000) return ExcavatorFsm.c_st_ANCHORING;
-                    else if(rNumber < 7000) return ExcavatorFsm.c_st_SHOCK_WAVE;
-                    else return ExcavatorFsm.c_st_SHOOT_MISSILE;
+                    if(rNumber < 2000) return Excavator.c_st_WALK;
+                    else if(rNumber < 6000) return Excavator.c_st_ANCHORING;
+                    else if(rNumber < 7000) return Excavator.c_st_SHOCK_WAVE;
+                    else return Excavator.c_st_SHOOT_MISSILE;
                 default:
-                    return FiniteStateMachine.c_st_MACHINE_HALT;
+                    return MachineConstant.c_lt_HALT;
             }
         }
     }

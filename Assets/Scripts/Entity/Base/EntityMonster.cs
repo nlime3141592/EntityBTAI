@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnchordMetroidvania;
-
 namespace Unchord
 {
     public abstract class EntityMonster : Entity
@@ -25,6 +23,8 @@ namespace Unchord
         public int targetLayerMask;
 
         public System.Random prng { get; private set; }
+
+        public int monsterPhase;
 
         protected override void InitMiscellaneous()
         {

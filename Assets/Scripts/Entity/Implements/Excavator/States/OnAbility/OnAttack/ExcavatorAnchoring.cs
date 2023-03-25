@@ -1,15 +1,16 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class ExcavatorAnchoring : ExcavatorAttack
     {
         private PhaseController m_phaser;
         private Timer m_anchorTimer;
 
-        public ExcavatorAnchoring(Excavator _instance)
-        : base(_instance)
+        public override void OnConstruct()
         {
+            base.OnConstruct();
+
             base.attackRange = new LTRB()
             {
                 left = 1.0f,
@@ -28,25 +29,25 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
-            excavator.bUpdateAggroDirX = true;
-            excavator.bFixLookDirX = false;
-            // excavator.bFixLookDirX = true;
+            instance.bUpdateAggroDirX = true;
+            instance.bFixLookDir.x = false;
+            // instance.bFixLookDirX = true;
 
             m_phaser.canUpdate = false;
 
             int aPhase = m_phaser.Next();
-            excavator.aPhase = aPhase;
+            instance.aPhase = aPhase;
 
             if(aPhase == 1)
             {
                 m_anchorTimer.Reset();
-                excavator.arm.targetTransform = excavator.aggroTargets[0].transform;
-                excavator.armObj.SetActive(true);
+                instance.arm.targetTransform = instance.aggroTargets[0].transform;
+                instance.armObj.SetActive(true);
             }
             if(aPhase == 2)
             {
-                excavator.hand.Clear();
-                excavator.hand.bStart = true;
+                instance.hand.Clear();
+                instance.hand.bStart = true;
             }
         }
 
@@ -59,7 +60,7 @@ namespace UnchordMetroidvania
         {
             base.OnUpdate();
 
-            if(excavator.aPhase == 1)
+            if(instance.aPhase == 1)
             {
                 m_anchorTimer.OnUpdate();
             }
@@ -69,18 +70,18 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(m_phaser.current == 0 && excavator.aController.bEndOfAnimation)
-                return ExcavatorFsm.c_st_ANCHORING;
+            else if(m_phaser.current == 0 && instance.aController.bEndOfAnimation)
+                return Excavator.c_st_ANCHORING;
             else if(m_phaser.current == 1 && m_anchorTimer.bEndOfTimer)
-                return ExcavatorFsm.c_st_ANCHORING;
-            else if(m_phaser.current == 2 && excavator.hand.bReturn)
-                return ExcavatorFsm.c_st_ANCHORING;
-            else if(m_phaser.current == 3 && excavator.aController.bEndOfAnimation)
-                return ExcavatorFsm.c_st_IDLE;
+                return Excavator.c_st_ANCHORING;
+            else if(m_phaser.current == 2 && instance.hand.bReturn)
+                return Excavator.c_st_ANCHORING;
+            else if(m_phaser.current == 3 && instance.aController.bEndOfAnimation)
+                return Excavator.c_st_IDLE;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
@@ -88,14 +89,14 @@ namespace UnchordMetroidvania
             base.OnStateEnd();
 
             if(m_phaser.current == 1)
-                excavator.arm.targetTransform = null;
+                instance.arm.targetTransform = null;
             if(m_phaser.current == 2)
-                excavator.armObj.SetActive(false);
+                instance.armObj.SetActive(false);
         }
 
         private void m_TraceArm()
         {
-            EntityBase target = excavator.aggroTargets[0];
+            Entity target = instance.aggroTargets[0];
         }
     }
 }

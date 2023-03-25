@@ -1,41 +1,30 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public abstract class MantisState : MonsterState<Mantis>
     {
-        protected MantisFsm fsm => instance.fsm;
-        protected MantisData data => instance.data;
-        protected Mantis mantis => instance;
-        // protected MantisFsm fsm => instance.fsm;
-
-        public MantisState(Mantis _mantis)
-        : base(_mantis)
-        {
-            
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            mantis.senseData.UpdateData(mantis);
+            instance.senseData.UpdateData(instance);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(mantis.health <= 0)
+            if(instance.health <= 0)
             {
-                if(fsm.mode == 1)
-                    return MantisFsm.c_st_SHOUT;
-                else if(fsm.mode == 2)
-                    return MantisFsm.c_st_DIE;
+                if(instance.monsterPhase == 1)
+                    return Mantis.c_st_SHOUT;
+                else if(instance.monsterPhase == 2)
+                    return Mantis.c_st_DIE;
             }
-            else if(mantis.groggyValue >= 1.0f)
-                return MantisFsm.c_st_GROGGY;
-            else if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            else if(instance.groggyValue >= 1.0f)
+                return Mantis.c_st_GROGGY;
+            else if(transit != MachineConstant.c_lt_PASS)
                 return transit;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

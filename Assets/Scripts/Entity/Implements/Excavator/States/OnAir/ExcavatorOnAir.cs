@@ -1,11 +1,7 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class ExcavatorOnAir : ExcavatorState
     {
-        public ExcavatorOnAir(Excavator _instance)
-        : base(_instance)
-        {
 
-        }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public static class MapManager
     {

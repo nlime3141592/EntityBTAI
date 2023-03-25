@@ -1,41 +1,42 @@
 using System;
 using System.Collections.Generic;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public abstract class MantisAttack : MantisAbility, IBattleState
     {
-        EntityBase IBattleState.attacker => mantis;
-        List<EntityBase> IBattleState.targets => this.targets;
+        Entity IBattleState.attacker => instance;
+        List<Entity> IBattleState.targets => this.targets;
         LTRB IBattleState.range => attackRange;
         int IBattleState.targetCount => this.targetCount;
         float IBattleState.baseDamage => this.baseDamage;
 
-        protected readonly List<EntityBase> targets;
+        protected List<Entity> targets;
         public LTRB attackRange;
         public int targetCount;
         public float baseDamage;
 
-        public MantisAttack(Mantis _mantis)
-        : base(_mantis)
+        public override void OnConstruct()
         {
-            targets = new List<EntityBase>(16);
+            base.OnConstruct();
+
+            targets = new List<Entity>(16);
         }
 
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            mantis.battleModule.SetBattleState(this);
-            mantis.bUpdateAggroDirX = false;
-            mantis.bFixLookDirX = true;
+            instance.battleModule.SetBattleState(this);
+            instance.bUpdateAggroDirX = false;
+            instance.bFixLookDir.x = true;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
 
-            mantis.bUpdateAggroDirX = true;
-            mantis.bFixLookDirX = false;
+            instance.bUpdateAggroDirX = true;
+            instance.bFixLookDir.x = false;
         }
     }
 }

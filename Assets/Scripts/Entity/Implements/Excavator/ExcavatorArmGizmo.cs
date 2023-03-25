@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [RequireComponent(typeof(ExcavatorArm))]
     public class ExcavatorArmGizmo : MonoBehaviour

@@ -20,10 +20,8 @@ namespace Unchord
 
         private bool m_bParryingDown;
 
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
-
             base.attackRange = new LTRB()
             {
                 left = 3.0f,

@@ -1,14 +1,8 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class MantisBackSlice : MantisAttack
     {
         private bool m_bRotated;
-
-        public MantisBackSlice(Mantis _mantis)
-        : base(_mantis)
-        {
-            
-        }
 
         public override void OnStateBegin()
         {
@@ -19,7 +13,7 @@ namespace UnchordMetroidvania
             // TODO: 테스트 코드
             // MantisBackSlice.OnFixedUpdate() 함수에서
             // AnimationController.bOnActionBegin == true가 되는 순간을 찾아 이 함수를 호출하도록 수정할 것.
-            mantis.lookDir.x = -mantis.lookDir.x;
+            instance.lookDir.x = (Direction)(-(int)instance.lookDir.x);
         }
 
         public override void OnFixedUpdate()

@@ -2,7 +2,7 @@ using System;
 
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [ExecuteAlways]
     public class ElongatedHexagonCollider2D : MonoBehaviour

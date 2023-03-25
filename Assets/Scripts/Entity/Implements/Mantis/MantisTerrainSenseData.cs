@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public class MantisTerrainSenseData : TerrainSenseData<Mantis>
@@ -51,30 +51,29 @@ namespace UnchordMetroidvania
 
         public override void UpdateData(Mantis mantis)
         {
-            MantisData data = mantis.data;
-            float lx = mantis.lookDir.x;
+            float lx = mantis.lookDir.fx;
 
-            m_tmp_bOnFloorL = TerrainSensor.CheckFloor(originFloorL.position, data.hitLength);
-            m_tmp_bOnFloorR = TerrainSensor.CheckFloor(originFloorR.position, data.hitLength);
-            m_tmp_bOnCeilL = TerrainSensor.CheckCeil(originCeilL.position, data.hitLength);
-            m_tmp_bOnCeilR = TerrainSensor.CheckCeil(originCeilR.position, data.hitLength);
+            m_tmp_bOnFloorL = TerrainSensor.CheckFloor(originFloorL.position, mantis.hitLength);
+            m_tmp_bOnFloorR = TerrainSensor.CheckFloor(originFloorR.position, mantis.hitLength);
+            m_tmp_bOnCeilL = TerrainSensor.CheckCeil(originCeilL.position, mantis.hitLength);
+            m_tmp_bOnCeilR = TerrainSensor.CheckCeil(originCeilR.position, mantis.hitLength);
 
             if(lx > 0)
             {
-                m_tmp_bOnWallLT = TerrainSensor.CheckWallBack(originWallLT.position, data.wallDetectLength, lx);
-                m_tmp_bOnWallLB = TerrainSensor.CheckWallBack(originWallLB.position, data.wallDetectLength, lx);
-                m_tmp_bOnWallRT = TerrainSensor.CheckWallFront(originWallRT.position, data.wallDetectLength, lx);
-                m_tmp_bOnWallRB = TerrainSensor.CheckWallFront(originWallRB.position, data.wallDetectLength, lx);
+                m_tmp_bOnWallLT = TerrainSensor.CheckWallBack(originWallLT.position, mantis.wallDetectLength, lx);
+                m_tmp_bOnWallLB = TerrainSensor.CheckWallBack(originWallLB.position, mantis.wallDetectLength, lx);
+                m_tmp_bOnWallRT = TerrainSensor.CheckWallFront(originWallRT.position, mantis.wallDetectLength, lx);
+                m_tmp_bOnWallRB = TerrainSensor.CheckWallFront(originWallRB.position, mantis.wallDetectLength, lx);
 
                 bOnWallFront = m_tmp_bOnWallRT || m_tmp_bOnWallRB;
                 bOnWallBack = m_tmp_bOnWallLT || m_tmp_bOnWallLB;
             }
             else
             {
-                m_tmp_bOnWallLT = TerrainSensor.CheckWallFront(originWallLT.position, data.wallDetectLength, lx);
-                m_tmp_bOnWallLB = TerrainSensor.CheckWallFront(originWallLB.position, data.wallDetectLength, lx);
-                m_tmp_bOnWallRT = TerrainSensor.CheckWallBack(originWallRT.position, data.wallDetectLength, lx);
-                m_tmp_bOnWallRB = TerrainSensor.CheckWallBack(originWallRB.position, data.wallDetectLength, lx);
+                m_tmp_bOnWallLT = TerrainSensor.CheckWallFront(originWallLT.position, mantis.wallDetectLength, lx);
+                m_tmp_bOnWallLB = TerrainSensor.CheckWallFront(originWallLB.position, mantis.wallDetectLength, lx);
+                m_tmp_bOnWallRT = TerrainSensor.CheckWallBack(originWallRT.position, mantis.wallDetectLength, lx);
+                m_tmp_bOnWallRB = TerrainSensor.CheckWallBack(originWallRB.position, mantis.wallDetectLength, lx);
 
                 bOnWallFront = m_tmp_bOnWallLT || m_tmp_bOnWallLB;
                 bOnWallBack = m_tmp_bOnWallRT || m_tmp_bOnWallRB;

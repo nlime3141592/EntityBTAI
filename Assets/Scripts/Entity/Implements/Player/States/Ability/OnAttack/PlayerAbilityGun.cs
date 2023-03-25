@@ -12,9 +12,9 @@ namespace Unchord
         // variable
         private float m_leftCooltime;
 
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
+            base.OnConstruct();
 
             base.attackRange = new LTRB()
             {

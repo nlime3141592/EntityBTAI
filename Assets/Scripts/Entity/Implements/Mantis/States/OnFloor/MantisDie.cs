@@ -1,26 +1,22 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class MantisDie : MantisOnFloor
     {
-        public MantisDie(Mantis instance)
-        : base(instance)
-        {
-
-        }
-
         public override int Transit()
         {
-            if(mantis.aController.bEndOfAnimation)
-                return FiniteStateMachine.c_st_MACHINE_HALT;
+            if(instance.aController.bEndOfAnimation)
+                return MachineConstant.c_lt_END;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
-        public override void OnStateEnd()
+        public override void OnMachineEnd()
         {
-            mantis.bEndOfEntity = true;
+            base.OnMachineEnd();
+
+            instance.bEndOfEntity = true;
         }
     }
 }

@@ -19,7 +19,9 @@ namespace Unchord
             Collider2D[] colliders = Physics2D.OverlapAreaAll(pStart, pEnd, layerMask);
 
             if(gizmo.bShowGizmo)
-                origin.skillRangeGizmoManager.Add(new EntityBoxSensorGizmo(gizmo.duration, gizmo.color, pStart, pEnd));
+            {
+                // origin.skillRangeGizmoManager.Add(new EntityBoxSensorGizmo(gizmo.duration, gizmo.color, pStart, pEnd));
+            }
 
             return colliders;
         }

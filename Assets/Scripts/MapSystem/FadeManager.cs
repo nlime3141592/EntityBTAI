@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public static class FadeManager

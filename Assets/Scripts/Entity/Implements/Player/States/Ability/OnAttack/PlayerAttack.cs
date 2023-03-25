@@ -13,19 +13,14 @@ namespace Unchord
         int IBattleState.targetCount => this.targetCount;
         float IBattleState.baseDamage => this.baseDamage;
 
-        protected readonly List<Entity> targets;
+        protected List<Entity> targets;
         public LTRB attackRange;
         public int targetCount;
         public float baseDamage;
 
-        public PlayerAttack()
+        public override void OnConstruct()
         {
             targets = new List<Entity>(16);
-        }
-
-        public override void OnMachineBegin(Player _instance, int _id)
-        {
-            base.OnMachineBegin(_instance, _id);
         }
 
         public override void OnStateBegin()

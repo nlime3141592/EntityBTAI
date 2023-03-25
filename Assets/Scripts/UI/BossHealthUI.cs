@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class BossHealthUI : MonoBehaviour
     {

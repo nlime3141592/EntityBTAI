@@ -1,41 +1,35 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class MantisWalkFront : MantisWalk
     {
         private float m_ix;
 
-        public MantisWalkFront(Mantis _mantis)
-        : base(_mantis)
-        {
-            
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            m_ix = mantis.lookDir.x;
+            m_ix = instance.lookDir.fx;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float vx = m_ix * mantis.moveDir.x * data.walkSpeed;
-            float vy = m_ix * mantis.moveDir.y * data.walkSpeed - 0.1f;
+            float vx = m_ix * instance.moveDir.x * instance.walkSpeed;
+            float vy = m_ix * instance.moveDir.y * instance.walkSpeed - 0.1f;
 
-            mantis.vm.SetVelocityXY(vx, vy);
+            instance.vm.SetVelocityXY(vx, vy);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(mantis.senseData.bOnWallFront)
-                return MantisFsm.c_st_IDLE;
+            else if(instance.senseData.bOnWallFront)
+                return Mantis.c_st_IDLE;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

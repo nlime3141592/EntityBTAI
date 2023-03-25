@@ -1,7 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class CameraTraceModule : MonoBehaviour
     {

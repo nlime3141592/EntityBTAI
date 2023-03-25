@@ -1,12 +1,13 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class ExcavatorBreakFloor : ExcavatorAttack
     {
-        public ExcavatorBreakFloor(Excavator _instance)
-        : base(_instance)
+        public override void OnConstruct()
         {
+            base.OnConstruct();
+
             base.attackRange = new LTRB()
             {
                 left = 0.5f,
@@ -21,29 +22,29 @@ namespace UnchordMetroidvania
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            excavator.bUpdateAggroDirX = false;
-            excavator.bFixLookDirX = true;
-            excavator.battleModule.targetLayerMask |= 1 << LayerMask.NameToLayer("Terrain");
-            excavator.AllowHitFromBattleModule(false);
-            excavator.health = excavator.maxHealth.finalValue;
+            instance.bUpdateAggroDirX = false;
+            instance.bFixLookDir.x = true;
+            instance.battleModule.targetLayerMask |= 1 << LayerMask.NameToLayer("Terrain");
+            instance.AllowHitFromBattleModule(false);
+            instance.SetHealth(instance.maxHealth.finalValue);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(excavator.aController.bEndOfAnimation)
-                return ExcavatorFsm.c_st_FREE_FALL;
+            else if(instance.aController.bEndOfAnimation)
+                return Excavator.c_st_FREE_FALL;
             
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            excavator.battleModule.targetLayerMask &= ~(1 << LayerMask.NameToLayer("Terrain"));
+            instance.battleModule.targetLayerMask &= ~(1 << LayerMask.NameToLayer("Terrain"));
         }
     }
 }

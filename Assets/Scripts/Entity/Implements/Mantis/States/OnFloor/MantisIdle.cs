@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class MantisIdle : MantisOnFloor
     {
@@ -18,32 +18,26 @@ namespace UnchordMetroidvania
         private int m_leftIxDelayTime = 0;
         private int m_rangeCode = -1;
 
-        public MantisIdle(Mantis _mantis)
-        : base(_mantis)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            mantis.vm.FreezePositionX();
-            mantis.vm.MeltPositionY();
+            instance.vm.FreezePositionX();
+            instance.vm.MeltPositionY();
 
-            m_leftIdleTime = mantis.prng.Next(m_minIdleTime, m_maxIdleTime + 1);
-            m_leftIxDelayTime = mantis.prng.Next(m_ixDelayTime / 4, 1 + m_ixDelayTime / 2);
-            mantis.lookDir.x = -mantis.lookDir.x;
+            m_leftIdleTime = instance.prng.Next(m_minIdleTime, m_maxIdleTime + 1);
+            m_leftIxDelayTime = instance.prng.Next(m_ixDelayTime / 4, 1 + m_ixDelayTime / 2);
+            instance.lookDir.x = (Direction)(-(int)(instance.lookDir.x));
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            mantis.vm.SetVelocityY(-1.0f);
+            instance.vm.SetVelocityY(-1.0f);
 
             if(m_leftIxDelayTime <= 0)
             {
-                mantis.axisInput.x = mantis.GetAxisInputX();
+                instance.axis.x = instance.GetAxisInputX();
                 m_leftIxDelayTime = m_ixDelayTime;
             }
 
@@ -57,27 +51,27 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(!mantis.bAggro)
-                return FiniteStateMachine.c_st_STATE_CONTINUE;
+            else if(!instance.bAggro)
+                return MachineConstant.c_lt_CONTINUE;
             else if(m_leftIdleTime <= 0)
             {
-                EntityBase target = mantis.aggroTargets[0];
-                m_rangeCode = m_GetRangeCode(target, mantis, m_rangeX1, m_rangeX2, m_rangeY1, m_rangeY2);
+                Entity target = instance.aggroTargets[0];
+                m_rangeCode = m_GetRangeCode(target, instance, m_rangeX1, m_rangeX2, m_rangeY1, m_rangeY2);
 
-                if(fsm.mode == 1)
+                if(instance.monsterPhase == 1)
                     return m_ChangeStateByRangeCodePhase1(m_rangeCode);
-                else if(fsm.mode == 2)
+                else if(instance.monsterPhase == 2)
                     return m_ChangeStateByRangeCodePhase2(m_rangeCode);
 
                 // NOTE: 테스트 코드.
                 /*
-                if(mantis.senseData.bOnWallFront)
+                if(instance.senseData.bOnWallFront)
                     fsm.Change(fsm.walkBack);
-                else if(mantis.senseData.bOnWallBack)
+                else if(instance.senseData.bOnWallBack)
                     fsm.Change(fsm.walkFront);
-                else if(mantis.prng.Next(0, 100) < 50)
+                else if(instance.prng.Next(0, 100) < 50)
                     fsm.Change(fsm.walkFront);
                 else
                     fsm.Change(fsm.walkBack);
@@ -85,19 +79,19 @@ namespace UnchordMetroidvania
                 */
             }
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            mantis.vm.MeltPositionX();
+            instance.vm.MeltPositionX();
         }
 
-        private int m_GetRangeCode(EntityBase target, Mantis mantis, float rx1, float rx2, float ry1, float ry2)
+        private int m_GetRangeCode(Entity target, Mantis mantis, float rx1, float rx2, float ry1, float ry2)
         {
-            Vector2 tDir = target.transform.position - mantis.aiCenter.position;
-            float dx = tDir.x * mantis.lookDir.x;
+            Vector2 tDir = target.transform.position - instance.aiCenter.position;
+            float dx = tDir.x * instance.lookDir.fx;
             float dy = tDir.y;
             int code = 0;
 
@@ -121,109 +115,111 @@ namespace UnchordMetroidvania
                 return code + 6;
         }
 
+        // TODO: xmlx 파일 입출력으로 변경하기.
         private int m_ChangeStateByRangeCodePhase1(int code)
         {
-            int rNumber = mantis.prng.Next(0, 10000);
+            int rNumber = instance.prng.Next(0, 10000);
 
             switch(code)
             {
                 case 0:
-                    if(rNumber < 2000)              return MantisFsm.c_st_WALK_FRONT;
-                    else                            return MantisFsm.c_st_BACK_SLICE;
+                    if(rNumber < 2000)              return Mantis.c_st_WALK_FRONT;
+                    else                            return Mantis.c_st_BACK_SLICE;
 
                 case 1:
-                    if(rNumber < 5000)              return MantisFsm.c_st_UP_SLICE;
-                    else if(rNumber < 8000)         return MantisFsm.c_st_CHOP;
-                    else                            return MantisFsm.c_st_WALK_BACK;
+                    if(rNumber < 5000)              return Mantis.c_st_UP_SLICE;
+                    else if(rNumber < 8000)         return Mantis.c_st_CHOP;
+                    else                            return Mantis.c_st_WALK_BACK;
 
                 case 2:
-                    if(rNumber < 5000)              return MantisFsm.c_st_CHOP;
-                    else if(rNumber < 7000)         return MantisFsm.c_st_UP_SLICE;
-                    else if(rNumber < 9000)         return MantisFsm.c_st_WALK_BACK;
-                    else                            return MantisFsm.c_st_WALK_FRONT;
+                    if(rNumber < 5000)              return Mantis.c_st_CHOP;
+                    else if(rNumber < 7000)         return Mantis.c_st_UP_SLICE;
+                    else if(rNumber < 9000)         return Mantis.c_st_WALK_BACK;
+                    else                            return Mantis.c_st_WALK_FRONT;
 
                 case 3:
                 case 6:
                 case 9:
-                    if(rNumber < 7000)              return MantisFsm.c_st_WALK_FRONT;
-                    else                            return MantisFsm.c_st_WALK_BACK;
+                    if(rNumber < 7000)              return Mantis.c_st_WALK_FRONT;
+                    else                            return Mantis.c_st_WALK_BACK;
 
                 case 4:
-                    if(rNumber < 7000)              return MantisFsm.c_st_UP_SLICE;
-                    else if(rNumber < 8000)         return MantisFsm.c_st_CHOP;
-                    else                            return MantisFsm.c_st_WALK_BACK;
+                    if(rNumber < 7000)              return Mantis.c_st_UP_SLICE;
+                    else if(rNumber < 8000)         return Mantis.c_st_CHOP;
+                    else                            return Mantis.c_st_WALK_BACK;
 
                 case 5:
-                    if(rNumber < 4000)              return MantisFsm.c_st_CHOP;
-                    else if(rNumber < 7000)         return MantisFsm.c_st_UP_SLICE;
-                    else if(rNumber < 9000)         return MantisFsm.c_st_WALK_BACK;
-                    else                            return MantisFsm.c_st_WALK_FRONT;
+                    if(rNumber < 4000)              return Mantis.c_st_CHOP;
+                    else if(rNumber < 7000)         return Mantis.c_st_UP_SLICE;
+                    else if(rNumber < 9000)         return Mantis.c_st_WALK_BACK;
+                    else                            return Mantis.c_st_WALK_FRONT;
 
                 case 7:
-                    if(rNumber < 4000)              return MantisFsm.c_st_UP_SLICE;
-                    else                            return MantisFsm.c_st_WALK_BACK;
+                    if(rNumber < 4000)              return Mantis.c_st_UP_SLICE;
+                    else                            return Mantis.c_st_WALK_BACK;
 
                 case 8:
-                    if(rNumber < 5000)              return MantisFsm.c_st_UP_SLICE;
-                    else                            return MantisFsm.c_st_WALK_BACK;
+                    if(rNumber < 5000)              return Mantis.c_st_UP_SLICE;
+                    else                            return Mantis.c_st_WALK_BACK;
 
                 default:
-                    return FiniteStateMachine.c_st_MACHINE_HALT;
+                    return MachineConstant.c_lt_HALT;
             }
         }
 
+        // TODO: xmlx 파일 입출력으로 변경하기.
         private int m_ChangeStateByRangeCodePhase2(int code)
         {
-            int rNumber = mantis.prng.Next(0, 10000);
+            int rNumber = instance.prng.Next(0, 10000);
 
             switch(code)
             {
                 case 0:
-                    if(rNumber < 2000)              return MantisFsm.c_st_WALK_FRONT;
-                    else                            return MantisFsm.c_st_BACK_SLICE;
+                    if(rNumber < 2000)              return Mantis.c_st_WALK_FRONT;
+                    else                            return Mantis.c_st_BACK_SLICE;
 
                 case 1:
-                    if(rNumber < 4000)              return MantisFsm.c_st_UP_SLICE;
-                    else if(rNumber < 6000)         return MantisFsm.c_st_CHOP; // TODO: 포효콤보로 변경
-                    else if(rNumber < 9000)         return MantisFsm.c_st_CHOP;
-                    else                            return MantisFsm.c_st_WALK_BACK;
-
+                    if(rNumber < 4000)              return Mantis.c_st_UP_SLICE;
+                    else if(rNumber < 6000)         return Mantis.c_st_CHOP; // TODO: 포효콤보로 변경
+                    else if(rNumber < 9000)         return Mantis.c_st_CHOP;
+                    else                            return Mantis.c_st_WALK_BACK;
+  
                 case 2:
-                    if(rNumber < 4000)              return MantisFsm.c_st_CHOP;
-                    else if(rNumber < 6000)         return MantisFsm.c_st_CHOP; // TODO: 포효콤보로 변경
-                    else if(rNumber < 8000)         return MantisFsm.c_st_UP_SLICE;
-                    else if(rNumber < 9000)         return MantisFsm.c_st_WALK_BACK;
-                    else                            return MantisFsm.c_st_WALK_FRONT;
+                    if(rNumber < 4000)              return Mantis.c_st_CHOP;
+                    else if(rNumber < 6000)         return Mantis.c_st_CHOP; // TODO: 포효콤보로 변경
+                    else if(rNumber < 8000)         return Mantis.c_st_UP_SLICE;
+                    else if(rNumber < 9000)         return Mantis.c_st_WALK_BACK;
+                    else                            return Mantis.c_st_WALK_FRONT;
 
                 case 3:
                 case 6:
                 case 9:
-                    if(rNumber < 3000)              return MantisFsm.c_st_WALK_FRONT;
-                    else                            return MantisFsm.c_st_JUMP_CHOP;
+                    if(rNumber < 3000)              return Mantis.c_st_WALK_FRONT;
+                    else                            return Mantis.c_st_JUMP_CHOP;
 
                 case 4:
-                    if(rNumber < 5000)              return MantisFsm.c_st_UP_SLICE;
-                    else if(rNumber < 7000)         return MantisFsm.c_st_CHOP; // TODO: 포효콤보로 변경
-                    else if(rNumber < 8000)         return MantisFsm.c_st_CHOP;
-                    else                            return MantisFsm.c_st_WALK_BACK;
+                    if(rNumber < 5000)              return Mantis.c_st_UP_SLICE;
+                    else if(rNumber < 7000)         return Mantis.c_st_CHOP; // TODO: 포효콤보로 변경
+                    else if(rNumber < 8000)         return Mantis.c_st_CHOP;
+                    else                            return Mantis.c_st_WALK_BACK;
 
                 case 5:
-                    if(rNumber < 3000)              return MantisFsm.c_st_CHOP;
-                    else if(rNumber < 5000)         return MantisFsm.c_st_UP_SLICE; // TODO: 포효콤보로 변경
-                    else if(rNumber < 8000)         return MantisFsm.c_st_UP_SLICE;
-                    else if(rNumber < 9000)         return MantisFsm.c_st_WALK_BACK;
-                    else                            return MantisFsm.c_st_WALK_FRONT;
+                    if(rNumber < 3000)              return Mantis.c_st_CHOP;
+                    else if(rNumber < 5000)         return Mantis.c_st_UP_SLICE; // TODO: 포효콤보로 변경
+                    else if(rNumber < 8000)         return Mantis.c_st_UP_SLICE;
+                    else if(rNumber < 9000)         return Mantis.c_st_WALK_BACK;
+                    else                            return Mantis.c_st_WALK_FRONT;
 
                 case 7:
-                    if(rNumber < 4000)              return MantisFsm.c_st_UP_SLICE;
-                    else                            return MantisFsm.c_st_WALK_BACK;
+                    if(rNumber < 4000)              return Mantis.c_st_UP_SLICE;
+                    else                            return Mantis.c_st_WALK_BACK;
 
                 case 8:
-                    if(rNumber < 5000)              return MantisFsm.c_st_UP_SLICE;
-                    else                            return MantisFsm.c_st_WALK_BACK;
+                    if(rNumber < 5000)              return Mantis.c_st_UP_SLICE;
+                    else                            return Mantis.c_st_WALK_BACK;
 
                 default:
-                    return FiniteStateMachine.c_st_MACHINE_HALT;
+                    return MachineConstant.c_lt_HALT;
             }
         }
     }

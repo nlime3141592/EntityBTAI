@@ -1,7 +1,5 @@
 using UnityEngine;
 
-using UnchordMetroidvania;
-
 namespace Unchord
 {
     public abstract class EntityState<T> : State<T>

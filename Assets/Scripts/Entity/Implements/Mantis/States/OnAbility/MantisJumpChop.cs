@@ -1,11 +1,7 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class MantisJumpChop : MantisAttack
     {
-        public MantisJumpChop(Mantis _mantis)
-        : base(_mantis)
-        {
-            
-        }
+
     }
 }

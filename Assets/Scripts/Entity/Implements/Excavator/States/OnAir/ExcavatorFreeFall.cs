@@ -1,39 +1,33 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class ExcavatorFreeFall : ExcavatorOnAir
     {
-        public ExcavatorFreeFall(Excavator _instance)
-        : base(_instance)
-        {
-
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float vy = excavator.vm.y;
-            float dV = data.gravity * Time.fixedDeltaTime;
+            float vy = instance.vm.y;
+            float dV = instance.gravity * Time.fixedDeltaTime;
 
             vy += dV;
-            if(vy < data.minFreeFallSpeed)
-                vy = data.minFreeFallSpeed;
+            if(vy < instance.minFreeFallSpeed)
+                vy = instance.minFreeFallSpeed;
 
-            excavator.vm.SetVelocityXY(0.0f, vy);
+            instance.vm.SetVelocityXY(0.0f, vy);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(excavator.senseData.bOnFloor)
-                return ExcavatorFsm.c_st_BASIC_LANDING;
+            else if(instance.senseData.bOnFloor)
+                return Excavator.c_st_BASIC_LANDING;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

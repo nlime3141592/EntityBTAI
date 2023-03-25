@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public class ExcavatorTerrainSenseData : TerrainSenseData<Excavator>
@@ -54,7 +54,7 @@ namespace UnchordMetroidvania
 
         public override void UpdateData(Excavator _instance)
         {
-            float lx = _instance.lookDir.x;
+            float lx = _instance.lookDir.fx;
 
             m_tmp_bOnFloorL = TerrainSensor.CheckFloor(originFloorL.position, hitLength);
             m_tmp_bOnFloorR = TerrainSensor.CheckFloor(originFloorR.position, hitLength);

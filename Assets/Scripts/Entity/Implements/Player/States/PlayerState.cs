@@ -1,5 +1,3 @@
-using UnchordMetroidvania;
-
 namespace Unchord
 {
     public abstract class PlayerState : EntityState<Player>

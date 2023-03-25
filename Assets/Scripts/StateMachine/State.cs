@@ -9,6 +9,9 @@ namespace Unchord
         public int id { get; protected set; }
 
 #region method implementation of interface IState<T>
+        // Constructor
+        public virtual void OnConstruct() {}
+
         // UnityEngine.FixedUpdate()
         public virtual void OnFixedUpdateAlways() {}
         public virtual void OnFixedUpdate() {}
@@ -42,6 +45,10 @@ namespace Unchord
         // StateMachine<T>.Transit()
         public virtual void OnMachineHalt() {}
 #endregion
+        public State()
+        {
+            OnConstruct();
+        }
 
         public virtual IEnumerable<IState<T>> GetStateCollectionDFS()
         {

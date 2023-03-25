@@ -1,48 +1,42 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public abstract class ExcavatorMove : ExcavatorOnFloor
     {
-        public ExcavatorMove(Excavator _instance)
-        : base(_instance)
-        {
-            
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            excavator.vm.FreezePosition(false, false);
+            instance.vm.FreezePosition(false, false);
 
-            excavator.bUpdateAggroDirX = false;
-            excavator.bFixLookDirX = true;
+            instance.bUpdateAggroDirX = false;
+            instance.bFixLookDir.x = true;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            excavator.senseData.UpdateMoveDir(excavator);
+            instance.senseData.UpdateMoveDir(instance);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(excavator.aController.bEndOfAnimation)
-                return ExcavatorFsm.c_st_IDLE;
-            // else if(excavator.senseData.bOnWallFront) return ExcavatorFsm.c_st_IDLE;
+            else if(instance.aController.bEndOfAnimation)
+                return Excavator.c_st_IDLE;
+            // else if(instance.senseData.bOnWallFront) return ExcavatorFsm.c_st_IDLE;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
 
-            excavator.bUpdateAggroDirX = true;
-            excavator.bFixLookDirX = false;
+            instance.bUpdateAggroDirX = true;
+            instance.bFixLookDir.x = false;
         }
     }
 }

@@ -17,10 +17,8 @@ namespace Unchord
         private Direction m_lookDirX;
         private float m_speed;
 
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
-
             base.attackRange = new LTRB()
             {
                 left = 1.0f,

@@ -8,6 +8,9 @@ namespace Unchord
         T instance { get; }
         int id { get; }
 
+        // Constructor
+        void OnConstruct();
+
         // UnityEngine.FixedUpdate()
         void OnFixedUpdateAlways();
         void OnFixedUpdate();

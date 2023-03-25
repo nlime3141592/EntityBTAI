@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnchordMetroidvania;
 
 namespace Unchord
 {
@@ -42,6 +41,8 @@ namespace Unchord
 #region 아직 정리 안 함.
         public VelocityModule2D vm;
         public bool bParrying;
+
+        public float groggyValue;
 #endregion
 
 #region Entity Events

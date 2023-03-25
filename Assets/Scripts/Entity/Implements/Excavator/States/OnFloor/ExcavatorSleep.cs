@@ -1,19 +1,13 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class ExcavatorSleep : ExcavatorState
     {
-        public ExcavatorSleep(Excavator _instance)
-        : base(_instance)
-        {
-            
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            fsm.mode = 1;
+            instance.monsterPhase = 1;
         }
 
         public override void OnFixedUpdate()
@@ -25,12 +19,12 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(excavator.bAggro)
-                return ExcavatorFsm.c_st_WAKE_UP;
+            else if(instance.bAggro)
+                return Excavator.c_st_WAKE_UP;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

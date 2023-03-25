@@ -13,10 +13,8 @@ namespace Unchord
         public LTRB m_sitRange;
         public LTRB m_slabRange;
 
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
-
             curSlabs = new List<Slab>(4);
             prevSlabs = new List<Slab>(4);
 

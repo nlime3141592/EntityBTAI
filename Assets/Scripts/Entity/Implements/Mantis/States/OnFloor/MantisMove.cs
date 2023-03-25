@@ -1,4 +1,4 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class MantisMove : MantisOnFloor
     {
@@ -8,20 +8,14 @@ namespace UnchordMetroidvania
         // variables
         private int m_leftMoveFrame = 0;
 
-        public MantisMove(Mantis _mantis)
-        : base(_mantis)
-        {
-            
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            mantis.vm.FreezePosition(false, false);
+            instance.vm.FreezePosition(false, false);
 
-            mantis.bUpdateAggroDirX = false;
-            mantis.bFixLookDirX = true;
+            instance.bUpdateAggroDirX = false;
+            instance.bFixLookDir.x = true;
 
             m_leftMoveFrame = m_moveFrame;
         }
@@ -29,7 +23,7 @@ namespace UnchordMetroidvania
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            mantis.senseData.UpdateMoveDir(mantis);
+            instance.senseData.UpdateMoveDir(instance);
 
             if(m_leftMoveFrame > 0)
                 --m_leftMoveFrame;
@@ -39,20 +33,20 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
             else if(m_leftMoveFrame <= 0)
-                return MantisFsm.c_st_IDLE;
+                return Mantis.c_st_IDLE;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
 
-            mantis.bUpdateAggroDirX = true;
-            mantis.bFixLookDirX = false;
+            instance.bUpdateAggroDirX = true;
+            instance.bFixLookDir.x = false;
         }
     }
 }

@@ -1,24 +1,18 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class ExcavatorDie : ExcavatorOnFloor
     {
-        public ExcavatorDie(Excavator _instance)
-        : base(_instance)
-        {
-
-        }
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            excavator.AllowHitFromBattleModule(false);
-            excavator.armObj.SetActive(false);
+            instance.AllowHitFromBattleModule(false);
+            instance.armObj.SetActive(false);
         }
 
         public override void OnUpdate()
         {
-            if(excavator.aController.bEndOfAnimation)
-                excavator.bEndOfEntity = true;
+            if(instance.aController.bEndOfAnimation)
+                instance.bEndOfEntity = true;
         }
     }
 }

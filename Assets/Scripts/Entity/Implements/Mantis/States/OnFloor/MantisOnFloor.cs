@@ -1,11 +1,7 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public abstract class MantisOnFloor : MantisState
     {
-        public MantisOnFloor(Mantis _mantis)
-        : base(_mantis)
-        {
-            
-        }
+
     }
 }

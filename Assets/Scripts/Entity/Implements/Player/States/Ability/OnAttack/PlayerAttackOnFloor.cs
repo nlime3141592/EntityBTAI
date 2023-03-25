@@ -21,10 +21,8 @@ namespace Unchord
 
         private Direction m_lookDirX;
 
-        public override void OnMachineBegin(Player _instance, int _id)
-        {
-            base.OnMachineBegin(_instance, _id);
-            
+        public override void OnConstruct()
+        {   
             base.attackRange = new LTRB()
             {
                 left = 1.0f,

@@ -11,8 +11,8 @@ namespace Unchord
         private Entity m_owner;
 
         public Transform damageParent;
-        public TestDamageUI hitUI;
-        public TestDamageUI healUI;
+        // public TestDamageUI hitUI;
+        // public TestDamageUI healUI;
 
         public EntitySensorGizmoOption battleRangeGizmo;
         public int targetLayerMask;
@@ -67,11 +67,14 @@ namespace Unchord
                 bGetGroggyValue |= target.bParrying;
 
                 if(!target.bParrying)
-                    target.Damage(finalDamage);
+                    target.ChangeHealth(-finalDamage);
             }
 
             if(bGetGroggyValue)
-                attacker.groggyValue += attacker.baseMentality.finalValue;
+            {
+                // attacker.groggyValue += attacker.baseMentality.finalValue;
+                attacker.groggyValue += 0.34f;
+            }
         }
 
         public float GetFinalDamage(Entity target, float baseDamage)

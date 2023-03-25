@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public class Stat

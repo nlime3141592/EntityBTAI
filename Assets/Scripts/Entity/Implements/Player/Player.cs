@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnchordMetroidvania;
-
 namespace Unchord
 {
     public class Player : Entity

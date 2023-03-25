@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class Keyboard
     {
