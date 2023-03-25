@@ -47,7 +47,8 @@ namespace Unchord
 #endregion
 
 #region Player Datas
-        public float detectLength = 0.04f;
+        public float detectLength = 0.5f;
+        public float hitLength = 0.04f;
         public float ledgerp = 0.06f;
         public float ledgeVerticalLengthWeight = 0.5f;
         public Vector2 moveDir;
@@ -102,6 +103,8 @@ namespace Unchord
         public int CURRENT_STATE;
         public float DEBUG_COYOTE;
         public EntitySensorGizmoManager rangeGizmoManager;
+
+        public int aPhase;
 #endregion
 
 #region Player Inputs
@@ -175,6 +178,7 @@ namespace Unchord
             m_stateTree = root;
             fsm.RegisterStateMap(stateMap);
             fsm.Begin(this, m_stateTree, Player.c_st_IDLE_SHORT);
+            RegisterMachineEvent(fsm);
         }
 
         protected override void InitMiscellaneous()

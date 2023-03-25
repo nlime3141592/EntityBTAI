@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class Timer
     {

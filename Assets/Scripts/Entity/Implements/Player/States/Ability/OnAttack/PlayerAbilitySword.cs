@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public class PlayerAbilitySword : PlayerAttack, IBattleState
@@ -12,9 +12,10 @@ namespace UnchordMetroidvania
         // variable
         private float m_leftCooltime;
 
-        public PlayerAbilitySword(Player _player)
-        : base(_player)
+        public override void OnMachineBegin(Player _instance, int _id)
         {
+            base.OnMachineBegin(_instance, _id);
+
             base.attackRange = new LTRB()
             {
                 left = 1.0f,
@@ -36,10 +37,10 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
-            player.battleModule.SetBattleState(this);
+            instance.battleModule.SetBattleState(this);
 
-            player.bFixLookDirX = true;
-            player.vm.FreezePositionX();
+            instance.bFixLookDir.x = true;
+            instance.vm.FreezePositionX();
 
             m_leftCooltime = m_cooltime;
         }
@@ -48,25 +49,25 @@ namespace UnchordMetroidvania
         {
             base.OnFixedUpdate();
 
-            player.vm.SetVelocityXY(0.0f, -1.0f);
+            instance.vm.SetVelocityXY(0.0f, -1.0f);
         }
 
         public override int Transit()
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.aController.bEndOfAction && player.parryingDown)
-                return PlayerFsm.c_st_EMERGENCY_PARRYING;
+            else if(instance.aController.bEndOfAction && instance.parryingDown)
+                return Player.c_st_EMERGENCY_PARRYING;
 
             // NOTE: 디버그용 상태 전환 코드.
             else if(Input.GetKeyDown(KeyCode.Q))
-                player.battleModule.TriggerBattleState();
+                instance.battleModule.TriggerBattleState();
             else if(Input.GetKeyDown(KeyCode.W))
-                player.aController.bEndOfAnimation = true;
+                instance.aController.bEndOfAnimation = true;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnUpdateAlways()
@@ -79,8 +80,8 @@ namespace UnchordMetroidvania
         {
             base.OnStateEnd();
 
-            player.bFixLookDirX = false;
-            player.vm.MeltPositionX();
+            instance.bFixLookDir.x = false;
+            instance.vm.MeltPositionX();
         }
 
         private void m_UpdateCooltime()

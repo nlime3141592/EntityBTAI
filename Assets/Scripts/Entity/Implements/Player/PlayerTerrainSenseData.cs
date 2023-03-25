@@ -62,32 +62,31 @@ namespace Unchord
 
         public override void UpdateData(Player player)
         {
-            PlayerData data = player.data;
-            float lx = player.lookDir.x;
+            float lx = player.lookDir.fx;
 
-            m_tmp_bDetectFloor = TerrainSensor.CheckFloor(originFloor.transform.position, data.detectLength);
-            m_tmp_bHitFloor = TerrainSensor.CheckFloor(originFloor.transform.position, data.hitLength);
-            m_tmp_bHitCeil = TerrainSensor.CheckCeil(originCeil.transform.position, data.hitLength);
+            m_tmp_bDetectFloor = TerrainSensor.CheckFloor(originFloor.transform.position, player.detectLength);
+            m_tmp_bHitFloor = TerrainSensor.CheckFloor(originFloor.transform.position, player.hitLength);
+            m_tmp_bHitCeil = TerrainSensor.CheckCeil(originCeil.transform.position, player.hitLength);
 
             if(lx > 0)
             {
-                m_tmp_bHitWallFrontT = TerrainSensor.CheckWallFront(originWallRT.position, data.hitLength, lx);
-                m_tmp_bHitWallFrontB = TerrainSensor.CheckWallFront(originWallRB.position, data.hitLength, lx);
-                m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallLT.position, data.hitLength, lx);
-                m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallLB.position, data.hitLength, lx);
+                m_tmp_bHitWallFrontT = TerrainSensor.CheckWallFront(originWallRT.position, player.hitLength, lx);
+                m_tmp_bHitWallFrontB = TerrainSensor.CheckWallFront(originWallRB.position, player.hitLength, lx);
+                m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallLT.position, player.hitLength, lx);
+                m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallLB.position, player.hitLength, lx);
 
-                m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeRT.position, data.detectLength, lx);
-                m_tmp_bDetectLedgeVertical = TerrainSensor.CheckLedgeVerticalDown(originLedgeRT.position + Vector3.right * data.ledgerp, data.detectLength * data.ledgeVerticalLengthWeight);
+                m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeRT.position, player.detectLength, lx);
+                m_tmp_bDetectLedgeVertical = TerrainSensor.CheckLedgeVerticalDown(originLedgeRT.position + Vector3.right * player.ledgerp, player.detectLength * player.ledgeVerticalLengthWeight);
             }
             else if(player.lookDir.x < 0)
             {
-                m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallRT.position, data.hitLength, lx);
-                m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallRB.position, data.hitLength, lx);
-                m_tmp_bHitWallFrontT = TerrainSensor.CheckWallFront(originWallLT.position, data.hitLength, lx);
-                m_tmp_bHitWallFrontB = TerrainSensor.CheckWallFront(originWallLB.position, data.hitLength, lx);
+                m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallRT.position, player.hitLength, lx);
+                m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallRB.position, player.hitLength, lx);
+                m_tmp_bHitWallFrontT = TerrainSensor.CheckWallFront(originWallLT.position, player.hitLength, lx);
+                m_tmp_bHitWallFrontB = TerrainSensor.CheckWallFront(originWallLB.position, player.hitLength, lx);
 
-                m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeLT.position, data.detectLength, lx);
-                m_tmp_bDetectLedgeVertical = TerrainSensor.CheckLedgeVerticalDown(originLedgeLT.position - Vector3.right * data.ledgerp, data.detectLength * data.ledgeVerticalLengthWeight);
+                m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeLT.position, player.detectLength, lx);
+                m_tmp_bDetectLedgeVertical = TerrainSensor.CheckLedgeVerticalDown(originLedgeLT.position - Vector3.right * player.ledgerp, player.detectLength * player.ledgeVerticalLengthWeight);
             }
 
             bOnDetectFloor = m_tmp_bDetectFloor;

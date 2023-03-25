@@ -20,9 +20,10 @@ namespace Unchord
 
         private bool m_bParryingDown;
 
-        public PlayerTakeDown(Player _player)
-        : base(_player)
+        public override void OnMachineBegin(Player _instance, int _id)
         {
+            base.OnMachineBegin(_instance, _id);
+
             base.attackRange = new LTRB()
             {
                 left = 3.0f,
@@ -39,7 +40,7 @@ namespace Unchord
             base.OnStateBegin();
 
             instance.battleModule.SetBattleState(this);
-            instance.bFixLookDirX = true;
+            instance.bFixLookDir.x = true;
 
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;

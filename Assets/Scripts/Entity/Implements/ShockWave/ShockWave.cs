@@ -1,22 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [RequireComponent(typeof(BattleModule))]
-    public class ShockWave : EntityBase, IBattleState
+    public class ShockWave : Entity, IBattleState
     {
         [HideInInspector] public BattleModule battleModule;
         public Transform container;
         public EntitySensorGizmoOption gizmo;
 
-        EntityBase IBattleState.attacker => this;
-        List<EntityBase> IBattleState.targets => this.targets;
+        Entity IBattleState.attacker => this;
+        List<Entity> IBattleState.targets => this.targets;
         LTRB IBattleState.range => this.attackRange;
         int IBattleState.targetCount => this.targetCount;
         float IBattleState.baseDamage => this.baseDamage;
 
-        protected List<EntityBase> targets;
+        protected List<Entity> targets;
         public LTRB attackRange;
         public int targetCount = 7;
         public float baseDamage = 1.0f;
@@ -29,11 +29,11 @@ namespace UnchordMetroidvania
         private int m_direction;
         private Vector2 m_position;
 
-        protected override void Start()
+        protected override void InitComponents()
         {
-            base.Start();
+            base.InitComponents();
 
-            targets = new List<EntityBase>();
+            targets = new List<Entity>();
 
             TryGetComponent<BattleModule>(out battleModule);
 
@@ -53,9 +53,9 @@ namespace UnchordMetroidvania
             }
         }
 
-        protected override void Update()
+        protected override void PostUpdate()
         {
-            base.Update();
+            base.PostUpdate();
 
             bool canNext = CanNextWave();
 

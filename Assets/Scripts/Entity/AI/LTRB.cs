@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public struct LTRB

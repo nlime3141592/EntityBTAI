@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public static class EntitySensorExtension
     {
@@ -36,11 +36,11 @@ namespace UnchordMetroidvania
             return collection;
         }
 
-        public static List<EntityBase> FilterFromColliders(this List<EntityBase> entities, EntityBase origin, Collider2D[] colliders, bool bCanDetectSelf, List<Collider2D> ignores = null, params string[] tags)
+        public static List<Entity> FilterFromColliders(this List<Entity> entities, Entity origin, Collider2D[] colliders, bool bCanDetectSelf, List<Collider2D> ignores = null, params string[] tags)
         {
             bool contains = false;
             GameObject obj = null;
-            EntityBase entity = null;
+            Entity entity = null;
 
             entities.Clear(); // 넣을지 말지 고민하기.
 
@@ -63,14 +63,14 @@ namespace UnchordMetroidvania
                     continue;
                 else if(!bCanDetectSelf && obj == origin.gameObject)
                     continue;
-                else if(obj.TryGetComponent<EntityBase>(out entity))
+                else if(obj.TryGetComponent<Entity>(out entity))
                     entities.Add(entity);
             }
 
             return entities;
         }
 
-        public static List<EntityBase> SetTargetCount(this List<EntityBase> entities, int count)
+        public static List<Entity> SetTargetCount(this List<Entity> entities, int count)
         {
             if(count < 1)
                 count = 1;

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public class PlayerAttackOnAir : PlayerAttack, IBattleState
@@ -14,12 +14,13 @@ namespace UnchordMetroidvania
         // variable
         private bool m_bAttackDown;
 
-        private float m_lookDirX;
+        private Direction m_lookDirX;
         private float m_speed;
 
-        public PlayerAttackOnAir(Player _player)
-        : base(_player)
+        public override void OnMachineBegin(Player _instance, int _id)
         {
+            base.OnMachineBegin(_instance, _id);
+
             base.attackRange = new LTRB()
             {
                 left = 1.0f,
@@ -40,31 +41,31 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
-            player.battleModule.SetBattleState(this);
-            player.bFixLookDirX = true;
-            player.vm.FreezePosition(true, false);
+            instance.battleModule.SetBattleState(this);
+            instance.bFixLookDir.x = true;
+            instance.vm.FreezePosition(true, false);
 
             m_bAttackDown = false;
 
             m_phaser.canUpdate = false;
 
-            player.aPhase = m_phaser.Next();
+            instance.aPhase = m_phaser.Next();
             base.baseDamage = m_baseDamages[m_phaser.current];
             m_cooltimer.Reset();
 
 /*
             // 상태 시작 시 입력 방향을 감지하고 방향 전환을 함.
-            float ix = player.axisInput.x;
-            if(ix < 0) player.lookDir.x = -1;
-            else if(ix > 0) player.lookDir.x = 1;
-            m_lookDirX = player.lookDir.x;
+            float ix = instance.axisInput.x;
+            if(ix < 0) instance.lookDir.x = -1;
+            else if(ix > 0) instance.lookDir.x = 1;
+            m_lookDirX = instance.lookDir.x;
 */
-            m_speed = data.jumpOnAirAttackSpeed;
+            m_speed = instance.speed_JumpOnAir;
         }
 
         public virtual void OnFirstPhase()
         {
-            --player.leftAirAttackCount;
+            --instance.countLeft_AttackOnAir;
         }
 
         public override void OnFixedUpdate()
@@ -72,18 +73,18 @@ namespace UnchordMetroidvania
             base.OnFixedUpdate();
 
             // 피격 판정 시에만 방향 전환 고정.
-            float ix = player.axisInput.x;
-            if(!player.aController.bBeginOfAction || player.aController.bEndOfAction)
+            float ix = instance.axis.x;
+            if(!instance.aController.bBeginOfAction || instance.aController.bEndOfAction)
             {
-                if(ix < 0) player.lookDir.x = -1;
-                else if(ix > 0) player.lookDir.x = 1;
+                if(ix < 0) instance.lookDir.x = Direction.Negative;
+                else if(ix > 0) instance.lookDir.x = Direction.Positive;
             }
-            m_lookDirX = player.lookDir.x;
+            m_lookDirX = instance.lookDir.x;
 
-            player.vm.SetVelocityXY(0.0f, -1.0f);
+            instance.vm.SetVelocityXY(0.0f, -1.0f);
 
-            m_speed += data.gravityOnAirAttack * Time.fixedDeltaTime;
-            player.vm.SetVelocityY(m_speed);
+            m_speed += instance.gravity_AttackOnAir * Time.fixedDeltaTime;
+            instance.vm.SetVelocityY(m_speed);
         }
 
         public override void OnUpdateAlways()
@@ -92,9 +93,9 @@ namespace UnchordMetroidvania
             m_cooltimer.OnUpdate();
             m_phaser.OnUpdate();
 
-            player.DEBUG_COYOTE = m_phaser.leftCoyoteTime;
+            instance.DEBUG_COYOTE = m_phaser.leftCoyoteTime;
 
-            if(!m_phaser.bEndOfCoyoteTime && player.leftAirAttackCount == data.maxAirAttackCount)
+            if(!m_phaser.bEndOfCoyoteTime && instance.countLeft_AttackOnAir == instance.count_AttackOnAir)
                 m_phaser.Reset();
             if(m_phaser.canUpdate && m_phaser.bEndOfCoyoteTime)
                 m_phaser.Reset();
@@ -104,7 +105,7 @@ namespace UnchordMetroidvania
         {
             base.OnUpdate();
 
-            if(!m_bAttackDown && player.skill00)
+            if(!m_bAttackDown && instance.skill00)
                 m_bAttackDown = true;
         }
 
@@ -115,7 +116,7 @@ namespace UnchordMetroidvania
             else if(m_phaser.bRunning)
                 return true;
             else
-                return player.leftAirAttackCount > 0;
+                return instance.countLeft_AttackOnAir > 0;
         }
 
         public override void OnActionEnd()
@@ -130,20 +131,20 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
             else if(m_bAttackDown)
-                return PlayerFsm.c_st_ATTACK_ON_AIR;
+                return Player.c_st_ATTACK_ON_AIR;
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
 
-            player.bFixLookDirX = false;
-            player.vm.FreezePosition(false, false);
+            instance.bFixLookDir.x = false;
+            instance.vm.FreezePosition(false, false);
 
             if(!m_phaser.canUpdate)
             {

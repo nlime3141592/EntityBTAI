@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [Serializable]
     public class PlayerAttackOnFloor : PlayerAttack
@@ -19,11 +19,12 @@ namespace UnchordMetroidvania
         private bool m_bAttackDown;
         private bool m_bMove;
 
-        private float m_lookDirX;
+        private Direction m_lookDirX;
 
-        public PlayerAttackOnFloor(Player _player)
-        : base(_player)
+        public override void OnMachineBegin(Player _instance, int _id)
         {
+            base.OnMachineBegin(_instance, _id);
+            
             base.attackRange = new LTRB()
             {
                 left = 1.0f,
@@ -42,8 +43,8 @@ namespace UnchordMetroidvania
         {
             base.OnStateBegin();
 
-            player.battleModule.SetBattleState(this);
-            player.bFixLookDirX = true;
+            instance.battleModule.SetBattleState(this);
+            instance.bFixLookDir.x = true;
 
             m_bParryingDown = false;
             m_bJumpDown = false;
@@ -53,16 +54,16 @@ namespace UnchordMetroidvania
 
             m_phaser.canUpdate = false;
 
-            player.aPhase = m_phaser.Next();
+            instance.aPhase = m_phaser.Next();
             base.baseDamage = m_baseDamages[m_phaser.current];
             m_cooltimer.Reset();
 
 /*
             // 상태 시작 시 입력 방향을 감지하고 방향 전환을 함.
-            float ix = player.axisInput.x;
-            if(ix < 0) player.lookDir.x = -1;
-            else if(ix > 0) player.lookDir.x = 1;
-            m_lookDirX = player.lookDir.x;
+            float ix = instance.axisInput.x;
+            if(ix < 0) instance.lookDir.x = -1;
+            else if(ix > 0) instance.lookDir.x = 1;
+            m_lookDirX = instance.lookDir.x;
 */
         }
 
@@ -71,36 +72,36 @@ namespace UnchordMetroidvania
             base.OnFixedUpdate();
 
             // 피격 판정 시에만 방향 전환 고정.
-            float ix = player.axisInput.x;
-            if(!player.aController.bBeginOfAction || player.aController.bEndOfAction)
+            float ix = instance.axis.x;
+            if(!instance.aController.bBeginOfAction || instance.aController.bEndOfAction)
             {
-                if(ix < 0) player.lookDir.x = -1;
-                else if(ix > 0) player.lookDir.x = 1;
+                if(ix < 0) instance.lookDir.x = Direction.Negative;
+                else if(ix > 0) instance.lookDir.x = Direction.Positive;
             }
-            m_lookDirX = player.lookDir.x;
+            m_lookDirX = instance.lookDir.x;
 
-            if(player.aController.bEndOfAction)
+            if(instance.aController.bEndOfAction)
             {
-                player.vm.FreezePosition(true, false);
-                player.vm.SetVelocityXY(0.0f, -1.0f);
+                instance.vm.FreezePosition(true, false);
+                instance.vm.SetVelocityXY(0.0f, -1.0f);
             }
             else
             {
-                RaycastHit2D terrain = Physics2D.Raycast(player.senseData.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
-                player.moveDir.x = 1.0f;
+                RaycastHit2D terrain = Physics2D.Raycast(instance.senseData.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
+                instance.moveDir.x = 1.0f;
 
                 if(terrain.normal.y == 0)
-                    player.moveDir.y = 0;
+                    instance.moveDir.y = 0;
                 else
-                    player.moveDir.y = -terrain.normal.x / terrain.normal.y;
+                    instance.moveDir.y = -terrain.normal.x / terrain.normal.y;
 
                 float speed = m_moveVelocity[m_phaser.current];
-                float vx = m_lookDirX * player.moveDir.x * speed;
-                float vy = m_lookDirX * player.moveDir.y * speed;
+                float vx = (float)m_lookDirX * instance.moveDir.x * speed;
+                float vy = (float)m_lookDirX * instance.moveDir.y * speed;
                 vy -= (float)Math.Abs(vy * 0.1f);
 
-                player.vm.FreezePosition(false, false);
-                player.vm.SetVelocityXY(vx, vy);
+                instance.vm.FreezePosition(false, false);
+                instance.vm.SetVelocityXY(vx, vy);
             }
         }
 
@@ -118,17 +119,17 @@ namespace UnchordMetroidvania
         {
             base.OnUpdate();
 
-            if(player.aController.bBeginOfAction)
+            if(instance.aController.bBeginOfAction)
             {
-                if(player.parryingDown)
+                if(instance.parryingDown)
                     m_bParryingDown = true;
-                if(player.jumpDown)
+                if(instance.jumpDown)
                     m_bJumpDown = true;
-                if(player.rushDown)
+                if(instance.rushDown)
                     m_bRushDown = true;
-                if(this.CanTransit() && player.skill00)
+                if(this.CanTransit() && instance.skill00)
                     m_bAttackDown = true;
-                if(player.axisInput.x != 0)
+                if(instance.axis.x != 0)
                     m_bMove = true;
             }
         }
@@ -143,28 +144,28 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(player.aController.bEndOfAction)
+            else if(instance.aController.bEndOfAction)
             {
                 if(m_bParryingDown)
-                    return PlayerFsm.c_st_EMERGENCY_PARRYING;
+                    return Player.c_st_EMERGENCY_PARRYING;
                 else if(m_bJumpDown)
-                    return PlayerFsm.c_st_JUMP_ON_FLOOR;
+                    return Player.c_st_JUMP_ON_FLOOR;
                 else if(m_bRushDown)
-                    return PlayerFsm.c_st_ROLL;
+                    return Player.c_st_ROLL;
                 else if(m_bAttackDown)
-                    return PlayerFsm.c_st_ATTACK_ON_FLOOR;
+                    return Player.c_st_ATTACK_ON_FLOOR;
                 else if(m_bMove)
                 {
-                    if(player.bIsRun)
-                        return PlayerFsm.c_st_RUN;
+                    if(instance.bIsRun)
+                        return Player.c_st_RUN;
                     else
-                        return PlayerFsm.c_st_WALK;
+                        return Player.c_st_WALK;
                 }
             }
 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
 
         public override void OnActionEnd()
@@ -179,17 +180,14 @@ namespace UnchordMetroidvania
         {
             base.OnStateEnd();
 
-            player.bFixLookDirX = false;
-            player.vm.MeltPositionX();
+            instance.bFixLookDir.x = false;
+            instance.vm.MeltPositionX();
 
             if(!m_phaser.canUpdate)
             {
                 m_phaser.SetCoyote();
                 m_phaser.canUpdate = true;
             }
-
-            // TODO: EntityState의 ChangeActionPhase 코드와 비교 후 뺄지 말지 결정.
-            player.aController.ChangeActionPhase(0);
         }
     }
 }

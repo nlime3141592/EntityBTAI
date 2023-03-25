@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     [RequireComponent(typeof(BattleModule))]
     [RequireComponent(typeof(CircleCollider2D))]
-    public class Projectile : EntityBase, IBattleState // NOTE: IBattleState는 State에 상속시키는 것이 일반적이므로, 시간이 날 때 수정해야 한다.
+    public class Projectile : Entity, IBattleState // NOTE: IBattleState는 State에 상속시키는 것이 일반적이므로, 시간이 날 때 수정해야 한다.
     {
         [HideInInspector] public BattleModule battleModule;
         [HideInInspector] public CircleCollider2D cCol;
@@ -13,13 +13,13 @@ namespace UnchordMetroidvania
         public int CURRENT_STATE = -1;
         public Transform container;
 
-        EntityBase IBattleState.attacker => this;
-        List<EntityBase> IBattleState.targets => this.targets;
+        Entity IBattleState.attacker => this;
+        List<Entity> IBattleState.targets => this.targets;
         LTRB IBattleState.range => this.attackRange;
         int IBattleState.targetCount => this.targetCount;
         float IBattleState.baseDamage => this.baseDamage;
 
-        protected List<EntityBase> targets;
+        protected List<Entity> targets;
         public LTRB attackRange;
         public int targetCount = 7;
         public float baseDamage = 1.0f;
@@ -30,11 +30,11 @@ namespace UnchordMetroidvania
         private bool cpy = false;
         private Timer m_timer;
 
-        protected override void Start()
+        protected override void InitComponents()
         {
-            base.Start();
+            base.InitComponents();
 
-            targets = new List<EntityBase>();
+            targets = new List<Entity>();
 
             TryGetComponent<BattleModule>(out battleModule);
             TryGetComponent<CircleCollider2D>(out cCol);
@@ -66,17 +66,17 @@ namespace UnchordMetroidvania
             }
         }
 
-        protected override void FixedUpdate()
+        protected override void PostFixedUpdate()
         {
-            base.FixedUpdate();
+            base.PostFixedUpdate();
 
             if(aController.id == 1)
                 vm.SetVelocityY(-1.0f);
         }
 
-        protected override void Update()
+        protected override void PostUpdate()
         {
-            base.Update();
+            base.PostUpdate();
 
             CURRENT_STATE = aController.id;
 

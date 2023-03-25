@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public class TestMantis : EntityMonster
     {
+        public const int c_st_IDLE = 0;
+        public const int c_st_WALK = 1;
+
         public int idleMinFrame = 30;
         public int idleMaxFrame = 50;
         public int walkMinFrame = 30;
@@ -12,79 +16,55 @@ namespace UnchordMetroidvania
 
         public float walkSpeed = 6.0f;
 
-        public tMantisFsm fsm;
+        public float axisX;
 
-        protected override void Start()
+        public StateMachine<TestMantis> fsm;
+        public Dictionary<int, int> m_stateMap;
+
+        protected override void InitComponents()
         {
-            base.Start();
+            base.InitComponents();
 
-            fsm = new tMantisFsm(this, 2);
-            fsm.Start(0);
-        }
+            fsm = new StateMachine<TestMantis>(2);
+            m_stateMap = new Dictionary<int, int>(2);
 
-        protected override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            fsm.OnFixedUpdate();
-        }
+            CompositeState<TestMantis> tree = new CompositeState<TestMantis>(2);
+            tree[0] = new tMantisIdle();
+            tree[1] = new tMantisWalk();
 
-        protected override void Update()
-        {
-            base.Update();
-            fsm.OnUpdate();
-        }
-    }
-
-    public class tMantisFsm : EntityFsm<TestMantis>
-    {
-        public const int c_st_IDLE = 0;
-        public const int c_st_WALK = 1;
-
-        public tMantisFsm(TestMantis _instance, int _capacity)
-        : base(_instance, _capacity)
-        {
-            this[0] = new tMantisIdle(_instance);
-            this[1] = new tMantisWalk(_instance);
+            fsm.RegisterStateMap(m_stateMap);
+            fsm.Begin(this, tree, 0);
+            base.RegisterMachineEvent(fsm);
         }
     }
 
     public abstract class tMantisState : MonsterState<TestMantis>
     {
-        protected TestMantis tMantis => instance;
-        protected tMantisFsm fsm => instance.fsm;
 
-        private int m_leftFrame;
-
-        public tMantisState(TestMantis _instance)
-        : base(_instance)
-        {
-
-        }
     }
 
     public class tMantisIdle : tMantisState
     {
         private int m_leftFrame;
 
-        public tMantisIdle(TestMantis _instance)
-        : base(_instance)
+        public override void OnMachineBegin(TestMantis _instance, int _id)
         {
-
+            instance.m_stateMap.Add(TestMantis.c_st_IDLE, id);
         }
 
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            m_leftFrame = tMantis.prng.Next(tMantis.idleMinFrame, tMantis.idleMaxFrame + 1);
+            m_leftFrame = instance.prng.Next(instance.idleMinFrame, instance.idleMaxFrame + 1);
 
-            tMantis.vm.FreezePosition(true, false);
+            instance.vm.FreezePosition(true, false);
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            tMantis.vm.SetVelocityY(-1.0f);
+            instance.vm.SetVelocityY(-1.0f);
 
             --m_leftFrame;
         }
@@ -93,12 +73,12 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
             else if(m_leftFrame <= 0)
-                return tMantisFsm.c_st_WALK;
+                return TestMantis.c_st_WALK;
                 
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 
@@ -106,30 +86,29 @@ namespace UnchordMetroidvania
     {
         private int m_leftFrame;
 
-        public tMantisWalk(TestMantis _instance)
-        : base(_instance)
+        public override void OnMachineBegin(TestMantis _instance, int _id)
         {
-
+            instance.m_stateMap.Add(TestMantis.c_st_WALK, id);
         }
 
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            tMantis.axisInput.x = tMantis.prng.Next(-100, 101) < 0 ? -1 : 1;
-            m_leftFrame = tMantis.prng.Next(tMantis.walkMinFrame, tMantis.walkMaxFrame + 1);
+            instance.axisX = instance.prng.Next(-100, 101) < 0 ? -1 : 1;
+            m_leftFrame = instance.prng.Next(instance.walkMinFrame, instance.walkMaxFrame + 1);
 
-            tMantis.vm.FreezePosition(false, false);
+            instance.vm.FreezePosition(false, false);
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float ix = tMantis.axisInput.x;
-            float vx = ix * tMantis.walkSpeed;
+            float ix = instance.axisX;
+            float vx = ix * instance.walkSpeed;
             float vy = -1.0f;
 
-            tMantis.vm.SetVelocityXY(vx, vy);
+            instance.vm.SetVelocityXY(vx, vy);
 
             if(m_leftFrame > 0)
                 --m_leftFrame;
@@ -139,12 +118,12 @@ namespace UnchordMetroidvania
         {
             int transit = base.Transit();
 
-            if(transit != FiniteStateMachine.c_st_BASE_IGNORE)
+            if(transit != MachineConstant.c_lt_PASS)
                 return transit;
             else if(m_leftFrame <= 0)
-                return tMantisFsm.c_st_IDLE;
+                return TestMantis.c_st_IDLE;
             
-            return FiniteStateMachine.c_st_BASE_IGNORE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

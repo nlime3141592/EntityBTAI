@@ -1,4 +1,4 @@
-namespace UnchordMetroidvania
+namespace Unchord
 {
     public enum TerrainType
     {

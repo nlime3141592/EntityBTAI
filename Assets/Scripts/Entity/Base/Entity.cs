@@ -66,8 +66,12 @@ namespace Unchord
         // MonoBehaviour.Start()
 
         // MonoBehaviour.FixedUpdate()
+        protected virtual void PreFixedUpdate() {}
+        protected virtual void PostFixedUpdate() {}
 
         // MonoBehaviour.Update()
+        protected virtual void PreUpdate() {}
+        protected virtual void PostUpdate() {}
 
         // MonoBehaviour.LateUpdate()
 
@@ -168,7 +172,9 @@ namespace Unchord
             if(!m_bRegisteredMachineEvent)
                 return;
 
+            PreUpdate();
             machineInterface.FixedUpdate();
+            PostUpdate();
         }
 
         private void Update()
@@ -176,7 +182,9 @@ namespace Unchord
             if(!m_bRegisteredMachineEvent)
                 return;
 
+            PreUpdate();
             machineInterface.Update();
+            PostUpdate();
         }
 
         private void LateUpdate()
