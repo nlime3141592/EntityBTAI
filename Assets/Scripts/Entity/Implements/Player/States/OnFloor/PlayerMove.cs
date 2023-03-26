@@ -16,7 +16,7 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            instance.senseData.UpdateMoveDir(instance);
+            // instance.senseData.UpdateMoveDir(instance);
         }
 
         public override int Transit()

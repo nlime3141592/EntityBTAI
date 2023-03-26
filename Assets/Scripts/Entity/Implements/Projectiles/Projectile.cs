@@ -45,7 +45,7 @@ namespace Unchord
             cCol.enabled = false;
             vm.FreezePosition(true, true);
 
-            aController.ChangeAnimation(0);
+            aController.SetState(0);
             m_timer = new Timer(10.0f);
 
             if(cpy)
@@ -133,7 +133,7 @@ namespace Unchord
         {
             vm.FreezePosition(true, true);
             vm.SetVelocityY(0);
-            aController.ChangeAnimation(1);
+            aController.SetState(1);
         }
     }
 }

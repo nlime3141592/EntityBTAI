@@ -15,7 +15,12 @@ namespace Unchord
                 idFixed = instance.machineInterface.GetMappedValueInverse(instance.machineInterface.current);
 
             instance.aController.Reset();
-            instance.aController.ChangeAnimation(idFixed);
+            instance.aController.SetState(idFixed);
+
+            instance.aController.onBeginOfAnimation += OnAnimationBegin;
+            instance.aController.onBeginOfAction += OnActionBegin;
+            instance.aController.onEndOfAction += OnActionEnd;
+            instance.aController.onEndOfAnimation += OnAnimationEnd;
         }
 
         public override void OnFixedUpdate()
@@ -30,6 +35,16 @@ namespace Unchord
         public virtual void OnActionBegin() {}
         public virtual void OnActionEnd() {}
         public virtual void OnAnimationEnd() {}
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+
+            instance.aController.onBeginOfAnimation -= OnAnimationBegin;
+            instance.aController.onBeginOfAction -= OnActionBegin;
+            instance.aController.onEndOfAction -= OnActionEnd;
+            instance.aController.onEndOfAnimation -= OnAnimationEnd;
+        }
 
         private void m_SetLookDir()
         {

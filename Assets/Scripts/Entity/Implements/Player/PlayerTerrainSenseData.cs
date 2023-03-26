@@ -105,7 +105,7 @@ namespace Unchord
 
         public override void UpdateMoveDir(Player player)
         {
-            RaycastHit2D terrain = Physics2D.Raycast(originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
+            RaycastHit2D terrain = Physics2D.Raycast(originFloor.position, Vector2.down, player.hitLength, 1 << LayerMask.NameToLayer("Terrain"));
             player.moveDir.x = 1.0f;
 
             if(terrain.normal.y == 0)

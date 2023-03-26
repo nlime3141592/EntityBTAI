@@ -26,7 +26,7 @@ namespace Unchord
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
             else if(instance.skill00)
-                return Player.c_st_ATTACK_ON_FLOOR;
+                return instance.stateNext_AttackOnFloor;
             else if(instance.skill01)
                 return Player.c_st_ABILITY_SWORD;
             else if(instance.skill02)

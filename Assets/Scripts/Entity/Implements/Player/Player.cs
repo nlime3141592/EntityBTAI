@@ -12,7 +12,7 @@ namespace Unchord
         public const int c_st_SIT                           = 4;
         public const int c_st_HEAD_UP                       = 5;
         public const int c_st_FREE_FALL                     = 6;
-
+        // DEPRECATED c_st_GLIDING                       = 7;
         public const int c_st_IDLE_WALL_FRONT               = 8;
         public const int c_st_SLIDING_WALL_FRONT            = 9;
         public const int c_st_JUMP_ON_FLOOR                 = 10;
@@ -21,14 +21,19 @@ namespace Unchord
         public const int c_st_ROLL                          = 13;
         public const int c_st_DASH                          = 14;
         public const int c_st_CLIMB_LEDGE                   = 15;
-        public const int c_st_ATTACK_ON_FLOOR               = 16;
-        public const int c_st_ATTACK_ON_AIR                 = 17;
+        // DEPRECATED c_st_ATTACK_ON_FLOOR               = 16;
+        // DEPRECATED c_st_ATTACK_ON_AIR                 = 17;
         public const int c_st_ABILITY_SWORD                 = 18;
         public const int c_st_ABILITY_GUN                   = 19;
         public const int c_st_TAKE_DOWN                     = 20;
         public const int c_st_BASIC_PARRYING                = 21;
         public const int c_st_EMERGENCY_PARRYING            = 22;
         public const int c_st_JUMP_DOWN                     = 23;
+        public const int c_st_ATTACK_ON_FLOOR_001           = 24;
+        public const int c_st_ATTACK_ON_FLOOR_002           = 25;
+        public const int c_st_ATTACK_ON_FLOOR_003           = 26;
+        public const int c_st_ATTACK_ON_AIR_001             = 27;
+        public const int c_st_ATTACK_ON_AIR_002             = 28;
 
         public static Player instance => s_m_player;
         private static Player s_m_player;
@@ -49,7 +54,6 @@ namespace Unchord
         public float hitLength = 0.06f;
         public float ledgerp = 0.06f;
         public float ledgeVerticalLengthWeight = 0.5f;
-        public Vector2 moveDir;
 
         public float speed_Walk = 6.0f;
         public float speed_Run = 12.0f;
@@ -90,6 +94,12 @@ namespace Unchord
         public int countLeft_AttackOnAir = 0;
 
         public Vector2 offset_StandCamera;
+
+        public TimerHandler timerCoyote_AttackOnFloor;
+        public int stateNext_AttackOnFloor;
+
+        public TimerHandler timerCoyote_AttackOnAir;
+        public int stateNext_AttackOnAir;
 #endregion
 
 #region 아직 정리 안 함.
@@ -137,6 +147,9 @@ namespace Unchord
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 
             stateMap = new Dictionary<int, int>(24);
+
+            timerCoyote_AttackOnFloor = new TimerHandler();
+            timerCoyote_AttackOnAir = new TimerHandler();
         }
 
         protected override void InitMiscellaneous()
@@ -154,6 +167,16 @@ namespace Unchord
             fsm = new StateMachine<Player>(30);
 
             CompositeState<Player> root = new CompositeState<Player>(30);
+            m_stateTree = root;
+
+            CompositeState<Player> state_AttackOnFloor = new CompositeState<Player>(3);
+            state_AttackOnFloor[0] = new PlayerAttackOnFloor001();
+            state_AttackOnFloor[1] = new PlayerAttackOnFloor002();
+            state_AttackOnFloor[2] = new PlayerAttackOnFloor003();
+
+            CompositeState<Player> state_AttackOnAir = new CompositeState<Player>(2);
+            state_AttackOnAir[0] = new PlayerAttackOnAir001();
+            state_AttackOnAir[1] = new PlayerAttackOnAir002();
 
             // NOTE: 상태를 이 곳에서 조직하고, m_stateTree에 Root 할당하기.
             int index_root = -1;
@@ -172,8 +195,8 @@ namespace Unchord
             root[++index_root] = new PlayerRoll();
             root[++index_root] = new PlayerDash();
             root[++index_root] = new PlayerClimbOnLedge();
-            root[++index_root] = new PlayerAttackOnFloor();
-            root[++index_root] = new PlayerAttackOnAir();
+            root[++index_root] = state_AttackOnFloor;
+            root[++index_root] = state_AttackOnAir;
             root[++index_root] = new PlayerAbilitySword();
             root[++index_root] = new PlayerAbilityGun();
             root[++index_root] = new PlayerTakeDown();
@@ -181,7 +204,16 @@ namespace Unchord
             root[++index_root] = new PlayerEmergencyParrying();
             root[++index_root] = new PlayerJumpDown();
 
-            m_stateTree = root;
+            stateNext_AttackOnFloor = Player.c_st_ATTACK_ON_FLOOR_001;
+            stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_001;
+
+            // timer handler settings
+            timerCoyote_AttackOnFloor.onEndOfTimer += () => { stateNext_AttackOnFloor = Player.c_st_ATTACK_ON_FLOOR_001; };
+            timerCoyote_AttackOnAir.onEndOfTimer += () => { stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_001; };
+            RegisterTimerHandler(timerCoyote_AttackOnFloor);
+            RegisterTimerHandler(timerCoyote_AttackOnAir);
+
+            // fsm registration
             fsm.RegisterStateMap(stateMap);
             RegisterMachineEvent(fsm);
 

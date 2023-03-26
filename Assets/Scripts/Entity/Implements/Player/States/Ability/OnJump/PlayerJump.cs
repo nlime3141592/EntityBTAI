@@ -38,7 +38,7 @@ namespace Unchord
                 if(instance.axis.y < 0)
                     return Player.c_st_TAKE_DOWN;
                 else
-                    return Player.c_st_ATTACK_ON_AIR;
+                    return instance.stateNext_AttackOnAir;
             }
             else if(instance.senseData.bOnCeil)
                 return Player.c_st_FREE_FALL;

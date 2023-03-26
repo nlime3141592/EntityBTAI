@@ -7,6 +7,7 @@ namespace Unchord
             base.OnFixedUpdate();
             instance.senseData.UpdateOrigins(instance);
             instance.senseData.UpdateData(instance);
+            instance.senseData.UpdateMoveDir(instance);
         }
     }
 }

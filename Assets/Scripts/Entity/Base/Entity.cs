@@ -72,10 +72,12 @@ namespace Unchord
         private float m_mana;
 
         private bool m_bRegisteredMachineEvent;
+        private CompositeTimerHandler m_compositeTimerHandler;
 #endregion
 
 #region 아직 정리 안 함.
         public bool bParrying;
+        public Vector2 moveDir;
 #endregion
 
 #region Entity Events
@@ -89,6 +91,7 @@ namespace Unchord
             TryGetComponent<AnimationController>(out m_aController);
 
             vm = new VelocityModule2D(m_physics);
+            m_compositeTimerHandler = new CompositeTimerHandler(1);
         }
 
         protected virtual void InitMiscellaneous()
@@ -182,6 +185,16 @@ namespace Unchord
             machineInterface = null;
         }
 
+        protected void RegisterTimerHandler(TimerHandlerBase _timer)
+        {
+            m_compositeTimerHandler.Add(_timer);
+        }
+
+        protected bool UnregisterTimerHandler(TimerHandlerBase _timer)
+        {
+            return m_compositeTimerHandler.Remove(_timer);
+        }
+
         public void IgnoreBattleTrigger(Collider2D _target, bool _bIgnore) => m_IgnoreCollision(battleTriggers, _target, _bIgnore);
         public void IgnoreVolumeCollision(Collider2D _target, bool _bIgnore) => m_IgnoreCollision(volumeCollisions, _target, _bIgnore);
 
@@ -233,6 +246,7 @@ namespace Unchord
                 return;
 
             PreUpdate();
+            m_compositeTimerHandler.OnUpdate(Time.deltaTime);
             machineInterface.Update();
             PostUpdate();
         }

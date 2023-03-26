@@ -41,7 +41,7 @@ namespace Unchord
 
             vm.FreezePosition(true, true);
 
-            aController.ChangeAnimation(0);
+            aController.SetState(0);
 
             if(cpy)
             {

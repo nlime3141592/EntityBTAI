@@ -34,7 +34,7 @@ namespace Unchord
                 TryGetComponent<Animator>(out m_animator);
         }
 
-        public void ChangeAnimation(int id)
+        public void SetState(int id)
         {
             this.id = id;
             m_animator.SetInteger("state", id);

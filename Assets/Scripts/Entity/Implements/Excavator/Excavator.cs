@@ -43,8 +43,6 @@ namespace Unchord
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
 
 #region 아직 정리 안 함.
-        public Vector2 moveDir;
-
         public float walkSpeed = 12.0f;
 
         public float gravity = -49.5f;
