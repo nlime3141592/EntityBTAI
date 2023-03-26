@@ -34,7 +34,6 @@ namespace Unchord
         public Dictionary<int, int> m_stateMap;
 
 #region 아직 정리 안 함.
-        public Vector2 axis;
         public Vector2 moveDir;
 
         public float wallDetectLength = 0.06f;
@@ -86,7 +85,7 @@ namespace Unchord
         {
             base.InitMiscellaneous();
 
-            volumeColliders.Add(GetComponent<BoxCollider2D>());
+            volumeCollisions.Add(GetComponent<BoxCollider2D>());
             // hitColliders.Add(GetComponent<BoxCollider2D>());
 
             GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);

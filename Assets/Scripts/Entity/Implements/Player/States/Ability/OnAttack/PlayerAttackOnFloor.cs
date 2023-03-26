@@ -42,7 +42,7 @@ namespace Unchord
             base.OnStateBegin();
 
             instance.battleModule.SetBattleState(this);
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
 
             m_bParryingDown = false;
             m_bJumpDown = false;
@@ -178,7 +178,7 @@ namespace Unchord
         {
             base.OnStateEnd();
 
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
             instance.vm.MeltPositionX();
 
             if(!m_phaser.canUpdate)

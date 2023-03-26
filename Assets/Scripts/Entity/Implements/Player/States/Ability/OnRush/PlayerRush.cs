@@ -5,13 +5,13 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
         }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
         }
     }
 }

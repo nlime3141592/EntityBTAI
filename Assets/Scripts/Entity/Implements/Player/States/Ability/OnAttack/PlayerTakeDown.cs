@@ -38,7 +38,7 @@ namespace Unchord
             base.OnStateBegin();
 
             instance.battleModule.SetBattleState(this);
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
 
             if(m_actionPhase >= m_maxActionPhase || m_actionPhase < 0)
                 m_actionPhase = 0;
@@ -102,7 +102,7 @@ namespace Unchord
             base.OnStateEnd();
 
             if(m_actionPhase == 3)
-                instance.bFixLookDir.x = false;
+                instance.bFixedLookDirByAxis.x = false;
         }
 
         public void UpdateCooltime()

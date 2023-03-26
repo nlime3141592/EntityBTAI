@@ -39,7 +39,7 @@ namespace Unchord
 
             instance.battleModule.SetBattleState(this);
 
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
             instance.vm.FreezePositionX();
 
             m_leftCooltime = m_cooltime;
@@ -80,7 +80,7 @@ namespace Unchord
         {
             base.OnStateEnd();
 
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
             instance.vm.MeltPositionX();
         }
 

@@ -5,9 +5,11 @@ namespace Unchord
 {
     public interface IStateMachineRemote
     {
-        int current { get; }
         bool bStarted { get; }
         bool bPaused { get; }
+
+        int current { get; }
+        public IStateBase state { get; }
 
         event Action onMachineBegin;
         event Action onMachinePause;

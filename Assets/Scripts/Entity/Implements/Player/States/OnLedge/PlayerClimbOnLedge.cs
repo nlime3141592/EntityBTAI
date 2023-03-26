@@ -16,7 +16,7 @@ namespace Unchord
             instance.vm.FreezePositionY();
 
             bInitState = false;
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
 
             Vector2 rayOriginX = Vector2.zero;
             Vector2 rayOriginY = Vector2.zero;
@@ -76,7 +76,7 @@ namespace Unchord
             base.OnStateEnd();
 
             instance.transform.position = playerTeleportPosition;
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
             instance.vm.MeltPositionX();
             instance.vm.MeltPositionY();
         }

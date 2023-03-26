@@ -93,7 +93,9 @@ namespace Unchord
         public int countLeft_AttackOnAir = 0;
 
         public Vector2 offset_StandCamera;
+#endregion
 
+#region 아직 정리 안 함.
         // TODO: 아직 어떤 Region에 넣을지 결정하지 못함.
         public PlayerTerrainSenseData senseData;
         public PlayerInputManager iManager;
@@ -106,7 +108,6 @@ namespace Unchord
 #endregion
 
 #region Player Inputs
-        public Vector2 axis;
         public bool jumpDown;
         public bool jumpUp;
         public bool rushDown;

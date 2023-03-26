@@ -35,7 +35,7 @@ namespace Unchord
         {
             base.OnUpdateAlways();
 
-            if(fsm.current != Excavator.c_st_GROGGY)
+            if(instance.fsm.current != Excavator.c_st_GROGGY)
                 m_phaser.Reset();
         }
 

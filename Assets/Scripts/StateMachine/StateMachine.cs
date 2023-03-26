@@ -7,9 +7,11 @@ namespace Unchord
     public class StateMachine<T> : IStateMachine<T>
     where T : class
     {
-        public int current { get; private set; }
         public bool bStarted { get; private set; }
         public bool bPaused { get; private set; }
+
+        public int current { get; private set; }
+        public IStateBase state => m_states[current];
 
         public event Action onMachineBegin;
         public event Action onMachinePause;

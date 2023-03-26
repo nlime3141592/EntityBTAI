@@ -10,7 +10,7 @@ namespace Unchord
         {
             base.OnStateBegin();
 
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
             vy = instance.speed_JumpOnWall_Y;
         }
 
@@ -50,13 +50,13 @@ namespace Unchord
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
         }
 
         protected override void p_OnJumpCanceled()
         {
             base.p_OnJumpCanceled();
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
             vy /= 2;
         }
     }

@@ -28,7 +28,7 @@ namespace Unchord
             base.OnStateBegin();
             instance.battleModule.SetBattleState(this);
             instance.bUpdateAggroDirX = false;
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
         }
 
         public override void OnStateEnd()
@@ -36,7 +36,7 @@ namespace Unchord
             base.OnStateEnd();
 
             instance.bUpdateAggroDirX = true;
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
         }
     }
 }
