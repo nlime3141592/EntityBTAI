@@ -2,27 +2,22 @@ namespace Unchord
 {
     public class PlayerDash : PlayerRush
     {
-        private int m_leftDashFrame = 0;
+        public override void OnMachineBegin(Player _instance, int _id)
+        {
+            base.OnMachineBegin(_instance, _id);
+
+            _instance.stateMap.Add(Player.c_st_DASH, _id);
+        }
 
         public override void OnStateBegin()
         {
             base.OnStateBegin();
             --instance.countLeft_Dash;
-            m_leftDashFrame = instance.frame_Dash;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-
-            if(instance.senseData.bOnWallFrontB || instance.senseData.bOnWallFrontT)
-            {
-                m_leftDashFrame = 0;
-                return;
-            }
-
-            if(m_leftDashFrame > 0)
-                --m_leftDashFrame;
 
             instance.moveDir.x = 1;
             instance.moveDir.y = 0;
@@ -44,7 +39,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(m_leftDashFrame <= 0)
+            else if(instance.aController.bEndOfAnimation)
                 return Player.c_st_FREE_FALL;
             else if(instance.countLeft_JumpOnAir > 0 && instance.jumpDown)
                 return Player.c_st_JUMP_ON_AIR;

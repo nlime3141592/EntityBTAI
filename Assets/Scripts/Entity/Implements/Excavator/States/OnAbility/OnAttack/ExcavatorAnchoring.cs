@@ -30,7 +30,7 @@ namespace Unchord
             base.OnStateBegin();
 
             instance.bUpdateAggroDirX = true;
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
             // instance.bFixLookDirX = true;
 
             m_phaser.canUpdate = false;

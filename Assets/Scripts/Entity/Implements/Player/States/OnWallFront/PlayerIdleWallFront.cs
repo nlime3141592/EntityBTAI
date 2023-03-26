@@ -2,6 +2,13 @@ namespace Unchord
 {
     public class PlayerIdleWallFront : PlayerOnWallFront
     {
+        public override void OnMachineBegin(Player _instance, int _id)
+        {
+            base.OnMachineBegin(_instance, _id);
+
+            _instance.stateMap.Add(Player.c_st_IDLE_WALL_FRONT, _id);
+        }
+
         public override void OnStateBegin()
         {
             base.OnStateBegin();

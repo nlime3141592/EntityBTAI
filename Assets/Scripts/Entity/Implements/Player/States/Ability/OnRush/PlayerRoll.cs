@@ -4,15 +4,18 @@ namespace Unchord
 {
     public class PlayerRoll : PlayerRush
     {
-        private int m_frame = 45;
-        private int m_leftFrame;
-
         private bool m_bParryingDown;
+
+        public override void OnMachineBegin(Player _instance, int _id)
+        {
+            base.OnMachineBegin(_instance, _id);
+
+            _instance.stateMap.Add(Player.c_st_ROLL, _id);
+        }
 
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            m_leftFrame = m_frame;
 
             m_bParryingDown = false;
 
@@ -26,14 +29,6 @@ namespace Unchord
             base.OnFixedUpdate();
 
             RaycastHit2D terrain = Physics2D.Raycast(instance.senseData.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
-
-            if(m_leftFrame > 0)
-                --m_leftFrame;
-            else if(!terrain || instance.senseData.bOnWallFrontB || instance.senseData.bOnWallFrontT)
-            {
-                m_leftFrame = 0;
-                return;
-            }
 
             instance.moveDir.x = 1.0f;
 
@@ -69,14 +64,6 @@ namespace Unchord
             {
                 // TODO: 이 블럭 안에 패링 입력을 받을지 고민해보기.
             }
-        }
-
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-
-            // TODO: 플레이어에게 일정 시간 동안 무적 효과 부여.
-            // instance.(무적인가?) = instance.aController.bBeginOfAction && !instance.aController.bEndOfAction;
         }
 
         public override int Transit()

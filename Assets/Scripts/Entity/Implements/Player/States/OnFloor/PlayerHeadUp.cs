@@ -4,6 +4,13 @@ namespace Unchord
 {
     public class PlayerHeadUp : PlayerStand
     {
+        public override void OnMachineBegin(Player _instance, int _id)
+        {
+            base.OnMachineBegin(_instance, _id);
+
+            _instance.stateMap.Add(Player.c_st_HEAD_UP, _id);
+        }
+
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();

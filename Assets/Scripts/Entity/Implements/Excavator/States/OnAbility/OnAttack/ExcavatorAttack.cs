@@ -33,7 +33,7 @@ namespace Unchord
             base.OnStateEnd();
 
             instance.bUpdateAggroDirX = true;
-            instance.bFixLookDir.x = false;
+            instance.bFixedLookDirByAxis.x = false;
         }
     }
 }

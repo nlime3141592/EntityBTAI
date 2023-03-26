@@ -8,6 +8,13 @@ namespace Unchord
         private Vector2 playerTeleportPosition;
         private bool bInitState;
 
+        public override void OnMachineBegin(Player _instance, int _id)
+        {
+            base.OnMachineBegin(_instance, _id);
+
+            _instance.stateMap.Add(Player.c_st_CLIMB_LEDGE, _id);
+        }
+
         public override void OnStateBegin()
         {
             base.OnStateBegin();

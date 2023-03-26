@@ -46,7 +46,7 @@ namespace Unchord
 
 #region Player Datas
         public float detectLength = 0.5f;
-        public float hitLength = 0.04f;
+        public float hitLength = 0.06f;
         public float ledgerp = 0.06f;
         public float ledgeVerticalLengthWeight = 0.5f;
         public Vector2 moveDir;
@@ -76,9 +76,6 @@ namespace Unchord
         public float gravity_AttackOnAir = -49.5f;
 
         public int frame_IdleShort = 100;
-        public int frame_Roll = 15; // TODO: 애니메이션 설정 보고 제거할지 말지 결정하기.
-        public int frame_Roll_Invincibility = 15;
-        public int frame_Dash = 35; // TODO: 애니메이션 설정 보고 제거할지 말지 결정하기.
 
         public int count_JumpOnAir = 1;
         public int count_Dash = 1;
@@ -101,6 +98,7 @@ namespace Unchord
         public PlayerInputManager iManager;
 
         public int CURRENT_STATE;
+        public string CURRENT_TYPE;
         public float DEBUG_COYOTE;
         public EntitySensorGizmoManager rangeGizmoManager;
 
@@ -123,13 +121,12 @@ namespace Unchord
 
         protected override bool InitSingletonInstance()
         {
-            if(s_m_player != null)
-                return false;
-            else if(s_m_player != this)
-                return false;
+            if(s_m_player == null)
+                s_m_player = this;
+            if(s_m_player == this)
+                return true;
 
-            s_m_player = this;
-            return true;
+            return false;
         }
 
         protected override void InitComponents()
@@ -138,6 +135,16 @@ namespace Unchord
 
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
+
+            stateMap = new Dictionary<int, int>(24);
+        }
+
+        protected override void InitMiscellaneous()
+        {
+            base.InitMiscellaneous();
+
+            rangeGizmoManager = new EntitySensorGizmoManager();
+            iManager = new PlayerInputManager(this);
         }
 
         protected override void InitStateMachine()
@@ -150,7 +157,7 @@ namespace Unchord
 
             // NOTE: 상태를 이 곳에서 조직하고, m_stateTree에 Root 할당하기.
             int index_root = -1;
-            root[++index_root] = new PlayerIdle();
+            root[++index_root] = new PlayerIdleLong();
             root[++index_root] = new PlayerIdleShort();
             root[++index_root] = new PlayerWalk();
             root[++index_root] = new PlayerRun();
@@ -176,16 +183,24 @@ namespace Unchord
 
             m_stateTree = root;
             fsm.RegisterStateMap(stateMap);
-            fsm.Begin(this, m_stateTree, Player.c_st_IDLE_SHORT);
             RegisterMachineEvent(fsm);
+
+            fsm.Begin(this, m_stateTree, Player.c_st_IDLE_SHORT);
         }
 
-        protected override void InitMiscellaneous()
+        protected override void PreUpdate()
         {
-            base.InitMiscellaneous();
+            base.PreUpdate();
 
-            rangeGizmoManager = new EntitySensorGizmoManager();
-            iManager = new PlayerInputManager(this);
+            iManager.UpdateInputs(true);
+        }
+
+        protected override void PostUpdate()
+        {
+            base.PostUpdate();
+
+            CURRENT_STATE = machineInterface.current;
+            CURRENT_TYPE = machineInterface.state.GetType().ToString();
         }
 /*
         protected override void Start()

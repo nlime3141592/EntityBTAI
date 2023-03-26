@@ -8,7 +8,7 @@ namespace Unchord
         {
             base.OnStateBegin();
             instance.bUpdateAggroDirX = false;
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
             instance.aController.onBeginOfAction += m_OnActionBegin;
         }
 
@@ -36,7 +36,7 @@ namespace Unchord
             ShockWave rw = instance.shockwave.Copy();
             float dx = (instance.shockRange.left + instance.shockRange.right) * 0.5f;
 
-            lw.InitIgnore(instance.hitColliders);
+            lw.InitIgnore(instance.battleTriggers);
             lw.InitBaseDamage(1.0f);
             lw.InitDirection(-1);
             lw.InitPosition(instance.aiCenter.position - new Vector3(dx, 0, 0));
@@ -44,7 +44,7 @@ namespace Unchord
             lw.InitLeftWave(15);
             lw.InitShow();
 
-            rw.InitIgnore(instance.hitColliders);
+            rw.InitIgnore(instance.battleTriggers);
             rw.InitBaseDamage(1.0f);
             rw.InitDirection(1);
             rw.InitPosition(instance.aiCenter.position + new Vector3(dx, 0, 0));

@@ -8,6 +8,13 @@ namespace Unchord
             instance.bFixedLookDirByAxis.x = true;
         }
 
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            instance.bInvincibility = instance.aController.bBeginOfAction && !instance.aController.bEndOfAction;
+        }
+
         public override void OnStateEnd()
         {
             base.OnStateEnd();

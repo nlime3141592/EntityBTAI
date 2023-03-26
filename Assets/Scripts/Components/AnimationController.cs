@@ -28,7 +28,7 @@ namespace Unchord
                 TryGetComponent<Animator>(out m_animator);
         }
 
-        public void OnStart()
+        public void Awake()
         {
             if(m_animator == null)
                 TryGetComponent<Animator>(out m_animator);

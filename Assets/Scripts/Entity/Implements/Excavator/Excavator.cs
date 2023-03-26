@@ -115,7 +115,7 @@ namespace Unchord
             armObj.SetActive(false);
 
             // hitColliders.Add(GetComponent<BoxCollider2D>());
-            volumeColliders.Add(GetComponent<BoxCollider2D>());
+            volumeCollisions.Add(GetComponent<BoxCollider2D>());
         }
 
         protected override void PreFixedUpdate()

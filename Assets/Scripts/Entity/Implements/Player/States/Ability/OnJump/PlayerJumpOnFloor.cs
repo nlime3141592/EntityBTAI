@@ -6,17 +6,21 @@ namespace Unchord
     {
         private float vy;
 
+        public override void OnMachineBegin(Player _instance, int _id)
+        {
+            base.OnMachineBegin(_instance, _id);
+
+            _instance.stateMap.Add(Player.c_st_JUMP_ON_FLOOR, _id);
+        }
+
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            vy = instance.force_JumpOnFloor;
+            vy = instance.speed_JumpOnFloor;
         }
 
         public override void OnFixedUpdate()
         {
-            if(!instance.aController.bBeginOfAction)
-                return;
-
             base.OnFixedUpdate();
 
             float vx = instance.bIsRun ? instance.speed_Run : instance.speed_Walk;

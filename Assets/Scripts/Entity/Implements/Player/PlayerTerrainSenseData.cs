@@ -78,7 +78,7 @@ namespace Unchord
                 m_tmp_bDetectLedgeHorizontal = TerrainSensor.CheckLedgeHorizontal(originLedgeRT.position, player.detectLength, lx);
                 m_tmp_bDetectLedgeVertical = TerrainSensor.CheckLedgeVerticalDown(originLedgeRT.position + Vector3.right * player.ledgerp, player.detectLength * player.ledgeVerticalLengthWeight);
             }
-            else if(player.lookDir.x < 0)
+            else if(lx < 0)
             {
                 m_tmp_bHitWallBackT = TerrainSensor.CheckWallBack(originWallRT.position, player.hitLength, lx);
                 m_tmp_bHitWallBackB = TerrainSensor.CheckWallBack(originWallRB.position, player.hitLength, lx);

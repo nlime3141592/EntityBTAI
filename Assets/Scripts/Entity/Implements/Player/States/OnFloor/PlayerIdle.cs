@@ -1,6 +1,6 @@
 namespace Unchord
 {
-    public class PlayerIdle : PlayerOnFloor
+    public abstract class PlayerIdle : PlayerOnFloor
     {
         public override void OnStateBegin()
         {

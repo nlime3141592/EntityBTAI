@@ -87,9 +87,9 @@ namespace Unchord
             TryGetComponent<Rigidbody2D>(out m_physics);
             TryGetComponent<SpriteRenderer>(out m_spRenderer);
             TryGetComponent<AnimationController>(out m_aController);
-        }
 
-        protected virtual void InitStateMachine() {}
+            vm = new VelocityModule2D(m_physics);
+        }
 
         protected virtual void InitMiscellaneous()
         {
@@ -98,6 +98,7 @@ namespace Unchord
         }
 
         // MonoBehaviour.Start()
+        protected virtual void InitStateMachine() {}
 
         // MonoBehaviour.FixedUpdate()
         protected virtual void PreFixedUpdate() {}
@@ -207,13 +208,13 @@ namespace Unchord
             }
 
             InitComponents();
-            InitStateMachine();
             InitMiscellaneous();
         }
 
         private void Start()
         {
             StartCoroutine(m_DestroyEntity());
+            InitStateMachine();
         }
 
         private void FixedUpdate()

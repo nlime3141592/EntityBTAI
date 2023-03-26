@@ -31,11 +31,6 @@ namespace Unchord
 #region method implementation of interface IStateMachine<T>
         public void Begin(T _instance, IState<T> _stateTree, int _state)
         {
-            if(m_stateMap != null)
-                _state = m_stateMap[_state];
-
-            m_stateTree = _stateTree;
-            current = _state;
             bStarted = true;
 
             onMachineBegin?.Invoke();
@@ -47,6 +42,12 @@ namespace Unchord
                 m_states.Add(state);
                 state.OnMachineBegin(_instance, ++id);
             }
+
+            if(m_stateMap != null)
+                _state = m_stateMap[_state];
+
+            m_stateTree = _stateTree;
+            current = _state;
 
             m_states[current].OnStateBegin();
         }

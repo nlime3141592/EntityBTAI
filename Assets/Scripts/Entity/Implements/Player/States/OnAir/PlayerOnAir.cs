@@ -4,11 +4,6 @@ namespace Unchord
 {
     public abstract class PlayerOnAir : PlayerState
     {
-        public override void OnFixedUpdate()
-        {
-            base.OnFixedUpdate();
-        }
-
         public override int Transit()
         {
             int transit = base.Transit();

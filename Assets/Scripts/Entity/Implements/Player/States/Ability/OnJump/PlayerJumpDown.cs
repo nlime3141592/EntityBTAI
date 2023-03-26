@@ -34,6 +34,13 @@ namespace Unchord
             };
         }
 
+        public override void OnMachineBegin(Player _instance, int _id)
+        {
+            base.OnMachineBegin(_instance, _id);
+
+            _instance.stateMap.Add(Player.c_st_JUMP_DOWN, _id);
+        }
+
         public override void OnStateBegin()
         {
             base.OnStateBegin();

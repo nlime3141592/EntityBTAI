@@ -21,7 +21,7 @@ namespace Unchord
         {
             base.OnStateBegin();
             instance.bUpdateAggroDirX = false;
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
         }
 
         public override int Transit()

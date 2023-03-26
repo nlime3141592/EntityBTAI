@@ -11,7 +11,7 @@ namespace Unchord
         {
             base.OnStateBegin();
             instance.bUpdateAggroDirX = false;
-            instance.bFixLookDir.x = true;
+            instance.bFixedLookDirByAxis.x = true;
 
             instance.aController.onBeginOfAction += m_OnBeginOfAction;
             i = -1;
@@ -51,7 +51,7 @@ namespace Unchord
         private void m_ShootProjectile(Vector2 velocity)
         {
             Projectile proj = instance.projectile.Copy();
-            proj.InitIgnore(instance.hitColliders);
+            proj.InitIgnore(instance.battleTriggers);
             proj.InitVelocity(velocity);
             proj.InitPosition(instance.transform.position);
             proj.InitShow();
