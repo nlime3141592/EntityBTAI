@@ -4,11 +4,11 @@ namespace Unchord
 {
     public class PlayerSlidingWallFront : PlayerOnWallFront
     {
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
+            base.OnConstruct();
 
-            _instance.stateMap.Add(Player.c_st_SLIDING_WALL_FRONT, _id);
+            idFixed = Player.c_st_SLIDING_WALL_FRONT;
         }
 
         public override void OnStateBegin()

@@ -13,7 +13,7 @@ namespace Unchord
             else if(instance.skill00)
             {
                 if(instance.axis.y < 0)
-                    return Player.c_st_TAKE_DOWN;
+                    return Player.c_st_TAKE_DOWN_001;
                 else
                     return instance.stateNext_AttackOnAir;
             }

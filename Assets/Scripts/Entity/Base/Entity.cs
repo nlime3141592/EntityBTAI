@@ -76,6 +76,7 @@ namespace Unchord
 #endregion
 
 #region 아직 정리 안 함.
+        public Dictionary<int, int> stateMap;
         public bool bParrying;
         public Vector2 moveDir;
 #endregion
@@ -92,6 +93,7 @@ namespace Unchord
 
             vm = new VelocityModule2D(m_physics);
             m_compositeTimerHandler = new CompositeTimerHandler(1);
+            stateMap = new Dictionary<int, int>(2);
         }
 
         protected virtual void InitMiscellaneous()

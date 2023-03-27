@@ -25,7 +25,7 @@ namespace Unchord
         // DEPRECATED c_st_ATTACK_ON_AIR                 = 17;
         public const int c_st_ABILITY_SWORD                 = 18;
         public const int c_st_ABILITY_GUN                   = 19;
-        public const int c_st_TAKE_DOWN                     = 20;
+        // DEPRECATED c_st_TAKE_DOWN                     = 20;
         public const int c_st_BASIC_PARRYING                = 21;
         public const int c_st_EMERGENCY_PARRYING            = 22;
         public const int c_st_JUMP_DOWN                     = 23;
@@ -34,6 +34,9 @@ namespace Unchord
         public const int c_st_ATTACK_ON_FLOOR_003           = 26;
         public const int c_st_ATTACK_ON_AIR_001             = 27;
         public const int c_st_ATTACK_ON_AIR_002             = 28;
+        public const int c_st_TAKE_DOWN_001                 = 29;
+        public const int c_st_TAKE_DOWN_002                 = 30;
+        public const int c_st_TAKE_DOWN_003                 = 31;
 
         public static Player instance => s_m_player;
         private static Player s_m_player;
@@ -45,7 +48,6 @@ namespace Unchord
 
 #region Player State Machine Management
         public IStateMachine<Player> fsm;
-        public Dictionary<int, int> stateMap;
         private IState<Player> m_stateTree;
 #endregion
 
@@ -146,8 +148,6 @@ namespace Unchord
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 
-            stateMap = new Dictionary<int, int>(24);
-
             timerCoyote_AttackOnFloor = new TimerHandler();
             timerCoyote_AttackOnAir = new TimerHandler();
         }
@@ -178,6 +178,11 @@ namespace Unchord
             state_AttackOnAir[0] = new PlayerAttackOnAir001();
             state_AttackOnAir[1] = new PlayerAttackOnAir002();
 
+            CompositeState<Player> state_TakeDown = new CompositeState<Player>(3);
+            state_TakeDown[0] = new PlayerTakeDown001();
+            state_TakeDown[1] = new PlayerTakeDown002();
+            state_TakeDown[2] = new PlayerTakeDown003();
+
             // NOTE: 상태를 이 곳에서 조직하고, m_stateTree에 Root 할당하기.
             int index_root = -1;
             root[++index_root] = new PlayerIdleLong();
@@ -199,7 +204,7 @@ namespace Unchord
             root[++index_root] = state_AttackOnAir;
             root[++index_root] = new PlayerAbilitySword();
             root[++index_root] = new PlayerAbilityGun();
-            root[++index_root] = new PlayerTakeDown();
+            root[++index_root] = state_TakeDown;
             root[++index_root] = new PlayerBasicParrying();
             root[++index_root] = new PlayerEmergencyParrying();
             root[++index_root] = new PlayerJumpDown();

@@ -1,26 +1,19 @@
 namespace Unchord
 {
-    public class PlayerIdleWallFront : PlayerOnWallFront
+    public class PlayerTakeDown001 : PlayerTakeDownBase
     {
         public override void OnConstruct()
         {
             base.OnConstruct();
 
-            idFixed = Player.c_st_IDLE_WALL_FRONT;
+            idFixed = Player.c_st_TAKE_DOWN_001;
         }
 
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
-            instance.vm.FreezePositionX();
-            instance.vm.MeltPositionY();
-        }
-
-        public override void OnFixedUpdate()
-        {
-            base.OnFixedUpdate();
-            instance.vm.SetVelocityXY(0.0f, 0.0f);
+            instance.vm.FreezePosition(true, true);
         }
 
         public override int Transit()
@@ -29,8 +22,8 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.axis.x == 0)
-                return Player.c_st_SLIDING_WALL_FRONT;
+            else if(instance.aController.bEndOfAnimation)
+                return Player.c_st_TAKE_DOWN_002;
 
             return MachineConstant.c_lt_PASS;
         }
@@ -39,8 +32,7 @@ namespace Unchord
         {
             base.OnStateEnd();
 
-            instance.vm.MeltPositionX();
-            instance.vm.MeltPositionY();
+            instance.vm.FreezePosition(false, false);
         }
     }
 }

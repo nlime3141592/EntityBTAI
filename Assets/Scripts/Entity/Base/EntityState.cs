@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Unchord
@@ -5,7 +6,17 @@ namespace Unchord
     public abstract class EntityState<T> : State<T>
     where T : Entity
     {
-        public int idFixed { get; private set; } = -1;
+        public int idFixed { get; protected set; } = -1;
+
+        public override void OnMachineBegin(T _instance, int _id)
+        {
+            base.OnMachineBegin(_instance, _id);
+
+            if(idFixed < 0)
+                Debug.AssertFormat(false, "state \"{0}\" not initialized idFixed value. override OnConstruct() and initialize idFixed value.", this.GetType().Name);
+            else
+                _instance.stateMap.Add(idFixed, _id);
+        }
 
         public override void OnStateBegin()
         {
@@ -44,6 +55,13 @@ namespace Unchord
             instance.aController.onBeginOfAction -= OnActionBegin;
             instance.aController.onEndOfAction -= OnActionEnd;
             instance.aController.onEndOfAnimation -= OnAnimationEnd;
+        }
+
+        public override void OnMachineEnd()
+        {
+            base.OnMachineEnd();
+
+            idFixed = -1;
         }
 
         private void m_SetLookDir()

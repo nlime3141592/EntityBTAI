@@ -40,7 +40,11 @@ namespace Unchord
         }
 
         // StateMachine<T>.End();
-        public virtual void OnMachineEnd() {}
+        public virtual void OnMachineEnd()
+        {
+            instance = default(T);
+            id = -1;
+        }
 
         // StateMachine<T>.Transit()
         public virtual void OnMachineHalt() {}

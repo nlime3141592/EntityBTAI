@@ -7,11 +7,11 @@ namespace Unchord
         private bool m_bOnSlab;
         private Slab m_slab;
 
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
+            base.OnConstruct();
 
-            _instance.stateMap.Add(Player.c_st_SIT, _id);
+            idFixed = Player.c_st_SIT;
         }
 
         public override void OnFixedUpdate()

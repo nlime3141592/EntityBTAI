@@ -12,13 +12,8 @@ namespace Unchord
             base.baseDamage = 1.0f;
             base.speed_Hop = 20.0f;
             base.coyote = 2.0f;
-        }
 
-        public override void OnMachineBegin(Player _instance, int _id)
-        {
-            base.OnMachineBegin(_instance, _id);
-
-            _instance.stateMap.Add(Player.c_st_ATTACK_ON_AIR_001, _id);
+            idFixed = Player.c_st_ATTACK_ON_AIR_001;
         }
 
         public override void OnStateBegin()

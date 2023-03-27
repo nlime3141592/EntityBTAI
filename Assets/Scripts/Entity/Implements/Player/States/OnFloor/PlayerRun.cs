@@ -4,11 +4,11 @@ namespace Unchord
 {
     public class PlayerRun : PlayerMove
     {
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
+            base.OnConstruct();
 
-            _instance.stateMap.Add(Player.c_st_RUN, _id);
+            idFixed = Player.c_st_RUN;
         }
 
         public override void OnFixedUpdate()

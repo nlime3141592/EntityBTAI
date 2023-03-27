@@ -6,11 +6,11 @@ namespace Unchord
     {
         private float vy;
 
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
+            base.OnConstruct();
 
-            _instance.stateMap.Add(Player.c_st_JUMP_ON_FLOOR, _id);
+            idFixed = Player.c_st_JUMP_ON_FLOOR;
         }
 
         public override void OnStateBegin()

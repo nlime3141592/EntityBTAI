@@ -2,11 +2,11 @@ namespace Unchord
 {
     public class PlayerDash : PlayerRush
     {
-        public override void OnMachineBegin(Player _instance, int _id)
+        public override void OnConstruct()
         {
-            base.OnMachineBegin(_instance, _id);
+            base.OnConstruct();
 
-            _instance.stateMap.Add(Player.c_st_DASH, _id);
+            idFixed = Player.c_st_DASH;
         }
 
         public override void OnStateBegin()

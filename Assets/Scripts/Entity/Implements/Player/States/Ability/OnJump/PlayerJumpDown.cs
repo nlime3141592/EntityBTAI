@@ -32,13 +32,8 @@ namespace Unchord
                 right = 0.6f,
                 bottom = 1.87f
             };
-        }
 
-        public override void OnMachineBegin(Player _instance, int _id)
-        {
-            base.OnMachineBegin(_instance, _id);
-
-            _instance.stateMap.Add(Player.c_st_JUMP_DOWN, _id);
+            idFixed = Player.c_st_JUMP_DOWN;
         }
 
         public override void OnStateBegin()
