@@ -453,6 +453,57 @@ Transform:
   m_Father: {fileID: 1478297897}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &544938490
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 544938491}
+  - component: {fileID: 544938492}
+  m_Layer: 0
+  m_Name: SensorDebugModule
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &544938491
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544938490}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1004430211}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &544938492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 544938490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83deefb5bc83b8f49ba4e7f220aca1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensor: {fileID: 0}
+  bDrawSensor: 0
+  clrSensor: {r: 0, g: 1, b: 0, a: 1}
+  bDrawBasis: 0
+  clrAxisPX: {r: 1, g: 0, b: 0, a: 1}
+  clrAxisPY: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  clrAxisNX: {r: 0, g: 1, b: 1, a: 1}
+  clrAxisNY: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &568642914
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +670,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1004430210
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1004430211}
+  m_Layer: 0
+  m_Name: Debuggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1004430211
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004430210}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 544938491}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1009125003
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,13 +1257,13 @@ MonoBehaviour:
   bInvincibility: 0
   groggyValue: 0
   bParrying: 0
+  moveDir: {x: 0, y: 0}
   battleModule: {fileID: 0}
   hCol: {fileID: 0}
   detectLength: 0.5
   hitLength: 0.04
   ledgerp: 0.06
   ledgeVerticalLengthWeight: 0.5
-  moveDir: {x: 0, y: 0}
   speed_Walk: 6
   speed_Run: 12
   speed_JumpOnFloor: 16
@@ -1203,9 +1285,6 @@ MonoBehaviour:
   gravity_WallSlidingFront: -9.81
   gravity_AttackOnAir: -49.5
   frame_IdleShort: 100
-  frame_Roll: 15
-  frame_Roll_Invincibility: 15
-  frame_Dash: 15
   count_JumpOnAir: 1
   count_Dash: 1
   count_AttackOnAir: 1
@@ -1214,6 +1293,8 @@ MonoBehaviour:
   countLeft_Dash: 0
   countLeft_AttackOnAir: 0
   offset_StandCamera: {x: 0, y: 0}
+  stateNext_AttackOnFloor: 0
+  stateNext_AttackOnAir: 0
   senseData:
     originFloor: {fileID: 512282752}
     originCeil: {fileID: 1248438015}
