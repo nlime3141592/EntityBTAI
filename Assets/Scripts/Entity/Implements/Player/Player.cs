@@ -52,8 +52,6 @@ namespace Unchord
 #endregion
 
 #region Player Datas
-        public float detectLength = 0.5f;
-        public float hitLength = 0.06f;
         public float ledgerp = 0.06f;
         public float ledgeVerticalLengthWeight = 0.5f;
 
@@ -106,7 +104,7 @@ namespace Unchord
 
 #region 아직 정리 안 함.
         // TODO: 아직 어떤 Region에 넣을지 결정하지 못함.
-        public PlayerTerrainSenseData senseData;
+        public PlayerTerrainSensor senseData;
         public PlayerInputManager iManager;
 
         public int CURRENT_STATE;
