@@ -12,14 +12,13 @@ namespace Unchord
         public Entity owner => m_owner;
         private Entity m_owner;
 
-        public Transform damageParent;
+        // public Transform damageParent;
         // public TestDamageUI hitUI;
         // public TestDamageUI healUI;
 
         public EntitySensorGizmoOption battleRangeGizmo;
         public int targetLayerMask;
 
-        private IBattleState m_battleState;
         private List<Collider2D> m_ignores;
 
         private void OnValidate()
@@ -32,30 +31,9 @@ namespace Unchord
             TryGetComponent<Entity>(out m_owner);
         }
 
-        public void SetBattleState(IBattleState state)
-        {
-            m_battleState = state;
-        }
-
         public void SetIgnoreColliders(List<Collider2D> ignores)
         {
             m_ignores = ignores;
-        }
-
-        public void ClearBattleState()
-        {
-            m_battleState = null;
-        }
-
-        // 새로운 애니메이션 이벤트 트리거
-        public void _TriggerBattleState()
-        {
-            IStateBase tmpState = owner.machineInterface.state;
-
-            if(!(tmpState is IBattleState))
-                return;
-            else if(!System.Object.Equals(tmpState, m_battleState))
-                m_battleState = tmpState as IBattleState;
         }
 
         // 새로운 데미지 공식
@@ -88,6 +66,10 @@ namespace Unchord
 
         public void TriggerBattleState()
         {
+            IStateBase current = owner.machineInterface.state;
+            (current as IBattleState)?.OnTriggerBattleState();
+
+            /*
             Entity attacker = m_battleState.attacker;
             List<Entity> targets = m_battleState.targets;
             LTRB range = m_battleState.range;
@@ -116,39 +98,38 @@ namespace Unchord
                 // attacker.groggyValue += attacker.baseMentality.finalValue;
                 attacker.groggyValue += 0.34f;
             }
-        }
-
-        public float GetFinalDamage(Entity target, float baseDamage)
-        {
-            /*
-            [용어 설명]
-            owner: 전투 모듈을 가지고 있는 Entity (공격자)
-            target: 스킬 범위에 의해 감지된 Entity (피해자)
-            [전투 공식]
-            (최종데미지) = (공격자의 공격력) * (스킬 계수) - (피해자의 방어력)
-            단, (최종데미지)의 최소값은 1이다.
             */
-            if(target.bInvincibility)
-                return 0;
-            else if(target.fixedTakenDamage.finalValue > 0)
-                return target.fixedTakenDamage.finalValue;
-
-            float finalStrength = owner.strength.finalValue;
-            finalStrength *= baseDamage;
-            float finalDefence = target.defence.finalValue;
-            float finalDamage = finalStrength - finalDefence;
-
-            if(finalDamage < 1)
-                finalDamage = 1;
-
-            return finalDamage;
-            // TestDamageUI ui = TestDamageUI.Get(hitUI, dH, target.transform.position);
-            // ui.transform.SetParent(damageParent, false);
         }
 
-        public float GetFinalGroggy(Entity target)
+        public static float GetFinalDamage(Entity _attacker, Entity _victim, float _baseDamage)
         {
-            float finalMental = target.mentality.finalValue;
+            if(_victim.bInvincibility) // NOTE: 무적
+                return 0;
+            else if(_victim.fixedTakenDamage.finalValue > 0) // NOTE: 고정 피해량
+                return _victim.fixedTakenDamage.finalValue;
+
+            // NOTE: 순수 데미지
+            float pureDamage = _attacker.strength.finalValue - _victim.defence.finalValue;
+
+            if(pureDamage <= 0)
+                return 0;
+
+            float finalDamage = pureDamage;
+
+            // NOTE: 크리티컬 확률, 크리티컬 데미지
+            float isCritical = UnityEngine.Random.value; // NOTE: 0 <= isCritical <= 1
+            if(isCritical < _attacker.criticalChance.finalValue)
+                finalDamage *= (2.0f + Utilities.Max<float>(0, _attacker.criticalDamage.finalValue));
+
+            // NOTE: 최종 데미지 증가
+            finalDamage *= (1.0f + Utilities.Max<float>(0, _attacker.finalDamage.finalValue));
+
+            return Utilities.Max<float>(1, finalDamage);
+        }
+
+        public static float GetFinalGroggy(Entity _publisher, Entity _receiver)
+        {
+            float finalMental = _receiver.mentality.finalValue;
 
             if(finalMental < 0.001f)
                 return 0.001f;

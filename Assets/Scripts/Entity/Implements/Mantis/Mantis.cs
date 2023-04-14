@@ -23,7 +23,7 @@ namespace Unchord
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
         public StateMachine<Mantis> fsm;
-        public MantisTerrainSenseData senseData;
+        public MantisTerrainSensor senseData;
 
         public int CURRENT_STATE;
         public int BOSS_PHASE;
@@ -94,7 +94,6 @@ namespace Unchord
             base.PreFixedUpdate();
 
             aiCenter.localPosition = aiCenterOffset;
-            senseData.UpdateOrigins(this);
         }
 
         protected override void PostUpdate()

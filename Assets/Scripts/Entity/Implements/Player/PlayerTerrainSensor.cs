@@ -67,14 +67,20 @@ namespace Unchord
             datCornerFrontT.hLength = hLength;
             datCornerBackB.hLength = hLength;
             datCornerBackT.hLength = hLength;
-
-            datFloor.direction.Set(0, -1);
-            datCeil.direction.Set(0, 1);
-
             datCornerFrontVB.hLength = -1;
             datCornerFrontVT.hLength = -1;
             datCornerBackVB.hLength = -1;
             datCornerBackVT.hLength = -1;
+
+            // NOTE: 혹시나 flip Y 기능을 사용한다면,
+            // (1) float ly = _player.lookDir.fy;
+            // (2) 1 => ly; -1 => -ly;
+            datFloor.direction.Set(0, -1);
+            datCeil.direction.Set(0, 1);
+            datCornerFrontVB.direction.Set(0, 1);
+            datCornerFrontVT.direction.Set(0, -1);
+            datCornerBackVB.direction.Set(0, 1);
+            datCornerBackVT.direction.Set(0, -1);
         }
 
         protected override void SetOrigins(Player _player)
@@ -121,14 +127,6 @@ namespace Unchord
             datCornerBackB.direction.Set(-lx, 0);
             datCornerBackT.direction.Set(-lx, 0);
 
-            // NOTE: 혹시나 flip Y 기능을 사용한다면,
-            // (1) float ly = _player.lookDir.fy;
-            // (2) 1 => ly; -1 => -ly;
-            datCornerFrontVB.direction.Set(0, 1);
-            datCornerFrontVT.direction.Set(0, -1);
-            datCornerBackVB.direction.Set(0, 1);
-            datCornerBackVT.direction.Set(0, -1);
-
             datCornerFrontVB.dLength = 0.9f * feet.extents.y;
             datCornerFrontVT.dLength = 0.9f * head.extents.y;
             datCornerBackVB.dLength = 0.9f * feet.extents.y;
@@ -153,8 +151,6 @@ namespace Unchord
 
         protected override void DetectTerrains(Player player)
         {
-            float lx = player.lookDir.fx;
-
             TerrainSensorBase.Sense(in datFloor);
             TerrainSensorBase.Sense(in datCeil);
             TerrainSensorBase.Sense(in datWallFrontB);

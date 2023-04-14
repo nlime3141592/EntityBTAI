@@ -5,7 +5,7 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            instance.senseData.UpdateData(instance);
+            instance.senseData.OnFixedUpdate(instance);
         }
 
         public override int Transit()
