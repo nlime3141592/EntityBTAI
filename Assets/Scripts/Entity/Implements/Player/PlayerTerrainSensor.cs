@@ -7,134 +7,74 @@ namespace Unchord
     public class PlayerTerrainSensor : TerrainSensor<Player>
     {
         // TODO: 지형 정보를 외부로 빼낼 수 있도록 public property를 제작해야 함.
+        public readonly TerrainSenseData datFloor;
+        public readonly TerrainSenseData datCeil;
+        public readonly TerrainSenseData datWallFrontB;
+        public readonly TerrainSenseData datWallFrontT;
+        public readonly TerrainSenseData datWallBackB;
+        public readonly TerrainSenseData datWallBackT;
+        public readonly TerrainSenseData datCornerFrontB;
+        public readonly TerrainSenseData datCornerFrontT;
+        public readonly TerrainSenseData datCornerBackB;
+        public readonly TerrainSenseData datCornerBackT;
+        public readonly TerrainSenseData datCornerFrontVB;
+        public readonly TerrainSenseData datCornerFrontVT;
+        public readonly TerrainSenseData datCornerBackVB;
+        public readonly TerrainSenseData datCornerBackVT;
 
-
-
-        public bool bOnDetectFloor => m_datFloor.bOnDetected;
-        public bool bOnFloor => m_datFloor.bOnHit;
-        private TerrainSenseData m_datFloor;
-
-        public bool bOnDetectCeil => m_datCeil.bOnDetected;
-        public bool bOnCeil => m_datCeil.bOnHit;
-        private TerrainSenseData m_datCeil;
-
-        public bool bOnDetectWallFrontB => m_datWallFrontB.bOnDetected;
-        public bool bOnWallFrontB => m_datWallFrontB.bOnHit;
-        private TerrainSenseData m_datWallFrontB;
-
-        public bool bOnDetectWallFrontT => m_datWallFrontT.bOnDetected;
-        public bool bOnWallFrontT => m_datWallFrontT.bOnHit;
-        private TerrainSenseData m_datWallFrontT;
-
-        public bool bOnDetectWallBackB => m_datWallBackB.bOnDetected;
-        public bool bOnWallBackB => m_datWallBackB.bOnHit;
-        private TerrainSenseData m_datWallBackB;
-
-        public bool bOnDetectWallBackT => m_datWallBackT.bOnDetected;
-        public bool bOnWallBackT => m_datWallBackT.bOnHit;
-        private TerrainSenseData m_datWallBackT;
-
-        public bool bOnDetectCornerFrontB => m_datCornerFrontB.bOnDetected;
-        public bool bOnCornerFrontB => m_datCornerFrontB.bOnHit;
-        private TerrainSenseData m_datCornerFrontB;
-
-        public bool bOnDetectCornerFrontT => m_datCornerFrontT.bOnDetected;
-        public bool bOnCornerFrontT => m_datCornerFrontT.bOnHit;
-        private TerrainSenseData m_datCornerFrontT;
-
-        public bool bOnDetectCornerBackB => m_datCornerBackB.bOnDetected;
-        public bool bOnCornerBackB => m_datCornerBackB.bOnHit;
-        private TerrainSenseData m_datCornerBackB;
-
-        public bool bOnDetectCornerBackT => m_datCornerBackT.bOnDetected;
-        public bool bOnCornerBackT => m_datCornerBackT.bOnHit;
-        private TerrainSenseData m_datCornerBackT;
-
-        public bool bOnDetectCornerFrontVB => m_datCornerFrontVB.bOnDetected;
-        public bool bOnCornerFrontVB => m_datCornerFrontVB.bOnHit;
-        private TerrainSenseData m_datCornerFrontVB;
-
-        public bool bOnDetectCornerFrontVT => m_datCornerFrontVT.bOnDetected;
-        public bool bOnCornerFrontVT => m_datCornerFrontVT.bOnHit;
-        private TerrainSenseData m_datCornerFrontVT;
-
-        public bool bOnDetectCornerBackVB => m_datCornerBackVB.bOnDetected;
-        public bool bOnCornerBackVB => m_datCornerBackVB.bOnHit;
-        private TerrainSenseData m_datCornerBackVB;
-
-        public bool bOnDetectCornerBackVT => m_datCornerBackVT.bOnDetected;
-        public bool bOnCornerBackVT => m_datCornerBackVT.bOnHit;
-        private TerrainSenseData m_datCornerBackVT;
-
-        public bool bOnWallFront => bOnWallFrontB && bOnWallFrontT && bOnCornerFrontT;
-        public bool bOnWallBack => bOnWallBackB && bOnWallBackT;
-        public bool bOnLedge => bOnWallFrontT && !bOnCornerFrontT;
+        public bool bOnWallFront => datWallFrontB.bOnHit && datWallFrontT.bOnHit && datCornerFrontT.bOnDetected;
+        public bool bOnWallBack => datWallBackB.bOnHit && datWallBackT.bOnHit;
+        public bool bOnLedge => datWallFrontT.bOnHit && !datCornerFrontT.bOnDetected && datCornerFrontVT.bOnDetected;
 
         public PlayerTerrainSensor()
         {
-            m_datFloor = new TerrainSenseData();
-            m_datCeil = new TerrainSenseData();
-            m_datWallFrontB = new TerrainSenseData();
-            m_datWallFrontT = new TerrainSenseData();
-            m_datWallBackB = new TerrainSenseData();
-            m_datWallBackT = new TerrainSenseData();
-            m_datCornerFrontB = new TerrainSenseData();
-            m_datCornerFrontT = new TerrainSenseData();
-            m_datCornerBackB = new TerrainSenseData();
-            m_datCornerBackT = new TerrainSenseData();
-            m_datCornerFrontVB = new TerrainSenseData();
-            m_datCornerFrontVT = new TerrainSenseData();
-            m_datCornerBackVB = new TerrainSenseData();
-            m_datCornerBackVT = new TerrainSenseData();
+            datFloor = new TerrainSenseData();
+            datCeil = new TerrainSenseData();
+            datWallFrontB = new TerrainSenseData();
+            datWallFrontT = new TerrainSenseData();
+            datWallBackB = new TerrainSenseData();
+            datWallBackT = new TerrainSenseData();
+            datCornerFrontB = new TerrainSenseData();
+            datCornerFrontT = new TerrainSenseData();
+            datCornerBackB = new TerrainSenseData();
+            datCornerBackT = new TerrainSenseData();
+            datCornerFrontVB = new TerrainSenseData();
+            datCornerFrontVT = new TerrainSenseData();
+            datCornerBackVB = new TerrainSenseData();
+            datCornerBackVT = new TerrainSenseData();
 
             float dLength = 0.5f;
             float hLength = 0.06f;
 
-            m_datFloor.dLength = dLength;
-            m_datCeil.dLength = dLength;
-            m_datWallFrontB.dLength = dLength;
-            m_datWallFrontT.dLength = dLength;
-            m_datWallBackB.dLength = dLength;
-            m_datWallBackT.dLength = dLength;
-            m_datCornerFrontB.dLength = dLength;
-            m_datCornerFrontT.dLength = dLength;
-            m_datCornerBackB.dLength = dLength;
-            m_datCornerBackT.dLength = dLength;
+            datFloor.dLength = dLength;
+            datCeil.dLength = dLength;
+            datWallFrontB.dLength = dLength;
+            datWallFrontT.dLength = dLength;
+            datWallBackB.dLength = dLength;
+            datWallBackT.dLength = dLength;
+            datCornerFrontB.dLength = dLength;
+            datCornerFrontT.dLength = dLength;
+            datCornerBackB.dLength = dLength;
+            datCornerBackT.dLength = dLength;
 
-            m_datFloor.hLength = hLength;
-            m_datCeil.hLength = hLength;
-            m_datWallFrontB.hLength = hLength;
-            m_datWallFrontT.hLength = hLength;
-            m_datWallBackB.hLength = hLength;
-            m_datWallBackT.hLength = hLength;
-            m_datCornerFrontB.hLength = hLength;
-            m_datCornerFrontT.hLength = hLength;
-            m_datCornerBackB.hLength = hLength;
-            m_datCornerBackT.hLength = hLength;
+            datFloor.hLength = hLength;
+            datCeil.hLength = hLength;
+            datWallFrontB.hLength = hLength;
+            datWallFrontT.hLength = hLength;
+            datWallBackB.hLength = hLength;
+            datWallBackT.hLength = hLength;
+            datCornerFrontB.hLength = hLength;
+            datCornerFrontT.hLength = hLength;
+            datCornerBackB.hLength = hLength;
+            datCornerBackT.hLength = hLength;
 
-            m_datFloor.direction.Set(0, -1);
-            m_datCeil.direction.Set(0, 1);
+            datFloor.direction.Set(0, -1);
+            datCeil.direction.Set(0, 1);
 
-            m_datCornerFrontVB.hLength = -1;
-            m_datCornerFrontVT.hLength = -1;
-            m_datCornerBackVB.hLength = -1;
-            m_datCornerBackVT.hLength = -1;
-
-            int tmpLayer = 1 << LayerMask.NameToLayer("Terrain");
-            m_datFloor.targetLayer = tmpLayer;
-            m_datCeil.targetLayer = tmpLayer;
-            m_datWallFrontB.targetLayer = tmpLayer;
-            m_datWallFrontT.targetLayer = tmpLayer;
-            m_datWallBackB.targetLayer = tmpLayer;
-            m_datWallBackT.targetLayer = tmpLayer;
-            m_datCornerFrontB.targetLayer = tmpLayer;
-            m_datCornerFrontT.targetLayer = tmpLayer;
-            m_datCornerBackB.targetLayer = tmpLayer;
-            m_datCornerBackT.targetLayer = tmpLayer;
-            m_datCornerFrontVB.targetLayer = tmpLayer;
-            m_datCornerFrontVT.targetLayer = tmpLayer;
-            m_datCornerBackVB.targetLayer = tmpLayer;
-            m_datCornerBackVT.targetLayer = tmpLayer;
+            datCornerFrontVB.hLength = -1;
+            datCornerFrontVT.hLength = -1;
+            datCornerBackVB.hLength = -1;
+            datCornerBackVT.hLength = -1;
         }
 
         protected override void SetOrigins(Player _player)
@@ -143,64 +83,92 @@ namespace Unchord
             Bounds feet = _player.hCol.feet.bounds;
             float lx = _player.lookDir.fx;
 
-            m_datFloor.origin.Set(feet.center.x, feet.min.y);
-            m_datCeil.origin.Set(head.center.x, head.max.y);
-            m_datWallFrontB.origin.Set(feet.center.x + lx * feet.extents.x, feet.center.y);
-            m_datWallFrontT.origin.Set(head.center.x + lx * head.extents.x, head.center.y);
-            m_datWallBackB.origin.Set(feet.center.x - lx * feet.extents.x, feet.center.y);
-            m_datWallBackT.origin.Set(head.center.x - lx * head.extents.x, head.center.y);
-            m_datCornerFrontB.origin.Set(feet.center.x + lx * feet.extents.x, feet.min.y);
-            m_datCornerFrontT.origin.Set(head.center.x + lx * head.extents.x, head.max.y);
-            m_datCornerBackB.origin.Set(feet.center.x - lx * feet.extents.x, feet.min.y);
-            m_datCornerBackT.origin.Set(head.center.x - lx * head.extents.x, head.max.y);
+            datFloor.origin.Set(feet.center.x, feet.min.y);
+            datCeil.origin.Set(head.center.x, head.max.y);
+            datWallFrontB.origin.Set(feet.center.x + lx * feet.extents.x, feet.center.y);
+            datWallFrontT.origin.Set(head.center.x + lx * head.extents.x, head.center.y);
+            datWallBackB.origin.Set(feet.center.x - lx * feet.extents.x, feet.center.y);
+            datWallBackT.origin.Set(head.center.x - lx * head.extents.x, head.center.y);
+            datCornerFrontB.origin.Set(feet.center.x + lx * feet.extents.x, feet.min.y);
+            datCornerFrontT.origin.Set(head.center.x + lx * head.extents.x, head.max.y);
+            datCornerBackB.origin.Set(feet.center.x - lx * feet.extents.x, feet.min.y);
+            datCornerBackT.origin.Set(head.center.x - lx * head.extents.x, head.max.y);
 
             // TODO;
-            // m_datCornerFrontVB.origin.Set(0, 1);
-            // m_datCornerFrontVT.origin.Set(0, -1);
-            // m_datCornerBackVB.origin.Set(0, 1);
-            // m_datCornerBackVT.origin.Set(0, -1);
+            datCornerFrontVB.origin.Set(
+                datCornerFrontB.origin.x + lx * 0.1f,
+                datCornerFrontB.origin.y
+                );
+            datCornerFrontVT.origin.Set(
+                datCornerFrontT.origin.x + lx * 0.1f,
+                datCornerFrontT.origin.y
+                );
+            datCornerBackVB.origin.Set(
+                datCornerBackB.origin.x - lx * 0.1f,
+                datCornerBackB.origin.y
+                );
+            datCornerBackVT.origin.Set(
+                datCornerBackT.origin.x - lx * 0.1f,
+                datCornerBackT.origin.y
+                );
 
-            m_datWallFrontB.direction.Set(lx, 0);
-            m_datWallFrontT.direction.Set(lx, 0);
-            m_datWallBackB.direction.Set(-lx, 0);
-            m_datWallBackT.direction.Set(-lx, 0);
-            m_datCornerFrontB.direction.Set(lx, 0);
-            m_datCornerFrontT.direction.Set(lx, 0);
-            m_datCornerBackB.direction.Set(-lx, 0);
-            m_datCornerBackT.direction.Set(-lx, 0);
+            datWallFrontB.direction.Set(lx, 0);
+            datWallFrontT.direction.Set(lx, 0);
+            datWallBackB.direction.Set(-lx, 0);
+            datWallBackT.direction.Set(-lx, 0);
+            datCornerFrontB.direction.Set(lx, 0);
+            datCornerFrontT.direction.Set(lx, 0);
+            datCornerBackB.direction.Set(-lx, 0);
+            datCornerBackT.direction.Set(-lx, 0);
 
             // NOTE: 혹시나 flip Y 기능을 사용한다면,
             // (1) float ly = _player.lookDir.fy;
             // (2) 1 => ly; -1 => -ly;
-            m_datCornerFrontVB.direction.Set(0, 1);
-            m_datCornerFrontVT.direction.Set(0, -1);
-            m_datCornerBackVB.direction.Set(0, 1);
-            m_datCornerBackVT.direction.Set(0, -1);
+            datCornerFrontVB.direction.Set(0, 1);
+            datCornerFrontVT.direction.Set(0, -1);
+            datCornerBackVB.direction.Set(0, 1);
+            datCornerBackVT.direction.Set(0, -1);
 
-            m_datCornerFrontVB.dLength = feet.max.y - feet.min.y;
-            m_datCornerFrontVT.dLength = head.max.y - head.min.y;
-            m_datCornerBackVB.dLength = feet.max.y - feet.min.y;
-            m_datCornerBackVT.dLength = head.max.y - head.min.y;
+            datCornerFrontVB.dLength = 0.9f * feet.extents.y;
+            datCornerFrontVT.dLength = 0.9f * head.extents.y;
+            datCornerBackVB.dLength = 0.9f * feet.extents.y;
+            datCornerBackVT.dLength = 0.9f * head.extents.y;
+
+            int tmpLayer = 1 << LayerMask.NameToLayer("Terrain");
+            datFloor.targetLayer = tmpLayer;
+            datCeil.targetLayer = tmpLayer;
+            datWallFrontB.targetLayer = tmpLayer;
+            datWallFrontT.targetLayer = tmpLayer;
+            datWallBackB.targetLayer = tmpLayer;
+            datWallBackT.targetLayer = tmpLayer;
+            datCornerFrontB.targetLayer = tmpLayer;
+            datCornerFrontT.targetLayer = tmpLayer;
+            datCornerBackB.targetLayer = tmpLayer;
+            datCornerBackT.targetLayer = tmpLayer;
+            datCornerFrontVB.targetLayer = tmpLayer;
+            datCornerFrontVT.targetLayer = tmpLayer;
+            datCornerBackVB.targetLayer = tmpLayer;
+            datCornerBackVT.targetLayer = tmpLayer;
         }
 
         protected override void DetectTerrains(Player player)
         {
             float lx = player.lookDir.fx;
 
-            TerrainSensorBase.Sense(in m_datFloor);
-            TerrainSensorBase.Sense(in m_datCeil);
-            TerrainSensorBase.Sense(in m_datWallFrontB);
-            TerrainSensorBase.Sense(in m_datWallFrontT);
-            TerrainSensorBase.Sense(in m_datWallBackB);
-            TerrainSensorBase.Sense(in m_datWallBackT);
-            TerrainSensorBase.Sense(in m_datCornerFrontB);
-            TerrainSensorBase.Sense(in m_datCornerFrontT);
-            TerrainSensorBase.Sense(in m_datCornerBackB);
-            TerrainSensorBase.Sense(in m_datCornerBackT);
-            TerrainSensorBase.Sense(in m_datCornerFrontVB);
-            TerrainSensorBase.Sense(in m_datCornerFrontVT);
-            TerrainSensorBase.Sense(in m_datCornerBackVB);
-            TerrainSensorBase.Sense(in m_datCornerBackVT);
+            TerrainSensorBase.Sense(in datFloor);
+            TerrainSensorBase.Sense(in datCeil);
+            TerrainSensorBase.Sense(in datWallFrontB);
+            TerrainSensorBase.Sense(in datWallFrontT);
+            TerrainSensorBase.Sense(in datWallBackB);
+            TerrainSensorBase.Sense(in datWallBackT);
+            TerrainSensorBase.Sense(in datCornerFrontB);
+            TerrainSensorBase.Sense(in datCornerFrontT);
+            TerrainSensorBase.Sense(in datCornerBackB);
+            TerrainSensorBase.Sense(in datCornerBackT);
+            TerrainSensorBase.Sense(in datCornerFrontVB);
+            TerrainSensorBase.Sense(in datCornerFrontVT);
+            TerrainSensorBase.Sense(in datCornerBackVB);
+            TerrainSensorBase.Sense(in datCornerBackVT);
         }
 
         protected override void SetDirectionVector(Player player)
@@ -208,10 +176,10 @@ namespace Unchord
             float nx = 1;
             float ny = 0;
 
-            if(m_datFloor.bOnDetected)
+            if(datFloor.bOnDetected)
             {
-                nx = m_datFloor.hitData.normal.x;
-                ny = m_datFloor.hitData.normal.y;
+                nx = datFloor.hitData.normal.x;
+                ny = datFloor.hitData.normal.y;
 
                 if(ny != 0)
                     ny = -nx / ny;

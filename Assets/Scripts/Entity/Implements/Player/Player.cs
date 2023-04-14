@@ -237,6 +237,11 @@ namespace Unchord
             CURRENT_STATE = machineInterface.current;
             CURRENT_TYPE = machineInterface.state.GetType().ToString();
         }
+
+        protected override bool bShowGizmos()
+        {
+            return true;
+        }
 /*
         protected override void Start()
         {

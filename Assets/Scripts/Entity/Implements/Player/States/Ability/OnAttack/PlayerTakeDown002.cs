@@ -29,7 +29,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.senseData.bOnFloor)
+            else if(instance.senseData.datFloor.bOnHit)
                 return Player.c_st_TAKE_DOWN_003;
 
             return MachineConstant.c_lt_PASS;

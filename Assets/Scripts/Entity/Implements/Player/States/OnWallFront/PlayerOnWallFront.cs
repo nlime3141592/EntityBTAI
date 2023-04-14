@@ -28,7 +28,7 @@ namespace Unchord
                 return transit;
             else if(instance.jumpDown)
                 return Player.c_st_JUMP_ON_WALL_FRONT;
-            else if(instance.senseData.bOnDetectFloor)
+            else if(instance.senseData.datFloor.bOnDetected)
                 return Player.c_st_FREE_FALL;
             else if(instance.axis.y < 0 && instance.axis.x == 0)
                 return Player.c_st_FREE_FALL;

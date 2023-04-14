@@ -25,45 +25,19 @@ namespace Unchord
             bInitState = false;
             instance.bFixedLookDirByAxis.x = true;
 
-            Vector2 rayOriginX = Vector2.zero;
-            Vector2 rayOriginY = Vector2.zero;
-            Vector2 dirX = Vector2.zero;
-            Vector2 dirY = Vector2.zero;
-            float dLength = instance.detectLength;
-            float ledgerp = instance.ledgerp;
-            float lWeight = instance.ledgeVerticalLengthWeight;
-            int layerMask = 1 << LayerMask.NameToLayer("Terrain");
+            Vector2 hand = Vector2.zero;
+            hand.x = instance.senseData.datWallFrontT.hitData.point.x;
+            hand.y = instance.senseData.datCornerFrontVT.hitData.point.y;
 
-            RaycastHit2D hitX = default(RaycastHit2D);
-            RaycastHit2D hitY = default(RaycastHit2D);
-            Vector2 dtPosition = Vector2.zero;
-            Vector2 dfPosition = Vector2.zero;
-            Vector2 handPosition = Vector2.zero;
+            Vector2 dt = instance.transform.position;
+            dt -= instance.senseData.datWallFrontT.origin;
 
-            if(instance.lookDir.x < 0)
-            {
-                rayOriginX = instance.senseData.originWallLT.position;
-                rayOriginY = instance.senseData.originLedgeLT.position;
-                dirX = Vector2.left;
-                dirY = Vector2.down;
-            }
-            else
-            {
-                rayOriginX = instance.senseData.originWallRT.position;
-                rayOriginY = instance.senseData.originLedgeRT.position;
-                dirX = Vector2.right;
-                dirY = Vector2.down;
-            }
+            Vector2 df = instance.transform.position;
+            df -= instance.senseData.datFloor.origin;
 
-            hitX = Physics2D.Raycast(rayOriginX, dirX, dLength, layerMask);
-            hitY = Physics2D.Raycast(rayOriginY + dirX * ledgerp, dirY, dLength, layerMask);
-            dtPosition = (Vector2)instance.transform.position - rayOriginX;
-            dfPosition = instance.transform.position - instance.senseData.originFloor.position;
-            handPosition.x = hitX.point.x;
-            handPosition.y = hitY.point.y;
+            playerPosition = hand + dt;
+            playerTeleportPosition = hand + df + instance.lookDir.fx * 0.1f * Vector2.right;
 
-            playerPosition = handPosition + dtPosition;
-            playerTeleportPosition = handPosition + dfPosition + dirX * ledgerp;
             instance.transform.position = playerPosition;
         }
 
@@ -86,6 +60,15 @@ namespace Unchord
             instance.bFixedLookDirByAxis.x = false;
             instance.vm.MeltPositionX();
             instance.vm.MeltPositionY();
+        }
+
+        public override void OnDrawGizmoAlways()
+        {
+            base.OnDrawGizmoAlways();
+
+            Debug.DrawRay(instance.senseData.datWallFrontT.origin, instance.senseData.datWallFrontT.direction * instance.senseData.datWallFrontT.dLength, Color.cyan, Time.deltaTime);
+            Debug.DrawRay(instance.senseData.datCornerFrontT.origin, instance.senseData.datCornerFrontT.direction * instance.senseData.datCornerFrontT.dLength, Color.cyan, Time.deltaTime);
+            Debug.DrawRay(instance.senseData.datCornerFrontVT.origin, instance.senseData.datCornerFrontVT.direction * instance.senseData.datCornerFrontVT.dLength, Color.cyan, Time.deltaTime);
         }
     }
 }

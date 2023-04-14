@@ -65,9 +65,9 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.senseData.bOnCeil || instance.aController.bEndOfAnimation)
+            else if(instance.senseData.datCeil.bOnHit || instance.aController.bEndOfAnimation)
                 return Player.c_st_FREE_FALL;
-            else if(instance.senseData.bOnFloor)
+            else if(instance.senseData.datFloor.bOnHit)
                 return Player.c_st_IDLE_SHORT;
             else if(instance.aController.bEndOfAction)
             {

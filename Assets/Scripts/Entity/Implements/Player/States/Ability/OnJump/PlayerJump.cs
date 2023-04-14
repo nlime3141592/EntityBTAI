@@ -40,7 +40,7 @@ namespace Unchord
                 else
                     return instance.stateNext_AttackOnAir;
             }
-            else if(instance.senseData.bOnCeil)
+            else if(instance.senseData.datCeil.bOnHit)
                 return Player.c_st_FREE_FALL;
             else if(instance.countLeft_JumpOnAir > 0 && instance.jumpDown)
                 return Player.c_st_JUMP_ON_AIR;

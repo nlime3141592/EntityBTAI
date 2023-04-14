@@ -19,11 +19,19 @@ namespace Unchord
             base.OnFixedUpdate();
             instance.offset_StandCamera = Vector2.down;
 
+            GameObject floor = instance.senseData.datFloor.hitData.collider.gameObject;
+
+            if(floor == null)
+                m_bOnSlab = false;
+            else
+                m_bOnSlab = floor.TryGetComponent<Slab>(out m_slab);
+/*
             RaycastHit2D hit = Physics2D.Raycast(instance.senseData.originFloor.position, Vector2.down, 0.1f, 1 << LayerMask.NameToLayer("Slab"));
             if(hit)
                 m_bOnSlab = hit.collider.gameObject.TryGetComponent<Slab>(out m_slab);
             else
                 m_bOnSlab = false;
+*/
         }
 
         public override int Transit()

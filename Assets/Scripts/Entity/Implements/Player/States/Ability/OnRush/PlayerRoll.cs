@@ -5,6 +5,7 @@ namespace Unchord
     public class PlayerRoll : PlayerRush
     {
         private bool m_bParryingDown;
+        private float m_dirX;
 
         public override void OnConstruct()
         {
@@ -18,39 +19,15 @@ namespace Unchord
             base.OnStateBegin();
 
             m_bParryingDown = false;
-
-            float ix = instance.axis.x;
-            if(ix < 0) instance.lookDir.x = Direction.Negative;
-            else if(ix > 0) instance.lookDir.x = Direction.Positive;
+            m_dirX = instance.lookDir.fx;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            RaycastHit2D terrain = Physics2D.Raycast(instance.senseData.originFloor.position, Vector2.down, 0.5f, 1 << LayerMask.NameToLayer("Terrain"));
-
-            instance.moveDir.x = 1.0f;
-
-            if(terrain.normal.y == 0)
-                instance.moveDir.y = 0;
-            else
-                instance.moveDir.y = -terrain.normal.x / terrain.normal.y;
-
-            float vx = instance.lookDir.fx * instance.moveDir.x * instance.speed_Roll;
-            float vy = instance.lookDir.fx * instance.moveDir.y * instance.speed_Roll;
-            float addVelocityRatio = 0.25f;
-
-            if(vy < 0)
-                vy *= (1 + addVelocityRatio);
-            else if(vy > 0)
-                vy *= (1 - addVelocityRatio);
-            else if(vx < 0)
-                vy += vx;
-            else if(vx > 0)
-                vy -= vx;
-            else
-                vy -= 1.0f;
+            float vx = m_dirX * instance.moveDir.x * instance.speed_Roll;
+            float vy = m_dirX * instance.moveDir.y * instance.speed_Roll - 1.0f;
 
             instance.vm.SetVelocityXY(vx, vy);
         }
@@ -72,6 +49,8 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
+            else if(!instance.senseData.datFloor.bOnHit)
+                return Player.c_st_FREE_FALL;
             else if(instance.aController.bEndOfAnimation)
                 return Player.c_st_IDLE_SHORT;
             else if(m_bParryingDown)

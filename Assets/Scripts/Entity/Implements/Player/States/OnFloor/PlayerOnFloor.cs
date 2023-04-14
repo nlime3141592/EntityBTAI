@@ -35,7 +35,7 @@ namespace Unchord
                 return Player.c_st_BASIC_PARRYING;
             else if(instance.rushDown)
                 return Player.c_st_ROLL;
-            else if(!instance.senseData.bOnFloor)
+            else if(!instance.senseData.datFloor.bOnHit)
                 return Player.c_st_FREE_FALL;
 
             return MachineConstant.c_lt_PASS;

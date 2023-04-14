@@ -21,9 +21,9 @@ namespace Unchord
                 return Player.c_st_JUMP_ON_AIR;
             else if(instance.rushDown)
                 return Player.c_st_DASH;
-            else if(instance.senseData.bOnFloor)
+            else if(instance.senseData.datFloor.bOnHit)
                 return Player.c_st_IDLE_SHORT;
-            else if(instance.senseData.bOnDetectFloor)
+            else if(instance.senseData.datFloor.bOnDetected)
                 return MachineConstant.c_lt_PASS;
             else if(instance.axis.x != 0)
             {

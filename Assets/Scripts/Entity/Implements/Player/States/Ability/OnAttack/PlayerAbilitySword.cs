@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Unchord
 {
     [Serializable]
-    public class PlayerAbilitySword : PlayerAttack, IBattleState
+    public class PlayerAbilitySword : PlayerAttack //, IBattleState
     {
         // fixed data
         private float m_cooltime = 3.0f;
@@ -15,7 +15,7 @@ namespace Unchord
         public override void OnConstruct()
         {
             base.OnConstruct();
-
+/*
             base.attackRange = new LTRB()
             {
                 left = 1.0f,
@@ -25,6 +25,7 @@ namespace Unchord
             };
             base.targetCount = 7;
             base.baseDamage = 1.0f;
+*/
         }
 
         public override bool CanTransit()
@@ -37,7 +38,7 @@ namespace Unchord
         {
             base.OnStateBegin();
 
-            instance.battleModule.SetBattleState(this);
+            // instance.battleModule.SetBattleState(this);
 
             instance.bFixedLookDirByAxis.x = true;
             instance.vm.FreezePositionX();
