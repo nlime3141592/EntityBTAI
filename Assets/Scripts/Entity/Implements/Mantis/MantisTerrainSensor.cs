@@ -15,6 +15,9 @@ namespace Unchord
         public readonly TerrainSenseData datWallBackB;
         public readonly TerrainSenseData datWallBackT;
 
+        public bool bOnWallFront => datWallFrontB.bOnDetected && datWallFrontT.bOnDetected;
+        public bool bOnWallBack => datWallBackB.bOnDetected && datWallBackT.bOnDetected;
+
         public MantisTerrainSensor()
         {
             datFloorBack = new TerrainSenseData();

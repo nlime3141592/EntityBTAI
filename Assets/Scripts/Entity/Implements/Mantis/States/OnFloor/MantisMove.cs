@@ -23,7 +23,6 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            instance.senseData.UpdateMoveDir(instance);
 
             if(m_leftMoveFrame > 0)
                 --m_leftMoveFrame;

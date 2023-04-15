@@ -38,7 +38,7 @@ namespace Unchord
         {
             base.OnStateBegin();
 
-            instance.battleModule.SetBattleState(this);
+            // instance.battleModule.SetBattleState(this);
 
             m_leftCooltime = m_cooltime;
             m_bAttacked = false;

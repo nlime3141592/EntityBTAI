@@ -24,7 +24,8 @@ namespace Unchord
 
         public bool bOnWallFront => datWallFrontB.bOnHit && datWallFrontT.bOnHit && datCornerFrontT.bOnDetected;
         public bool bOnWallBack => datWallBackB.bOnHit && datWallBackT.bOnHit;
-        public bool bOnLedge => datWallFrontT.bOnHit && !datCornerFrontT.bOnDetected && datCornerFrontVT.bOnDetected;
+        // public bool bOnLedge => datWallFrontT.bOnHit && !datCornerFrontT.bOnDetected && datCornerFrontVT.bOnDetected;
+        public bool bOnLedge => false;
 
         public PlayerTerrainSensor()
         {
@@ -157,14 +158,15 @@ namespace Unchord
             TerrainSensorBase.Sense(in datWallFrontT);
             TerrainSensorBase.Sense(in datWallBackB);
             TerrainSensorBase.Sense(in datWallBackT);
-            TerrainSensorBase.Sense(in datCornerFrontB);
-            TerrainSensorBase.Sense(in datCornerFrontT);
-            TerrainSensorBase.Sense(in datCornerBackB);
-            TerrainSensorBase.Sense(in datCornerBackT);
-            TerrainSensorBase.Sense(in datCornerFrontVB);
-            TerrainSensorBase.Sense(in datCornerFrontVT);
-            TerrainSensorBase.Sense(in datCornerBackVB);
-            TerrainSensorBase.Sense(in datCornerBackVT);
+
+            // TerrainSensorBase.Sense(in datCornerFrontB);
+            // TerrainSensorBase.Sense(in datCornerFrontT);
+            // TerrainSensorBase.Sense(in datCornerBackB);
+            // TerrainSensorBase.Sense(in datCornerBackT);
+            // TerrainSensorBase.Sense(in datCornerFrontVB);
+            // TerrainSensorBase.Sense(in datCornerFrontVT);
+            // TerrainSensorBase.Sense(in datCornerBackVB);
+            // TerrainSensorBase.Sense(in datCornerBackVT);
         }
 
         protected override void SetDirectionVector(Player player)

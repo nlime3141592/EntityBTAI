@@ -10,12 +10,6 @@ namespace Unchord
         public Transform container;
         public EntitySensorGizmoOption gizmo;
 
-        Entity IBattleState.attacker => this;
-        List<Entity> IBattleState.targets => this.targets;
-        LTRB IBattleState.range => this.attackRange;
-        int IBattleState.targetCount => this.targetCount;
-        float IBattleState.baseDamage => this.baseDamage;
-
         protected List<Entity> targets;
         public LTRB attackRange;
         public int targetCount = 7;
@@ -37,7 +31,7 @@ namespace Unchord
 
             TryGetComponent<BattleModule>(out battleModule);
 
-            battleModule.SetBattleState(this);
+            // battleModule.SetBattleState(this);
 
             vm.FreezePosition(true, true);
 
@@ -133,6 +127,11 @@ namespace Unchord
                 return false;
             Collider2D[] cols = EntitySensor.OverlapBox(this, attackRange, gizmo, 1 << LayerMask.NameToLayer("Terrain"));
             return cols != null && cols.Length == 0;
+        }
+
+        public void OnTriggerBattleState()
+        {
+            
         }
     }
 }

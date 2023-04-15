@@ -4,12 +4,6 @@ namespace Unchord
 {
     public class ExcavatorAttack : ExcavatorAbility, IBattleState
     {
-        Entity IBattleState.attacker => instance;
-        List<Entity> IBattleState.targets => this.targets;
-        LTRB IBattleState.range => attackRange;
-        int IBattleState.targetCount => this.targetCount;
-        float IBattleState.baseDamage => this.baseDamage;
-
         protected List<Entity> targets;
         public LTRB attackRange;
         public int targetCount;
@@ -25,7 +19,7 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            instance.battleModule.SetBattleState(this);
+            // instance.battleModule.SetBattleState(this);
         }
 
         public override void OnStateEnd()
@@ -34,6 +28,11 @@ namespace Unchord
 
             instance.bUpdateAggroDirX = true;
             instance.bFixedLookDirByAxis.x = false;
+        }
+
+        public void OnTriggerBattleState()
+        {
+            
         }
     }
 }

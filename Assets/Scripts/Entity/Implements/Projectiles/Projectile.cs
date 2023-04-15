@@ -13,12 +13,6 @@ namespace Unchord
         public int CURRENT_STATE = -1;
         public Transform container;
 
-        Entity IBattleState.attacker => this;
-        List<Entity> IBattleState.targets => this.targets;
-        LTRB IBattleState.range => this.attackRange;
-        int IBattleState.targetCount => this.targetCount;
-        float IBattleState.baseDamage => this.baseDamage;
-
         protected List<Entity> targets;
         public LTRB attackRange;
         public int targetCount = 7;
@@ -40,7 +34,7 @@ namespace Unchord
             TryGetComponent<CircleCollider2D>(out cCol);
 
             // NOTE: Projectile의 상태 클래스를 따로 만들어 관리하는 방법을 생각해 봐야 한다.
-            battleModule.SetBattleState(this);
+            // battleModule.SetBattleState(this);
 
             cCol.enabled = false;
             vm.FreezePosition(true, true);
@@ -134,6 +128,11 @@ namespace Unchord
             vm.FreezePosition(true, true);
             vm.SetVelocityY(0);
             aController.SetState(1);
+        }
+
+        public void OnTriggerBattleState()
+        {
+            
         }
     }
 }
