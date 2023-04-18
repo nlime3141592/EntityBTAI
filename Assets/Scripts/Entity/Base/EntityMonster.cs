@@ -11,6 +11,8 @@ namespace Unchord
         public float waitSecondOnChangeAction = 1.5f;
         public float waitDiffSecondOnChangeAction = 0.5f;
 
+        public MonsterAggroAI aggroAI;
+
         [Header("Aggro Options")]
         public LTRB aggroRange;
         public EntitySensorGizmoOption aggroDebugOption;
@@ -22,15 +24,21 @@ namespace Unchord
         public List<Entity> aggroTargets;
         public int targetLayerMask;
 
-        public System.Random prng { get; private set; }
-
         public int monsterPhase;
+
+        protected override void InitComponents()
+        {
+            base.InitComponents();
+        }
 
         protected override void InitMiscellaneous()
         {
             base.InitMiscellaneous();
 
             aggroTargets = new List<Entity>(4);
+
+            aggroAI.onAggroBegin += OnAggroBegin;
+            aggroAI.onAggroEnd += OnAggroEnd;
         }
 
         public virtual void OnAggroBegin() {}

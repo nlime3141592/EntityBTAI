@@ -25,6 +25,7 @@ namespace Unchord
 
         public IStateMachineRemote machineInterface { get; protected set; }
         public VelocityModule2D vm { get; private set; }
+        public System.Random prng { get; private set; }
 #endregion
 
 #region Allocate on Editor
@@ -92,6 +93,7 @@ namespace Unchord
             TryGetComponent<AnimationController>(out m_aController);
 
             vm = new VelocityModule2D(m_physics);
+            prng = new System.Random();
             m_compositeTimerHandler = new CompositeTimerHandler(1);
             stateMap = new Dictionary<int, int>(2);
         }
