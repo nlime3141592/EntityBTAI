@@ -69,6 +69,8 @@ namespace Unchord
         public bool bInvincibility;
         public float groggyValue;
 
+        public List<Collider2D> sensorBuffer;
+
         private float m_health;
         private float m_mana;
 
@@ -96,6 +98,9 @@ namespace Unchord
             prng = new System.Random();
             m_compositeTimerHandler = new CompositeTimerHandler(1);
             stateMap = new Dictionary<int, int>(2);
+
+            if(sensorBuffer == null)
+                sensorBuffer = new List<Collider2D>();
         }
 
         protected virtual void InitMiscellaneous()

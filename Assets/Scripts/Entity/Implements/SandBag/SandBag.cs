@@ -1,35 +1,37 @@
-/*
-namespace UnchordMetroidvania
+namespace Unchord
 {
-    public class SandBag : EntityBase
+    public class SandBag : Entity
     {
-        public SandBagHard stateHard;
-        public SandBagSoft stateSoft;
+        public const int c_st_DIE = 0;
+        public const int c_st_IDLE = 1;
 
-        public SandBagState currentState = null;
-        public InvokeResult currentInvocation = InvokeResult.Failure;
-        public bool value = false;
+        public IStateMachine<SandBag> fsm;
+        private IState<SandBag> m_stateTree;
 
-        protected override void Start()
+        public float 현재체력;
+
+        protected override void InitStateMachine()
         {
-            base.Start();
+            base.InitStateMachine();
 
-            aController = GetComponent<AnimationController>();
+            fsm = new StateMachine<SandBag>(2);
 
-            stateHard = new SandBagHard(this, aController);
-            stateSoft = new SandBagSoft(this, aController);
-            currentState = stateSoft;
+            CompositeState<SandBag> root = new CompositeState<SandBag>(2);
+            root[0] = new SandBagDie();
+            root[1] = new SandBagIdle();
+
+            m_stateTree = root;
+
+            // fsm.RegisterStateMap(stateMap);
+            RegisterMachineEvent(fsm);
+            fsm.Begin(this, m_stateTree, SandBag.c_st_IDLE);
         }
 
-        protected override void FixedUpdate()
+        protected override void PostUpdate()
         {
-            base.FixedUpdate();
+            base.PostUpdate();
 
-            if(currentState == null)
-                return;
-
-            currentInvocation = currentState.Invoke();
+            현재체력 = base.health;
         }
     }
 }
-*/

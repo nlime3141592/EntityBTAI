@@ -24,7 +24,7 @@ namespace Unchord
             base.OnStateBegin();
             instance.bUpdateAggroDirX = false;
             instance.bFixedLookDirByAxis.x = true;
-            instance.battleModule.targetLayerMask |= 1 << LayerMask.NameToLayer("Terrain");
+            // instance.battleModule.targetLayerMask |= 1 << LayerMask.NameToLayer("Terrain");
             // instance.AllowHitFromBattleModule(false);
             instance.IgnoreBattleTrigger(null, false); // TODO: 배틀 트리거를 넣어줘야 함.
             instance.SetHealth(instance.maxHealth.finalValue);
@@ -45,7 +45,7 @@ namespace Unchord
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-            instance.battleModule.targetLayerMask &= ~(1 << LayerMask.NameToLayer("Terrain"));
+            // instance.battleModule.targetLayerMask &= ~(1 << LayerMask.NameToLayer("Terrain"));
         }
     }
 }

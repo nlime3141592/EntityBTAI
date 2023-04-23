@@ -32,8 +32,11 @@ namespace Unchord
                 m_player.rushDown = Input.GetKeyDown(KeyCode.LeftShift);
                 m_player.rushUp = Input.GetKeyUp(KeyCode.LeftShift);
                 m_player.skill00 = Input.GetKeyDown(KeyCode.Z);
-                m_player.skill01 = Input.GetKeyDown(KeyCode.X);
-                m_player.skill02 = Input.GetKeyDown(KeyCode.C);
+
+                // m_player.skill01 = Input.GetKeyDown(KeyCode.X);
+                // m_player.skill02 = Input.GetKeyDown(KeyCode.C);
+                m_player.skill01 = false;
+                m_player.skill02 = false;
             }
             else
             {

@@ -44,15 +44,7 @@ namespace Unchord
             bAggroPrev = bAggro;
             aggroTargets.Clear();
             aggroSensor.Sense(in m_detected, targetLayer);
-
-            for(int i = 0; i < m_detected.Count; ++i)
-            {
-                Entity dEntity;
-
-                if(m_detected[i].gameObject.TryGetComponent(out dEntity))
-                    if(!aggroTargets.Contains(dEntity))
-                        aggroTargets.Add(dEntity);
-            }
+            m_detected.GetComponents<Entity>(in aggroTargets);
 
             bAggro = aggroTargets.Count > 0;
         }

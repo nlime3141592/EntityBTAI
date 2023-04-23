@@ -84,6 +84,10 @@ namespace Unchord
         public int count_JumpOnAir = 1;
         public int count_Dash = 1;
         public int count_AttackOnAir = 1;
+
+        public Sensor_SO skillRange_AttackOnFloor001;
+        public Sensor_SO skillRange_AttackOnFloor002;
+        public Sensor_SO skillRange_AttackOnFloor003;
 #endregion
 
 #region Player Variables
@@ -175,12 +179,12 @@ namespace Unchord
             CompositeState<Player> state_AttackOnAir = new CompositeState<Player>(2);
             state_AttackOnAir[0] = new PlayerAttackOnAir001();
             state_AttackOnAir[1] = new PlayerAttackOnAir002();
-
+/*
             CompositeState<Player> state_TakeDown = new CompositeState<Player>(3);
             state_TakeDown[0] = new PlayerTakeDown001();
             state_TakeDown[1] = new PlayerTakeDown002();
             state_TakeDown[2] = new PlayerTakeDown003();
-
+*/
             // NOTE: 상태를 이 곳에서 조직하고, m_stateTree에 Root 할당하기.
             int index_root = -1;
             root[++index_root] = new PlayerIdleLong();
@@ -197,12 +201,12 @@ namespace Unchord
             root[++index_root] = new PlayerJumpOnWallFront();
             root[++index_root] = new PlayerRoll();
             root[++index_root] = new PlayerDash();
-            root[++index_root] = new PlayerClimbOnLedge();
+            // root[++index_root] = new PlayerClimbOnLedge();
             root[++index_root] = state_AttackOnFloor;
             root[++index_root] = state_AttackOnAir;
-            root[++index_root] = new PlayerAbilitySword();
-            root[++index_root] = new PlayerAbilityGun();
-            root[++index_root] = state_TakeDown;
+            // root[++index_root] = new PlayerAbilitySword();
+            // root[++index_root] = new PlayerAbilityGun();
+            // root[++index_root] = state_TakeDown;
             root[++index_root] = new PlayerBasicParrying();
             root[++index_root] = new PlayerEmergencyParrying();
             root[++index_root] = new PlayerJumpDown();

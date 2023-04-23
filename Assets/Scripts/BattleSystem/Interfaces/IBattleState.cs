@@ -4,6 +4,6 @@ namespace Unchord
 {
     public interface IBattleState
     {
-        void OnTriggerBattleState();
+        void OnTriggerBattleState(BattleModule _btModule);
     }
 }

@@ -13,16 +13,16 @@ namespace Unchord
         public readonly TerrainSenseData datWallFrontT;
         public readonly TerrainSenseData datWallBackB;
         public readonly TerrainSenseData datWallBackT;
-        public readonly TerrainSenseData datCornerFrontB;
-        public readonly TerrainSenseData datCornerFrontT;
-        public readonly TerrainSenseData datCornerBackB;
-        public readonly TerrainSenseData datCornerBackT;
-        public readonly TerrainSenseData datCornerFrontVB;
-        public readonly TerrainSenseData datCornerFrontVT;
-        public readonly TerrainSenseData datCornerBackVB;
-        public readonly TerrainSenseData datCornerBackVT;
+        // public readonly TerrainSenseData datCornerFrontB;
+        // public readonly TerrainSenseData datCornerFrontT;
+        // public readonly TerrainSenseData datCornerBackB;
+        // public readonly TerrainSenseData datCornerBackT;
+        // public readonly TerrainSenseData datCornerFrontVB;
+        // public readonly TerrainSenseData datCornerFrontVT;
+        // public readonly TerrainSenseData datCornerBackVB;
+        // public readonly TerrainSenseData datCornerBackVT;
 
-        public bool bOnWallFront => datWallFrontB.bOnHit && datWallFrontT.bOnHit && datCornerFrontT.bOnDetected;
+        public bool bOnWallFront => datWallFrontB.bOnHit && datWallFrontT.bOnHit; // && datCornerFrontT.bOnDetected;
         public bool bOnWallBack => datWallBackB.bOnHit && datWallBackT.bOnHit;
         // public bool bOnLedge => datWallFrontT.bOnHit && !datCornerFrontT.bOnDetected && datCornerFrontVT.bOnDetected;
         public bool bOnLedge => false;
@@ -35,6 +35,8 @@ namespace Unchord
             datWallFrontT = new TerrainSenseData();
             datWallBackB = new TerrainSenseData();
             datWallBackT = new TerrainSenseData();
+
+/*
             datCornerFrontB = new TerrainSenseData();
             datCornerFrontT = new TerrainSenseData();
             datCornerBackB = new TerrainSenseData();
@@ -43,7 +45,7 @@ namespace Unchord
             datCornerFrontVT = new TerrainSenseData();
             datCornerBackVB = new TerrainSenseData();
             datCornerBackVT = new TerrainSenseData();
-
+*/
             float dLength = 0.5f;
             float hLength = 0.06f;
 
@@ -53,10 +55,13 @@ namespace Unchord
             datWallFrontT.dLength = dLength;
             datWallBackB.dLength = dLength;
             datWallBackT.dLength = dLength;
+
+/*
             datCornerFrontB.dLength = dLength;
             datCornerFrontT.dLength = dLength;
             datCornerBackB.dLength = dLength;
             datCornerBackT.dLength = dLength;
+*/
 
             datFloor.hLength = hLength;
             datCeil.hLength = hLength;
@@ -64,6 +69,8 @@ namespace Unchord
             datWallFrontT.hLength = hLength;
             datWallBackB.hLength = hLength;
             datWallBackT.hLength = hLength;
+
+/*
             datCornerFrontB.hLength = hLength;
             datCornerFrontT.hLength = hLength;
             datCornerBackB.hLength = hLength;
@@ -72,16 +79,19 @@ namespace Unchord
             datCornerFrontVT.hLength = -1;
             datCornerBackVB.hLength = -1;
             datCornerBackVT.hLength = -1;
+*/
 
             // NOTE: 혹시나 flip Y 기능을 사용한다면,
             // (1) float ly = _player.lookDir.fy;
             // (2) 1 => ly; -1 => -ly;
             datFloor.direction.Set(0, -1);
             datCeil.direction.Set(0, 1);
+/*
             datCornerFrontVB.direction.Set(0, 1);
             datCornerFrontVT.direction.Set(0, -1);
             datCornerBackVB.direction.Set(0, 1);
             datCornerBackVT.direction.Set(0, -1);
+*/
         }
 
         protected override void SetOrigins(Player _player)
@@ -96,6 +106,8 @@ namespace Unchord
             datWallFrontT.origin.Set(head.center.x + lx * head.extents.x, head.center.y);
             datWallBackB.origin.Set(feet.center.x - lx * feet.extents.x, feet.center.y);
             datWallBackT.origin.Set(head.center.x - lx * head.extents.x, head.center.y);
+
+/*
             datCornerFrontB.origin.Set(feet.center.x + lx * feet.extents.x, feet.min.y);
             datCornerFrontT.origin.Set(head.center.x + lx * head.extents.x, head.max.y);
             datCornerBackB.origin.Set(feet.center.x - lx * feet.extents.x, feet.min.y);
@@ -118,11 +130,14 @@ namespace Unchord
                 datCornerBackT.origin.x - lx * 0.1f,
                 datCornerBackT.origin.y
                 );
+*/
 
             datWallFrontB.direction.Set(lx, 0);
             datWallFrontT.direction.Set(lx, 0);
             datWallBackB.direction.Set(-lx, 0);
             datWallBackT.direction.Set(-lx, 0);
+
+/*
             datCornerFrontB.direction.Set(lx, 0);
             datCornerFrontT.direction.Set(lx, 0);
             datCornerBackB.direction.Set(-lx, 0);
@@ -132,6 +147,7 @@ namespace Unchord
             datCornerFrontVT.dLength = 0.9f * head.extents.y;
             datCornerBackVB.dLength = 0.9f * feet.extents.y;
             datCornerBackVT.dLength = 0.9f * head.extents.y;
+*/
 
             int tmpLayer = 1 << LayerMask.NameToLayer("Terrain");
             datFloor.targetLayer = tmpLayer;
@@ -140,6 +156,8 @@ namespace Unchord
             datWallFrontT.targetLayer = tmpLayer;
             datWallBackB.targetLayer = tmpLayer;
             datWallBackT.targetLayer = tmpLayer;
+
+/*
             datCornerFrontB.targetLayer = tmpLayer;
             datCornerFrontT.targetLayer = tmpLayer;
             datCornerBackB.targetLayer = tmpLayer;
@@ -148,6 +166,7 @@ namespace Unchord
             datCornerFrontVT.targetLayer = tmpLayer;
             datCornerBackVB.targetLayer = tmpLayer;
             datCornerBackVT.targetLayer = tmpLayer;
+*/
         }
 
         protected override void DetectTerrains(Player player)
@@ -158,15 +177,16 @@ namespace Unchord
             TerrainSensorBase.Sense(in datWallFrontT);
             TerrainSensorBase.Sense(in datWallBackB);
             TerrainSensorBase.Sense(in datWallBackT);
-
-            // TerrainSensorBase.Sense(in datCornerFrontB);
-            // TerrainSensorBase.Sense(in datCornerFrontT);
-            // TerrainSensorBase.Sense(in datCornerBackB);
-            // TerrainSensorBase.Sense(in datCornerBackT);
-            // TerrainSensorBase.Sense(in datCornerFrontVB);
-            // TerrainSensorBase.Sense(in datCornerFrontVT);
-            // TerrainSensorBase.Sense(in datCornerBackVB);
-            // TerrainSensorBase.Sense(in datCornerBackVT);
+/*
+            TerrainSensorBase.Sense(in datCornerFrontB);
+            TerrainSensorBase.Sense(in datCornerFrontT);
+            TerrainSensorBase.Sense(in datCornerBackB);
+            TerrainSensorBase.Sense(in datCornerBackT);
+            TerrainSensorBase.Sense(in datCornerFrontVB);
+            TerrainSensorBase.Sense(in datCornerFrontVT);
+            TerrainSensorBase.Sense(in datCornerBackVB);
+            TerrainSensorBase.Sense(in datCornerBackVT);
+*/
         }
 
         protected override void SetDirectionVector(Player player)

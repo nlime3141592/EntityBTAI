@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Unchord
 {
     [RequireComponent(typeof(BattleModule))]
-    public class ShockWave : Entity, IBattleState
+    public class ShockWave : Entity //, IBattleState
     {
         [HideInInspector] public BattleModule battleModule;
         public Transform container;

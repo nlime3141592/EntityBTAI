@@ -4,10 +4,6 @@ namespace Unchord
 {
     public abstract class PlayerAttackOnFloorBase : PlayerAttack
     {
-        public float baseDamage { get; protected set; }
-        public float speed_Step { get; protected set; }
-        public float coyote { get; protected set; }
-
         protected bool bCapturedParryingDown { get; private set; }
         protected bool bCapturedJumpDown { get; private set; }
         protected bool bCapturedRushDown { get; private set; }
@@ -27,7 +23,6 @@ namespace Unchord
             bCapturedMove = false;
 
             instance.vm.FreezePosition(true, false);
-            instance.timerCoyote_AttackOnFloor.SetTimer(coyote);
 
             m_bCanStepFront = false;
         }

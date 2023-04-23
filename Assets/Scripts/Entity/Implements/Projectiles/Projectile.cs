@@ -5,7 +5,7 @@ namespace Unchord
 {
     [RequireComponent(typeof(BattleModule))]
     [RequireComponent(typeof(CircleCollider2D))]
-    public class Projectile : Entity, IBattleState // NOTE: IBattleState는 State에 상속시키는 것이 일반적이므로, 시간이 날 때 수정해야 한다.
+    public class Projectile : Entity //, IBattleState // NOTE: IBattleState는 State에 상속시키는 것이 일반적이므로, 시간이 날 때 수정해야 한다.
     {
         [HideInInspector] public BattleModule battleModule;
         [HideInInspector] public CircleCollider2D cCol;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Unchord
 {
-    public abstract class MantisAttack : MantisAbility, IBattleState
+    public abstract class MantisAttack : MantisAbility //, IBattleState
     {
         protected List<Entity> targets;
         public LTRB attackRange;

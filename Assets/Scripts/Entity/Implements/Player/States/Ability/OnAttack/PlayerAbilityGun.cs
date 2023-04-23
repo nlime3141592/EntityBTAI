@@ -1,3 +1,4 @@
+/*
 using System;
 using UnityEngine;
 
@@ -15,7 +16,7 @@ namespace Unchord
         public override void OnConstruct()
         {
             base.OnConstruct();
-/*
+
             base.attackRange = new LTRB()
             {
                 left = 1.0f,
@@ -25,7 +26,7 @@ namespace Unchord
             };
             base.targetCount = 7;
             base.baseDamage = 1.0f;
-*/
+
         }
 
         public override bool CanTransit()
@@ -86,3 +87,4 @@ namespace Unchord
         }
     }
 }
+*/

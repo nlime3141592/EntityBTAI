@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public class MantisChop : MantisAttack, IBattleState
+    public class MantisChop : MantisAttack //, IBattleState
     {
         // fixed data
         private float m_cooltime = 0.1f;

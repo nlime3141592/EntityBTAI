@@ -1,19 +1,7 @@
-/*
-namespace UnchordMetroidvania
+namespace Unchord
 {
-    public abstract class SandBagState : EntityStateBT<SandBag>
+    public abstract class SandBagState : EntityState<SandBag>
     {
-        public SandBagState(SandBag instance, AnimationController aController)
-        : base(instance, aController)
-        {
-
-        }
-
-        public override void OnStateBegin()
-        {
-            base.OnStateBegin();
-            aController.Reset();
-        }
+        
     }
 }
-*/

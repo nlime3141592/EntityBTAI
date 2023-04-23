@@ -17,7 +17,7 @@ namespace Unchord
         // public TestDamageUI healUI;
 
         public EntitySensorGizmoOption battleRangeGizmo;
-        public int targetLayerMask;
+        public LayerMask targetLayer;
 
         private List<Collider2D> m_ignores;
 
@@ -67,7 +67,7 @@ namespace Unchord
         public void TriggerBattleState()
         {
             IStateBase current = owner.machineInterface.state;
-            (current as IBattleState)?.OnTriggerBattleState();
+            (current as IBattleState)?.OnTriggerBattleState(this);
 
             /*
             Entity attacker = m_battleState.attacker;
