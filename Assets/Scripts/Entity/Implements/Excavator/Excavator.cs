@@ -77,11 +77,11 @@ namespace Unchord
             fsm = new StateMachine<Excavator>(13);
         }
 
-        protected override void InitStateMachine()
+        protected override IStateMachineBase InitStateMachine()
         {
             base.InitStateMachine();
 
-            CompositeState<Excavator> root = new CompositeState<Excavator>(13);
+            StateComposite<Excavator> root = new StateComposite<Excavator>(13);
 
             int idx = -1;
 
@@ -101,9 +101,8 @@ namespace Unchord
 
             monsterPhase = 1;
 
-            fsm.RegisterStateMap(m_stateMap);
-            fsm.Begin(this, root, c_st_SLEEP);
-            RegisterMachineEvent(fsm);
+            fsm.Begin(root, c_st_SLEEP);
+            return fsm;
         }
 
         protected override void InitMiscellaneous()
@@ -145,7 +144,7 @@ namespace Unchord
         {
             base.PostUpdate();
 
-            CURRENT_STATE = fsm.current;
+            // CURRENT_STATE = fsm.current;
         }
 
         public override void OnAggroBegin()

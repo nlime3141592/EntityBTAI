@@ -2,12 +2,7 @@ namespace Unchord
 {
     public class PlayerDash : PlayerRush
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_DASH;
-        }
+        public override int idConstant => Player.c_st_DASH;
 
         public override void OnStateBegin()
         {

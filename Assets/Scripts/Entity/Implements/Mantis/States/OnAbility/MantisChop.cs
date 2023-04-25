@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class MantisChop : MantisAttack //, IBattleState
     {
+        public override int idConstant => Mantis.c_st_CHOP;
+
         // fixed data
         private float m_cooltime = 0.1f;
 

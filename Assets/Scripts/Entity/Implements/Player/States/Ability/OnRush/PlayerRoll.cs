@@ -7,12 +7,7 @@ namespace Unchord
         private bool m_bParryingDown;
         private float m_dirX;
 
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_ROLL;
-        }
+        public override int idConstant => Player.c_st_ROLL;
 
         public override void OnStateBegin()
         {

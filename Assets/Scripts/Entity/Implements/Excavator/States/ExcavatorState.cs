@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public class ExcavatorState : MonsterState<Excavator>
+    public abstract class ExcavatorState : MonsterState<Excavator>
     {
         public override void OnFixedUpdate()
         {

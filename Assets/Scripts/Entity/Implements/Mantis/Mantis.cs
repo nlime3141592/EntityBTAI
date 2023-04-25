@@ -55,11 +55,11 @@ namespace Unchord
             m_stateMap = new Dictionary<int, int>(11);
         }
 
-        protected override void InitStateMachine()
+        protected override IStateMachineBase InitStateMachine()
         {
             base.InitStateMachine();
 
-            CompositeState<Mantis> root = new CompositeState<Mantis>(11);
+            StateComposite<Mantis> root = new StateComposite<Mantis>(11);
 
             int idx = -1;
             root[++idx] = new MantisIdle();
@@ -74,9 +74,8 @@ namespace Unchord
             root[++idx] = new MantisGroggy();
             root[++idx] = new MantisDie();
 
-            fsm.RegisterStateMap(m_stateMap);
-            fsm.Begin(this, root, c_st_IDLE);
-            RegisterMachineEvent(fsm);
+            fsm.Begin(root, c_st_IDLE);
+            return fsm;
         }
 
         protected override void InitMiscellaneous()

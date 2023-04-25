@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class MantisWalkFront : MantisWalk
     {
+        public override int idConstant => Mantis.c_st_WALK_FRONT;
+
         private float m_ix;
 
         public override void OnStateBegin()

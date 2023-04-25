@@ -1,6 +1,6 @@
 namespace Unchord
 {
-    public class MantisFreeFall : MantisOnAir
+    public abstract class MantisFreeFall : MantisOnAir
     {
 
     }

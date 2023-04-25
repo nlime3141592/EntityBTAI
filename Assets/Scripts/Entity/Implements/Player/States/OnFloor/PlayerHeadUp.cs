@@ -4,12 +4,7 @@ namespace Unchord
 {
     public class PlayerHeadUp : PlayerStand
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_HEAD_UP;
-        }
+        public override int idConstant => Player.c_st_HEAD_UP;
 
         public override void OnFixedUpdate()
         {

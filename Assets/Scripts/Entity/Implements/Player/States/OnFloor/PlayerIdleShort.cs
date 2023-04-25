@@ -7,12 +7,7 @@ namespace Unchord
         private float m_idleTime = 10.0f;
         private float m_leftIdleTime;
 
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_IDLE_SHORT;
-        }
+        public override int idConstant => Player.c_st_IDLE_SHORT;
 
         public override void OnStateBegin()
         {

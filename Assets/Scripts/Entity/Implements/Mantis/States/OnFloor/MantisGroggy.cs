@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class MantisGroggy : MantisOnFloor
     {
+        public override int idConstant => Mantis.c_st_GROGGY;
+
         private float m_groggyTime = 5.0f;
         private float m_leftGroggyTime;
 

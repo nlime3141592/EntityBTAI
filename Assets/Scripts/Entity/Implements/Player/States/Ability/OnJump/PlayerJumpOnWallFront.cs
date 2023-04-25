@@ -6,12 +6,7 @@ namespace Unchord
     {
         private float vy;
 
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_JUMP_ON_WALL_FRONT;
-        }
+        public override int idConstant => Player.c_st_JUMP_ON_WALL_FRONT;
 
         public override void OnStateBegin()
         {

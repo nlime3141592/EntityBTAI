@@ -5,6 +5,8 @@ namespace Unchord
 {
     public class PlayerAttackOnAir001 : PlayerAttackOnAirBase
     {
+        public override int idConstant => Player.c_st_ATTACK_ON_AIR_001;
+
         public override void OnConstruct()
         {
             base.OnConstruct();
@@ -12,8 +14,6 @@ namespace Unchord
             base.baseDamage = 1.0f;
             base.speed_Hop = 20.0f;
             base.coyote = 2.0f;
-
-            idFixed = Player.c_st_ATTACK_ON_AIR_001;
         }
 
         public override void OnStateBegin()

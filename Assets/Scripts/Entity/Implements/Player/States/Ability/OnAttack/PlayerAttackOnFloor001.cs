@@ -12,6 +12,8 @@ namespace Unchord
 
         private List<Entity> m_targets;
 
+        public override int idConstant => Player.c_st_ATTACK_ON_FLOOR_003;
+
         public override void OnConstruct()
         {
             base.OnConstruct();
@@ -19,8 +21,6 @@ namespace Unchord
             baseDamage = 1.0f;
             speed_Step = 1.5f;
             coyote = 2.0f;
-
-            idFixed = Player.c_st_ATTACK_ON_FLOOR_001;
 
             m_targets = new List<Entity>();
         }

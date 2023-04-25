@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class MantisBackSlice : MantisAttack
     {
+        public override int idConstant => Mantis.c_st_BACK_SLICE;
+
         private bool m_bRotated;
 
         public override void OnStateBegin()

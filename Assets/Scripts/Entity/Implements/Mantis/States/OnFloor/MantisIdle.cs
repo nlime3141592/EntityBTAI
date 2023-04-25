@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class MantisIdle : MantisOnFloor
     {
+        public override int idConstant => Mantis.c_st_IDLE;
+
         // fixed data
         private int m_minIdleTime = 60;
         private int m_maxIdleTime = 120;

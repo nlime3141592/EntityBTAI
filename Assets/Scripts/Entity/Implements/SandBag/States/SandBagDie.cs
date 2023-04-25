@@ -4,12 +4,7 @@ namespace Unchord
 {
     public class SandBagDie : SandBagState
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = SandBag.c_st_DIE;
-        }
+        public override int idConstant => SandBag.c_st_DIE;
 
         public override void OnStateBegin()
         {

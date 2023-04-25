@@ -4,12 +4,7 @@ namespace Unchord
 {
     public class PlayerFreeFall : PlayerOnAir
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_FREE_FALL;
-        }
+        public override int idConstant => Player.c_st_FREE_FALL;
 
         public override void OnFixedUpdate()
         {

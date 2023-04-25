@@ -7,12 +7,7 @@ namespace Unchord
         private bool m_bOnSlab;
         private Slab m_slab;
 
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_SIT;
-        }
+        public override int idConstant => Player.c_st_SIT;
 
         public override void OnFixedUpdate()
         {

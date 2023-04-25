@@ -25,7 +25,7 @@ namespace Unchord
         // DEPRECATED c_st_ATTACK_ON_AIR                 = 17;
         public const int c_st_ABILITY_SWORD                 = 18;
         public const int c_st_ABILITY_GUN                   = 19;
-        // DEPRECATED c_st_TAKE_DOWN                     = 20;
+        public const int c_st_TAKE_DOWN                     = 20;
         public const int c_st_BASIC_PARRYING                = 21;
         public const int c_st_EMERGENCY_PARRYING            = 22;
         public const int c_st_JUMP_DOWN                     = 23;
@@ -162,29 +162,29 @@ namespace Unchord
             iManager = new PlayerInputManager(this);
         }
 
-        protected override void InitStateMachine()
+        protected override IStateMachineBase InitStateMachine()
         {
             base.InitStateMachine();
 
             fsm = new StateMachine<Player>(30);
 
-            CompositeState<Player> root = new CompositeState<Player>(30);
+            StateComposite<Player> root = new StateComposite<Player>(30);
             m_stateTree = root;
 
-            CompositeState<Player> state_AttackOnFloor = new CompositeState<Player>(3);
+            StateComposite<Player> state_AttackOnFloor = new StateComposite<Player>(3);
             state_AttackOnFloor[0] = new PlayerAttackOnFloor001();
             state_AttackOnFloor[1] = new PlayerAttackOnFloor002();
             state_AttackOnFloor[2] = new PlayerAttackOnFloor003();
 
-            CompositeState<Player> state_AttackOnAir = new CompositeState<Player>(2);
+            StateComposite<Player> state_AttackOnAir = new StateComposite<Player>(2);
             state_AttackOnAir[0] = new PlayerAttackOnAir001();
             state_AttackOnAir[1] = new PlayerAttackOnAir002();
-/*
-            CompositeState<Player> state_TakeDown = new CompositeState<Player>(3);
+
+            StateComposite<Player> state_TakeDown = new StateComposite<Player>(3);
             state_TakeDown[0] = new PlayerTakeDown001();
             state_TakeDown[1] = new PlayerTakeDown002();
             state_TakeDown[2] = new PlayerTakeDown003();
-*/
+
             // NOTE: 상태를 이 곳에서 조직하고, m_stateTree에 Root 할당하기.
             int index_root = -1;
             root[++index_root] = new PlayerIdleLong();
@@ -206,7 +206,7 @@ namespace Unchord
             root[++index_root] = state_AttackOnAir;
             // root[++index_root] = new PlayerAbilitySword();
             // root[++index_root] = new PlayerAbilityGun();
-            // root[++index_root] = state_TakeDown;
+            root[++index_root] = state_TakeDown;
             root[++index_root] = new PlayerBasicParrying();
             root[++index_root] = new PlayerEmergencyParrying();
             root[++index_root] = new PlayerJumpDown();
@@ -220,11 +220,8 @@ namespace Unchord
             RegisterTimerHandler(timerCoyote_AttackOnFloor);
             RegisterTimerHandler(timerCoyote_AttackOnAir);
 
-            // fsm registration
-            fsm.RegisterStateMap(stateMap);
-            RegisterMachineEvent(fsm);
-
-            fsm.Begin(this, m_stateTree, Player.c_st_IDLE_SHORT);
+            fsm.Begin(root, Player.c_st_IDLE_SHORT);
+            return fsm;
         }
 
         protected override void PreUpdate()
@@ -238,7 +235,7 @@ namespace Unchord
         {
             base.PostUpdate();
 
-            CURRENT_STATE = machineInterface.current;
+            // CURRENT_STATE = machineInterface.state;
             CURRENT_TYPE = machineInterface.state.GetType().ToString();
         }
 

@@ -13,6 +13,8 @@ namespace Unchord
         public LTRB m_sitRange;
         public LTRB m_slabRange;
 
+        public override int idConstant => Player.c_st_JUMP_DOWN;
+
         public override void OnConstruct()
         {
             curSlabs = new List<Slab>(4);
@@ -32,8 +34,6 @@ namespace Unchord
                 right = 0.6f,
                 bottom = 1.87f
             };
-
-            idFixed = Player.c_st_JUMP_DOWN;
         }
 
         public override void OnStateBegin()

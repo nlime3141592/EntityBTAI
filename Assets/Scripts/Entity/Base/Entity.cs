@@ -23,7 +23,7 @@ namespace Unchord
         public float health => m_health;
         public float mana => m_mana;
 
-        public IStateMachineRemote machineInterface { get; protected set; }
+        public IStateMachineBase machineInterface { get; private set; }
         public VelocityModule2D vm { get; private set; }
         public System.Random prng { get; private set; }
 #endregion
@@ -110,7 +110,7 @@ namespace Unchord
         }
 
         // MonoBehaviour.Start()
-        protected virtual void InitStateMachine() {}
+        protected virtual IStateMachineBase InitStateMachine() => null;
 
         // MonoBehaviour.FixedUpdate()
         protected virtual void PreFixedUpdate() {}
@@ -174,26 +174,6 @@ namespace Unchord
             return SetMana(m_mana + _dMana);
         }
 
-        protected void RegisterMachineEvent(IStateMachineRemote _machineInterface)
-        {
-            if(m_bRegisteredMachineEvent)
-                return;
-            else if(_machineInterface == null)
-                return;
-
-            m_bRegisteredMachineEvent = true;
-            machineInterface = _machineInterface;
-        }
-
-        protected void UnregisterMachineEvent()
-        {
-            if(!m_bRegisteredMachineEvent)
-                return;
-
-            m_bRegisteredMachineEvent = false;
-            machineInterface = null;
-        }
-
         protected void RegisterTimerHandler(TimerHandlerBase _timer)
         {
             m_compositeTimerHandler.Add(_timer);
@@ -236,7 +216,7 @@ namespace Unchord
         private void Start()
         {
             StartCoroutine(m_DestroyEntity());
-            InitStateMachine();
+            machineInterface = InitStateMachine();
         }
 
         private void FixedUpdate()

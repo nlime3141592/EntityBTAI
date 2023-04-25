@@ -4,12 +4,7 @@ namespace Unchord
 {
     public class PlayerWalk : PlayerMove
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_WALK;
-        }
+        public override int idConstant => Player.c_st_WALK;
 
         public override void OnFixedUpdate()
         {

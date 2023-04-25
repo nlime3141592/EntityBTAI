@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class MantisShout : MantisOnFloor
     {
+        public override int idConstant => Mantis.c_st_SHOUT;
+
         public override int Transit()
         {
             if(!instance.aController.bEndOfAnimation)

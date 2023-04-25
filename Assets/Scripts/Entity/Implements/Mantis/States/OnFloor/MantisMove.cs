@@ -1,6 +1,6 @@
 namespace Unchord
 {
-    public class MantisMove : MantisOnFloor
+    public abstract class MantisMove : MantisOnFloor
     {
         // fixed data
         private int m_moveFrame = 60;

@@ -4,12 +4,7 @@ namespace Unchord
     {
         private bool m_bCapturedParringDown;
 
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_TAKE_DOWN_003;
-        }
+        public override int idConstant => Player.c_st_TAKE_DOWN_003;
 
         public override void OnStateBegin()
         {

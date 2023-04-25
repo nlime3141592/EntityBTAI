@@ -1,6 +1,6 @@
 namespace Unchord
 {
-    public class MantisWalk : MantisMove
+    public abstract class MantisWalk : MantisMove
     {
         public override void OnStateEnd()
         {

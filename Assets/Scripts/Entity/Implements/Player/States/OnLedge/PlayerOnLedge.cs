@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public class PlayerOnLedge : PlayerState
+    public abstract class PlayerOnLedge : PlayerState
     {
 
     }

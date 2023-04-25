@@ -4,12 +4,7 @@ namespace Unchord
 {
     public class PlayerEmergencyParrying : PlayerParrying
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_EMERGENCY_PARRYING;
-        }
+        public override int idConstant => Player.c_st_EMERGENCY_PARRYING;
 
         public override void OnFixedUpdate()
         {

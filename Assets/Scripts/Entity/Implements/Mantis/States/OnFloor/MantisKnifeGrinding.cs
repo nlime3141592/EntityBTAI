@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class MantisKnifeGrinding : MantisOnFloor
     {
+        public override int idConstant => Mantis.c_st_KNIFE_GRINDING;
+
         public override int Transit()
         {
             if(!instance.aController.bEndOfAnimation)

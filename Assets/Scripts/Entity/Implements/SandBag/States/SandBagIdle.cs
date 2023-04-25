@@ -4,12 +4,7 @@ namespace Unchord
 {
     public class SandBagIdle : SandBagState
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = SandBag.c_st_IDLE;
-        }
+        public override int idConstant => SandBag.c_st_IDLE;
 
         public override void OnStateBegin()
         {

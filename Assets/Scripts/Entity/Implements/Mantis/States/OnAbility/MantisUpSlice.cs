@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class MantisUpSlice : MantisAttack
     {
+        public override int idConstant => Mantis.c_st_UP_SLICE;
+
         // fixed data
         private float m_cooltime = 0.1f;
 

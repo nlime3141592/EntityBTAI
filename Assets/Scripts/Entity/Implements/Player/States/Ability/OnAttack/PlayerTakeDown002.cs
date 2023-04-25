@@ -2,12 +2,7 @@ namespace Unchord
 {
     public class PlayerTakeDown002 : PlayerTakeDownBase
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_TAKE_DOWN_002;
-        }
+        public override int idConstant => Player.c_st_TAKE_DOWN_002;
 
         public override void OnStateBegin()
         {

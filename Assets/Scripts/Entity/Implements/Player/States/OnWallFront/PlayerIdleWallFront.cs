@@ -2,12 +2,7 @@ namespace Unchord
 {
     public class PlayerIdleWallFront : PlayerOnWallFront
     {
-        public override void OnConstruct()
-        {
-            base.OnConstruct();
-
-            idFixed = Player.c_st_IDLE_WALL_FRONT;
-        }
+        public override int idConstant => Player.c_st_IDLE_WALL_FRONT;
 
         public override void OnStateBegin()
         {
