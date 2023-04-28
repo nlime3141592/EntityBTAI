@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class ExcavatorWakeUp : ExcavatorIdleBase
     {
+        public override int idConstant => Excavator.c_st_WAKE_UP;
+
         public override int Transit()
         {
             int transit = base.Transit();

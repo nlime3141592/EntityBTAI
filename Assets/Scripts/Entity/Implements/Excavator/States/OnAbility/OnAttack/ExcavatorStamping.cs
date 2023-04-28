@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class ExcavatorStamping : ExcavatorAttack
     {
+        public override int idConstant => Excavator.c_st_STAMPING;
+
         public override void OnConstruct()
         {
             base.OnConstruct();

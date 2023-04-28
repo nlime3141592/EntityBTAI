@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public class ExcavatorOnFloor : ExcavatorState
+    public abstract class ExcavatorOnFloor : ExcavatorState
     {
         public override int Transit()
         {

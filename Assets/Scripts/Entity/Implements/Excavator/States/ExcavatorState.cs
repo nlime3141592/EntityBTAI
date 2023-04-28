@@ -22,7 +22,7 @@ namespace Unchord
             {
                 if(++instance.monsterPhase <= 3)
                     return Excavator.c_st_BREAK_GROUND;
-                else if(instance.fsm.current != Excavator.c_st_DIE)
+                else if(!instance.bDeadState)
                     return Excavator.c_st_DIE;
             }
             else if(instance.groggyValue >= 1.0f)

@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class ExcavatorGroggy : ExcavatorOnFloor
     {
+        public override int idConstant => Excavator.c_st_GROGGY;
+
         private PhaseController m_phaser;
         private Timer m_groggyTime;
 
@@ -35,7 +37,7 @@ namespace Unchord
         {
             base.OnUpdateAlways();
 
-            if(instance.fsm.current != Excavator.c_st_GROGGY)
+            if(instance.fsm.state != this)
                 m_phaser.Reset();
         }
 

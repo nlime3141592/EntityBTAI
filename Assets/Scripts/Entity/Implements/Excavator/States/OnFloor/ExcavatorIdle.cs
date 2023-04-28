@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class ExcavatorIdle : ExcavatorIdleBase
     {
+        public override int idConstant => Excavator.c_st_IDLE;
+
         // fixed data
         private Timer m_idleTimer;
         private float m_rangeX1 = 10.5f;

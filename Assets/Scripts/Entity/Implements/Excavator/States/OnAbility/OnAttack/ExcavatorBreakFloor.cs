@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class ExcavatorBreakFloor : ExcavatorAttack
     {
+        public override int idConstant => Excavator.c_st_BREAK_GROUND;
+
         public override void OnConstruct()
         {
             base.OnConstruct();

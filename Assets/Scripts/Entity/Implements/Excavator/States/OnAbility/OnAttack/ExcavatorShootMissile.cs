@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class ExcavatorShootMissile : ExcavatorAttack
     {
+        public override int idConstant => Excavator.c_st_SHOOT_MISSILE;
+
         private int i = -1;
         float ang = 30.0f;
 

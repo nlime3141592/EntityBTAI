@@ -220,6 +220,7 @@ namespace Unchord
             RegisterTimerHandler(timerCoyote_AttackOnFloor);
             RegisterTimerHandler(timerCoyote_AttackOnAir);
 
+            fsm.instance = this;
             fsm.Begin(root, Player.c_st_IDLE_SHORT);
             return fsm;
         }
@@ -237,6 +238,9 @@ namespace Unchord
 
             // CURRENT_STATE = machineInterface.state;
             CURRENT_TYPE = machineInterface.state.GetType().ToString();
+
+            // timerCoyote_AttackOnAir.OnUpdate(Time.deltaTime);
+            // timerCoyote_AttackOnFloor.OnUpdate(Time.deltaTime);
         }
 
         protected override bool bShowGizmos()

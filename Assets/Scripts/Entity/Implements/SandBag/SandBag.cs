@@ -17,6 +17,7 @@ namespace Unchord
             root[0] = new SandBagDie();
             root[1] = new SandBagIdle();
 
+            fsm.instance = this;
             fsm.Begin(root, SandBag.c_st_IDLE);
             return fsm;
         }

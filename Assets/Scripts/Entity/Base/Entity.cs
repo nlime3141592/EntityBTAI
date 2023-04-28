@@ -64,6 +64,7 @@ namespace Unchord
         public DirectionVector2 lookDir; // 시선 방향
         public Vector3 eulerRotation; // 방향 회전
 
+        public bool bDeadState;
         public bool bEndOfEntity;
 
         public bool bInvincibility;
@@ -71,10 +72,9 @@ namespace Unchord
 
         public List<Collider2D> sensorBuffer;
 
-        private float m_health;
+        private float m_health = 1;
         private float m_mana;
 
-        private bool m_bRegisteredMachineEvent;
         private CompositeTimerHandler m_compositeTimerHandler;
 #endregion
 
@@ -131,8 +131,9 @@ namespace Unchord
 
         private IEnumerator m_DestroyEntity()
         {
-            yield return new WaitUntil(() => m_bRegisteredMachineEvent);
-            yield return new WaitWhile(() => m_health <= 0);
+            // yield return new WaitUntil(() => m_bRegisteredMachineEvent);
+            // yield return new WaitWhile(() => m_health <= 0);
+            yield return new WaitUntil(() => bDeadState);
 
             void rec_SearchOrgan(Entity _organ)
             {
@@ -145,7 +146,6 @@ namespace Unchord
             }
 
             rec_SearchOrgan(this);
-
             yield return new WaitUntil(() => bEndOfEntity);
             this.OnEndOfEntity();
         }
@@ -221,9 +221,6 @@ namespace Unchord
 
         private void FixedUpdate()
         {
-            if(!m_bRegisteredMachineEvent)
-                return;
-
             PreUpdate();
             machineInterface.FixedUpdate();
             PostUpdate();
@@ -231,9 +228,6 @@ namespace Unchord
 
         private void Update()
         {
-            if(!m_bRegisteredMachineEvent)
-                return;
-
             PreUpdate();
             m_compositeTimerHandler.OnUpdate(Time.deltaTime);
             machineInterface.Update();
@@ -242,18 +236,12 @@ namespace Unchord
 
         private void LateUpdate()
         {
-            if(!m_bRegisteredMachineEvent)
-                return;
-
             machineInterface.LateUpdate();
         }
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if(!m_bRegisteredMachineEvent)
-                return;
-
             machineInterface.OnDrawGizmos(bShowGizmos());
         }
 #endif

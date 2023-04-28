@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class ExcavatorSleep : ExcavatorState
     {
+        public override int idConstant => Excavator.c_st_SLEEP;
+
         public override void OnStateBegin()
         {
             base.OnStateBegin();

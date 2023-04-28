@@ -44,9 +44,9 @@ namespace Unchord
         private void m_rec_Sense(in List<Collider2D> _colliders, Sensor_SO _parent, Sensor_SO _child, int _layerMask)
         {
             if(_parent == null)
-                TransformManager2.SyncRootBasis(_child.transform);
+                TransformManager2.UnsafeSyncRootBasis(_child.transform);
             else
-                TransformManager2.SyncBasis(_parent.transform, _child.transform);
+                TransformManager2.UnsafeSyncBasis(_child.transform, _parent.transform);
 
             int count = _child.children?.Count ?? 0;
 
@@ -59,11 +59,11 @@ namespace Unchord
         private void m_rec_OnUpdate(Sensor_SO _parent, Sensor_SO _child)
         {
             if(_parent == null)
-                TransformManager2.SyncRootBasis(_child.transform);
+                TransformManager2.UnsafeSyncRootBasis(_child.transform);
             else if(_child == null)
                 return;
             else
-                TransformManager2.SyncBasis(_parent.transform, _child.transform);
+                TransformManager2.UnsafeSyncBasis(_child.transform, _parent.transform);
 
             int count = _child.children?.Count ?? 0;
 

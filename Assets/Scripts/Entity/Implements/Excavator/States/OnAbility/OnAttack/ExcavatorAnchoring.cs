@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class ExcavatorAnchoring : ExcavatorAttack
     {
+        public override int idConstant => Excavator.c_st_ANCHORING;
+
         private PhaseController m_phaser;
         private Timer m_anchorTimer;
 

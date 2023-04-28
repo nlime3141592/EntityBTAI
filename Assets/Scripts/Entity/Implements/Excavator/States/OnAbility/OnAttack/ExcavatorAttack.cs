@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Unchord
 {
-    public class ExcavatorAttack : ExcavatorAbility //, IBattleState
+    public abstract class ExcavatorAttack : ExcavatorAbility //, IBattleState
     {
         protected List<Entity> targets;
         public LTRB attackRange;

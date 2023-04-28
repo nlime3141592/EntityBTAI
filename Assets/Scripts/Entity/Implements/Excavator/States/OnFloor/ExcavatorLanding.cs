@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class ExcavatorLanding : ExcavatorOnFloor
     {
+        public override int idConstant => Excavator.c_st_BASIC_LANDING;
+
         public override int Transit()
         {
             int transit = base.Transit();

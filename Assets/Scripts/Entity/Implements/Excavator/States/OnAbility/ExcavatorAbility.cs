@@ -1,6 +1,6 @@
 namespace Unchord
 {
-    public class ExcavatorAbility : ExcavatorState
+    public abstract class ExcavatorAbility : ExcavatorState
     {
 
     }

@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class ExcavatorFreeFall : ExcavatorOnAir
     {
+        public override int idConstant => Excavator.c_st_FREE_FALL;
+
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();

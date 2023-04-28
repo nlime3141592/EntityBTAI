@@ -12,7 +12,7 @@ namespace Unchord
 
         private List<Entity> m_targets;
 
-        public override int idConstant => Player.c_st_ATTACK_ON_FLOOR_003;
+        public override int idConstant => Player.c_st_ATTACK_ON_FLOOR_001;
 
         public override void OnConstruct()
         {

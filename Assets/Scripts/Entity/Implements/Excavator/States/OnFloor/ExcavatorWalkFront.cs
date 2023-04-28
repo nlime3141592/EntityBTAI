@@ -2,6 +2,8 @@ namespace Unchord
 {
     public class ExcavatorWalkFront : ExcavatorWalk
     {
+        public override int idConstant => Excavator.c_st_WALK;
+
         private float m_ix;
 
         public override void OnStateBegin()

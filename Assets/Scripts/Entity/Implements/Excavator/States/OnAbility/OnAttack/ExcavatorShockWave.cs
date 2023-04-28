@@ -4,6 +4,8 @@ namespace Unchord
 {
     public class ExcavatorShockWave : ExcavatorAttack
     {
+        public override int idConstant => Excavator.c_st_SHOCK_WAVE;
+
         public override void OnStateBegin()
         {
             base.OnStateBegin();
