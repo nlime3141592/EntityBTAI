@@ -6,6 +6,7 @@ namespace Unchord
     public class PolyominoPiece
     {
         public bool bPlacedOnBoard { get; internal set; } = false;
+        public object source { get; set; }
         public PolyominoBoard placedBoard => bPlacedOnBoard ? i_placedBoard : null;
 
         internal PolyominoBoard i_placedBoard;
