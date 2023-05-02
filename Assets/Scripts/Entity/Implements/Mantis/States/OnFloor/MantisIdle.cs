@@ -7,9 +7,6 @@ namespace Unchord
         public override int idConstant => Mantis.c_st_IDLE;
 
         // fixed data
-        private int m_minIdleTime = 60;
-        private int m_maxIdleTime = 120;
-        private int m_ixDelayTime = 70; // NOTE: 좌, 우 회전을 자주 하면 안 되기 때문에 쿨타임을 소폭 부여함.
         private float m_rangeX1 = 8.0f; // NOTE: 상태 전이 구간 설정용 변수.
         private float m_rangeX2 = 16.0f;
         private float m_rangeY1 = 4.0f;
@@ -17,8 +14,9 @@ namespace Unchord
 
         // variable
         private int m_leftIdleTime = 0;
-        private int m_leftIxDelayTime = 0;
         private int m_rangeCode = -1;
+
+        private int m_leftIdleAggroDelay;
 
         public override void OnStateBegin()
         {
@@ -27,9 +25,9 @@ namespace Unchord
             instance.vm.FreezePositionX();
             instance.vm.MeltPositionY();
 
-            m_leftIdleTime = instance.prng.Next(m_minIdleTime, m_maxIdleTime + 1);
-            m_leftIxDelayTime = instance.prng.Next(m_ixDelayTime / 4, 1 + m_ixDelayTime / 2);
-            instance.lookDir.x = (Direction)(-(int)(instance.lookDir.x));
+            m_leftIdleTime = instance.prng.Next(instance.frame_idleTimeMin, instance.frame_idleTimeMax + 1);
+            m_leftIdleAggroDelay = instance.prng.Next(instance.frame_idleAggroDelay / 4, instance.frame_idleAggroDelay / 2);
+            // instance.lookDir.x = (Direction)(-(int)(instance.lookDir.x));
         }
 
         public override void OnFixedUpdate()
@@ -37,16 +35,30 @@ namespace Unchord
             base.OnFixedUpdate();
             instance.vm.SetVelocityY(-1.0f);
 
-            if(m_leftIxDelayTime <= 0)
+            if(m_leftIdleAggroDelay == 0)
             {
-                instance.axis.x = instance.GetAxisInputX();
-                m_leftIxDelayTime = m_ixDelayTime;
+                instance.lookDir.x = m_GetLookDirX();
+                m_leftIdleAggroDelay = instance.frame_idleAggroDelay;
             }
+            else
+                --m_leftIdleAggroDelay;
 
             if(m_leftIdleTime > 0)
                 --m_leftIdleTime;
-            if(m_leftIxDelayTime > 0)
-                --m_leftIxDelayTime;
+        }
+
+        private Direction m_GetLookDirX()
+        {
+            if(!instance.bAggro)
+                return instance.lookDir.x;
+
+            float tx = instance.aggroTargets[0].transform.position.x;
+            float px = instance.transform.position.x;
+
+            if(tx - px < 0)
+                return Direction.Negative;
+            else
+                return Direction.Positive;
         }
 
         public override int Transit()

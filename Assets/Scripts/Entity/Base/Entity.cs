@@ -63,6 +63,7 @@ namespace Unchord
         public DirectionVector2 lookDir; // 시선 방향
         public Vector3 eulerRotation; // 방향 회전
 
+        public int phase;
         public bool bDeadState;
         public bool bEndOfEntity; // TODO: 변수 지우기
 

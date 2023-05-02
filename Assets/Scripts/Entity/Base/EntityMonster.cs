@@ -24,7 +24,12 @@ namespace Unchord
         public List<Entity> aggroTargets;
         public int targetLayerMask;
 
-        public int monsterPhase;
+        // TODO: 사마귀에 포함시키기.
+        public int frame_idleTimeMin = 60;
+        public int frame_idleTimeMax = 120;
+        public int frame_idleAggroDelay = 70;
+
+        public int monsterPhase; // TODO: Entity.phase 변수를 사용할 예정이므로 EntityMonster.monsterPhase 변수 지우기.
 
         protected override void InitComponents()
         {

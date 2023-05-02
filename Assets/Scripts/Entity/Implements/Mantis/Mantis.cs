@@ -29,6 +29,8 @@ namespace Unchord
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
 
+        // private StateRegion3 m_regionAi3;
+
 #region 아직 정리 안 함.
         public float wallDetectLength = 0.06f;
         public float hitLength = 0.06f;
@@ -46,6 +48,7 @@ namespace Unchord
 
             m_spawnData = new EntitySpawnData("사마귀", this);
             m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
+            // m_regionAi3 = new StateRegion3();
         }
 
         protected override IStateMachineBase InitStateMachine()
@@ -104,20 +107,6 @@ namespace Unchord
         protected void OnDisable()
         {
             GameManager.instance.generatedBoss.Remove(m_spawnDataNode);
-        }
-
-        public float GetAxisInputX()
-        {
-            if(!bAggro)
-                return 0;
-
-            float tx = aggroTargets[0].transform.position.x;
-            float px = transform.position.x;
-
-            if(tx - px < 0)
-                return -1;
-            else
-                return 1;
         }
     }
 }
