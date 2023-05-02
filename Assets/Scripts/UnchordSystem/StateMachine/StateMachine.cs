@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using UnityEngine;
+
 namespace Unchord
 {
     // 사용법
@@ -148,15 +150,37 @@ namespace Unchord
 
             m_states[m_idMap[m_currentIdConstant]].OnUpdate();
 
-            // Parse Logic
-            int current = m_currentIdConstant;
-            int pure = m_states[m_idMap[m_currentIdConstant]].Transit();
-            int parsed = m_ParseTransit(pure);
-            onParseTransit?.Invoke(this, current, parsed);
-
             // Transit Logic
-            if(parsed >= 0 && parsed != current && parsed < capacity)
-                Change(parsed);
+            m_ParseTransit();
+        }
+
+        private void m_ParseTransit()
+        {
+            int stLast = m_currentIdConstant;
+            int stNextPure = m_states[m_idMap[stLast]].Transit();
+
+            switch(stNextPure)
+            {
+                case MachineConstant.c_st_MACHINE_OFF:
+                    onParseTransit?.Invoke(this, stLast, MachineConstant.c_st_MACHINE_OFF);
+                    End();
+                    break;
+                case MachineConstant.c_lt_HALT:
+                    onParseTransit?.Invoke(this, stLast, MachineConstant.c_st_MACHINE_OFF);
+                    End();
+                    onMachineHalt?.Invoke(this, stLast);
+                    break;
+                case MachineConstant.c_lt_CONTINUE:
+                case MachineConstant.c_lt_PASS:
+                    onParseTransit?.Invoke(this, stLast, stLast);
+                    break;
+                default:
+                    bool bCanTransit = m_states[m_idMap[stNextPure]].CanTransit();
+                    onParseTransit?.Invoke(this, stLast, stLast);
+                    if(bCanTransit)
+                        Change(stNextPure);
+                    break;
+            }
         }
 
         public void LateUpdate()
@@ -214,31 +238,6 @@ namespace Unchord
             }
 
             return false;
-        }
-
-        private int m_ParseTransit(int _nextIdConstant)
-        {
-            switch(_nextIdConstant)
-            {
-                case MachineConstant.c_st_MACHINE_OFF:
-                    End();
-                    return _nextIdConstant;
-
-                case MachineConstant.c_lt_HALT:
-                    End();
-                    onMachineHalt?.Invoke(this, m_currentIdConstant);
-                    return _nextIdConstant;
-
-                case MachineConstant.c_lt_CONTINUE: // current state continues, any state change event not occurs.
-                case MachineConstant.c_lt_PASS: // NOTE: all inherited states returned c_lt_PASS, means no transition, current state continues.
-                    return m_currentIdConstant;
-
-                default:
-                    if(m_states[m_idMap[m_currentIdConstant]].CanTransit())
-                        return _nextIdConstant;
-                    else
-                        return m_currentIdConstant;
-            }
         }
 
         private bool m_bPassEvent()

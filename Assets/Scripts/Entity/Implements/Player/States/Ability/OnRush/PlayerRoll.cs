@@ -30,7 +30,7 @@ namespace Unchord
         public override void OnUpdateAlways()
         {
             base.OnUpdateAlways();
-            if(instance.parryingDown)
+            if(instance.iManager.parryingDown)
                 m_bParryingDown = true;
             if(instance.aController.bEndOfAction)
             {
@@ -50,7 +50,7 @@ namespace Unchord
                 return Player.c_st_IDLE_SHORT;
             else if(m_bParryingDown)
                 return Player.c_st_EMERGENCY_PARRYING;
-            else if(instance.jumpDown)
+            else if(instance.iManager.jumpDown)
                 return Player.c_st_JUMP_ON_FLOOR;
 
             return MachineConstant.c_lt_PASS;

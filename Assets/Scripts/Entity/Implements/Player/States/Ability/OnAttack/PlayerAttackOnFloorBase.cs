@@ -67,15 +67,15 @@ namespace Unchord
             if(!instance.aController.bBeginOfAction)
                 return;
 
-            if(instance.parryingDown)
+            if(instance.iManager.parryingDown)
                 bCapturedParryingDown = true;
-            if(instance.jumpDown)
+            if(instance.iManager.jumpDown)
                 bCapturedJumpDown = true;
-            if(instance.rushDown)
+            if(instance.iManager.rushDown)
                 bCapturedRushDown = true;
-            if(this.CanTransit() && instance.skill00)
+            if(this.CanTransit() && instance.iManager.active000)
                 bCapturedAttackDown = true;
-            if(instance.axis.x != 0)
+            if(instance.iManager.ix != 0)
                 bCapturedMove = true;
         }
 

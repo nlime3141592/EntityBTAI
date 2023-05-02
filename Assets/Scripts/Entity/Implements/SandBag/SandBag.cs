@@ -20,12 +20,5 @@ namespace Unchord
             fsm.Begin(SandBag.c_st_IDLE);
             return fsm;
         }
-
-        protected override void PostUpdate()
-        {
-            base.PostUpdate();
-
-            현재체력 = base.health;
-        }
     }
 }

@@ -17,12 +17,10 @@ namespace Unchord
         public const int c_st_GROGGY                     = 9;
         public const int c_st_DIE                        = 10;
 
-        public BattleModule battleModule;
         public BoxCollider2D terrainCollider; // Inspector에서 값 할당 필요
         public Transform aiCenter; // Inspector에서 값 할당 필요
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
-        public StateMachine<Mantis> fsm;
         public MantisTerrainSensor senseData;
 
         public int CURRENT_STATE;
@@ -30,8 +28,6 @@ namespace Unchord
 
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
-
-        public Dictionary<int, int> m_stateMap;
 
 #region 아직 정리 안 함.
         public float wallDetectLength = 0.06f;
@@ -50,32 +46,29 @@ namespace Unchord
 
             m_spawnData = new EntitySpawnData("사마귀", this);
             m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
-            battleModule = GetComponent<BattleModule>();
-            fsm = new StateMachine<Mantis>(11);
-            m_stateMap = new Dictionary<int, int>(11);
         }
 
         protected override IStateMachineBase InitStateMachine()
         {
             base.InitStateMachine();
 
-            fsm = new StateMachine<Mantis>(20);
-            fsm.instance = this;
+            StateMachine<Mantis> machine = new StateMachine<Mantis>(20);
+            machine.instance = this;
 
-            fsm.Add(new MantisIdle());
-            fsm.Add(new MantisWalkFront());
-            fsm.Add(new MantisWalkBack());
-            fsm.Add(new MantisShout());
-            fsm.Add(new MantisKnifeGrinding());
-            fsm.Add(new MantisUpSlice());
-            fsm.Add(new MantisBackSlice());
-            fsm.Add(new MantisChop());
-            fsm.Add(new MantisJumpChop());
-            fsm.Add(new MantisGroggy());
-            fsm.Add(new MantisDie());
+            machine.Add(new MantisIdle());
+            machine.Add(new MantisWalkFront());
+            machine.Add(new MantisWalkBack());
+            machine.Add(new MantisShout());
+            machine.Add(new MantisKnifeGrinding());
+            machine.Add(new MantisUpSlice());
+            machine.Add(new MantisBackSlice());
+            machine.Add(new MantisChop());
+            machine.Add(new MantisJumpChop());
+            machine.Add(new MantisGroggy());
+            machine.Add(new MantisDie());
 
             fsm.Begin(Mantis.c_st_IDLE);
-            return fsm;
+            return machine;
         }
 
         protected override void InitMiscellaneous()
@@ -86,21 +79,6 @@ namespace Unchord
             // hitColliders.Add(GetComponent<BoxCollider2D>());
 
             GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
-        }
-
-        protected override void PreFixedUpdate()
-        {
-            base.PreFixedUpdate();
-
-            aiCenter.localPosition = aiCenterOffset;
-        }
-
-        protected override void PostUpdate()
-        {
-            base.PostUpdate();
-
-            // BOSS_PHASE = fsm.mode;
-            // Debug.Log(string.Format("Current State: {0}", fsm.stateId));
         }
 
         public override void OnAggroBegin()

@@ -4,52 +4,57 @@ namespace Unchord
 {
     public class PlayerInputManager
     {
-        private Player m_player;
-
-        public PlayerInputManager(Player player)
-        {
-            m_player = player;
-        }
+        public float ix { get; private set; }
+        public float iy { get; private set; }
+        public bool parryingDown;
+        public bool parryingUp;
+        public bool jumpDown;
+        public bool jumpUp;
+        public bool rushDown;
+        public bool rushUp;
+        public bool active000;
+        public bool active001;
+        public bool active002;
 
         public void UpdateInputs(bool bCanInput)
         {
             if(bCanInput)
             {
-                m_player.axis.x = Keyboard.GetAxis(
+                ix = Keyboard.GetAxis(
                     Keyboard.GetKeyPress(KeyboardKey.VK_LEFT),
                     Keyboard.GetKeyPress(KeyboardKey.VK_RIGHT)
                 );
-                m_player.axis.y = Keyboard.GetAxis(
+                iy = Keyboard.GetAxis(
                     Keyboard.GetKeyPress(KeyboardKey.VK_DOWN),
                     Keyboard.GetKeyPress(KeyboardKey.VK_UP)
                 );
                 // m_player.axisInput.x = Input.GetAxisRaw("Horizontal");
                 // m_player.axisInput.y = Input.GetAxisRaw("Vertical");
-                m_player.parryingDown = Input.GetKeyDown(KeyCode.V);
-                m_player.parryingUp = Input.GetKeyUp(KeyCode.V);
-                m_player.jumpDown = Input.GetKeyDown(KeyCode.Space);
-                m_player.jumpUp = Input.GetKeyUp(KeyCode.Space);
-                m_player.rushDown = Input.GetKeyDown(KeyCode.LeftShift);
-                m_player.rushUp = Input.GetKeyUp(KeyCode.LeftShift);
-                m_player.skill00 = Input.GetKeyDown(KeyCode.Z);
+                parryingDown = Input.GetKeyDown(KeyCode.V);
+                parryingUp = Input.GetKeyUp(KeyCode.V);
+                jumpDown = Input.GetKeyDown(KeyCode.Space);
+                jumpUp = Input.GetKeyUp(KeyCode.Space);
+                rushDown = Input.GetKeyDown(KeyCode.LeftShift);
+                rushUp = Input.GetKeyUp(KeyCode.LeftShift);
+                active000 = Input.GetKeyDown(KeyCode.Z);
 
                 // m_player.skill01 = Input.GetKeyDown(KeyCode.X);
                 // m_player.skill02 = Input.GetKeyDown(KeyCode.C);
-                m_player.skill01 = false;
-                m_player.skill02 = false;
+                active001 = false;
+                active002 = false;
             }
             else
             {
-                m_player.axis.x = 0;
-                m_player.axis.y = 0;
-                m_player.parryingDown = false;
-                m_player.jumpDown = false;
-                m_player.jumpUp = false;
-                m_player.rushDown = false;
-                m_player.rushUp = false;
-                m_player.skill00 = false;
-                m_player.skill01 = false;
-                m_player.skill02 = false;
+                ix = 0;
+                iy = 0;
+                parryingDown = false;
+                jumpDown = false;
+                jumpUp = false;
+                rushDown = false;
+                rushUp = false;
+                active000 = false;
+                active001 = false;
+                active002 = false;
             }
         }
     }

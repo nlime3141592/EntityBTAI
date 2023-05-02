@@ -4,18 +4,10 @@ namespace Unchord
 {
     public abstract class PlayerParrying : PlayerAbility
     {
-
         public override void OnStateBegin()
         {
             base.OnStateBegin();
             instance.bParrying = false;
-        }
-
-        public override void OnFixedUpdate()
-        {
-            base.OnFixedUpdate();
-
-            // instance.senseData.UpdateMoveDir(player);
         }
 
         public override void OnUpdate()
@@ -30,7 +22,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.parryingUp || instance.aController.bEndOfAnimation)
+            else if(instance.iManager.parryingUp || instance.aController.bEndOfAnimation)
                 return Player.c_st_IDLE_SHORT;
 
             return MachineConstant.c_lt_PASS;

@@ -10,8 +10,8 @@ namespace Unchord
         {
             base.OnFixedUpdate();
 
-            float vx = instance.axis.x * instance.moveDir.x * instance.speed_Walk;
-            float vy = instance.axis.x * instance.moveDir.y * instance.speed_Walk - 0.1f;
+            float vx = instance.iManager.ix * instance.moveDir.x * instance.speed_Walk;
+            float vy = instance.iManager.ix * instance.moveDir.y * instance.speed_Walk - 0.1f;
 
             instance.vm.SetVelocityXY(vx, vy);
         }

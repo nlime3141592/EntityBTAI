@@ -55,7 +55,7 @@ namespace Unchord
             if(!instance.aController.bBeginOfAction)
                 return;
 
-            if(instance.skill00)
+            if(instance.iManager.active000)
                 bCapturedAttackDown = true;
         }
 

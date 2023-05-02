@@ -24,7 +24,7 @@ namespace Unchord
             float ix = -instance.lookDir.fx;
 
             if(bJumpCanceled)
-                ix = instance.axis.x;
+                ix = instance.iManager.ix;
 
             instance.moveDir.x = ix;
             instance.moveDir.y = 0;
@@ -41,7 +41,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(bJumpCanceled && instance.rushDown)
+            else if(bJumpCanceled && instance.iManager.rushDown)
                 return Player.c_st_DASH;
             else if(vy <= 0)
                 return Player.c_st_FREE_FALL;

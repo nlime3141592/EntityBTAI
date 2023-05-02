@@ -6,6 +6,7 @@ namespace Unchord
         {
             base.OnFixedUpdate();
             instance.senseData.OnFixedUpdate(instance);
+            instance.aiCenter.localPosition = instance.aiCenterOffset;
         }
 
         public override int Transit()

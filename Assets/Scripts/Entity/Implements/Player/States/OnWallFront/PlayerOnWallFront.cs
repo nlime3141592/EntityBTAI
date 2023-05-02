@@ -26,11 +26,11 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.jumpDown)
+            else if(instance.iManager.jumpDown)
                 return Player.c_st_JUMP_ON_WALL_FRONT;
             else if(instance.senseData.datFloor.bOnDetected)
                 return Player.c_st_FREE_FALL;
-            else if(instance.axis.y < 0 && instance.axis.x == 0)
+            else if(instance.iManager.iy < 0 && instance.iManager.ix == 0)
                 return Player.c_st_FREE_FALL;
             else if(!instance.senseData.bOnWallFront)
                 return Player.c_st_FREE_FALL;

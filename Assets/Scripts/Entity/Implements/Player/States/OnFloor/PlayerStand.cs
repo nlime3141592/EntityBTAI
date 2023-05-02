@@ -22,7 +22,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.axis.y == 0)
+            else if(instance.iManager.iy == 0)
                 return Player.c_st_IDLE_SHORT;
 
             return MachineConstant.c_lt_PASS;

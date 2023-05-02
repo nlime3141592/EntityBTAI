@@ -4,7 +4,6 @@ namespace Unchord
 {
     public class PlayerIdleShort : PlayerIdle
     {
-        private float m_idleTime = 10.0f;
         private float m_leftIdleTime;
 
         public override int idConstant => Player.c_st_IDLE_SHORT;
@@ -12,18 +11,14 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            m_leftIdleTime = m_idleTime;
+            m_leftIdleTime = instance.time_idleShort;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
 
-            bool bGameStarted = GameManager.instance.bGameStarted;
-
-            if(!bGameStarted)
-                m_leftIdleTime = m_idleTime;
-            else if(m_leftIdleTime > 0)
+            if(m_leftIdleTime > 0)
                 m_leftIdleTime -= Time.deltaTime;
         }
 

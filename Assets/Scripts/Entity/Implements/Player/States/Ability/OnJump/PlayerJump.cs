@@ -20,7 +20,7 @@ namespace Unchord
         {
             base.OnUpdate();
 
-            if(!bJumpCanceled && instance.jumpUp)
+            if(!bJumpCanceled && instance.iManager.jumpUp)
             {
                 bJumpCanceled = true;
                 p_OnJumpCanceled();
@@ -33,16 +33,16 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.skill00)
+            else if(instance.iManager.active000)
             {
-                if(instance.axis.y < 0)
+                if(instance.iManager.iy < 0)
                     return Player.c_st_TAKE_DOWN_001;
                 else
                     return instance.stateNext_AttackOnAir;
             }
             else if(instance.senseData.datCeil.bOnHit)
                 return Player.c_st_FREE_FALL;
-            else if(instance.countLeft_JumpOnAir > 0 && instance.jumpDown)
+            else if(instance.countLeft_JumpOnAir > 0 && instance.iManager.jumpDown)
                 return Player.c_st_JUMP_ON_AIR;
 
             return MachineConstant.c_lt_PASS;

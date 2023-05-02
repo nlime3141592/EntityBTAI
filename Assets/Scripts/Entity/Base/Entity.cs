@@ -23,7 +23,7 @@ namespace Unchord
         public float health => m_health;
         public float mana => m_mana;
 
-        public IStateMachineBase machineInterface { get; private set; }
+        public IStateMachineBase fsm { get; private set; }
         public VelocityModule2D vm { get; private set; }
         public System.Random prng { get; private set; }
 #endregion
@@ -59,13 +59,12 @@ namespace Unchord
 #endregion
 
 #region Variables
-        public Vector2 axis; // 입력
         public BoolVector2 bFixedLookDirByAxis; // 입력에 의한 시선 방향 전환 제어
         public DirectionVector2 lookDir; // 시선 방향
         public Vector3 eulerRotation; // 방향 회전
 
         public bool bDeadState;
-        public bool bEndOfEntity;
+        public bool bEndOfEntity; // TODO: 변수 지우기
 
         public bool bInvincibility;
         public float groggyValue;
@@ -73,13 +72,10 @@ namespace Unchord
         public List<Collider2D> sensorBuffer;
 
         private float m_health = 1;
-        private float m_mana;
-
-        private CompositeTimerHandler m_compositeTimerHandler;
+        private float m_mana = 1;
 #endregion
 
 #region 아직 정리 안 함.
-        public Dictionary<int, int> stateMap;
         public bool bParrying;
         public Vector2 moveDir;
 #endregion
@@ -96,8 +92,6 @@ namespace Unchord
 
             vm = new VelocityModule2D(m_physics);
             prng = new System.Random();
-            m_compositeTimerHandler = new CompositeTimerHandler(1);
-            stateMap = new Dictionary<int, int>(2);
 
             if(sensorBuffer == null)
                 sensorBuffer = new List<Collider2D>();
@@ -113,12 +107,8 @@ namespace Unchord
         protected virtual IStateMachineBase InitStateMachine() => null;
 
         // MonoBehaviour.FixedUpdate()
-        protected virtual void PreFixedUpdate() {}
-        protected virtual void PostFixedUpdate() {}
 
         // MonoBehaviour.Update()
-        protected virtual void PreUpdate() {}
-        protected virtual void PostUpdate() {}
 
         // MonoBehaviour.LateUpdate()
 
@@ -126,9 +116,9 @@ namespace Unchord
         protected virtual bool bShowGizmos() => false;
 
         // Extra.
-        protected virtual void OnZeroHealth() {}
+        // protected virtual void OnZeroHealth() {}
         protected virtual void OnEndOfEntity() {}
-
+/*
         private IEnumerator m_DestroyEntity()
         {
             // yield return new WaitUntil(() => m_bRegisteredMachineEvent);
@@ -146,8 +136,13 @@ namespace Unchord
             }
 
             rec_SearchOrgan(this);
-            yield return new WaitUntil(() => bEndOfEntity);
+            yield return new WaitUntil(m_bCanDestroy);
             this.OnEndOfEntity();
+        }
+*/
+        private bool m_bCanDestroy()
+        {
+            return bDeadState && !fsm.bStarted;
         }
 #endregion
 
@@ -172,16 +167,6 @@ namespace Unchord
         public float ChangeMana(float _dMana)
         {
             return SetMana(m_mana + _dMana);
-        }
-
-        protected void RegisterTimerHandler(TimerHandlerBase _timer)
-        {
-            m_compositeTimerHandler.Add(_timer);
-        }
-
-        protected bool UnregisterTimerHandler(TimerHandlerBase _timer)
-        {
-            return m_compositeTimerHandler.Remove(_timer);
         }
 
         public void IgnoreBattleTrigger(Collider2D _target, bool _bIgnore) => m_IgnoreCollision(battleTriggers, _target, _bIgnore);
@@ -215,36 +200,30 @@ namespace Unchord
 
         private void Start()
         {
-            StartCoroutine(m_DestroyEntity());
-            machineInterface = InitStateMachine();
+            // StartCoroutine(m_DestroyEntity());
+            fsm = InitStateMachine();
         }
 
         private void FixedUpdate()
         {
-            PreUpdate();
-            machineInterface.FixedUpdate();
-            PostUpdate();
+            fsm.FixedUpdate();
         }
 
         private void Update()
         {
-            PreUpdate();
-            m_compositeTimerHandler.OnUpdate(Time.deltaTime);
-            machineInterface.Update();
-            PostUpdate();
+            fsm.Update();
+
+            if(m_bCanDestroy())
+            {
+                OnEndOfEntity();
+                Destroy(this.gameObject);
+            }
         }
 
         private void LateUpdate()
         {
-            machineInterface.LateUpdate();
+            fsm.LateUpdate();
         }
-
-#if UNITY_EDITOR
-        private void OnDrawGizmos()
-        {
-            machineInterface.OnDrawGizmos(bShowGizmos());
-        }
-#endif
 #endregion
     }
 }

@@ -21,13 +21,13 @@ namespace Unchord
             int transit = base.Transit();
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.jumpDown)
+            else if(instance.iManager.jumpDown)
                 return Player.c_st_JUMP_ON_FLOOR;
-            else if(instance.axis.y > 0)
+            else if(instance.iManager.iy > 0)
                 return Player.c_st_HEAD_UP;
-            else if(instance.axis.y < 0)
+            else if(instance.iManager.iy < 0)
                 return Player.c_st_SIT;
-            else if(instance.axis.x != 0)
+            else if(instance.iManager.ix != 0)
             {
                 if(instance.bIsRun)
                     return Player.c_st_RUN;

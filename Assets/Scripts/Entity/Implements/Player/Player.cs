@@ -75,6 +75,8 @@ namespace Unchord
         public float gravity_WallSlidingFront = -9.81f;
         public float gravity_AttackOnAir = -49.5f;
 
+        public float time_idleShort = 10.0f;
+
         public int frame_IdleShort = 100;
 
         public int count_JumpOnAir = 1;
@@ -111,20 +113,6 @@ namespace Unchord
         public string CURRENT_TYPE;
         public float DEBUG_COYOTE;
         public EntitySensorGizmoManager rangeGizmoManager;
-
-        public int aPhase;
-#endregion
-
-#region Player Inputs
-        public bool jumpDown;
-        public bool jumpUp;
-        public bool rushDown;
-        public bool rushUp;
-        public bool parryingDown;
-        public bool parryingUp;
-        public bool skill00; // NOTE: 일반 공격
-        public bool skill01;
-        public bool skill02;
 #endregion
 
         public List<Slab> sitSlabs;
@@ -155,7 +143,7 @@ namespace Unchord
             base.InitMiscellaneous();
 
             rangeGizmoManager = new EntitySensorGizmoManager();
-            iManager = new PlayerInputManager(this);
+            iManager = new PlayerInputManager();
         }
 
         protected override IStateMachineBase InitStateMachine()
@@ -197,34 +185,9 @@ namespace Unchord
             // timer handler settings
             timerCoyote_AttackOnFloor.onEndOfTimer += () => { stateNext_AttackOnFloor = Player.c_st_ATTACK_ON_FLOOR_001; };
             timerCoyote_AttackOnAir.onEndOfTimer += () => { stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_001; };
-            RegisterTimerHandler(timerCoyote_AttackOnFloor);
-            RegisterTimerHandler(timerCoyote_AttackOnAir);
-
-            fsm.onStateChange += (machine, prev, next) =>
-            {
-                Debug.LogFormat("{0}->{1}", prev, next);
-            };
 
             fsm.Begin(Player.c_st_IDLE_SHORT);
             return fsm;
-        }
-
-        protected override void PreUpdate()
-        {
-            base.PreUpdate();
-
-            iManager.UpdateInputs(true);
-        }
-
-        protected override void PostUpdate()
-        {
-            base.PostUpdate();
-
-            // CURRENT_STATE = machineInterface.state;
-            CURRENT_TYPE = machineInterface.state.GetType().ToString();
-
-            // timerCoyote_AttackOnAir.OnUpdate(Time.deltaTime);
-            // timerCoyote_AttackOnFloor.OnUpdate(Time.deltaTime);
         }
 
         protected override bool bShowGizmos()

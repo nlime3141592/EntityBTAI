@@ -25,15 +25,11 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.skill00)
+            else if(instance.iManager.active000)
                 return instance.stateNext_AttackOnFloor;
-            else if(instance.skill01)
-                return Player.c_st_ABILITY_SWORD;
-            else if(instance.skill02)
-                return Player.c_st_ABILITY_GUN;
-            else if(instance.parryingDown)
+            else if(instance.iManager.parryingDown)
                 return Player.c_st_BASIC_PARRYING;
-            else if(instance.rushDown)
+            else if(instance.iManager.rushDown)
                 return Player.c_st_ROLL;
             else if(!instance.senseData.datFloor.bOnHit)
                 return Player.c_st_FREE_FALL;

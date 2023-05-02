@@ -49,8 +49,6 @@ namespace Unchord
         public float minFreeFallSpeed = -42.0f;
 
         public int aPhase;
-
-        public StateMachine<Excavator> fsm;
 #endregion
 
         public virtual bool CanAggro()
@@ -76,27 +74,27 @@ namespace Unchord
         {
             base.InitStateMachine();
 
-            fsm = new StateMachine<Excavator>(13);
-            fsm.instance = this;
+            StateMachine<Excavator> machine = new StateMachine<Excavator>(13);
+            machine.instance = this;
 
-            fsm.Add(new ExcavatorSleep());
-            fsm.Add(new ExcavatorWakeUp());
-            fsm.Add(new ExcavatorIdle());
-            fsm.Add(new ExcavatorWalkFront());
-            fsm.Add(new ExcavatorFreeFall());
-            fsm.Add(new ExcavatorStamping());
-            fsm.Add(new ExcavatorAnchoring());
-            fsm.Add(new ExcavatorShockWave());
-            fsm.Add(new ExcavatorShootMissile());
-            fsm.Add(new ExcavatorBreakFloor());
-            fsm.Add(new ExcavatorLanding());
-            fsm.Add(new ExcavatorDie());
-            fsm.Add(new ExcavatorGroggy());
+            machine.Add(new ExcavatorSleep());
+            machine.Add(new ExcavatorWakeUp());
+            machine.Add(new ExcavatorIdle());
+            machine.Add(new ExcavatorWalkFront());
+            machine.Add(new ExcavatorFreeFall());
+            machine.Add(new ExcavatorStamping());
+            machine.Add(new ExcavatorAnchoring());
+            machine.Add(new ExcavatorShockWave());
+            machine.Add(new ExcavatorShootMissile());
+            machine.Add(new ExcavatorBreakFloor());
+            machine.Add(new ExcavatorLanding());
+            machine.Add(new ExcavatorDie());
+            machine.Add(new ExcavatorGroggy());
 
             monsterPhase = 1;
 
-            fsm.Begin(Excavator.c_st_SLEEP);
-            return fsm;
+            machine.Begin(Excavator.c_st_SLEEP);
+            return machine;
         }
 
         protected override void InitMiscellaneous()
@@ -107,38 +105,6 @@ namespace Unchord
 
             // hitColliders.Add(GetComponent<BoxCollider2D>());
             volumeCollisions.Add(GetComponent<BoxCollider2D>());
-        }
-
-        protected override void PreFixedUpdate()
-        {
-            base.PreFixedUpdate();
-
-            aiCenter.localPosition = aiCenterOffset;
-            senseData.UpdateOrigins(this);
-        }
-
-        protected override void PreUpdate()
-        {
-            // NOTE: test input code
-            float ixn = Input.GetKeyDown(KeyCode.J) ? -1 : 0;
-            float ixp = Input.GetKeyDown(KeyCode.L) ? 1 : 0;
-            float iyn = Input.GetKeyDown(KeyCode.I) ? -1 : 0;
-            float iyp = Input.GetKeyDown(KeyCode.K) ? 1 : 0;
-            float ix = ixn + ixp;
-            float iy = iyn + iyp;
-            // axisInput.x = ix;
-            // axisInput.y = iy;
-
-            base.PreUpdate();
-
-            arm.yAngle = transform.eulerAngles.y;
-        }
-
-        protected override void PostUpdate()
-        {
-            base.PostUpdate();
-
-            // CURRENT_STATE = fsm.current;
         }
 
         public override void OnAggroBegin()

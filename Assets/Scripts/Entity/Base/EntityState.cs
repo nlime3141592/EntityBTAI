@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public abstract class EntityState<T> : State<T>
+    public abstract class EntityState<T> : State<T>, IEntityStateEvent
     where T : Entity
     {
         public override void OnStateBegin()
@@ -22,10 +22,10 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-
-            m_SetLookDir();
-            m_Rotate();
+            m_FixedUpdateRotate();
         }
+
+        public virtual void OnCollisionEnter2D(Collision2D _collision) {}
 
         public virtual void OnAnimationBegin() {}
         public virtual void OnActionBegin() {}
@@ -42,25 +42,7 @@ namespace Unchord
             instance.aController.onEndOfAnimation -= OnAnimationEnd;
         }
 
-        private void m_SetLookDir()
-        {
-            instance.lookDir.x = m_GetLookDir(instance.axis.x, instance.lookDir.x, instance.bFixedLookDirByAxis.x);
-            instance.lookDir.y = m_GetLookDir(instance.axis.y, instance.lookDir.y, instance.bFixedLookDirByAxis.y);
-        }
-
-        private Direction m_GetLookDir(float _axis, Direction _current, bool _bFixed)
-        {
-            if(_bFixed)
-                return _current;
-            else if(_axis < 0)
-                return Direction.Negative;
-            else if(_axis > 0)
-                return Direction.Positive;
-            else
-                return _current;
-        }
-
-        private void m_Rotate()
+        private void m_FixedUpdateRotate()
         {
             float x = m_GetEulerRotation(instance.lookDir.y, instance.eulerRotation.x);
             float y = m_GetEulerRotation(instance.lookDir.x, instance.eulerRotation.y);

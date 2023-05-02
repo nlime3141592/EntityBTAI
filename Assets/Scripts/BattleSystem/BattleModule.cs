@@ -66,7 +66,7 @@ namespace Unchord
 
         public void TriggerBattleState()
         {
-            IStateBase current = owner.machineInterface.state;
+            IStateBase current = owner.fsm.state;
             (current as IBattleState)?.OnTriggerBattleState(this);
 
             /*

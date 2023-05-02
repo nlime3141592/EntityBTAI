@@ -11,7 +11,7 @@ namespace Unchord
             base.OnFixedUpdate();
 
             float vx = instance.bIsRun ? instance.speed_Run : instance.speed_Walk;
-            float ix = instance.axis.x;
+            float ix = instance.iManager.ix;
 
             instance.moveDir.x = ix;
             instance.moveDir.y = 0;

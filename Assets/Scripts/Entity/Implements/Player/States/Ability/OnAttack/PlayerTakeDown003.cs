@@ -29,7 +29,7 @@ namespace Unchord
             if(!instance.aController.bEndOfAction)
                 return;
 
-            if(!instance.parryingDown)
+            if(!instance.iManager.parryingDown)
                 m_bCapturedParringDown = true;
         }
 

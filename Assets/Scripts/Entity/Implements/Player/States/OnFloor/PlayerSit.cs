@@ -35,7 +35,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(m_bOnSlab && instance.jumpDown)
+            else if(m_bOnSlab && instance.iManager.jumpDown)
                 return Player.c_st_JUMP_DOWN;
 
             return MachineConstant.c_lt_PASS;
