@@ -16,7 +16,7 @@ namespace Unchord
         // variable
         private int m_rangeCode = -1;
 
-        public override void OnConstruct()
+        protected override void OnConstruct()
         {
             base.OnConstruct();
             m_idleTimer = new Timer(1.2f);

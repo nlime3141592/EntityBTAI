@@ -14,7 +14,7 @@ namespace Unchord
 
         public override int idConstant => Player.c_st_ATTACK_ON_FLOOR_002;
 
-        public override void OnConstruct()
+        protected override void OnConstruct()
         {
             base.OnConstruct();
 

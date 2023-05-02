@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,11 +45,6 @@ namespace Unchord
 #region Player Components
         public BattleModule battleModule;
         public ElongatedHexagonCollider2D hCol;
-#endregion
-
-#region Player State Machine Management
-        public IStateMachine<Player> fsm;
-        private IState<Player> m_stateTree;
 #endregion
 
 #region Player Datas
@@ -166,50 +162,34 @@ namespace Unchord
         {
             base.InitStateMachine();
 
-            fsm = new StateMachine<Player>(30);
+            StateMachine<Player> fsm = new StateMachine<Player>(50);
+            fsm.instance = this;
 
-            StateComposite<Player> root = new StateComposite<Player>(30);
-            m_stateTree = root;
-
-            StateComposite<Player> state_AttackOnFloor = new StateComposite<Player>(3);
-            state_AttackOnFloor[0] = new PlayerAttackOnFloor001();
-            state_AttackOnFloor[1] = new PlayerAttackOnFloor002();
-            state_AttackOnFloor[2] = new PlayerAttackOnFloor003();
-
-            StateComposite<Player> state_AttackOnAir = new StateComposite<Player>(2);
-            state_AttackOnAir[0] = new PlayerAttackOnAir001();
-            state_AttackOnAir[1] = new PlayerAttackOnAir002();
-
-            StateComposite<Player> state_TakeDown = new StateComposite<Player>(3);
-            state_TakeDown[0] = new PlayerTakeDown001();
-            state_TakeDown[1] = new PlayerTakeDown002();
-            state_TakeDown[2] = new PlayerTakeDown003();
-
-            // NOTE: 상태를 이 곳에서 조직하고, m_stateTree에 Root 할당하기.
-            int index_root = -1;
-            root[++index_root] = new PlayerIdleLong();
-            root[++index_root] = new PlayerIdleShort();
-            root[++index_root] = new PlayerWalk();
-            root[++index_root] = new PlayerRun();
-            root[++index_root] = new PlayerSit();
-            root[++index_root] = new PlayerHeadUp();
-            root[++index_root] = new PlayerFreeFall();
-            root[++index_root] = new PlayerIdleWallFront();
-            root[++index_root] = new PlayerSlidingWallFront();
-            root[++index_root] = new PlayerJumpOnFloor();
-            root[++index_root] = new PlayerJumpOnAir();
-            root[++index_root] = new PlayerJumpOnWallFront();
-            root[++index_root] = new PlayerRoll();
-            root[++index_root] = new PlayerDash();
-            // root[++index_root] = new PlayerClimbOnLedge();
-            root[++index_root] = state_AttackOnFloor;
-            root[++index_root] = state_AttackOnAir;
-            // root[++index_root] = new PlayerAbilitySword();
-            // root[++index_root] = new PlayerAbilityGun();
-            root[++index_root] = state_TakeDown;
-            root[++index_root] = new PlayerBasicParrying();
-            root[++index_root] = new PlayerEmergencyParrying();
-            root[++index_root] = new PlayerJumpDown();
+            fsm.Add(new PlayerIdleLong());
+            fsm.Add(new PlayerIdleShort());
+            fsm.Add(new PlayerWalk());
+            fsm.Add(new PlayerRun());
+            fsm.Add(new PlayerSit());
+            fsm.Add(new PlayerHeadUp());
+            fsm.Add(new PlayerFreeFall());
+            fsm.Add(new PlayerIdleWallFront());
+            fsm.Add(new PlayerSlidingWallFront());
+            fsm.Add(new PlayerJumpOnFloor());
+            fsm.Add(new PlayerJumpOnAir());
+            fsm.Add(new PlayerJumpOnWallFront());
+            fsm.Add(new PlayerRoll());
+            fsm.Add(new PlayerDash());
+            fsm.Add(new PlayerAttackOnFloor001());
+            fsm.Add(new PlayerAttackOnFloor002());
+            fsm.Add(new PlayerAttackOnFloor003());
+            fsm.Add(new PlayerAttackOnAir001());
+            fsm.Add(new PlayerAttackOnAir002());
+            fsm.Add(new PlayerTakeDown001());
+            fsm.Add(new PlayerTakeDown002());
+            fsm.Add(new PlayerTakeDown003());
+            fsm.Add(new PlayerBasicParrying());
+            fsm.Add(new PlayerEmergencyParrying());
+            fsm.Add(new PlayerJumpDown());
 
             stateNext_AttackOnFloor = Player.c_st_ATTACK_ON_FLOOR_001;
             stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_001;
@@ -220,8 +200,12 @@ namespace Unchord
             RegisterTimerHandler(timerCoyote_AttackOnFloor);
             RegisterTimerHandler(timerCoyote_AttackOnAir);
 
-            fsm.instance = this;
-            fsm.Begin(root, Player.c_st_IDLE_SHORT);
+            fsm.onStateChange += (machine, prev, next) =>
+            {
+                Debug.LogFormat("{0}->{1}", prev, next);
+            };
+
+            fsm.Begin(Player.c_st_IDLE_SHORT);
             return fsm;
         }
 

@@ -59,22 +59,22 @@ namespace Unchord
         {
             base.InitStateMachine();
 
-            StateComposite<Mantis> root = new StateComposite<Mantis>(11);
+            fsm = new StateMachine<Mantis>(20);
+            fsm.instance = this;
 
-            int idx = -1;
-            root[++idx] = new MantisIdle();
-            root[++idx] = new MantisWalkFront();
-            root[++idx] = new MantisWalkBack();
-            root[++idx] = new MantisShout();
-            root[++idx] = new MantisKnifeGrinding();
-            root[++idx] = new MantisUpSlice();
-            root[++idx] = new MantisBackSlice();
-            root[++idx] = new MantisChop();
-            root[++idx] = new MantisJumpChop();
-            root[++idx] = new MantisGroggy();
-            root[++idx] = new MantisDie();
+            fsm.Add(new MantisIdle());
+            fsm.Add(new MantisWalkFront());
+            fsm.Add(new MantisWalkBack());
+            fsm.Add(new MantisShout());
+            fsm.Add(new MantisKnifeGrinding());
+            fsm.Add(new MantisUpSlice());
+            fsm.Add(new MantisBackSlice());
+            fsm.Add(new MantisChop());
+            fsm.Add(new MantisJumpChop());
+            fsm.Add(new MantisGroggy());
+            fsm.Add(new MantisDie());
 
-            fsm.Begin(root, c_st_IDLE);
+            fsm.Begin(Mantis.c_st_IDLE);
             return fsm;
         }
 

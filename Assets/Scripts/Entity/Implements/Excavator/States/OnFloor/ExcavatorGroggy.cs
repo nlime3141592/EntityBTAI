@@ -7,7 +7,7 @@ namespace Unchord
         private PhaseController m_phaser;
         private Timer m_groggyTime;
 
-        public override void OnConstruct()
+        protected override void OnConstruct()
         {
             base.OnConstruct();
 

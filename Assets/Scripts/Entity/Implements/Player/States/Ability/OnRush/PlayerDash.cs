@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Unchord
 {
     public class PlayerDash : PlayerRush
@@ -33,12 +35,22 @@ namespace Unchord
             int transit = base.Transit();
 
             if(transit != MachineConstant.c_lt_PASS)
+            {
+                Debug.Log("pass 1");
                 return transit;
+            }
             else if(instance.aController.bEndOfAnimation)
+            {
+                Debug.Log("pass 2");
                 return Player.c_st_FREE_FALL;
+            }
             else if(instance.countLeft_JumpOnAir > 0 && instance.jumpDown)
+            {
+                Debug.Log("pass 3");
                 return Player.c_st_JUMP_ON_AIR;
+            }
 
+            Debug.Log("pass 4");
             return MachineConstant.c_lt_PASS;
         }
     }

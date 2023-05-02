@@ -13,12 +13,11 @@ namespace Unchord
 
             IStateMachine<SandBag> fsm = new StateMachine<SandBag>(2);
 
-            StateComposite<SandBag> root = new StateComposite<SandBag>(2);
-            root[0] = new SandBagDie();
-            root[1] = new SandBagIdle();
+            fsm.Add(new SandBagDie());
+            fsm.Add(new SandBagIdle());
 
             fsm.instance = this;
-            fsm.Begin(root, SandBag.c_st_IDLE);
+            fsm.Begin(SandBag.c_st_IDLE);
             return fsm;
         }
 

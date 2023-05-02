@@ -10,7 +10,7 @@ namespace Unchord
         public int targetCount;
         public float baseDamage;
 
-        public override void OnConstruct()
+        protected override void OnConstruct()
         {
             base.OnConstruct();
 

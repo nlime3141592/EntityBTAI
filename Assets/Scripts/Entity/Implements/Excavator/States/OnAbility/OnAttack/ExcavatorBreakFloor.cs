@@ -6,7 +6,7 @@ namespace Unchord
     {
         public override int idConstant => Excavator.c_st_BREAK_GROUND;
 
-        public override void OnConstruct()
+        protected override void OnConstruct()
         {
             base.OnConstruct();
 

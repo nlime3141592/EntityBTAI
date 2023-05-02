@@ -15,7 +15,7 @@ namespace Unchord
 
         // TODO: 포효콤보 관련 로직을 추가해야 함.
 
-        public override void OnConstruct()
+        protected override void OnConstruct()
         {
             base.OnConstruct();
 

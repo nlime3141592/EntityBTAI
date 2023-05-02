@@ -15,7 +15,7 @@ namespace Unchord
 
         public override int idConstant => Player.c_st_JUMP_DOWN;
 
-        public override void OnConstruct()
+        protected override void OnConstruct()
         {
             curSlabs = new List<Slab>(4);
             prevSlabs = new List<Slab>(4);

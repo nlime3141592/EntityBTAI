@@ -48,8 +48,6 @@ namespace Unchord
         public float gravity = -49.5f;
         public float minFreeFallSpeed = -42.0f;
 
-        public Dictionary<int, int> m_stateMap;
-
         public int aPhase;
 
         public StateMachine<Excavator> fsm;
@@ -72,36 +70,32 @@ namespace Unchord
 
             arm = GetComponentInChildren<ExcavatorArm>();
             hand = GetComponentInChildren<ExcavatorHand>();
-
-            m_stateMap = new Dictionary<int, int>(13);
-            fsm = new StateMachine<Excavator>(13);
         }
 
         protected override IStateMachineBase InitStateMachine()
         {
             base.InitStateMachine();
 
-            StateComposite<Excavator> root = new StateComposite<Excavator>(13);
+            fsm = new StateMachine<Excavator>(13);
+            fsm.instance = this;
 
-            int idx = -1;
-
-            root[++idx] = new ExcavatorSleep();
-            root[++idx] = new ExcavatorWakeUp();
-            root[++idx] = new ExcavatorIdle();
-            root[++idx] = new ExcavatorWalkFront();
-            root[++idx] = new ExcavatorFreeFall();
-            root[++idx] = new ExcavatorStamping();
-            root[++idx] = new ExcavatorAnchoring();
-            root[++idx] = new ExcavatorShockWave();
-            root[++idx] = new ExcavatorShootMissile();
-            root[++idx] = new ExcavatorBreakFloor();
-            root[++idx] = new ExcavatorLanding();
-            root[++idx] = new ExcavatorDie();
-            root[++idx] = new ExcavatorGroggy();
+            fsm.Add(new ExcavatorSleep());
+            fsm.Add(new ExcavatorWakeUp());
+            fsm.Add(new ExcavatorIdle());
+            fsm.Add(new ExcavatorWalkFront());
+            fsm.Add(new ExcavatorFreeFall());
+            fsm.Add(new ExcavatorStamping());
+            fsm.Add(new ExcavatorAnchoring());
+            fsm.Add(new ExcavatorShockWave());
+            fsm.Add(new ExcavatorShootMissile());
+            fsm.Add(new ExcavatorBreakFloor());
+            fsm.Add(new ExcavatorLanding());
+            fsm.Add(new ExcavatorDie());
+            fsm.Add(new ExcavatorGroggy());
 
             monsterPhase = 1;
 
-            fsm.Begin(root, c_st_SLEEP);
+            fsm.Begin(Excavator.c_st_SLEEP);
             return fsm;
         }
 

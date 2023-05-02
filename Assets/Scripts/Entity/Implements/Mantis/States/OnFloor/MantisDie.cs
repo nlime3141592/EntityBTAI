@@ -14,9 +14,9 @@ namespace Unchord
             return MachineConstant.c_lt_PASS;
         }
 
-        public override void OnMachineEnd()
+        public override void OnAnimationEnd()
         {
-            base.OnMachineEnd();
+            base.OnAnimationEnd();
 
             instance.bEndOfEntity = true;
         }

@@ -9,7 +9,7 @@ namespace Unchord
         private PhaseController m_phaser;
         private Timer m_anchorTimer;
 
-        public override void OnConstruct()
+        protected override void OnConstruct()
         {
             base.OnConstruct();
 
