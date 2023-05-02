@@ -1,3 +1,4 @@
+/*
 namespace Unchord
 {
     public static class PrimitivePolyomino
@@ -71,3 +72,4 @@ namespace Unchord
         private static int[] p5_zBaseF => new int[]{ -1,-1, 0,-1, 0,0, 0,1, 1,1 };
     }
 }
+*/

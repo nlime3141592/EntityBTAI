@@ -2,35 +2,22 @@ namespace Unchord
 {
     public class PolyominoBoard
     {
-        private PolyominoPiece[] m_pieces;
-        private int[,] m_board;
+        internal readonly int i_sx;
+        internal readonly int i_sy;
+        internal readonly int[,] i_board;
+        internal readonly PolyominoPiece[] i_placed;
 
-        public PolyominoBoard(int _sx, int _sy)
+        // _sx: size of board-x.
+        // _sy: size of board-y.
+        // _capacity: how many pieces available on this board.
+        internal PolyominoBoard(int _sx, int _sy, int _capacity)
         {
-            m_board = new int[_sx, _sy];
+            i_sx = _sx;
+            i_sy = _sy;
+            i_board = new int[_sx, _sy];
+            i_placed = new PolyominoPiece[_capacity];
         }
 
-        public bool Place(PolyominoPiece _piece)
-        {
-            if(_piece.bPlacedOnBoard)
-                return false;
-
-            return true;
-        }
-
-        public bool Remove(PolyominoPiece _piece)
-        {
-            return true;
-        }
-
-        public void RemoveAll()
-        {
-
-        }
-
-        public void RemoveFrom(object _source)
-        {
-
-        }
+        // DEPRECATED; public void RemoveFrom(object _source) {}
     }
 }

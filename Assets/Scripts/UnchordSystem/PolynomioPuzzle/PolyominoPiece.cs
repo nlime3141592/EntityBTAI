@@ -5,105 +5,40 @@ namespace Unchord
 {
     public class PolyominoPiece
     {
-        public bool bPlacedOnBoard { get; internal set; } = false;
-        public object source { get; set; }
-        public PolyominoBoard placedBoard => bPlacedOnBoard ? i_placedBoard : null;
+        public bool bPlacedOnBoard => i_id > 0;
+        // DEPRECATED; public object source { get; set; }
 
+        // 생성 시 고정되는 값
+        public int dimension { get; private set; }
+        internal readonly int[] i_pieceBase;
+        internal int i_cntBlock;
+
+        // 운영 시 변경될 수 있는 값
+        internal int i_id = -1;
+        internal int i_placedCx = -1;
+        internal int i_placedCy = -1;
         internal PolyominoBoard i_placedBoard;
+        internal int i_rotation = 0;
 
-        private int[] m_pieceBase;
-        private int m_rotation = 0;
-
-        public PolyominoPiece(int _countPolyBlock)
+        internal PolyominoPiece(int _dimension)
         {
-            m_pieceBase = new int[_countPolyBlock + _countPolyBlock];
+            dimension = _dimension;
+            i_pieceBase = new int[_dimension + _dimension];
         }
 
-        public PolyominoPiece(int[] _pieceBase)
-        {
-            m_pieceBase = _pieceBase;
-        }
+        // public PolyominoPiece(int[] _pieceBase) { i_pieceBase = _pieceBase; }
 
-        public void GetPolyBlock(out int _dx, out int _dy, int _numBlock)
-        {
-            int indexPointer = _numBlock + _numBlock;
-            int x = m_pieceBase[indexPointer];
-            int y = m_pieceBase[indexPointer + 1];
-
-            switch(m_rotation)
-            {
-                case 0:
-                    _dx = x;
-                    _dy = y;
-                    break;
-                case 1:
-                    _dx = -y;
-                    _dy = x;
-                    break;
-                case 2:
-                    _dx = -x;
-                    _dy = -y;
-                    break;
-                case 3:
-                    _dx = y;
-                    _dy = -x;
-                    break;
-                default:
-                    throw new Exception("invalid rotation value.");
-            }
-        }
-
-        public void SetPolyBlock(int _numBlock, int _dx, int _dy)
-        {
-            if(bPlacedOnBoard)
-                throw new PolyominoPieceTransformationException(this, "can't change options when piece on board.");
-
-            int indexPointer = _numBlock + _numBlock;
-
-            m_pieceBase[indexPointer] = _dx;
-            m_pieceBase[indexPointer + 1] = _dy;
-        }
-
-        public void Rotate()
-        {
-            if(bPlacedOnBoard)
-                throw new PolyominoPieceTransformationException(this, "can't change options when piece on board.");
-
-            m_rotation = (m_rotation + 1) % 4;
-        }
-
-        public void RotateReverse()
-        {
-            if(bPlacedOnBoard)
-                throw new PolyominoPieceTransformationException(this, "can't change options when piece on board.");
-
-            m_rotation = (m_rotation + 3) % 4;
-        }
-
-        public void SetRotation(PolyominoPieceRotation _rotation)
-        {
-            if(bPlacedOnBoard)
-                throw new PolyominoPieceTransformationException(this, "can't change options when piece on board.");
-
-            m_rotation = (int)_rotation;
-        }
-
-        public void PickUp()
-        {
-            if(!bPlacedOnBoard)
-                return;
-        }
-
+/*
         public void Draw(string name)
         {
             int[,] board = new int[9,9];
             int cx = 4;
             int cy = 4;
 
-            for(int i = 0; i < m_pieceBase.Length; i += 2)
+            for(int i = 0; i < i_pieceBase.Length; i += 2)
             {
-                int px = cx + m_pieceBase[i];
-                int py = cy + m_pieceBase[i + 1];
+                int px = cx + i_pieceBase[i];
+                int py = cy + i_pieceBase[i + 1];
                 board[px, py] = 1;
             }
 
@@ -120,5 +55,6 @@ namespace Unchord
                 Console.WriteLine();
             }
         }
+*/
     }
 }
