@@ -9,7 +9,7 @@ namespace Unchord
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(AnimationController))]
     [DisallowMultipleComponent]
-    public class Entity : MonoBehaviour
+    public abstract class Entity : MonoBehaviour
     {
         // Entity, Non-Tile object.
         // 위치, 방향,
@@ -105,7 +105,7 @@ namespace Unchord
         }
 
         // MonoBehaviour.Start()
-        protected virtual IStateMachineBase InitStateMachine() => null;
+        protected abstract IStateMachineBase InitStateMachine();
 
         // MonoBehaviour.FixedUpdate()
 

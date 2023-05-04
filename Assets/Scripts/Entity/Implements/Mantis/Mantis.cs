@@ -53,8 +53,6 @@ namespace Unchord
 
         protected override IStateMachineBase InitStateMachine()
         {
-            base.InitStateMachine();
-
             StateMachine<Mantis> machine = new StateMachine<Mantis>(20);
             machine.instance = this;
 

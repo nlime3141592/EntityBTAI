@@ -148,8 +148,6 @@ namespace Unchord
 
         protected override IStateMachineBase InitStateMachine()
         {
-            base.InitStateMachine();
-
             StateMachine<Player> fsm = new StateMachine<Player>(50);
             fsm.instance = this;
 

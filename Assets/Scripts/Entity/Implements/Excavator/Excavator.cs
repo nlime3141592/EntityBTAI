@@ -33,11 +33,9 @@ namespace Unchord
         public int CURRENT_STATE;
         public int BOSS_PHASE;
 
-        public Projectile projectile;
-        public Vector2 projVelocity;
-
-        public ShockWave shockwave;
-        public LTRB shockRange;
+        // Prefabs
+        public ExcavatorProjectile projectile;
+        public ExcavatorWave wave;
 
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
@@ -49,6 +47,8 @@ namespace Unchord
         public float minFreeFallSpeed = -42.0f;
 
         public int aPhase;
+
+        public int waveLength = 15;
 #endregion
 
         public virtual bool CanAggro()
@@ -72,8 +72,6 @@ namespace Unchord
 
         protected override IStateMachineBase InitStateMachine()
         {
-            base.InitStateMachine();
-
             StateMachine<Excavator> machine = new StateMachine<Excavator>(13);
             machine.instance = this;
 

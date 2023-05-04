@@ -24,6 +24,13 @@ namespace Unchord
             m_cntBounce = instance.cntBounce;
         }
 
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+            
+            // TODO: 탄환 착지 후 일정 시간이 지나면 탄환이 자동으로 멈추며 폭발하는 로직 추가.
+        }
+
         public override void OnCollisionEnter2D(Collision2D _collider)
         {
             base.OnCollisionEnter2D(_collider);

@@ -9,8 +9,6 @@ namespace Unchord
 
         protected override IStateMachineBase InitStateMachine()
         {
-            base.InitStateMachine();
-
             IStateMachine<SandBag> fsm = new StateMachine<SandBag>(2);
 
             fsm.Add(new SandBagDie());

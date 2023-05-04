@@ -25,6 +25,7 @@ namespace Unchord
             m_FixedUpdateRotate();
         }
 
+        public virtual void OnTriggerEnter2D(Collider2D _collider) {}
         public virtual void OnCollisionEnter2D(Collision2D _collision) {}
 
         public virtual void OnAnimationBegin() {}

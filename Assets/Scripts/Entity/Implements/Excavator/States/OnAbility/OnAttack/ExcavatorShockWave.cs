@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public class ExcavatorShockWave : ExcavatorAttack
+    public class ExcavatorShockWave : ExcavatorAttack, IBattleState
     {
         public override int idConstant => Excavator.c_st_SHOCK_WAVE;
 
@@ -11,7 +11,6 @@ namespace Unchord
             base.OnStateBegin();
             instance.bUpdateAggroDirX = false;
             instance.bFixedLookDirByAxis.x = true;
-            instance.aController.onBeginOfAction += m_OnActionBegin;
         }
 
         public override int Transit()
@@ -26,33 +25,13 @@ namespace Unchord
             return MachineConstant.c_lt_PASS;
         }
 
-        public override void OnStateEnd()
+        public void OnTriggerBattleState(BattleModule _btModule)
         {
-            base.OnStateEnd();
-            instance.aController.onBeginOfAction -= m_OnActionBegin;
-        }
-
-        private void m_OnActionBegin()
-        {
-            ShockWave lw = instance.shockwave.Copy();
-            ShockWave rw = instance.shockwave.Copy();
-            float dx = (instance.shockRange.left + instance.shockRange.right) * 0.5f;
-
-            lw.InitIgnore(instance.battleTriggers);
-            lw.InitBaseDamage(1.0f);
-            lw.InitDirection(-1);
-            lw.InitPosition(instance.aiCenter.position - new Vector3(dx, 0, 0));
-            lw.InitRange(instance.shockRange);
-            lw.InitLeftWave(15);
-            lw.InitShow();
-
-            rw.InitIgnore(instance.battleTriggers);
-            rw.InitBaseDamage(1.0f);
-            rw.InitDirection(1);
-            rw.InitPosition(instance.aiCenter.position + new Vector3(dx, 0, 0));
-            rw.InitRange(instance.shockRange);
-            rw.InitLeftWave(15);
-            rw.InitShow();
+            // TODO: 내부 코드 로직이 ExcavatorWaveShake.m_SpreadWave() 함수와 유사하므로, 가능하다면, 통합할 수 있는 방법을 모색해보기.
+            ExcavatorWave wave = GameObject.Instantiate<ExcavatorWave>(instance.wave);
+            
+            wave.waveStep = instance.waveLength;
+            wave.bInstanceReady = true;
         }
     }
 }
