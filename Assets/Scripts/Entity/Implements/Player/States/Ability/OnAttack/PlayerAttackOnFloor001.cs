@@ -37,14 +37,8 @@ namespace Unchord
         {
             base.OnUpdate();
 
-            SensorUtilities.Bind(instance.transform, instance.skillRange_AttackOnFloor001.transform);
-        }
-
-        public override void OnDrawGizmo()
-        {
-            base.OnDrawGizmo();
-
-            instance.skillRange_AttackOnFloor001.DrawSensor(Color.white);
+            SensorUtilities.Bind(instance.transform, instance.skillRange_AttackOnFloor001_01.transform);
+            instance.skillRange_AttackOnFloor001_01.OnUpdate();
         }
 
         public void OnTriggerBattleState(BattleModule _btModule)
@@ -52,8 +46,13 @@ namespace Unchord
             instance.sensorBuffer.Clear();
             m_targets.Clear();
 
-            instance.skillRange_AttackOnFloor001.Sense(in instance.sensorBuffer, _btModule.targetLayer);
-            instance.sensorBuffer.GetComponents<Entity>(in m_targets);
+            instance.skillRange_AttackOnFloor001_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
+            instance.sensorBuffer
+                .IgnoreColliders(instance.battleTriggers)
+                .IgnoreColliders(instance.volumeCollisions)
+                .GetComponents<Entity>(in m_targets);
+
+            Debug.LogFormat("cound: {0}", instance.sensorBuffer.Count);
 
             foreach(Entity entity in m_targets)
             {

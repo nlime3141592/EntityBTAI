@@ -638,12 +638,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sensor: {fileID: 11400000, guid: 6b5c1a20eeb38e440960466f264594d0, type: 2}
   bDrawSensor: 0
-  clrSensor: {r: 0, g: 1, b: 0, a: 1}
+  clrSensor:
+    r: 0
+    g: 1
+    b: 0
+    a: 1
   bDrawBasis: 0
-  clrAxisPX: {r: 1, g: 0, b: 0, a: 1}
-  clrAxisPY: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  clrAxisNX: {r: 0, g: 1, b: 1, a: 1}
-  clrAxisNY: {r: 1, g: 1, b: 1, a: 1}
+  clrAxisPX:
+    r: 1
+    g: 0
+    b: 0
+    a: 1
+  clrAxisPY:
+    r: 1
+    g: 0.92156863
+    b: 0.015686275
+    a: 1
+  clrAxisNX:
+    r: 0
+    g: 1
+    b: 1
+    a: 1
+  clrAxisNY:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
 --- !u!1 &568642914
 GameObject:
   m_ObjectHideFlags: 0
@@ -1114,7 +1134,6 @@ MonoBehaviour:
     baseValue: 0
   mentality:
     baseValue: 0
-  axis: {x: 0, y: 0}
   bFixedLookDirByAxis:
     x: 0
     y: 0
@@ -1122,8 +1141,7 @@ MonoBehaviour:
     x: 0
     y: 0
   eulerRotation: {x: 0, y: 0, z: 0}
-  bDeadState: 0
-  bEndOfEntity: 0
+  phase: 0
   bInvincibility: 0
   groggyValue: 0
   sensorBuffer: []
@@ -1890,7 +1908,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2f45a5cbdbd9c46a093f22e8b30870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeCollisions: []
+  volumeCollisions:
+  - {fileID: 1247878694}
+  - {fileID: 93637026}
+  - {fileID: 568642915}
   battleTriggers: []
   subOrgans: []
   maxHealth:
@@ -1913,7 +1934,6 @@ MonoBehaviour:
     baseValue: 0
   mentality:
     baseValue: 0
-  axis: {x: 0, y: 0}
   bFixedLookDirByAxis:
     x: 0
     y: 1
@@ -1921,8 +1941,7 @@ MonoBehaviour:
     x: 1
     y: 1
   eulerRotation: {x: 0, y: 0, z: 0}
-  bDeadState: 0
-  bEndOfEntity: 0
+  phase: 0
   bInvincibility: 0
   groggyValue: 0
   sensorBuffer: []
@@ -1952,13 +1971,53 @@ MonoBehaviour:
   gravity_FreeFall: -49.5
   gravity_WallSlidingFront: -9.81
   gravity_AttackOnAir: -49.5
+  time_idleShort: 10
   frame_IdleShort: 100
   count_JumpOnAir: 1
   count_Dash: 1
   count_AttackOnAir: 1
-  skillRange_AttackOnFloor001: {fileID: 11400000, guid: 6b5c1a20eeb38e440960466f264594d0, type: 2}
-  skillRange_AttackOnFloor002: {fileID: 11400000, guid: ad27323781acf1e428cb1d722e6325e8, type: 2}
-  skillRange_AttackOnFloor003: {fileID: 11400000, guid: 1e603d6582f2d5846bcfafc6d1f0f245, type: 2}
+  skillRange_AttackOnFloor001_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 1
+      t: 2
+      r: 4
+      b: 2
+  skillRange_AttackOnFloor002_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0
+      t: 2
+      r: 3
+      b: 2
+  skillRange_AttackOnFloor003_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 1
+      t: 2
+      r: 5
+      b: 2
   bIsRun: 1
   countLeft_JumpOnAir: 0
   countLeft_Dash: 0
@@ -1969,16 +2028,6 @@ MonoBehaviour:
   CURRENT_STATE: 0
   CURRENT_TYPE: 
   DEBUG_COYOTE: 0
-  aPhase: -1
-  jumpDown: 0
-  jumpUp: 0
-  rushDown: 0
-  rushUp: 0
-  parryingDown: 0
-  parryingUp: 0
-  skill00: 0
-  skill01: 0
-  skill02: 0
   sitSlabs: []
 --- !u!114 &1751650957
 MonoBehaviour:
@@ -1996,7 +2045,8 @@ MonoBehaviour:
     bShowGizmo: 1
     duration: 2
     color: {r: 0.2028302, g: 0.7639362, b: 1, a: 1}
-  targetLayer:
+  tags: []
+  mask:
     serializedVersion: 2
     m_Bits: 128
 --- !u!114 &1751650958
@@ -2177,7 +2227,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.05, y: 2.8}

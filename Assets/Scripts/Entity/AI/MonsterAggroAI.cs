@@ -10,47 +10,39 @@ namespace Unchord
         public event Action onAggroBegin;
         public event Action onAggroEnd;
 
-        public Sensor_SO aggroSensor;
-        public LayerMask targetLayer;
-        public List<string> targetTags;
+        public AreaSensorBox sensor;
+        public List<Entity> targets;
+        [HideInInspector] public List<Entity> targetsPrev;
+        public List<string> tags;
+        public LayerMask mask;
 
-        [HideInInspector] public List<Entity> aggroTargets;
-        [HideInInspector] public List<Entity> aggroTargetsPrev;
-        [HideInInspector] public bool bAggroPrev = false;
-        [HideInInspector] public bool bAggro = false;
-        private List<Collider2D> m_detected;
+        public bool bCanAggro = true;
+        public bool bAggroPrev;
+        public bool bAggro;
+
+        [NonSerialized] private List<Collider2D> m_sensed;
 
         public MonsterAggroAI()
         {
-            if(m_detected == null)
-                m_detected = new List<Collider2D>();
+            m_sensed = new List<Collider2D>(1);
         }
 
         public void OnFixedUpdate()
         {
-            m_DetectTargets();
-            m_PublishEvents();
-        }
+            targetsPrev.Clear();
+            List<Entity> tmp_aggros = targets;
+            targets = targetsPrev;
+            targetsPrev = tmp_aggros;
 
-        private void m_DetectTargets()
-        {
-            if(aggroSensor == null)
-                return;
-
-            List<Entity> tmp_aggros = aggroTargets;
-            aggroTargets = aggroTargetsPrev;
-            aggroTargetsPrev = tmp_aggros;
+            if(bCanAggro)
+            {
+                sensor.Sense(m_sensed, tags, mask);
+                m_sensed.GetComponents<Entity>(in targets);
+            }
 
             bAggroPrev = bAggro;
-            aggroTargets.Clear();
-            aggroSensor.Sense(in m_detected, targetLayer);
-            m_detected.GetComponents<Entity>(in aggroTargets);
+            bAggro = targets.Count > 0;
 
-            bAggro = aggroTargets.Count > 0;
-        }
-
-        private void m_PublishEvents()
-        {
             if(bAggro && !bAggroPrev)
                 onAggroBegin?.Invoke();
             else if(bAggroPrev)

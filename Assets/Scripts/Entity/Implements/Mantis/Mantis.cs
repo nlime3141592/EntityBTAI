@@ -84,7 +84,7 @@ namespace Unchord
             fsm.Begin(Mantis.c_st_IDLE);
             return machine;
         }
-
+/*
         public override void OnAggroBegin()
         {
             base.OnAggroBegin();
@@ -104,7 +104,7 @@ namespace Unchord
             aggroRange.right = 20;
             aggroRange.bottom = 5;
         }
-
+*/
         protected void OnDisable()
         {
             GameManager.instance.generatedBoss.Remove(m_spawnDataNode);

@@ -4,11 +4,14 @@ namespace Unchord
     {
         public override int idConstant => Mantis.c_st_SLEEP;
 
-        public override void OnFixedUpdate()
+        public override void OnAggroBegin()
         {
-            base.OnFixedUpdate();
+            base.OnAggroBegin();
 
-            // TODO: 이 곳에서 sleep 상태 시 어그로 영역을 이용한 타겟 감지를 수행.
+            instance.aggroAi.sensor.box.l = 200;
+            instance.aggroAi.sensor.box.t = 200;
+            instance.aggroAi.sensor.box.r = 200;
+            instance.aggroAi.sensor.box.b = 200;
         }
     }
 }

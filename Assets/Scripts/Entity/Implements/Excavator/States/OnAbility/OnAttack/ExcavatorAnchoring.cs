@@ -42,7 +42,7 @@ namespace Unchord
             if(aPhase == 1)
             {
                 m_anchorTimer.Reset();
-                instance.arm.targetTransform = instance.aggroTargets[0].transform;
+                instance.arm.targetTransform = instance.aggroAi.targets[0].transform;
                 instance.armObj.SetActive(true);
             }
             if(aPhase == 2)
@@ -97,7 +97,7 @@ namespace Unchord
 
         private void m_TraceArm()
         {
-            Entity target = instance.aggroTargets[0];
+            Entity target = instance.aggroAi.targets[0];
         }
     }
 }

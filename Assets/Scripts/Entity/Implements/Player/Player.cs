@@ -83,9 +83,9 @@ namespace Unchord
         public int count_Dash = 1;
         public int count_AttackOnAir = 1;
 
-        public Sensor_SO skillRange_AttackOnFloor001;
-        public Sensor_SO skillRange_AttackOnFloor002;
-        public Sensor_SO skillRange_AttackOnFloor003;
+        public AreaSensorBox skillRange_AttackOnFloor001_01;
+        public AreaSensorBox skillRange_AttackOnFloor002_01;
+        public AreaSensorBox skillRange_AttackOnFloor003_01;
 #endregion
 
 #region Player Variables

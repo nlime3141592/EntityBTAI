@@ -51,7 +51,7 @@ namespace Unchord
                 return transit;
             else if(m_idleTimer.bEndOfTimer)
             {
-                Entity target = instance.aggroTargets[0];
+                Entity target = instance.aggroAi.targets[0];
                 m_rangeCode = m_GetRangeCode(target, instance, m_rangeX1, m_rangeX2, m_rangeY1, m_rangeY2);
 
                 if(instance.phase == 0)

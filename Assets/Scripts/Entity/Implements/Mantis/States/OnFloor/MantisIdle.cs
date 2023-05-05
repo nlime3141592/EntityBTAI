@@ -52,10 +52,10 @@ namespace Unchord
 
         private Direction m_GetLookDirX()
         {
-            if(!instance.bAggro)
+            if(!instance.aggroAi.bAggro)
                 return instance.lookDir.x;
 
-            float tx = instance.aggroTargets[0].transform.position.x;
+            float tx = instance.aggroAi.targets[0].transform.position.x;
             float px = instance.transform.position.x;
 
             if(tx - px < 0)
@@ -70,7 +70,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(!instance.bAggro)
+            else if(!instance.aggroAi.bAggro)
                 return MachineConstant.c_lt_CONTINUE;
             else if(m_leftIdleTime <= 0)
             {

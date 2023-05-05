@@ -100,7 +100,7 @@ namespace Unchord
             machine.Begin(Excavator.c_st_SLEEP);
             return machine;
         }
-
+/*
         public override void OnAggroBegin()
         {
             base.OnAggroBegin();
@@ -120,7 +120,7 @@ namespace Unchord
             aggroRange.right = 200;
             aggroRange.bottom = 200;
         }
-
+*/
         protected void OnDisable()
         {
             GameManager.instance.generatedBoss.Remove(m_spawnDataNode);

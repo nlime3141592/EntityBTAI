@@ -17,7 +17,8 @@ namespace Unchord
         // public TestDamageUI healUI;
 
         public EntitySensorGizmoOption battleRangeGizmo;
-        public LayerMask targetLayer;
+        public List<string> tags;
+        public LayerMask mask;
 
         private List<Collider2D> m_ignores;
 
