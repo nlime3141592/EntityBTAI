@@ -33,6 +33,9 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
+
+            // TODO: 이 곳에서 idle 상태 시 어그로 영역을 이용한 타겟 감지를 수행.
+
             instance.vm.SetVelocityY(-1.0f);
 
             if(m_leftIdleAggroDelay == 0)

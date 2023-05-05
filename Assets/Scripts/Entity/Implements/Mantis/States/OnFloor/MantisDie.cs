@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Unchord
 {
     public class MantisDie : MantisOnFloor
@@ -9,16 +7,9 @@ namespace Unchord
         public override int Transit()
         {
             if(instance.aController.bEndOfAnimation)
-                return MachineConstant.c_lt_END;
+                return MachineConstant.c_st_MACHINE_OFF;
 
             return MachineConstant.c_lt_PASS;
-        }
-
-        public override void OnAnimationEnd()
-        {
-            base.OnAnimationEnd();
-
-            instance.bEndOfEntity = true;
         }
     }
 }

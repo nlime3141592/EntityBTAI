@@ -16,21 +16,21 @@ namespace Unchord
         public const int c_st_JUMP_CHOP                  = 8;
         public const int c_st_GROGGY                     = 9;
         public const int c_st_DIE                        = 10;
+        public const int c_st_SLEEP                      = 11;
 
         public BoxCollider2D terrainCollider; // Inspector에서 값 할당 필요
         public Transform aiCenter; // Inspector에서 값 할당 필요
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
         public MantisTerrainSensor senseData;
+        public MantisStateRegion3_001 stateAi_001;
+        public MantisStateRegion3_002 stateAi_002;
 
         public int CURRENT_STATE;
         public int BOSS_PHASE;
 
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
-
-        public MantisStateRegion3_001 stateAi_001 { get; private set; }
-        public MantisStateRegion3_002 stateAi_002 { get; private set; }
 
 #region 아직 정리 안 함.
         public float wallDetectLength = 0.06f;
@@ -43,14 +43,25 @@ namespace Unchord
             return false;
         }
 
-        protected override void InitComponents()
+        protected override void OnAwakeEntity()
         {
-            base.InitComponents();
+            base.OnAwakeEntity();
+
+            senseData = new MantisTerrainSensor();
+            stateAi_001 = new MantisStateRegion3_001();
+            stateAi_002 = new MantisStateRegion3_002();
 
             m_spawnData = new EntitySpawnData("사마귀", this);
             m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
-            stateAi_001 = new MantisStateRegion3_001();
-            stateAi_002 = new MantisStateRegion3_002();
+        }
+
+        protected override void OnStartEntity()
+        {
+            base.OnStartEntity();
+
+            volumeCollisions.Add(GetComponent<BoxCollider2D>());
+
+            GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
         }
 
         protected override IStateMachineBase InitStateMachine()
@@ -72,16 +83,6 @@ namespace Unchord
 
             fsm.Begin(Mantis.c_st_IDLE);
             return machine;
-        }
-
-        protected override void InitMiscellaneous()
-        {
-            base.InitMiscellaneous();
-
-            volumeCollisions.Add(GetComponent<BoxCollider2D>());
-            // hitColliders.Add(GetComponent<BoxCollider2D>());
-
-            GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
         }
 
         public override void OnAggroBegin()

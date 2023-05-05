@@ -127,20 +127,15 @@ namespace Unchord
             return false;
         }
 
-        protected override void InitComponents()
+        protected override void OnAwakeEntity()
         {
-            base.InitComponents();
+            base.OnAwakeEntity();
 
             battleModule = GetComponent<BattleModule>();
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 
             timerCoyote_AttackOnFloor = new TimerHandler();
             timerCoyote_AttackOnAir = new TimerHandler();
-        }
-
-        protected override void InitMiscellaneous()
-        {
-            base.InitMiscellaneous();
 
             rangeGizmoManager = new EntitySensorGizmoManager();
             iManager = new PlayerInputManager();
@@ -187,47 +182,5 @@ namespace Unchord
             fsm.Begin(Player.c_st_IDLE_SHORT);
             return fsm;
         }
-
-        protected override bool bShowGizmos()
-        {
-            return true;
-        }
-/*
-        protected override void Start()
-        {
-            // NOTE: 각 State별 OnMachineBegin() 함수에 이 코드를 집어넣을 것.
-            leftAirJumpCount = data.maxAirJumpCount;
-            leftDashCount = data.maxDashCount;
-            leftAirAttackCount = data.maxAirAttackCount;
-        }
-*/
-/*
-        protected override void FixedUpdate()
-        {
-            // NOTE: PlayerState.OnFixedUpdate() 함수에 넣을 것.
-            senseData.UpdateOrigins(this);
-        }
-*/
-/*
-        protected override void Update()
-        {
-            // NOTE: PlayerState.OnUpdate() 함수에 넣을 것.
-            iManager.UpdateInputs(canInput);
-
-            if(Input.GetKeyDown(KeyCode.F5))
-                bIsRun = !bIsRun;
-        }
-*/
-/*
-        protected override void OnDrawGizmos()
-        {
-            base.OnDrawGizmos();
-            if(Application.isPlaying)
-            {
-                ((PlayerJumpDown)(fsm[PlayerFsm.c_st_JUMP_DOWN])).m_sitRange.Draw(transform.position, false, false, Color.red);
-                ((PlayerJumpDown)(fsm[PlayerFsm.c_st_JUMP_DOWN])).m_slabRange.Draw(transform.position, false, false, Color.cyan);
-            }
-        }
-*/
     }
 }

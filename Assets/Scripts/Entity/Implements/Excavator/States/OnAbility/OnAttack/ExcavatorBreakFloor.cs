@@ -24,7 +24,7 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            instance.bUpdateAggroDirX = false;
+            ++instance.phase;
             instance.bFixedLookDirByAxis.x = true;
             // instance.battleModule.targetLayerMask |= 1 << LayerMask.NameToLayer("Terrain");
             // instance.AllowHitFromBattleModule(false);

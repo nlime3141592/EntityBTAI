@@ -9,7 +9,6 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            instance.bUpdateAggroDirX = false;
             instance.bFixedLookDirByAxis.x = true;
         }
 

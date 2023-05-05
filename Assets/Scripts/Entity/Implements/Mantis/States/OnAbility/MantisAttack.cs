@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Unchord
 {
-    public abstract class MantisAttack : MantisAbility //, IBattleState
+    public abstract class MantisAttack : MantisAbility
     {
         protected List<Entity> targets;
         public LTRB attackRange;
@@ -20,8 +20,7 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            // instance.battleModule.SetBattleState(this);
-            instance.bUpdateAggroDirX = false;
+
             instance.bFixedLookDirByAxis.x = true;
         }
 
@@ -29,7 +28,6 @@ namespace Unchord
         {
             base.OnStateEnd();
 
-            instance.bUpdateAggroDirX = true;
             instance.bFixedLookDirByAxis.x = false;
         }
 

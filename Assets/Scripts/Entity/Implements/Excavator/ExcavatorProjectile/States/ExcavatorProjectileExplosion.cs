@@ -10,7 +10,6 @@ namespace Unchord
         {
             base.OnStateBegin();
 
-            instance.bDeadState = true;
             instance.vm.FreezePosition(true, true);
         }
 
@@ -24,6 +23,13 @@ namespace Unchord
                 return MachineConstant.c_st_MACHINE_OFF;
             
             return MachineConstant.c_lt_PASS;
+        }
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+
+            instance.SetHealth(0);
         }
     }
 }

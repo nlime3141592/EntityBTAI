@@ -8,7 +8,7 @@ namespace Unchord
         {
             if(!instance.aController.bEndOfAnimation)
                 return MachineConstant.c_lt_CONTINUE;
-            else if(instance.monsterPhase == 1 && instance.health <= 0)
+            else if(instance.phase == 1 && instance.health <= 0)
                 return Mantis.c_st_IDLE;
 
             int transit = base.Transit();
@@ -20,9 +20,9 @@ namespace Unchord
         {
             base.OnStateEnd();
 
-            if(instance.monsterPhase == 1 && instance.health <= 0)
+            if(instance.phase == 1 && instance.health <= 0)
             {
-                instance.monsterPhase = 2; // 2페이즈로 진입합니다.
+                instance.phase = 2; // 2페이즈로 진입합니다.
                 instance.SetHealth(instance.maxHealth.finalValue);
             }
         }

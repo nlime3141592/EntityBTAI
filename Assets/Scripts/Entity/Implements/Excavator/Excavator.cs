@@ -56,9 +56,9 @@ namespace Unchord
             return false;
         }
 
-        protected override void InitComponents()
+        protected override void OnAwakeEntity()
         {
-            base.InitComponents();
+            base.OnAwakeEntity();
 
             m_spawnData = new EntitySpawnData("굴착 기계", this);
             m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
@@ -68,6 +68,14 @@ namespace Unchord
 
             arm = GetComponentInChildren<ExcavatorArm>();
             hand = GetComponentInChildren<ExcavatorHand>();
+        }
+
+        protected override void OnStartEntity()
+        {
+            base.OnStartEntity();
+
+            armObj.SetActive(false);
+            volumeCollisions.Add(GetComponent<BoxCollider2D>());
         }
 
         protected override IStateMachineBase InitStateMachine()
@@ -89,20 +97,8 @@ namespace Unchord
             machine.Add(new ExcavatorDie());
             machine.Add(new ExcavatorGroggy());
 
-            monsterPhase = 1;
-
             machine.Begin(Excavator.c_st_SLEEP);
             return machine;
-        }
-
-        protected override void InitMiscellaneous()
-        {
-            base.InitMiscellaneous();
-
-            armObj.SetActive(false);
-
-            // hitColliders.Add(GetComponent<BoxCollider2D>());
-            volumeCollisions.Add(GetComponent<BoxCollider2D>());
         }
 
         public override void OnAggroBegin()

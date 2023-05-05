@@ -64,8 +64,6 @@ namespace Unchord
         public Vector3 eulerRotation; // 방향 회전
 
         public int phase;
-        public bool bDeadState;
-        public bool bEndOfEntity; // TODO: 변수 지우기
 
         public bool bInvincibility;
         public float groggyValue;
@@ -85,7 +83,7 @@ namespace Unchord
         // MonoBehaviour.Awake()
         protected virtual bool InitSingletonInstance() => true;
 
-        protected virtual void InitComponents()
+        protected virtual void OnAwakeEntity()
         {
             TryGetComponent<Rigidbody2D>(out m_physics);
             TryGetComponent<SpriteRenderer>(out m_spRenderer);
@@ -96,12 +94,13 @@ namespace Unchord
 
             if(sensorBuffer == null)
                 sensorBuffer = new List<Collider2D>();
+
+            m_health = Utilities.Max<float>(1, maxHealth.finalValue);
         }
 
-        protected virtual void InitMiscellaneous()
+        protected virtual void OnStartEntity()
         {
-            bEndOfEntity = false;
-            m_health = Utilities.Max<float>(1, maxHealth.finalValue);
+            
         }
 
         // MonoBehaviour.Start()
@@ -114,7 +113,6 @@ namespace Unchord
         // MonoBehaviour.LateUpdate()
 
         // MonoBehaviour.OnDrawGizmos()
-        protected virtual bool bShowGizmos() => false;
 
         // Extra.
         // protected virtual void OnZeroHealth() {}
@@ -143,7 +141,7 @@ namespace Unchord
 */
         private bool m_bCanDestroy()
         {
-            return bDeadState && !fsm.bStarted;
+            return m_health <= 0 && !fsm.bStarted;
         }
 #endregion
 
@@ -195,13 +193,12 @@ namespace Unchord
                 return;
             }
 
-            InitComponents();
-            InitMiscellaneous();
+            OnAwakeEntity();
         }
 
         private void Start()
         {
-            // StartCoroutine(m_DestroyEntity());
+            OnStartEntity();
             fsm = InitStateMachine();
         }
 

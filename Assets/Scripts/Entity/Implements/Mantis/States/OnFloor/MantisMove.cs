@@ -14,7 +14,6 @@ namespace Unchord
 
             instance.vm.FreezePosition(false, false);
 
-            instance.bUpdateAggroDirX = false;
             instance.bFixedLookDirByAxis.x = true;
 
             m_leftMoveFrame = m_moveFrame;
@@ -44,7 +43,6 @@ namespace Unchord
         {
             base.OnStateEnd();
 
-            instance.bUpdateAggroDirX = true;
             instance.bFixedLookDirByAxis.x = false;
         }
     }

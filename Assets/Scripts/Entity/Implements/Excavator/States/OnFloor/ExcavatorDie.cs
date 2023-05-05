@@ -7,16 +7,20 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            instance.bDeadState = true;
-            // instance.AllowHitFromBattleModule(false);
             instance.IgnoreBattleTrigger(null, false); // TODO: 배틀 트리거를 넣어줘야 함.
             instance.armObj.SetActive(false);
         }
 
-        public override void OnUpdate()
+        public override int Transit()
         {
-            if(instance.aController.bEndOfAnimation)
-                instance.bEndOfEntity = true;
+            int transit = base.Transit();
+
+            if(transit != MachineConstant.c_lt_PASS)
+                return transit;
+            else if(instance.aController.bEndOfAnimation)
+                return MachineConstant.c_st_MACHINE_OFF;
+
+            return MachineConstant.c_lt_PASS;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Unchord
         {
             if(!instance.aController.bEndOfAnimation)
                 return MachineConstant.c_lt_CONTINUE;
-            else if(instance.monsterPhase == 1 && instance.health <= 0)
+            else if(instance.phase == 1 && instance.health <= 0)
                 return Mantis.c_st_KNIFE_GRINDING;
 
             int transit = base.Transit();

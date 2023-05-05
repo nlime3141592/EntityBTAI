@@ -15,9 +15,9 @@ namespace Unchord
 
             if(instance.health <= 0)
             {
-                if(instance.monsterPhase == 1)
+                if(instance.phase == 0)
                     return Mantis.c_st_SHOUT;
-                else if(instance.monsterPhase == 2)
+                else if(instance.phase == 1)
                     return Mantis.c_st_DIE;
             }
             else if(instance.groggyValue >= 1.0f)

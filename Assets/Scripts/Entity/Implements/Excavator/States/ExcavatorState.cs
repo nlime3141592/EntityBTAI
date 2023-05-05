@@ -39,9 +39,9 @@ namespace Unchord
                 return transit;
             else if(instance.health <= 0.0f)
             {
-                if(++instance.monsterPhase <= 3)
+                if(instance.phase < 2)
                     return Excavator.c_st_BREAK_GROUND;
-                else if(!instance.bDeadState)
+                else
                     return Excavator.c_st_DIE;
             }
             else if(instance.groggyValue >= 1.0f)

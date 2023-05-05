@@ -16,9 +16,9 @@ namespace Unchord
 
         public ExcavatorWaveTerrainSensor senseData;
 
-        protected override void InitComponents()
+        protected override void OnAwakeEntity()
         {
-            base.InitComponents();
+            base.OnAwakeEntity();
 
             senseData = new ExcavatorWaveTerrainSensor();
         }

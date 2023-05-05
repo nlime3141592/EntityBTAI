@@ -6,12 +6,6 @@ namespace Unchord
     {
         public override int idConstant => Excavator.c_st_SLEEP;
 
-        public override void OnStateBegin()
-        {
-            base.OnStateBegin();
-            instance.monsterPhase = 1;
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();

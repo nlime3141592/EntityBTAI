@@ -54,11 +54,11 @@ namespace Unchord
                 Entity target = instance.aggroTargets[0];
                 m_rangeCode = m_GetRangeCode(target, instance, m_rangeX1, m_rangeX2, m_rangeY1, m_rangeY2);
 
-                if(instance.monsterPhase == 1)
+                if(instance.phase == 0)
                     return m_ChangeStateByRangeCodePhase1(m_rangeCode);
-                else if(instance.monsterPhase == 2)
+                else if(instance.phase == 1)
                     return m_ChangeStateByRangeCodePhase2(m_rangeCode);
-                else if(instance.monsterPhase == 3)
+                else if(instance.phase == 2)
                     return m_ChangeStateByRangeCodePhase3(m_rangeCode);
             }
 

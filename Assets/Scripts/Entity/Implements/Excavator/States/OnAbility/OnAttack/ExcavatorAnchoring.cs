@@ -31,7 +31,6 @@ namespace Unchord
         {
             base.OnStateBegin();
 
-            instance.bUpdateAggroDirX = true;
             instance.bFixedLookDirByAxis.x = false;
             // instance.bFixLookDirX = true;
 
