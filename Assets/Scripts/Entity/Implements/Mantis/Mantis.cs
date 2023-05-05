@@ -29,7 +29,8 @@ namespace Unchord
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
 
-        // private StateRegion3 m_regionAi3;
+        public MantisStateRegion3_001 stateAi_001 { get; private set; }
+        public MantisStateRegion3_002 stateAi_002 { get; private set; }
 
 #region 아직 정리 안 함.
         public float wallDetectLength = 0.06f;
@@ -48,7 +49,8 @@ namespace Unchord
 
             m_spawnData = new EntitySpawnData("사마귀", this);
             m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
-            // m_regionAi3 = new StateRegion3();
+            stateAi_001 = new MantisStateRegion3_001();
+            stateAi_002 = new MantisStateRegion3_002();
         }
 
         protected override IStateMachineBase InitStateMachine()
