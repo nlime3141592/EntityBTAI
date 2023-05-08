@@ -62,6 +62,7 @@ namespace Unchord
         public int GetState(System.Random _prng, float ox, float oy, float px, float py, float lx, float ly, float rx1, float rx2, float ry1, float ry2)
         {
             int code = m_GetRegion(ox, oy, px, py, lx, ly, rx1, rx2, ry1, ry2);
+            UnityEngine.Debug.LogFormat("current code: {0}", code);
             return m_events[code](_prng);
         }
 

@@ -14,7 +14,6 @@ namespace Unchord
         public override void OnUpdate()
         {
             base.OnUpdate();
-            instance.CURRENT_STATE = idConstant;
             instance.iManager.UpdateInputs(true);
         }
 

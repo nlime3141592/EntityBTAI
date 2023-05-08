@@ -109,7 +109,6 @@ namespace Unchord
         public PlayerTerrainSensor senseData;
         public PlayerInputManager iManager;
 
-        public int CURRENT_STATE;
         public string CURRENT_TYPE;
         public float DEBUG_COYOTE;
         public EntitySensorGizmoManager rangeGizmoManager;

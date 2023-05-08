@@ -25,7 +25,7 @@ namespace Unchord
             if(instance.health <= 0)
             {
                 if(instance.phase == 0)
-                    return Mantis.c_st_SHOUT;
+                    return Mantis.c_st_PHASE_SHOUT;
                 else if(instance.phase == 1)
                     return Mantis.c_st_DIE;
             }

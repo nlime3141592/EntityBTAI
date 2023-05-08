@@ -33,6 +33,14 @@ namespace Unchord
         public virtual void OnActionEnd() {}
         public virtual void OnAnimationEnd() {}
 
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            instance.CURRENT_STATE = instance.fsm.state.idConstant;
+            instance.CURRENT_HEALTH = instance.health;
+        }
+
         public override void OnStateEnd()
         {
             base.OnStateEnd();

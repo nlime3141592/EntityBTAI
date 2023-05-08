@@ -8,7 +8,7 @@ namespace Unchord
         public const int c_st_IDLE                       = 0;
         public const int c_st_WALK_FRONT                 = 1;
         public const int c_st_WALK_BACK                  = 2;
-        public const int c_st_SHOUT                      = 3;
+        public const int c_st_PHASE_SHOUT                = 3;
         public const int c_st_KNIFE_GRINDING             = 4;
         public const int c_st_UP_SLICE                   = 5;
         public const int c_st_BACK_SLICE                 = 6;
@@ -17,16 +17,13 @@ namespace Unchord
         public const int c_st_GROGGY                     = 9;
         public const int c_st_DIE                        = 10;
         public const int c_st_SLEEP                      = 11;
+        public const int c_st_COMBO_SHOUT                = 12;
 
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
         public MantisTerrainSensor senseData;
         public MantisStateRegion3_001 stateAi_001;
         public MantisStateRegion3_002 stateAi_002;
-
-        public int CURRENT_STATE;
-        public float CURRENT_HEALTH;
-        public int BOSS_PHASE;
 
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
@@ -72,7 +69,8 @@ namespace Unchord
             machine.Add(new MantisIdle());
             machine.Add(new MantisWalkFront());
             machine.Add(new MantisWalkBack());
-            machine.Add(new MantisShout());
+            machine.Add(new MantisPhaseShout());
+            machine.Add(new MantisComboShout());
             machine.Add(new MantisKnifeGrinding());
             machine.Add(new MantisUpSlice());
             machine.Add(new MantisBackSlice());

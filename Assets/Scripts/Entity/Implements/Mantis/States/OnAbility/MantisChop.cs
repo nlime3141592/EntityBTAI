@@ -29,13 +29,13 @@ namespace Unchord
             base.targetCount = 12;
             base.baseDamage = 1.0f;
         }
-
+/*
         public override bool CanTransit()
         {
             bool canAttack = m_leftCooltime <= 0;
             return canAttack;
         }
-
+*/
         public override void OnStateBegin()
         {
             base.OnStateBegin();

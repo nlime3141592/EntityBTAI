@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 63183680}
   - component: {fileID: 63183679}
   - component: {fileID: 63183678}
+  - component: {fileID: 63183684}
   m_Layer: 7
   m_Name: Mantis (0)
   m_TagString: Untagged
@@ -222,6 +223,8 @@ MonoBehaviour:
   bInvincibility: 0
   groggyValue: 0
   sensorBuffer: []
+  CURRENT_STATE: 0
+  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
   waitSecondOnChangeAggro: 0.75
@@ -245,22 +248,17 @@ MonoBehaviour:
         r: 20
         b: 20
     targets: []
-    targetsPrev: []
     tags: []
     mask:
       serializedVersion: 2
       m_Bits: 128
     bIgnoreSelf: 1
     bCanAggro: 1
-    bAggroPrev: 0
     bAggro: 0
   frame_idleTimeMin: 60
   frame_idleTimeMax: 120
   frame_idleAggroDelay: 70
   aiCenterOffset: {x: 0, y: -4}
-  CURRENT_STATE: 0
-  CURRENT_HEALTH: 0
-  BOSS_PHASE: 0
   wallDetectLength: 0.06
   hitLength: 0.06
   walkSpeed: 6
@@ -370,7 +368,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!4 &63183683
 Transform:
   m_ObjectHideFlags: 0
@@ -387,6 +385,27 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &63183684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63183677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ffbe9574fa6d9a4e9375f6223171ad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  battleRangeGizmo:
+    bShowGizmo: 1
+    duration: 2
+    color: {r: 1, g: 0.4764151, b: 0.4764151, a: 0}
+  tags:
+  - Player
+  mask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &93637024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1439,6 +1458,8 @@ MonoBehaviour:
   bInvincibility: 0
   groggyValue: 0
   sensorBuffer: []
+  CURRENT_STATE: 0
+  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
   "\uD604\uC7AC\uCCB4\uB825": 0
@@ -2296,6 +2317,8 @@ MonoBehaviour:
   bInvincibility: 0
   groggyValue: 0
   sensorBuffer: []
+  CURRENT_STATE: 0
+  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
   battleModule: {fileID: 0}
@@ -2376,7 +2399,6 @@ MonoBehaviour:
   offset_StandCamera: {x: 0, y: 0}
   stateNext_AttackOnFloor: 0
   stateNext_AttackOnAir: 0
-  CURRENT_STATE: 0
   CURRENT_TYPE: 
   DEBUG_COYOTE: 0
   sitSlabs: []

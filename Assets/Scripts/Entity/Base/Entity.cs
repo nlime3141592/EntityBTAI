@@ -56,6 +56,7 @@ namespace Unchord
         private Rigidbody2D m_physics;
         private SpriteRenderer m_spRenderer;
         private AnimationController m_aController;
+
 #endregion
 
 #region Variables
@@ -72,6 +73,11 @@ namespace Unchord
 
         private float m_health = 1;
         private float m_mana = 1;
+#endregion
+
+#region For Debugging
+        public int CURRENT_STATE;
+        public float CURRENT_HEALTH;
 #endregion
 
 #region 아직 정리 안 함.

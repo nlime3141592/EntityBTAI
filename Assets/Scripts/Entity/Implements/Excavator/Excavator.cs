@@ -30,9 +30,6 @@ namespace Unchord
 
         public ExcavatorTerrainSenseData senseData;
 
-        public int CURRENT_STATE;
-        public int BOSS_PHASE;
-
         // Prefabs
         public ExcavatorProjectile projectile;
         public ExcavatorWave wave;

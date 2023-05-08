@@ -1,8 +1,18 @@
 namespace Unchord
 {
-    public class MantisKnifeGrinding : MantisOnFloor
+    public class MantisPhaseShout : MantisShout
     {
-        public override int idConstant => Mantis.c_st_KNIFE_GRINDING;
+        public override int idConstant => Mantis.c_st_PHASE_SHOUT;
+
+        public override void OnStateBegin()
+        {
+            base.OnStateBegin();
+
+            if(instance.phase == 0)
+                instance.SetHealth(instance.maxHealth.finalValue);
+
+            ++instance.phase;
+        }
 
         public override int Transit()
         {
@@ -12,7 +22,7 @@ namespace Unchord
                 return transit;
             else if(instance.aController.bEndOfAnimation)
                 return Mantis.c_st_IDLE;
-
+            
             return MachineConstant.c_lt_PASS;
         }
     }
