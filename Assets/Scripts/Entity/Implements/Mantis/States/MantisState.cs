@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Unchord
 {
     public abstract class MantisState : MonsterState<Mantis>
@@ -6,7 +8,14 @@ namespace Unchord
         {
             base.OnFixedUpdate();
             instance.senseData.OnFixedUpdate(instance);
-            instance.aiCenter.localPosition = instance.aiCenterOffset;
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            instance.CURRENT_STATE = machine.state.idConstant;
+            instance.CURRENT_HEALTH = instance.health;
         }
 
         public override int Transit()

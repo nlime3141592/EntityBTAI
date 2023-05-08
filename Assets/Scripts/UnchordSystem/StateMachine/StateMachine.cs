@@ -91,6 +91,8 @@ namespace Unchord
             bPaused = false;
             onMachineBegin?.Invoke(this, _initIdConstant);
 
+            onParseTransit?.Invoke(this, MachineConstant.c_st_MACHINE_OFF, _initIdConstant);
+            onStateChange?.Invoke(this, MachineConstant.c_st_MACHINE_OFF, _initIdConstant);
             m_states[m_idMap[m_currentIdConstant]].OnStateBegin();
         }
 
@@ -109,6 +111,7 @@ namespace Unchord
         {
             int prev = m_currentIdConstant;
 
+            onParseTransit?.Invoke(this, m_currentIdConstant, _nextIdConstant);
             m_states[m_idMap[m_currentIdConstant]].OnStateEnd();
             m_currentIdConstant = _nextIdConstant;
             onStateChange?.Invoke(this, prev, _nextIdConstant);
@@ -121,6 +124,9 @@ namespace Unchord
                 return;
 
             m_states[m_idMap[m_currentIdConstant]].OnStateEnd();
+            onParseTransit?.Invoke(this, m_currentIdConstant, MachineConstant.c_st_MACHINE_OFF);
+            onStateChange?.Invoke(this, m_currentIdConstant, MachineConstant.c_st_MACHINE_OFF);
+
             onMachineEnd?.Invoke(this, m_currentIdConstant);
 
             bStarted = false;
@@ -162,11 +168,9 @@ namespace Unchord
             switch(stNextPure)
             {
                 case MachineConstant.c_st_MACHINE_OFF:
-                    onParseTransit?.Invoke(this, stLast, MachineConstant.c_st_MACHINE_OFF);
                     End();
                     break;
                 case MachineConstant.c_lt_HALT:
-                    onParseTransit?.Invoke(this, stLast, MachineConstant.c_st_MACHINE_OFF);
                     End();
                     onMachineHalt?.Invoke(this, stLast);
                     break;
@@ -176,9 +180,10 @@ namespace Unchord
                     break;
                 default:
                     bool bCanTransit = m_states[m_idMap[stNextPure]].CanTransit();
-                    onParseTransit?.Invoke(this, stLast, stLast);
                     if(bCanTransit)
                         Change(stNextPure);
+                    else
+                        onParseTransit?.Invoke(this, stLast, stLast);
                     break;
             }
         }

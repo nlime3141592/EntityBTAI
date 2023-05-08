@@ -18,8 +18,6 @@ namespace Unchord
         public const int c_st_DIE                        = 10;
         public const int c_st_SLEEP                      = 11;
 
-        public BoxCollider2D terrainCollider; // Inspector에서 값 할당 필요
-        public Transform aiCenter; // Inspector에서 값 할당 필요
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
         public MantisTerrainSensor senseData;
@@ -27,6 +25,7 @@ namespace Unchord
         public MantisStateRegion3_002 stateAi_002;
 
         public int CURRENT_STATE;
+        public float CURRENT_HEALTH;
         public int BOSS_PHASE;
 
         private EntitySpawnData m_spawnData;
@@ -52,7 +51,7 @@ namespace Unchord
             stateAi_002 = new MantisStateRegion3_002();
 
             m_spawnData = new EntitySpawnData("사마귀", this);
-            m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
+            // m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
         }
 
         protected override void OnStartEntity()
@@ -61,7 +60,7 @@ namespace Unchord
 
             volumeCollisions.Add(GetComponent<BoxCollider2D>());
 
-            GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
+            // GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
         }
 
         protected override IStateMachineBase InitStateMachine()
@@ -69,6 +68,7 @@ namespace Unchord
             StateMachine<Mantis> machine = new StateMachine<Mantis>(20);
             machine.instance = this;
 
+            machine.Add(new MantisSleep());
             machine.Add(new MantisIdle());
             machine.Add(new MantisWalkFront());
             machine.Add(new MantisWalkBack());
@@ -81,7 +81,7 @@ namespace Unchord
             machine.Add(new MantisGroggy());
             machine.Add(new MantisDie());
 
-            fsm.Begin(Mantis.c_st_IDLE);
+            machine.Begin(Mantis.c_st_SLEEP);
             return machine;
         }
 /*
@@ -107,7 +107,7 @@ namespace Unchord
 */
         protected void OnDisable()
         {
-            GameManager.instance.generatedBoss.Remove(m_spawnDataNode);
+            // GameManager.instance.generatedBoss.Remove(m_spawnDataNode);
         }
     }
 }

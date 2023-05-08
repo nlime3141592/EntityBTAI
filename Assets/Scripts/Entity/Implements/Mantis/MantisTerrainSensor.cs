@@ -58,7 +58,9 @@ namespace Unchord
 
         protected override void SetOrigins(Mantis _instance)
         {
-            Bounds box = _instance.terrainCollider.bounds;
+            // Bounds box = _instance.terrainCollider.bounds;
+            Bounds box = (_instance.volumeCollisions[0] as BoxCollider2D).bounds;
+
             float minY = box.min.y;
             float maxY = box.max.y;
             float cx = box.center.x;

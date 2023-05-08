@@ -21,6 +21,7 @@ namespace Unchord
         protected override void OnAwakeEntity()
         {
             base.OnAwakeEntity();
+            aggroAi.entity = this;
         }
 
         protected override void OnStartEntity()

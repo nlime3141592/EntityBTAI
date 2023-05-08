@@ -74,8 +74,8 @@ namespace Unchord
                 return MachineConstant.c_lt_CONTINUE;
             else if(m_leftIdleTime <= 0)
             {
-                float ox = instance.aiCenter.position.x;
-                float oy = instance.aiCenter.position.x;
+                float ox = instance.transform.position.x + instance.aiCenterOffset.x;
+                float oy = instance.transform.position.y + instance.aiCenterOffset.y;
                 float px = instance.transform.position.x;
                 float py = instance.transform.position.x;
                 float lx = instance.lookDir.fx;

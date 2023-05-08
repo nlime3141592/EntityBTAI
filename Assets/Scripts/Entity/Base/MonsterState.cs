@@ -14,7 +14,6 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-
             instance.aggroAi.OnFixedUpdate();
         }
 

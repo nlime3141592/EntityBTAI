@@ -20,7 +20,6 @@ namespace Unchord
             m_size.Set(box.sx, box.sy);
 
             Collider2D[] sensed = Physics2D.OverlapBoxAll(m_center, m_size, box.deg, _mask);
-
             AddSensedColliders(_colliders, _tags, sensed);
         }
 

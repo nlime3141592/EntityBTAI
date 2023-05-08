@@ -52,8 +52,8 @@ namespace Unchord
 
             cx = 0.5f * (lbx + rtx);
             cy = 0.5f * (lby + rty);
-            sx = rtx - ltx;
-            sy = ltx - lbx;
+            sx = l + r;
+            sy = t + b;
 
             double rad = System.Math.Atan2(rtx - ltx, rty - lty);
             double deg = rad * 180 / System.Math.PI;

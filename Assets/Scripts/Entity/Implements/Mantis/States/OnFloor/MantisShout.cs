@@ -13,7 +13,7 @@ namespace Unchord
 
             int transit = base.Transit();
 
-            return MachineConstant.c_lt_CONTINUE;
+            return MachineConstant.c_lt_PASS;
         }
     }
 }
