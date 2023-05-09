@@ -2,11 +2,12 @@ using System.Collections.Generic;
 
 namespace Unchord
 {
-    public class MantisBackSlice : MantisAttack
+    // NOTE: 도약찍기 제 2상태, 착지 및 공격 동작
+    public class MantisJumpChop002 : MantisAttack, IBattleState
     {
         public float baseDamage { get; private set; }
 
-        public override int idConstant => Mantis.c_st_BACK_SLICE;
+        public override int idConstant => Mantis.c_st_JUMP_CHOP_002;
 
         private List<Entity> m_targets;
 
@@ -17,6 +18,18 @@ namespace Unchord
             baseDamage = 1.0f;
 
             m_targets = new List<Entity>(1);
+        }
+
+        public override void OnFixedUpdate()
+        {
+            base.OnFixedUpdate();
+        }
+
+        public override void OnStateBegin()
+        {
+            base.OnStateBegin();
+
+            instance.vm.SetVelocityXY(0.0f, -0.1f);
         }
 
         public override int Transit()
@@ -31,26 +44,18 @@ namespace Unchord
             return MachineConstant.c_lt_PASS;
         }
 
-        public override void OnActionBegin()
-        {
-            if(instance.lookDir.x == Direction.Positive)
-                instance.lookDir.x = Direction.Negative;
-            else
-                instance.lookDir.x = Direction.Positive;
-        }
-
         public override void OnUpdate()
         {
             base.OnUpdate();
 
-            SensorUtilities.Bind(instance.transform, instance.skillRange_BackSlice_01.transform);
-            instance.skillRange_BackSlice_01.OnUpdate();
+            SensorUtilities.Bind(instance.transform, instance.skillRange_JumpChop002_01.transform);
+            instance.skillRange_JumpChop002_01.OnUpdate();
         }
 
         public void OnTriggerBattleState(BattleModule _btModule)
         {
             instance.sensorBuffer.Clear();
-            instance.skillRange_BackSlice_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
+            instance.skillRange_JumpChop002_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
             instance.sensorBuffer
                 .IgnoreColliders(instance.battleTriggers)
                 .IgnoreColliders(instance.volumeCollisions)

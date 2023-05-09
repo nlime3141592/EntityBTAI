@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Unchord
 {
-    // NOTE: 도약찍기 제 1상태, 점프 상승 동작
-    public class MantisJumpChop_001 : MantisAttack
+    // NOTE: 도약찍기 제 1상태, 점프 동작
+    public class MantisJumpChop001 : MantisAttack
     {
         public override int idConstant => Mantis.c_st_JUMP_CHOP_001;
 
@@ -13,6 +13,9 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
+
+            if(!instance.aController.bBeginOfAction)
+                return;
 
             instance.vm.SetVelocityXY(m_vx, m_vy);
 

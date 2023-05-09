@@ -24,7 +24,7 @@ namespace Unchord
 
             for(int i = 0; i < length; ++i)
             {
-                if((_tags == null || _tags.Count == 0 || _tags.Contains(_colliders[i].gameObject.tag)) && !_colliders.Contains(_sensed[i]))
+                if((_tags == null || _tags.Count == 0 || _tags.Contains(_sensed[i].gameObject.tag)) && !_colliders.Contains(_sensed[i]))
                     _colliders.Add(_sensed[i]);
             }
         }

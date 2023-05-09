@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MantisJumpChop
+  m_Name: MantisJumpChop001
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -43,18 +43,6 @@ AnimationClip:
       value: {fileID: 21300000, guid: 188ec662c836d6b4e9af085e4213fdce, type: 3}
     - time: 0.9
       value: {fileID: 21300000, guid: db82e2c754ced4544a3f14ca6c4ae48c, type: 3}
-    - time: 0.96666664
-      value: {fileID: 21300000, guid: 3881295aae2388e438dc33982defa201, type: 3}
-    - time: 1.05
-      value: {fileID: 21300000, guid: 4eafa2fdc2cfd484893c9c1aa47bf4fd, type: 3}
-    - time: 1.15
-      value: {fileID: 21300000, guid: 81edb9961b1dac8489a21328f6812d22, type: 3}
-    - time: 1.2333333
-      value: {fileID: 21300000, guid: 0d97328d88e81e844b8893d5ec960eca, type: 3}
-    - time: 1.3
-      value: {fileID: 21300000, guid: 6cce2f81751615a4fb94a54e8b6c8cc2, type: 3}
-    - time: 1.3833333
-      value: {fileID: 21300000, guid: 82b667978a6331448851e26851b9373f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -86,18 +74,12 @@ AnimationClip:
     - {fileID: 21300000, guid: a44089c499e3dac4f8c32bad0e112ee0, type: 3}
     - {fileID: 21300000, guid: 188ec662c836d6b4e9af085e4213fdce, type: 3}
     - {fileID: 21300000, guid: db82e2c754ced4544a3f14ca6c4ae48c, type: 3}
-    - {fileID: 21300000, guid: 3881295aae2388e438dc33982defa201, type: 3}
-    - {fileID: 21300000, guid: 4eafa2fdc2cfd484893c9c1aa47bf4fd, type: 3}
-    - {fileID: 21300000, guid: 81edb9961b1dac8489a21328f6812d22, type: 3}
-    - {fileID: 21300000, guid: 0d97328d88e81e844b8893d5ec960eca, type: 3}
-    - {fileID: 21300000, guid: 6cce2f81751615a4fb94a54e8b6c8cc2, type: 3}
-    - {fileID: 21300000, guid: 82b667978a6331448851e26851b9373f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.4
+    m_StopTime: 0.9166666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -116,4 +98,32 @@ AnimationClip:
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
-  m_Events: []
+  m_Events:
+  - time: 0
+    functionName: TriggerBeginOfAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.56666666
+    functionName: TriggerBeginOfAction
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.9
+    functionName: TriggerEndOfAction
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.9
+    functionName: TriggerEndOfAnimation
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0

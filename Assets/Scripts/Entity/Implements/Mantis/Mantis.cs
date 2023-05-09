@@ -29,6 +29,11 @@ namespace Unchord
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
 
+        public AreaSensorBox skillRange_BackSlice_01;
+        public AreaSensorBox skillRange_Chop_01;
+        public AreaSensorBox skillRange_JumpChop002_01;
+        public AreaSensorBox skillRange_UpSlice_01;
+
 #region 아직 정리 안 함.
         public float wallDetectLength = 0.06f;
         public float hitLength = 0.06f;
@@ -80,35 +85,15 @@ namespace Unchord
             machine.Add(new MantisUpSlice());
             machine.Add(new MantisBackSlice());
             machine.Add(new MantisChop());
-            machine.Add(new MantisJumpChop_001());
+            machine.Add(new MantisJumpChop001());
             machine.Add(new MantisGroggy());
             machine.Add(new MantisDie());
-            machine.Add(new MantisJumpChop_002());
+            machine.Add(new MantisJumpChop002());
 
             machine.Begin(Mantis.c_st_SLEEP);
             return machine;
         }
-/*
-        public override void OnAggroBegin()
-        {
-            base.OnAggroBegin();
 
-            aggroRange.left = 20;
-            aggroRange.top = 20;
-            aggroRange.right = 20;
-            aggroRange.bottom = 20;
-        }
-
-        public override void OnAggroEnd()
-        {
-            base.OnAggroEnd();
-
-            aggroRange.left = 200;
-            aggroRange.top = 10;
-            aggroRange.right = 20;
-            aggroRange.bottom = 5;
-        }
-*/
         protected void OnDisable()
         {
             // GameManager.instance.generatedBoss.Remove(m_spawnDataNode);

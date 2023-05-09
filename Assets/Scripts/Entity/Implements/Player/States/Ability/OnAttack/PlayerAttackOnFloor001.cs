@@ -52,8 +52,6 @@ namespace Unchord
                 .IgnoreColliders(instance.volumeCollisions)
                 .GetComponents<Entity>(in m_targets);
 
-            Debug.LogFormat("cound: {0}", instance.sensorBuffer.Count);
-
             foreach(Entity entity in m_targets)
             {
                 float finalDamage = BattleModule.GetFinalDamage(instance, entity, baseDamage);

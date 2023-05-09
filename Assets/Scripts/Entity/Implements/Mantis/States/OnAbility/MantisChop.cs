@@ -1,9 +1,11 @@
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace Unchord
 {
-    public class MantisChop : MantisAttack //, IBattleState
+    public class MantisChop : MantisAttack, IBattleState
     {
+        public float baseDamage { get; private set; }
+
         public override int idConstant => Mantis.c_st_CHOP;
 
         // fixed data
@@ -13,8 +15,19 @@ namespace Unchord
         private float m_leftCooltime;
         private bool m_bAttacked;
 
-        // TODO: 포효콤보 관련 로직을 추가해야 함.
+        private List<Entity> m_targets;
 
+        protected override void OnConstruct()
+        {
+            base.OnConstruct();
+
+            baseDamage = 1.0f;
+
+            m_targets = new List<Entity>(1);
+        }
+
+        // TODO: 포효콤보 관련 로직을 추가해야 함.
+/*
         protected override void OnConstruct()
         {
             base.OnConstruct();
@@ -29,6 +42,7 @@ namespace Unchord
             base.targetCount = 12;
             base.baseDamage = 1.0f;
         }
+*/
 /*
         public override bool CanTransit()
         {
@@ -39,8 +53,6 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-
-            // instance.battleModule.SetBattleState(this);
 
             m_leftCooltime = m_cooltime;
             m_bAttacked = false;
@@ -74,6 +86,30 @@ namespace Unchord
                 return Mantis.c_st_IDLE;
 
             return MachineConstant.c_lt_PASS;
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            SensorUtilities.Bind(instance.transform, instance.skillRange_Chop_01.transform);
+            instance.skillRange_Chop_01.OnUpdate();
+        }
+
+        public void OnTriggerBattleState(BattleModule _btModule)
+        {
+            instance.sensorBuffer.Clear();
+            instance.skillRange_Chop_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
+            instance.sensorBuffer
+                .IgnoreColliders(instance.battleTriggers)
+                .IgnoreColliders(instance.volumeCollisions)
+                .GetComponents<Entity>(in m_targets);
+
+            foreach(Entity entity in m_targets)
+            {
+                float finalDamage = BattleModule.GetFinalDamage(instance, entity, baseDamage);
+                entity.ChangeHealth(-finalDamage);
+            }
         }
     }
 }
