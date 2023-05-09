@@ -38,7 +38,7 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3)              return Mantis.c_st_WALK_FRONT;
-            else                            return Mantis.c_st_JUMP_CHOP;
+            else                            return Mantis.c_st_JUMP_CHOP_001;
         }
 
         protected override int OnRegion03(Random _prng)
@@ -67,7 +67,7 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3)              return Mantis.c_st_WALK_FRONT;
-            else                            return Mantis.c_st_JUMP_CHOP;
+            else                            return Mantis.c_st_JUMP_CHOP_001;
         }
 
         protected override int OnRegion06(Random _prng)
@@ -91,7 +91,7 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3)              return Mantis.c_st_WALK_FRONT;
-            else                            return Mantis.c_st_JUMP_CHOP;
+            else                            return Mantis.c_st_JUMP_CHOP_001;
         }
     }
 }

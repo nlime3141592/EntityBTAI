@@ -4,30 +4,24 @@ namespace Unchord
     {
         public override int idConstant => Mantis.c_st_BACK_SLICE;
 
-        private bool m_bRotated;
-
-        public override void OnStateBegin()
+        public override int Transit()
         {
-            base.OnStateBegin();
+            int transit = base.Transit();
 
-            m_bRotated = false;
+            if(transit != MachineConstant.c_lt_PASS)
+                return transit;
+            else if(instance.aController.bEndOfAnimation)
+                return Mantis.c_st_IDLE;
 
-            // TODO: 테스트 코드
-            // MantisBackSlice.OnFixedUpdate() 함수에서
-            // AnimationController.bOnActionBegin == true가 되는 순간을 찾아 이 함수를 호출하도록 수정할 것.
-            instance.lookDir.x = (Direction)(-(int)instance.lookDir.x);
+            return MachineConstant.c_lt_PASS;
         }
 
-        public override void OnFixedUpdate()
+        public override void OnActionBegin()
         {
-            base.OnFixedUpdate();
-/*
-            if(!m_bRotated && mantis.aController.bBeginOfAction)
-            {
-                m_bRotated = true;
-                mantis.lookDir.x = -mantis.lookDir.x;
-            }
-*/
+            if(instance.lookDir.x == Direction.Positive)
+                instance.lookDir.x = Direction.Negative;
+            else
+                instance.lookDir.x = Direction.Positive;
         }
     }
 }

@@ -8,6 +8,8 @@ namespace Unchord
         {
             base.OnStateBegin();
 
+            instance.bInvincibility = true;
+
             if(instance.phase == 0)
                 instance.SetHealth(instance.maxHealth.finalValue);
 
@@ -24,6 +26,13 @@ namespace Unchord
                 return Mantis.c_st_IDLE;
             
             return MachineConstant.c_lt_PASS;
+        }
+
+        public override void OnStateEnd()
+        {
+            base.OnStateEnd();
+
+            instance.bInvincibility = false;
         }
     }
 }

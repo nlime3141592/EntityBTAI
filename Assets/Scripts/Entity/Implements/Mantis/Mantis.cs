@@ -13,11 +13,12 @@ namespace Unchord
         public const int c_st_UP_SLICE                   = 5;
         public const int c_st_BACK_SLICE                 = 6;
         public const int c_st_CHOP                       = 7;
-        public const int c_st_JUMP_CHOP                  = 8;
+        public const int c_st_JUMP_CHOP_001              = 8;
         public const int c_st_GROGGY                     = 9;
         public const int c_st_DIE                        = 10;
         public const int c_st_SLEEP                      = 11;
         public const int c_st_COMBO_SHOUT                = 12;
+        public const int c_st_JUMP_CHOP_002              = 13;
 
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
@@ -32,6 +33,10 @@ namespace Unchord
         public float wallDetectLength = 0.06f;
         public float hitLength = 0.06f;
         public float walkSpeed = 6.0f;
+
+        public float speed_jumpChopX = 8.0f;
+        public float speed_jumpChopY = 4.0f;
+        public float force_jumpChopY = 49.5f;
 #endregion
 
         public virtual bool CanAggro()
@@ -75,9 +80,10 @@ namespace Unchord
             machine.Add(new MantisUpSlice());
             machine.Add(new MantisBackSlice());
             machine.Add(new MantisChop());
-            machine.Add(new MantisJumpChop());
+            machine.Add(new MantisJumpChop_001());
             machine.Add(new MantisGroggy());
             machine.Add(new MantisDie());
+            machine.Add(new MantisJumpChop_002());
 
             machine.Begin(Mantis.c_st_SLEEP);
             return machine;

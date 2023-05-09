@@ -262,6 +262,9 @@ MonoBehaviour:
   wallDetectLength: 0.06
   hitLength: 0.06
   walkSpeed: 6
+  speed_jumpChopX: 40
+  speed_jumpChopY: 20
+  force_jumpChopY: 49.5
 --- !u!114 &63183679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,9 +368,9 @@ Rigidbody2D:
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!4 &63183683
 Transform:
