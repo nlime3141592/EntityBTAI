@@ -11,12 +11,6 @@ namespace Unchord
             instance.bFixedLookDirByAxis.x = true;
         }
 
-        public override void OnFixedUpdate()
-        {
-            base.OnFixedUpdate();
-            instance.senseData.UpdateMoveDir(instance);
-        }
-
         public override int Transit()
         {
             int transit = base.Transit();

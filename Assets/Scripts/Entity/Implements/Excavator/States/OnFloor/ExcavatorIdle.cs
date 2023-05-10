@@ -51,170 +51,40 @@ namespace Unchord
                 return transit;
             else if(m_idleTimer.bEndOfTimer)
             {
-                Entity target = instance.aggroAi.targets[0];
-                m_rangeCode = m_GetRangeCode(target, instance, m_rangeX1, m_rangeX2, m_rangeY1, m_rangeY2);
+                float ox = instance.transform.position.x + instance.aiCenterOffset.x;
+                float oy = instance.transform.position.y + instance.aiCenterOffset.y;
+                float px = instance.aggroAi.targets[0].transform.position.x;
+                float py = instance.aggroAi.targets[0].transform.position.y;
+                float lx = instance.lookDir.fx;
+                float ly = instance.lookDir.fy;
 
-                if(instance.phase == 0)
-                    return m_ChangeStateByRangeCodePhase1(m_rangeCode);
-                else if(instance.phase == 1)
-                    return m_ChangeStateByRangeCodePhase2(m_rangeCode);
-                else if(instance.phase == 2)
-                    return m_ChangeStateByRangeCodePhase3(m_rangeCode);
+                if(instance.phase == 0) return instance.stateAi_001.GetState(
+                    instance.prng,
+                    ox, oy,
+                    px, py,
+                    lx, ly,
+                    m_rangeX1, m_rangeX2,
+                    m_rangeY1, m_rangeY2
+                );
+                else if(instance.phase == 1) return instance.stateAi_002.GetState(
+                    instance.prng,
+                    ox, oy,
+                    px, py,
+                    lx, ly,
+                    m_rangeX1, m_rangeX2,
+                    m_rangeY1, m_rangeY2
+                );
+                else if(instance.phase == 2) return instance.stateAi_003.GetState(
+                    instance.prng,
+                    ox, oy,
+                    px, py,
+                    lx, ly,
+                    m_rangeX1, m_rangeX2,
+                    m_rangeY1, m_rangeY2
+                );
             }
 
             return MachineConstant.c_lt_PASS;
-        }
-
-        private int m_GetRangeCode(Entity target, Excavator excaavtor, float rx1, float rx2, float ry1, float ry2)
-        {
-            Vector2 tDir = target.transform.position - instance.aiCenter.position;
-            float dx = tDir.x * instance.lookDir.fx;
-            float dy = tDir.y;
-            int code = 0;
-
-            if(dy < 0)
-                return -1;
-            else if(dx < 0)
-                return 0;
-
-            if(dx < rx1)
-                code = 1;
-            else if(dx < ry2)
-                code = 2;
-            else
-                code = 3;
-
-            if(dy < ry1)
-                return code;
-            else if(dy < ry2)
-                return code + 3;
-            else
-                return code + 6;
-        }
-
-        private int m_ChangeStateByRangeCodePhase1(int code)
-        {
-            int rNumber = instance.prng.Next(0, 10000);
-
-            switch(code)
-            {
-                case 0:
-                    return MachineConstant.c_lt_CONTINUE;
-                case 1:
-                case 4:
-                case 7:
-                    return Excavator.c_st_STAMPING;
-                case 2:
-                case 9:
-                    if(rNumber < 3000) return Excavator.c_st_WALK;
-                    else return Excavator.c_st_ANCHORING;
-                case 3:
-                    if(rNumber < 5000) return Excavator.c_st_WALK;
-                    else return Excavator.c_st_ANCHORING;
-                case 5:
-                case 8:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else return Excavator.c_st_ANCHORING;
-                case 6:
-                    if(rNumber < 4000) return Excavator.c_st_WALK;
-                    else return Excavator.c_st_ANCHORING;
-                default:
-                    return MachineConstant.c_lt_END;
-            }
-        }
-
-        private int m_ChangeStateByRangeCodePhase2(int code)
-        {
-            int rNumber = instance.prng.Next(0, 10000);
-
-            switch(code)
-            {
-                case 0:
-                    return MachineConstant.c_lt_CONTINUE;
-                case 1:
-                    if(rNumber < 6000) return Excavator.c_st_STAMPING;
-                    else return Excavator.c_st_SHOCK_WAVE;
-                case 2:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else if(rNumber < 6000) return Excavator.c_st_ANCHORING;
-                    else return Excavator.c_st_SHOCK_WAVE;
-                case 3:
-                case 6:
-                    if(rNumber < 3000) return Excavator.c_st_WALK;
-                    else if(rNumber < 7000) return Excavator.c_st_ANCHORING;
-                    else return Excavator.c_st_SHOCK_WAVE;
-                case 4:
-                    if(rNumber < 7000) return Excavator.c_st_STAMPING;
-                    else return Excavator.c_st_SHOCK_WAVE;
-                case 5:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else if(rNumber < 7000) return Excavator.c_st_ANCHORING;
-                    else return Excavator.c_st_SHOCK_WAVE;
-                case 7:
-                    if(rNumber < 8000) return Excavator.c_st_STAMPING;
-                    else return Excavator.c_st_SHOCK_WAVE;
-                case 8:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else if(rNumber < 8000) return Excavator.c_st_ANCHORING;
-                    else return Excavator.c_st_SHOCK_WAVE;
-                case 9:
-                    if(rNumber < 3000) return Excavator.c_st_WALK;
-                    else if(rNumber < 8000) return Excavator.c_st_ANCHORING;
-                    else return Excavator.c_st_SHOCK_WAVE;
-                default:
-                    return MachineConstant.c_lt_HALT;
-            }
-        }
-        
-        private int m_ChangeStateByRangeCodePhase3(int code)
-        {
-            int rNumber = instance.prng.Next(0, 10000);
-
-            switch(code)
-            {
-                case 0:
-                    return MachineConstant.c_lt_CONTINUE;
-                case 1:
-                    if(rNumber < 6000) return Excavator.c_st_STAMPING;
-                    else if(rNumber < 9000) return Excavator.c_st_SHOCK_WAVE;
-                    else return Excavator.c_st_SHOOT_MISSILE;
-                case 2:
-                case 5:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else if(rNumber < 5000) return Excavator.c_st_ANCHORING;
-                    else if(rNumber < 8000) return Excavator.c_st_SHOCK_WAVE;
-                    else return Excavator.c_st_SHOOT_MISSILE;
-                case 3:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else if(rNumber < 4000) return Excavator.c_st_ANCHORING;
-                    else if(rNumber < 7000) return Excavator.c_st_SHOCK_WAVE;
-                    else return Excavator.c_st_SHOOT_MISSILE;
-                case 4:
-                    if(rNumber < 5000) return Excavator.c_st_WALK;
-                    else if(rNumber < 8000) return Excavator.c_st_SHOCK_WAVE;
-                    else return Excavator.c_st_SHOOT_MISSILE;
-                case 6:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else if(rNumber < 5000) return Excavator.c_st_ANCHORING;
-                    else if(rNumber < 7000) return Excavator.c_st_SHOCK_WAVE;
-                    else return Excavator.c_st_SHOOT_MISSILE;
-                case 7:
-                    if(rNumber < 5000) return Excavator.c_st_WALK;
-                    else if(rNumber < 7000) return Excavator.c_st_SHOCK_WAVE;
-                    else return Excavator.c_st_SHOOT_MISSILE;
-                case 8:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else if(rNumber < 6000) return Excavator.c_st_ANCHORING;
-                    else if(rNumber < 8000) return Excavator.c_st_SHOCK_WAVE;
-                    else return Excavator.c_st_SHOOT_MISSILE;
-                case 9:
-                    if(rNumber < 2000) return Excavator.c_st_WALK;
-                    else if(rNumber < 6000) return Excavator.c_st_ANCHORING;
-                    else if(rNumber < 7000) return Excavator.c_st_SHOCK_WAVE;
-                    else return Excavator.c_st_SHOOT_MISSILE;
-                default:
-                    return MachineConstant.c_lt_HALT;
-            }
         }
     }
 }

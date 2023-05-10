@@ -9,9 +9,7 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            instance.senseData.UpdateOrigins(instance);
-            instance.senseData.UpdateData(instance);
-            instance.aiCenter.localPosition = instance.aiCenterOffset;
+            instance.senseData.OnUpdate(instance);
         }
 
         public override void OnUpdate()

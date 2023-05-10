@@ -4,20 +4,12 @@ namespace Unchord
     {
         public override int idConstant => Excavator.c_st_WALK;
 
-        private float m_ix;
-
-        public override void OnStateBegin()
-        {
-            base.OnStateBegin();
-            m_ix = instance.lookDir.fx;
-        }
-
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            float vx = m_ix * instance.moveDir.x * instance.walkSpeed;
-            float vy = m_ix * instance.moveDir.y * instance.walkSpeed - 0.1f;
+            float vx = instance.lookDir.fx * instance.moveDir.x * instance.walkSpeed;
+            float vy = -0.1f;
 
             instance.vm.SetVelocityXY(vx, vy);
         }

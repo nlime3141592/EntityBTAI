@@ -31,6 +31,8 @@ namespace Unchord
 #region Allocate on Editor
         public List<Collider2D> volumeCollisions; // 지형 충돌 영역(= 물체의 부피)
         public List<Collider2D> battleTriggers; // 전투 트리거
+
+        public Entity parentOrgan;
         public List<Entity> subOrgans; // 개체의 하위 기관
 
         // base stats
@@ -56,7 +58,6 @@ namespace Unchord
         private Rigidbody2D m_physics;
         private SpriteRenderer m_spRenderer;
         private AnimationController m_aController;
-
 #endregion
 
 #region Variables
@@ -91,6 +92,27 @@ namespace Unchord
 
         protected virtual void OnAwakeEntity()
         {
+            Entity pEntity;
+            Transform pTransform = transform.parent;
+
+            while(pTransform != null && parentOrgan == null)
+            {
+                if(pTransform.gameObject.TryGetComponent<Entity>(out pEntity))
+                {
+                    parentOrgan = pEntity;
+
+                    if(parentOrgan.subOrgans == null)
+                        parentOrgan.subOrgans = new List<Entity>(1);
+
+                    parentOrgan.subOrgans.Add(this);
+                    
+                }
+                else
+                {
+                    pTransform = pTransform.parent;
+                }
+            }
+
             TryGetComponent<Rigidbody2D>(out m_physics);
             TryGetComponent<SpriteRenderer>(out m_spRenderer);
             TryGetComponent<AnimationController>(out m_aController);

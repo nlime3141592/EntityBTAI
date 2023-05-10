@@ -19,16 +19,16 @@ namespace Unchord
         public const int c_st_DIE                       = 11;
         public const int c_st_GROGGY                    = 12;
 
-        public BattleModule battleModule;
-        public BoxCollider2D terrainCollider; // Inspector에서 값 할당 필요
-        public Transform aiCenter; // Inspector에서 값 할당 필요
-        public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
-
         public ExcavatorArm arm;
         public ExcavatorHand hand;
         public GameObject armObj;
 
-        public ExcavatorTerrainSenseData senseData;
+        public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
+
+        public ExcavatorTerrainSensor senseData;
+        public ExcavatorStateRegion3_001 stateAi_001;
+        public ExcavatorStateRegion3_002 stateAi_002;
+        public ExcavatorStateRegion3_003 stateAi_003;
 
         // Prefabs
         public ExcavatorProjectile projectile;
@@ -57,11 +57,15 @@ namespace Unchord
         {
             base.OnAwakeEntity();
 
-            m_spawnData = new EntitySpawnData("굴착 기계", this);
-            m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
-            GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
+            senseData = new ExcavatorTerrainSensor();
+            stateAi_001 = new ExcavatorStateRegion3_001();
+            stateAi_002 = new ExcavatorStateRegion3_002();
+            stateAi_003 = new ExcavatorStateRegion3_003();
 
-            battleModule = GetComponent<BattleModule>();
+            m_spawnData = new EntitySpawnData("굴착 기계", this);
+
+            // m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
+            // GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
 
             arm = GetComponentInChildren<ExcavatorArm>();
             hand = GetComponentInChildren<ExcavatorHand>();
@@ -97,30 +101,10 @@ namespace Unchord
             machine.Begin(Excavator.c_st_SLEEP);
             return machine;
         }
-/*
-        public override void OnAggroBegin()
-        {
-            base.OnAggroBegin();
 
-            aggroRange.left = 200;
-            aggroRange.top = 200;
-            aggroRange.right = 200;
-            aggroRange.bottom = 200;
-        }
-
-        public override void OnAggroEnd()
-        {
-            base.OnAggroEnd();
-
-            aggroRange.left = 200;
-            aggroRange.top = 200;
-            aggroRange.right = 200;
-            aggroRange.bottom = 200;
-        }
-*/
         protected void OnDisable()
         {
-            GameManager.instance.generatedBoss.Remove(m_spawnDataNode);
+            // GameManager.instance.generatedBoss.Remove(m_spawnDataNode);
         }
     }
 }

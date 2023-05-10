@@ -26,7 +26,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.senseData.bOnFloor)
+            else if(instance.senseData.datFloorBack.bOnHit || instance.senseData.datFloorFront.bOnHit)
                 return Excavator.c_st_BASIC_LANDING;
 
             return MachineConstant.c_lt_PASS;
