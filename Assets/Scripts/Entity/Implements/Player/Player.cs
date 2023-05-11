@@ -111,7 +111,6 @@ namespace Unchord
 
         public string CURRENT_TYPE;
         public float DEBUG_COYOTE;
-        public EntitySensorGizmoManager rangeGizmoManager;
 #endregion
 
         public List<Slab> sitSlabs;
@@ -136,7 +135,6 @@ namespace Unchord
             timerCoyote_AttackOnFloor = new TimerHandler();
             timerCoyote_AttackOnAir = new TimerHandler();
 
-            rangeGizmoManager = new EntitySensorGizmoManager();
             iManager = new PlayerInputManager();
         }
 

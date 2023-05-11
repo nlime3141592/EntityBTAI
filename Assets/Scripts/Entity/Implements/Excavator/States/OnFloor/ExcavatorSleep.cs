@@ -6,9 +6,11 @@ namespace Unchord
     {
         public override int idConstant => Excavator.c_st_SLEEP;
 
-        public override void OnFixedUpdate()
+        public override void OnStateBegin()
         {
-            base.OnFixedUpdate();
+            base.OnStateBegin();
+
+            instance.lookDir.x = Direction.Negative;
         }
 
         public override int Transit()

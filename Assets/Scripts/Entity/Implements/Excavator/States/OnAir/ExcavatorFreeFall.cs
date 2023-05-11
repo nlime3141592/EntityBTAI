@@ -14,8 +14,8 @@ namespace Unchord
             float dV = instance.gravity * Time.fixedDeltaTime;
 
             vy += dV;
-            if(vy < instance.minFreeFallSpeed)
-                vy = instance.minFreeFallSpeed;
+            if(vy < instance.speed_freeFallMin)
+                vy = instance.speed_freeFallMin;
 
             instance.vm.SetVelocityXY(0.0f, vy);
         }

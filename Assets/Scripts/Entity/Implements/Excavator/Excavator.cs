@@ -19,10 +19,6 @@ namespace Unchord
         public const int c_st_DIE                       = 11;
         public const int c_st_GROGGY                    = 12;
 
-        public ExcavatorArm arm;
-        public ExcavatorHand hand;
-        public GameObject armObj;
-
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
         public ExcavatorTerrainSensor senseData;
@@ -41,17 +37,21 @@ namespace Unchord
         public float walkSpeed = 12.0f;
 
         public float gravity = -49.5f;
-        public float minFreeFallSpeed = -42.0f;
+        public float speed_freeFallMin = -42.0f;
 
-        public int aPhase;
+        public float time_idleMin = 0.8f;
+        public float time_idleMax = 1.5f;
+        public float time_groggy = 5.0f;
+
+        public float rangeAi3_rx1 = 10.5f;
+        public float rangeAi3_rx2 = 21.0f;
+        public float rangeAi3_ry1 = 4.0f;
+        public float rangeAi3_ry2 = 8.0f;
+
+        public AreaSensorBox skillRange_stamping_01;
 
         public int waveLength = 15;
 #endregion
-
-        public virtual bool CanAggro()
-        {
-            return false;
-        }
 
         protected override void OnAwakeEntity()
         {
@@ -67,15 +67,15 @@ namespace Unchord
             // m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
             // GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
 
-            arm = GetComponentInChildren<ExcavatorArm>();
-            hand = GetComponentInChildren<ExcavatorHand>();
+            // arm = GetComponentInChildren<ExcavatorArm>();
+            // hand = GetComponentInChildren<ExcavatorHand>();
         }
 
         protected override void OnStartEntity()
         {
             base.OnStartEntity();
 
-            armObj.SetActive(false);
+            // armObj.SetActive(false);
             volumeCollisions.Add(GetComponent<BoxCollider2D>());
         }
 

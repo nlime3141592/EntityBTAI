@@ -1,9 +1,9 @@
 namespace Unchord
 {
-    public class ExcavatorStamping : ExcavatorAttack
+    public class ExcavatorStamping : ExcavatorAttack, IBattleState
     {
         public override int idConstant => Excavator.c_st_STAMPING;
-
+/*
         protected override void OnConstruct()
         {
             base.OnConstruct();
@@ -18,13 +18,7 @@ namespace Unchord
             base.targetCount = 12;
             base.baseDamage = 1.0f;
         }
-
-        public override void OnStateBegin()
-        {
-            base.OnStateBegin();
-            instance.bFixedLookDirByAxis.x = true;
-        }
-
+*/
         public override int Transit()
         {
             int transit = base.Transit();
@@ -35,6 +29,11 @@ namespace Unchord
                 return Excavator.c_st_IDLE;
             
             return MachineConstant.c_lt_PASS;
+        }
+
+        public void OnTriggerBattleState(BattleModule _btModule)
+        {
+            instance.skillRange_stamping_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
         }
     }
 }

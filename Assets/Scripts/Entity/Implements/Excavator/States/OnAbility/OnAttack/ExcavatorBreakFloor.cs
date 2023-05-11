@@ -5,7 +5,7 @@ namespace Unchord
     public class ExcavatorBreakFloor : ExcavatorAttack
     {
         public override int idConstant => Excavator.c_st_BREAK_GROUND;
-
+/*
         protected override void OnConstruct()
         {
             base.OnConstruct();
@@ -20,7 +20,7 @@ namespace Unchord
             base.targetCount = 16;
             base.baseDamage = 1.0f;
         }
-
+*/
         public override void OnStateBegin()
         {
             base.OnStateBegin();

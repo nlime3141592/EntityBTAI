@@ -15,11 +15,5 @@ namespace Unchord
 
             return MachineConstant.c_lt_PASS;
         }
-
-        public override void OnStateEnd()
-        {
-            base.OnStateEnd();
-            // instance.AllowHitFromBattleModule(true);
-        }
     }
 }

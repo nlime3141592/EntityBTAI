@@ -42,13 +42,13 @@ namespace Unchord
             if(aPhase == 1)
             {
                 m_anchorTimer.Reset();
-                instance.arm.targetTransform = instance.aggroAi.targets[0].transform;
-                instance.armObj.SetActive(true);
+                // instance.arm.targetTransform = instance.aggroAi.targets[0].transform;
+                // instance.armObj.SetActive(true);
             }
             if(aPhase == 2)
             {
-                instance.hand.Clear();
-                instance.hand.bStart = true;
+                // instance.hand.Clear();
+                // instance.hand.bStart = true;
             }
         }
 
@@ -77,8 +77,7 @@ namespace Unchord
                 return Excavator.c_st_ANCHORING;
             else if(m_phaser.current == 1 && m_anchorTimer.bEndOfTimer)
                 return Excavator.c_st_ANCHORING;
-            else if(m_phaser.current == 2 && instance.hand.bReturn)
-                return Excavator.c_st_ANCHORING;
+            // else if(m_phaser.current == 2 && instance.hand.bReturn) return Excavator.c_st_ANCHORING;
             else if(m_phaser.current == 3 && instance.aController.bEndOfAnimation)
                 return Excavator.c_st_IDLE;
 
@@ -88,11 +87,12 @@ namespace Unchord
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-
+/*
             if(m_phaser.current == 1)
                 instance.arm.targetTransform = null;
             if(m_phaser.current == 2)
                 instance.armObj.SetActive(false);
+*/
         }
 
         private void m_TraceArm()

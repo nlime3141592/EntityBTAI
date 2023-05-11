@@ -26,7 +26,7 @@ namespace Unchord
             // axisInput.x = ix;
             // axisInput.y = iy;
 
-            instance.arm.yAngle = instance.transform.eulerAngles.y;
+            // instance.arm.yAngle = instance.transform.eulerAngles.y;
         }
 
         public override int Transit()
