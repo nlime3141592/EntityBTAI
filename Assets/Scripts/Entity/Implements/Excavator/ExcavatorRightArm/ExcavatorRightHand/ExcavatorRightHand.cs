@@ -10,7 +10,18 @@ namespace Unchord
 
         protected override IStateMachineBase InitStateMachine()
         {
-            throw new System.NotImplementedException();
+            StateMachine<ExcavatorRightHand> machine = new StateMachine<ExcavatorRightHand>(3);
+            machine.instance = this;
+
+            machine.Add(new ExcavatorRightHandHidden());
+            machine.Add(new ExcavatorRightHandIdle());
+            machine.Add(new ExcavatorRightHandShoot());
+
+            machine.Begin(ExcavatorRightHand.c_st_HIDDEN);
+
+            return machine;
         }
+
+        protected override bool InitActiveSelf() => false;
     }
 }

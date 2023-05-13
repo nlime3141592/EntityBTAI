@@ -32,9 +32,6 @@ namespace Unchord
         public List<Collider2D> volumeCollisions; // 지형 충돌 영역(= 물체의 부피)
         public List<Collider2D> battleTriggers; // 전투 트리거
 
-        public Entity parentOrgan;
-        public List<Entity> subOrgans; // 개체의 하위 기관
-
         // base stats
         public Stat maxHealth; // 강도(체력)
         public Stat maxMana;
@@ -92,27 +89,6 @@ namespace Unchord
 
         protected virtual void OnAwakeEntity()
         {
-            Entity pEntity;
-            Transform pTransform = transform.parent;
-
-            while(pTransform != null && parentOrgan == null)
-            {
-                if(pTransform.gameObject.TryGetComponent<Entity>(out pEntity))
-                {
-                    parentOrgan = pEntity;
-
-                    if(parentOrgan.subOrgans == null)
-                        parentOrgan.subOrgans = new List<Entity>(1);
-
-                    parentOrgan.subOrgans.Add(this);
-                    
-                }
-                else
-                {
-                    pTransform = pTransform.parent;
-                }
-            }
-
             TryGetComponent<Rigidbody2D>(out m_physics);
             TryGetComponent<SpriteRenderer>(out m_spRenderer);
             TryGetComponent<AnimationController>(out m_aController);
@@ -133,6 +109,7 @@ namespace Unchord
 
         // MonoBehaviour.Start()
         protected abstract IStateMachineBase InitStateMachine();
+        protected virtual bool InitActiveSelf() => true;
 
         // MonoBehaviour.FixedUpdate()
 
@@ -145,28 +122,7 @@ namespace Unchord
         // Extra.
         // protected virtual void OnZeroHealth() {}
         protected virtual void OnEndOfEntity() {}
-/*
-        private IEnumerator m_DestroyEntity()
-        {
-            // yield return new WaitUntil(() => m_bRegisteredMachineEvent);
-            // yield return new WaitWhile(() => m_health <= 0);
-            yield return new WaitUntil(() => bDeadState);
 
-            void rec_SearchOrgan(Entity _organ)
-            {
-                int cntOrgan = _organ.subOrgans.Count;
-
-                for(int i = 0; i < cntOrgan; ++i)
-                    rec_SearchOrgan(_organ.subOrgans[i]);
-
-                _organ.OnZeroHealth();
-            }
-
-            rec_SearchOrgan(this);
-            yield return new WaitUntil(m_bCanDestroy);
-            this.OnEndOfEntity();
-        }
-*/
         private bool m_bCanDestroy()
         {
             return m_health <= 0 && !fsm.bStarted;
@@ -228,6 +184,7 @@ namespace Unchord
         {
             OnStartEntity();
             fsm = InitStateMachine();
+            gameObject.SetActive(InitActiveSelf());
         }
 
         private void FixedUpdate()

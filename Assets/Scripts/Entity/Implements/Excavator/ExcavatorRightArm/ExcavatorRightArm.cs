@@ -8,9 +8,30 @@ namespace Unchord
         public const int c_st_MOVE = 1;
         public const int c_st_SHOOT_HAND = 2;
 
+        // organ hierarchy
+        public ExcavatorRightHand rightHand;
+
+        protected override void OnAwakeEntity()
+        {
+            base.OnAwakeEntity();
+
+            rightHand = gameObject.GetComponentInChildren<ExcavatorRightHand>(true);
+        }
+
         protected override IStateMachineBase InitStateMachine()
         {
-            throw new System.NotImplementedException();
+            StateMachine<ExcavatorRightArm> machine = new StateMachine<ExcavatorRightArm>(3);
+            machine.instance = this;
+
+            machine.Add(new ExcavatorRightArmHidden());
+            machine.Add(new ExcavatorRightArmMove());
+            machine.Add(new ExcavatorRightArmShootHand());
+
+            machine.Begin(ExcavatorRightArm.c_st_HIDDEN);
+
+            return machine;
         }
+
+        protected override bool InitActiveSelf() => false;
     }
 }

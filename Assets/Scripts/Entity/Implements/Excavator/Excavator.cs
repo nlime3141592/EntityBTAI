@@ -19,6 +19,9 @@ namespace Unchord
         public const int c_st_DIE                       = 11;
         public const int c_st_GROGGY                    = 12;
 
+        // organ hierarchy
+        public ExcavatorRightArm rightArm;
+
         public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
 
         public ExcavatorTerrainSensor senseData;
@@ -57,6 +60,8 @@ namespace Unchord
         {
             base.OnAwakeEntity();
 
+            rightArm = GetComponentInChildren<ExcavatorRightArm>(true);
+
             senseData = new ExcavatorTerrainSensor();
             stateAi_001 = new ExcavatorStateRegion3_001();
             stateAi_002 = new ExcavatorStateRegion3_002();
@@ -66,16 +71,12 @@ namespace Unchord
 
             // m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
             // GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
-
-            // arm = GetComponentInChildren<ExcavatorArm>();
-            // hand = GetComponentInChildren<ExcavatorHand>();
         }
 
         protected override void OnStartEntity()
         {
             base.OnStartEntity();
 
-            // armObj.SetActive(false);
             volumeCollisions.Add(GetComponent<BoxCollider2D>());
         }
 
