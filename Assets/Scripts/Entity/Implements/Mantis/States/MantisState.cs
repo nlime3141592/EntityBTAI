@@ -10,14 +10,6 @@ namespace Unchord
             instance.senseData.OnFixedUpdate(instance);
         }
 
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-
-            instance.CURRENT_STATE = machine.state.idConstant;
-            instance.CURRENT_HEALTH = instance.health;
-        }
-
         public override int Transit()
         {
             int transit = base.Transit();

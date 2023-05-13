@@ -11,14 +11,14 @@ namespace Unchord
         // organ hierarchy
         public ExcavatorRightHand rightHand;
 
-        protected override void OnAwakeEntity()
+        public override void OnAwakeEntity()
         {
             base.OnAwakeEntity();
 
             rightHand = gameObject.GetComponentInChildren<ExcavatorRightHand>(true);
         }
 
-        protected override IStateMachineBase InitStateMachine()
+        public override IStateMachineBase InitStateMachine()
         {
             StateMachine<ExcavatorRightArm> machine = new StateMachine<ExcavatorRightArm>(3);
             machine.instance = this;
@@ -32,6 +32,6 @@ namespace Unchord
             return machine;
         }
 
-        protected override bool InitActiveSelf() => false;
+        public override bool InitActiveSelf() => false;
     }
 }

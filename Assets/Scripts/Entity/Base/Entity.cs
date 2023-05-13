@@ -8,6 +8,7 @@ namespace Unchord
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(AnimationController))]
+    [RequireComponent(typeof(EntityController))]
     [DisallowMultipleComponent]
     public abstract class Entity : MonoBehaviour
     {
@@ -23,7 +24,6 @@ namespace Unchord
         public float health => m_health;
         public float mana => m_mana;
 
-        public IStateMachineBase fsm { get; private set; }
         public VelocityModule2D vm { get; private set; }
         public System.Random prng { get; private set; }
 #endregion
@@ -47,8 +47,15 @@ namespace Unchord
         public Stat fixedTakenDamage; // 고정 데미지
         public Stat defence;
 
-        // other battle stats
+        // other stats
         public Stat mentality;
+        public Stat gravity;
+        public Stat moveSpeed;
+
+        // 생각...
+        // Stat이 나타내는 값이, 어떤 지표의 상한선(최대값 또는 최소값)인 경우에, 새로운 필드 변수를 지정해야 됨.
+        // Stat이 나타내는 값을 그대로 활용해야 한다면, Stat Modifier를 추가해서 finalValue를 얻어내는 방식을 사용함.
+
 #endregion
 
 #region Components
@@ -65,17 +72,12 @@ namespace Unchord
         public int phase;
 
         public bool bInvincibility;
-        public float groggyValue;
+        public float groggyValue; // TODO: groggyValue 이름 뭘로 바꿀지 고민해보기.
 
-        public List<Collider2D> sensorBuffer;
+        [HideInInspector] public List<Collider2D> sensorBuffer;
 
         private float m_health = 1;
         private float m_mana = 1;
-#endregion
-
-#region For Debugging
-        public int CURRENT_STATE;
-        public float CURRENT_HEALTH;
 #endregion
 
 #region 아직 정리 안 함.
@@ -85,9 +87,9 @@ namespace Unchord
 
 #region Entity Events
         // MonoBehaviour.Awake()
-        protected virtual bool InitSingletonInstance() => true;
+        public virtual bool InitSingletonInstance() => true;
 
-        protected virtual void OnAwakeEntity()
+        public virtual void OnAwakeEntity()
         {
             TryGetComponent<Rigidbody2D>(out m_physics);
             TryGetComponent<SpriteRenderer>(out m_spRenderer);
@@ -102,31 +104,20 @@ namespace Unchord
             m_health = Utilities.Max<float>(1, maxHealth.finalValue);
         }
 
-        protected virtual void OnStartEntity()
-        {
-            
-        }
-
         // MonoBehaviour.Start()
-        protected abstract IStateMachineBase InitStateMachine();
-        protected virtual bool InitActiveSelf() => true;
+        public virtual void OnStartEntity() {}
+        public abstract IStateMachineBase InitStateMachine();
+        public virtual bool InitActiveSelf() => true;
 
         // MonoBehaviour.FixedUpdate()
 
         // MonoBehaviour.Update()
+        public virtual void OnEndOfEntity() {}
 
         // MonoBehaviour.LateUpdate()
 
         // MonoBehaviour.OnDrawGizmos()
 
-        // Extra.
-        // protected virtual void OnZeroHealth() {}
-        protected virtual void OnEndOfEntity() {}
-
-        private bool m_bCanDestroy()
-        {
-            return m_health <= 0 && !fsm.bStarted;
-        }
 #endregion
 
 #region Entity Property Modifiers
@@ -165,47 +156,6 @@ namespace Unchord
             for(int i = 0; i < count; ++i)
                 if(_baseCollection[i] != null)
                     Physics2D.IgnoreCollision(_baseCollection[i], _target, _bIgnore);
-        }
-#endregion
-
-#region Unity Event Functions
-        private void Awake()
-        {
-            if(!InitSingletonInstance())
-            {
-                Destroy(this.gameObject);
-                return;
-            }
-
-            OnAwakeEntity();
-        }
-
-        private void Start()
-        {
-            OnStartEntity();
-            fsm = InitStateMachine();
-            gameObject.SetActive(InitActiveSelf());
-        }
-
-        private void FixedUpdate()
-        {
-            fsm.FixedUpdate();
-        }
-
-        private void Update()
-        {
-            fsm.Update();
-
-            if(m_bCanDestroy())
-            {
-                OnEndOfEntity();
-                Destroy(this.gameObject);
-            }
-        }
-
-        private void LateUpdate()
-        {
-            fsm.LateUpdate();
         }
 #endregion
     }

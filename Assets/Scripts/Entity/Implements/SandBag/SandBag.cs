@@ -7,7 +7,7 @@ namespace Unchord
 
         public float 현재체력;
 
-        protected override IStateMachineBase InitStateMachine()
+        public override IStateMachineBase InitStateMachine()
         {
             IStateMachine<SandBag> fsm = new StateMachine<SandBag>(2);
 

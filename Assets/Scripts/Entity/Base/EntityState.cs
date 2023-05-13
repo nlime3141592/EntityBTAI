@@ -22,7 +22,7 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            m_FixedUpdateRotate();
+            m_FixedUpdateRotation();
         }
 
         public virtual void OnTriggerEnter2D(Collider2D _collider) {}
@@ -32,14 +32,6 @@ namespace Unchord
         public virtual void OnActionBegin() {}
         public virtual void OnActionEnd() {}
         public virtual void OnAnimationEnd() {}
-
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-
-            instance.CURRENT_STATE = instance.fsm.state.idConstant;
-            instance.CURRENT_HEALTH = instance.health;
-        }
 
         public override void OnStateEnd()
         {
@@ -51,7 +43,7 @@ namespace Unchord
             instance.aController.onEndOfAnimation -= OnAnimationEnd;
         }
 
-        private void m_FixedUpdateRotate()
+        private void m_FixedUpdateRotation()
         {
             float x = m_GetEulerRotation(instance.lookDir.y, instance.eulerRotation.x);
             float y = m_GetEulerRotation(instance.lookDir.x, instance.eulerRotation.y);

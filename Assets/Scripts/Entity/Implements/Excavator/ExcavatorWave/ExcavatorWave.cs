@@ -16,14 +16,14 @@ namespace Unchord
 
         public ExcavatorWaveTerrainSensor senseData;
 
-        protected override void OnAwakeEntity()
+        public override void OnAwakeEntity()
         {
             base.OnAwakeEntity();
 
             senseData = new ExcavatorWaveTerrainSensor();
         }
 
-        protected override IStateMachineBase InitStateMachine()
+        public override IStateMachineBase InitStateMachine()
         {
             StateMachine<ExcavatorWave> machine = new StateMachine<ExcavatorWave>(2);
             machine.instance = this;

@@ -8,7 +8,7 @@ namespace Unchord
 
         private void OnDrawGizmos()
         {
-            entity.fsm?.OnDrawGizmos(showGizmo);
+            // entity.fsm?.OnDrawGizmos(showGizmo);
         }
     }
 }

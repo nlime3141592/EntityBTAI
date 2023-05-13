@@ -17,7 +17,7 @@ namespace Unchord
         public float dx = 0;
         public float dy = 0;
 
-        protected override IStateMachineBase InitStateMachine()
+        public override IStateMachineBase InitStateMachine()
         {
             StateMachine<ExcavatorProjectile> machine = new StateMachine<ExcavatorProjectile>(2);
             machine.instance = this;

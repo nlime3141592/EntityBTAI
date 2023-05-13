@@ -4,40 +4,38 @@ using UnityEngine;
 namespace Unchord
 {
     [RequireComponent(typeof(Animator))]
-    public class AnimationController : MonoBehaviour
+    public class AnimationController : EntityBehaviour
     {
         // TODO: Debug가 완료되면 set;을 private set;으로 변경.
-        public bool bBeginOfAnimation; // { get; set; }
-        public bool bBeginOfAction; // { get; set; }
-        public bool bEndOfAction; // { get; set; }
-        public bool bEndOfAnimation; // { get; set; }
+        public bool bBeginOfAnimation { get; private set; }
+        public bool bBeginOfAction { get; private set; }
+        public bool bEndOfAction { get; private set; }
+        public bool bEndOfAnimation { get; private set; }
 
         public event Action onBeginOfAnimation;
         public event Action onBeginOfAction;
         public event Action onEndOfAction;
         public event Action onEndOfAnimation;
 
-        public int id { get; private set; }
-        public int phase { get; private set; }
-
         private Animator m_animator;
 
-        private void OnValidate()
+        protected override void OnValidate()
         {
-            if(Application.isEditor && !Application.isPlaying)
-                TryGetComponent<Animator>(out m_animator);
+            base.OnValidate();
+
+            TryGetComponent<Animator>(out m_animator);
         }
 
-        public void Awake()
+        protected override void Awake()
         {
-            if(m_animator == null)
-                TryGetComponent<Animator>(out m_animator);
+            base.Awake();
+
+            TryGetComponent<Animator>(out m_animator);
         }
 
-        public void SetState(int id)
+        public void SetState(int _id)
         {
-            this.id = id;
-            m_animator.SetInteger("state", id);
+            m_animator.SetInteger("state", _id);
         }
 
         public void Reset()

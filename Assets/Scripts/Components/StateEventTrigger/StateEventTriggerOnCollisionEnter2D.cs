@@ -6,7 +6,7 @@ namespace Unchord
     {
         private void OnCollisionEnter2D(Collision2D _collision)
         {
-            (entity.fsm.state as IEntityStateEvent)?.OnCollisionEnter2D(_collision);
+            // (entity.fsm.state as IEntityStateEvent)?.OnCollisionEnter2D(_collision);
         }
     }
 }

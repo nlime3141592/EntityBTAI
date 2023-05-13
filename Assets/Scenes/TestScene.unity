@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 63183681}
   - component: {fileID: 63183680}
   - component: {fileID: 63183679}
+  - component: {fileID: 63183685}
   - component: {fileID: 63183678}
   - component: {fileID: 63183684}
   m_Layer: 7
@@ -174,7 +175,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &63183678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,8 +192,6 @@ MonoBehaviour:
   - {fileID: 1339446025}
   battleTriggers:
   - {fileID: 1033197511}
-  parentOrgan: {fileID: 0}
-  subOrgans: []
   maxHealth:
     baseValue: 2000
   maxMana:
@@ -334,10 +333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bBeginOfAnimation: 0
-  bBeginOfAction: 0
-  bEndOfAction: 0
-  bEndOfAnimation: 0
 --- !u!95 &63183680
 Animator:
   serializedVersion: 3
@@ -462,6 +457,20 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &63183685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63183677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CURRENT_STATE_ID_CONSTANT: 0
+  CURRENT_HEALTH: 0
 --- !u!1 &69667359
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,13 +485,14 @@ GameObject:
   - component: {fileID: 69667362}
   - component: {fileID: 69667361}
   - component: {fileID: 69667360}
+  - component: {fileID: 69667366}
   m_Layer: 0
   m_Name: Excavator (0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &69667360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,8 +509,6 @@ MonoBehaviour:
   - {fileID: 1614172490}
   battleTriggers:
   - {fileID: 464347464}
-  parentOrgan: {fileID: 0}
-  subOrgans: []
   maxHealth:
     baseValue: 2000
   maxMana:
@@ -567,6 +575,7 @@ MonoBehaviour:
   frame_idleTimeMin: 60
   frame_idleTimeMax: 120
   frame_idleAggroDelay: 70
+  rightArm: {fileID: 0}
   aiCenterOffset: {x: 0, y: -8.5}
   projectile: {fileID: 0}
   wave: {fileID: 0}
@@ -607,10 +616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bBeginOfAnimation: 0
-  bBeginOfAction: 0
-  bEndOfAction: 0
-  bEndOfAnimation: 0
 --- !u!95 &69667362
 Animator:
   serializedVersion: 3
@@ -719,6 +724,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &69667366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69667359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CURRENT_STATE_ID_CONSTANT: 0
+  CURRENT_HEALTH: 0
 --- !u!1 &93637024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,6 +1577,7 @@ GameObject:
   - component: {fileID: 906718989}
   - component: {fileID: 906718988}
   - component: {fileID: 906718987}
+  - component: {fileID: 906718992}
   m_Layer: 0
   m_Name: ExcavatorRightHand
   m_TagString: Untagged
@@ -1593,8 +1613,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   volumeCollisions: []
   battleTriggers: []
-  parentOrgan: {fileID: 0}
-  subOrgans: []
   maxHealth:
     baseValue: 0
   maxMana:
@@ -1642,10 +1660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bBeginOfAnimation: 0
-  bBeginOfAction: 0
-  bEndOfAction: 0
-  bEndOfAnimation: 0
 --- !u!95 &906718989
 Animator:
   serializedVersion: 3
@@ -1737,6 +1751,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &906718992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906718985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CURRENT_STATE_ID_CONSTANT: 0
+  CURRENT_HEALTH: 0
 --- !u!1 &1004430210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1988,6 +2016,7 @@ GameObject:
   - component: {fileID: 1083395506}
   - component: {fileID: 1083395505}
   - component: {fileID: 1083395504}
+  - component: {fileID: 1083395508}
   m_Layer: 7
   m_Name: SandBag (0)
   m_TagString: Untagged
@@ -2078,8 +2107,6 @@ MonoBehaviour:
   - {fileID: 1987182882}
   battleTriggers:
   - {fileID: 1811821256}
-  parentOrgan: {fileID: 0}
-  subOrgans: []
   maxHealth:
     baseValue: 2000
   maxMana:
@@ -2128,10 +2155,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bBeginOfAnimation: 0
-  bBeginOfAction: 0
-  bEndOfAction: 0
-  bEndOfAnimation: 0
 --- !u!95 &1083395506
 Animator:
   serializedVersion: 3
@@ -2172,6 +2195,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1083395508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083395501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CURRENT_STATE_ID_CONSTANT: 0
+  CURRENT_HEALTH: 0
 --- !u!1 &1155413886
 GameObject:
   m_ObjectHideFlags: 0
@@ -2749,6 +2786,7 @@ GameObject:
   - component: {fileID: 1605662616}
   - component: {fileID: 1605662615}
   - component: {fileID: 1605662614}
+  - component: {fileID: 1605662619}
   m_Layer: 0
   m_Name: ExcavatorRightArm
   m_TagString: Untagged
@@ -2785,8 +2823,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   volumeCollisions: []
   battleTriggers: []
-  parentOrgan: {fileID: 0}
-  subOrgans: []
   maxHealth:
     baseValue: 0
   maxMana:
@@ -2822,6 +2858,7 @@ MonoBehaviour:
   CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
+  rightHand: {fileID: 0}
 --- !u!114 &1605662615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2834,10 +2871,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bBeginOfAnimation: 0
-  bBeginOfAction: 0
-  bEndOfAction: 0
-  bEndOfAnimation: 0
 --- !u!95 &1605662616
 Animator:
   serializedVersion: 3
@@ -2929,6 +2962,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1605662619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605662612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CURRENT_STATE_ID_CONSTANT: 0
+  CURRENT_HEALTH: 0
 --- !u!1 &1614172488
 GameObject:
   m_ObjectHideFlags: 0
@@ -3108,6 +3155,7 @@ GameObject:
   - component: {fileID: 1751650959}
   - component: {fileID: 1751650958}
   - component: {fileID: 1751650957}
+  - component: {fileID: 1751650955}
   - component: {fileID: 1751650956}
   - component: {fileID: 1751650954}
   - component: {fileID: 1751650953}
@@ -3153,10 +3201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bBeginOfAnimation: 0
-  bBeginOfAction: 0
-  bEndOfAction: 0
-  bEndOfAnimation: 0
 --- !u!95 &1751650954
 Animator:
   serializedVersion: 3
@@ -3176,6 +3220,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1751650955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751650951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CURRENT_STATE_ID_CONSTANT: 0
+  CURRENT_HEALTH: 0
 --- !u!114 &1751650956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3194,8 +3252,6 @@ MonoBehaviour:
   - {fileID: 568642915}
   battleTriggers:
   - {fileID: 374918600}
-  parentOrgan: {fileID: 0}
-  subOrgans: []
   maxHealth:
     baseValue: 100000
   maxMana:

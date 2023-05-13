@@ -8,7 +8,7 @@ namespace Unchord
         public const int c_st_IDLE = 1;
         public const int c_st_SHOOT = 2;
 
-        protected override IStateMachineBase InitStateMachine()
+        public override IStateMachineBase InitStateMachine()
         {
             StateMachine<ExcavatorRightHand> machine = new StateMachine<ExcavatorRightHand>(3);
             machine.instance = this;
@@ -22,6 +22,6 @@ namespace Unchord
             return machine;
         }
 
-        protected override bool InitActiveSelf() => false;
+        public override bool InitActiveSelf() => false;
     }
 }

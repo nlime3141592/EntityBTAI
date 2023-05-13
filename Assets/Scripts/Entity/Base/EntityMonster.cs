@@ -18,13 +18,13 @@ namespace Unchord
         public int frame_idleTimeMax = 120;
         public int frame_idleAggroDelay = 70;
 
-        protected override void OnAwakeEntity()
+        public override void OnAwakeEntity()
         {
             base.OnAwakeEntity();
             aggroAi.entity = this;
         }
 
-        protected override void OnStartEntity()
+        public override void OnStartEntity()
         {
             base.OnStartEntity();
         }

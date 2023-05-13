@@ -49,7 +49,7 @@ namespace Unchord
             return false;
         }
 
-        protected override void OnAwakeEntity()
+        public override void OnAwakeEntity()
         {
             base.OnAwakeEntity();
 
@@ -61,7 +61,7 @@ namespace Unchord
             // m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
         }
 
-        protected override void OnStartEntity()
+        public override void OnStartEntity()
         {
             base.OnStartEntity();
 
@@ -70,7 +70,7 @@ namespace Unchord
             // GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
         }
 
-        protected override IStateMachineBase InitStateMachine()
+        public override IStateMachineBase InitStateMachine()
         {
             StateMachine<Mantis> machine = new StateMachine<Mantis>(20);
             machine.instance = this;

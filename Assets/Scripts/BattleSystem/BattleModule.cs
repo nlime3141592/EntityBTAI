@@ -5,30 +5,24 @@ using UnityEngine;
 
 namespace Unchord
 {
-    [RequireComponent(typeof(Entity))]
+    [RequireComponent(typeof(EntityController))]
     [DisallowMultipleComponent]
     public class BattleModule : MonoBehaviour
     {
-        public Entity owner => m_owner;
-        private Entity m_owner;
-
-        // public Transform damageParent;
-        // public TestDamageUI hitUI;
-        // public TestDamageUI healUI;
-
         public List<string> tags;
         public LayerMask mask;
 
+        private EntityController m_eController;
         private List<Collider2D> m_ignores;
 
         private void OnValidate()
         {
-            TryGetComponent<Entity>(out m_owner);
+            TryGetComponent<EntityController>(out m_eController);
         }
 
-        private void Start()
+        private void Awake()
         {
-            TryGetComponent<Entity>(out m_owner);
+            TryGetComponent<EntityController>(out m_eController);
         }
 
         public void SetIgnoreColliders(List<Collider2D> ignores)
@@ -66,39 +60,8 @@ namespace Unchord
 
         public void TriggerBattleState()
         {
-            IStateBase current = owner.fsm.state;
+            IStateBase current = m_eController.fsm.state;
             (current as IBattleState)?.OnTriggerBattleState(this);
-
-            /*
-            Entity attacker = m_battleState.attacker;
-            List<Entity> targets = m_battleState.targets;
-            LTRB range = m_battleState.range;
-            int targetCount = m_battleState.targetCount;
-            float baseDamage = m_battleState.baseDamage;
-            bool bGetGroggyValue = false;
-
-            Collider2D[] colTargets = EntitySensor.OverlapBox(attacker, range, battleRangeGizmo, targetLayerMask);
-            targets.Clear();
-            targets
-                .FilterFromColliders(attacker, colTargets, false, m_ignores)
-                .SetTargetCount(targetCount);
-
-            foreach(Entity target in targets)
-            {
-                float finalDamage = this.GetFinalDamage(target, baseDamage);
-
-                bGetGroggyValue |= target.bParrying;
-
-                if(!target.bParrying)
-                    target.ChangeHealth(-finalDamage);
-            }
-
-            if(bGetGroggyValue)
-            {
-                // attacker.groggyValue += attacker.baseMentality.finalValue;
-                attacker.groggyValue += 0.34f;
-            }
-            */
         }
 
         public static float GetFinalDamage(Entity _attacker, Entity _victim, float _baseDamage)

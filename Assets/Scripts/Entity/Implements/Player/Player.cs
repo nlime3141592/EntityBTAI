@@ -115,7 +115,7 @@ namespace Unchord
 
         public List<Slab> sitSlabs;
 
-        protected override bool InitSingletonInstance()
+        public override bool InitSingletonInstance()
         {
             if(s_m_player == null)
                 s_m_player = this;
@@ -125,7 +125,7 @@ namespace Unchord
             return false;
         }
 
-        protected override void OnAwakeEntity()
+        public override void OnAwakeEntity()
         {
             base.OnAwakeEntity();
 
@@ -138,7 +138,7 @@ namespace Unchord
             iManager = new PlayerInputManager();
         }
 
-        protected override IStateMachineBase InitStateMachine()
+        public override IStateMachineBase InitStateMachine()
         {
             StateMachine<Player> fsm = new StateMachine<Player>(50);
             fsm.instance = this;

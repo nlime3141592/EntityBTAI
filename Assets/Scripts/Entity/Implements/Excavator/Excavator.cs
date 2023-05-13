@@ -56,7 +56,7 @@ namespace Unchord
         public int waveLength = 15;
 #endregion
 
-        protected override void OnAwakeEntity()
+        public override void OnAwakeEntity()
         {
             base.OnAwakeEntity();
 
@@ -73,14 +73,14 @@ namespace Unchord
             // GameManager.instance.generatedBoss.AddLast(m_spawnDataNode);
         }
 
-        protected override void OnStartEntity()
+        public override void OnStartEntity()
         {
             base.OnStartEntity();
 
             volumeCollisions.Add(GetComponent<BoxCollider2D>());
         }
 
-        protected override IStateMachineBase InitStateMachine()
+        public override IStateMachineBase InitStateMachine()
         {
             StateMachine<Excavator> machine = new StateMachine<Excavator>(13);
             machine.instance = this;
