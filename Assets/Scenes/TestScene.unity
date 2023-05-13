@@ -457,10 +457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffbe9574fa6d9a4e9375f6223171ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleRangeGizmo:
-    bShowGizmo: 1
-    duration: 2
-    color: {r: 1, g: 0.4764151, b: 0.4764151, a: 0}
   tags:
   - Player
   mask:
@@ -506,13 +502,13 @@ MonoBehaviour:
   parentOrgan: {fileID: 0}
   subOrgans: []
   maxHealth:
-    baseValue: 0
+    baseValue: 2000
   maxMana:
     baseValue: 0
   healthProportionDamage:
     baseValue: 0
   strength:
-    baseValue: 0
+    baseValue: 7
   criticalChance:
     baseValue: 0
   criticalDamage:
@@ -556,10 +552,10 @@ MonoBehaviour:
         lsx: 1
         lsy: 1
       box:
-        l: 0.5
-        t: 0.5
-        r: 0.5
-        b: 0.5
+        l: 20
+        t: 20
+        r: 20
+        b: 20
     targets: []
     tags: []
     mask:
@@ -571,16 +567,33 @@ MonoBehaviour:
   frame_idleTimeMin: 60
   frame_idleTimeMax: 120
   frame_idleAggroDelay: 70
-  arm: {fileID: 0}
-  hand: {fileID: 0}
-  armObj: {fileID: 0}
   aiCenterOffset: {x: 0, y: -8.5}
   projectile: {fileID: 0}
   wave: {fileID: 0}
   walkSpeed: 12
   gravity: -49.5
-  minFreeFallSpeed: -42
-  aPhase: 0
+  speed_freeFallMin: -42
+  time_idleMin: 0.8
+  time_idleMax: 1.5
+  time_groggy: 5
+  rangeAi3_rx1: 10.5
+  rangeAi3_rx2: 21
+  rangeAi3_ry1: 4
+  rangeAi3_ry2: 8
+  skillRange_stamping_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0
+      t: 0
+      r: 10.5
+      b: 8
   waveLength: 15
 --- !u!114 &69667361
 MonoBehaviour:
@@ -608,7 +621,7 @@ Animator:
   m_GameObject: {fileID: 69667359}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 58a48c96ccac448489e5558ccb2bfc05, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3311,10 +3324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ffbe9574fa6d9a4e9375f6223171ad1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleRangeGizmo:
-    bShowGizmo: 1
-    duration: 2
-    color: {r: 0.2028302, g: 0.7639362, b: 1, a: 1}
   tags: []
   mask:
     serializedVersion: 2

@@ -16,7 +16,6 @@ namespace Unchord
         // public TestDamageUI hitUI;
         // public TestDamageUI healUI;
 
-        public EntitySensorGizmoOption battleRangeGizmo;
         public List<string> tags;
         public LayerMask mask;
 

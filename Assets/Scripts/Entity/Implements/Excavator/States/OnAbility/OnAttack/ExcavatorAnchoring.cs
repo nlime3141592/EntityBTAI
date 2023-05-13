@@ -8,7 +8,7 @@ namespace Unchord
 
         private PhaseController m_phaser;
         private Timer m_anchorTimer;
-
+/*
         protected override void OnConstruct()
         {
             base.OnConstruct();
@@ -26,7 +26,8 @@ namespace Unchord
             m_phaser = new PhaseController(4, 0.0f);
             m_anchorTimer = new Timer(2.0f);
         }
-
+*/
+/*
         public override void OnStateBegin()
         {
             base.OnStateBegin();
@@ -51,7 +52,7 @@ namespace Unchord
                 // instance.hand.bStart = true;
             }
         }
-
+*/
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
@@ -60,11 +61,6 @@ namespace Unchord
         public override void OnUpdate()
         {
             base.OnUpdate();
-
-            if(instance.aPhase == 1)
-            {
-                m_anchorTimer.OnUpdate();
-            }
         }
 
         public override int Transit()

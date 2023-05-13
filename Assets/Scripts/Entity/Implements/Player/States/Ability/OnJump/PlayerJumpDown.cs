@@ -47,7 +47,7 @@ namespace Unchord
                 false,
                 m_sitRange,
                 1 << LayerMask.NameToLayer("Slab"));
-            instance.sitSlabs.GetComponentsFromColliders<Slab>(instance.transform, colliders, false);
+            // instance.sitSlabs.GetComponentsFromColliders<Slab>(instance.transform, colliders, false);
 
             for(int i = 0; i < instance.sitSlabs.Count; ++i)
             {
@@ -68,7 +68,7 @@ namespace Unchord
                 false,
                 m_slabRange,
                 1 << LayerMask.NameToLayer("Slab"));
-            curSlabs.GetComponentsFromColliders<Slab>(instance.transform, colliders, false);
+            // curSlabs.GetComponentsFromColliders<Slab>(instance.transform, colliders, false);
 
             for(int i = instance.sitSlabs.Count - 1; i >= 0; --i)
             {
