@@ -84,6 +84,9 @@ namespace Unchord
         public int count_Dash = 1;
         public int count_AttackOnAir = 1;
 
+        public AreaSensorBox slabSensorOnSit;
+        public AreaSensorBox slabSensorOnBody;
+
         public AreaSensorBox skillRange_AttackOnFloor001_01;
         public AreaSensorBox skillRange_AttackOnFloor002_01;
         public AreaSensorBox skillRange_AttackOnFloor003_01;
