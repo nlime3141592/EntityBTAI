@@ -6,16 +6,8 @@ namespace Unchord
     {
         public override int idConstant => Mantis.c_st_IDLE;
 
-        // fixed data
-        private float m_rangeX1 = 8.0f; // NOTE: 상태 전이 구간 설정용 변수.
-        private float m_rangeX2 = 16.0f;
-        private float m_rangeY1 = 4.0f;
-        private float m_rangeY2 = 8.0f;
-
         // variable
         private int m_leftIdleTime = 0;
-        private int m_rangeCode = -1;
-
         private int m_leftIdleAggroDelay;
 
         public override void OnStateBegin()
@@ -52,10 +44,10 @@ namespace Unchord
 
         private Direction m_GetLookDirX()
         {
-            if(!instance.aggroAi.bAggro)
+            if(!instance.bAggro)
                 return instance.lookDir.x;
 
-            float tx = instance.aggroAi.targets[0].transform.position.x;
+            float tx = instance.aggroTargets[0].transform.position.x;
             float px = instance.transform.position.x;
 
             if(tx - px < 0)
@@ -70,14 +62,14 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(!instance.aggroAi.bAggro)
+            else if(!instance.bAggro)
                 return MachineConstant.c_lt_CONTINUE;
             else if(m_leftIdleTime <= 0)
             {
                 float ox = instance.transform.position.x + instance.aiCenterOffset.x;
                 float oy = instance.transform.position.y + instance.aiCenterOffset.y;
-                float px = instance.aggroAi.targets[0].transform.position.x;
-                float py = instance.aggroAi.targets[0].transform.position.y;
+                float px = instance.aggroTargets[0].transform.position.x;
+                float py = instance.aggroTargets[0].transform.position.y;
                 float lx = instance.lookDir.fx;
                 float ly = instance.lookDir.fy;
 
@@ -85,17 +77,13 @@ namespace Unchord
                     instance.prng,
                     ox, oy,
                     px, py,
-                    lx, ly,
-                    m_rangeX1, m_rangeX2,
-                    m_rangeY1, m_rangeY2
+                    lx, ly
                 );
                 else if(instance.phase == 1) return instance.stateAi_002.GetState(
                     instance.prng,
                     ox, oy,
                     px, py,
-                    lx, ly,
-                    m_rangeX1, m_rangeX2,
-                    m_rangeY1, m_rangeY2
+                    lx, ly
                 );
             }
 

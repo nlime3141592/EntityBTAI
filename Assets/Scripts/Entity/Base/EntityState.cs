@@ -3,7 +3,10 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public abstract class EntityState<T> : State<T>, IEntityStateEvent
+    public abstract class EntityState<T> : State<T>,
+    ICollisionEnterEvent2D, ICollisionExitEvent2D, ICollisionStayEvent2D,
+    ITriggerEnterEvent2D, ITriggerExitEvent2D, ITriggerStayEvent2D,
+    IAnimationEvents
     where T : Entity
     {
         public override void OnStateBegin()

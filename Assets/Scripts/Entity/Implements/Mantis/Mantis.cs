@@ -20,29 +20,37 @@ namespace Unchord
         public const int c_st_COMBO_SHOUT                = 12;
         public const int c_st_JUMP_CHOP_002              = 13;
 
-        public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
-
-        public MantisTerrainSensor senseData;
+        [Header("Mantis State Transition AI")]
+        public Vector2 aiCenterOffset;
         public MantisStateRegion3_001 stateAi_001;
         public MantisStateRegion3_002 stateAi_002;
+
+        public MantisTerrainSensor senseData;
 
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
 
+        [Header("Mantis Skill Ranges")]
         public AreaSensorBox skillRange_BackSlice_01;
         public AreaSensorBox skillRange_Chop_01;
         public AreaSensorBox skillRange_JumpChop002_01;
         public AreaSensorBox skillRange_UpSlice_01;
 
-#region 아직 정리 안 함.
+        [Header("Mantis Parameters")]
         public float wallDetectLength = 0.06f;
         public float hitLength = 0.06f;
         public float walkSpeed = 6.0f;
 
+        public int frame_idleTimeMin = 60;
+        public int frame_idleTimeMax = 120;
+        public int frame_idleAggroDelay = 70;
+
         public float speed_jumpChopX = 8.0f;
         public float speed_jumpChopY = 4.0f;
         public float force_jumpChopY = 49.5f;
-#endregion
+
+        public bool bAggro;
+        public List<Entity> aggroTargets;
 
         public virtual bool CanAggro()
         {

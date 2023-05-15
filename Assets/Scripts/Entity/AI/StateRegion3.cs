@@ -2,6 +2,7 @@ using System;
 
 namespace Unchord
 {
+    [Serializable]
     public abstract class StateRegion3
     {
         public RegionEvent this[int _index]
@@ -11,6 +12,11 @@ namespace Unchord
                 m_events[_index] = value;
             }
         }
+
+        public float x1 = 5;
+        public float x2 = 10;
+        public float y1 = 5;
+        public float y2 = 10;
 
         private RegionEvent[] m_events;
 
@@ -59,9 +65,9 @@ namespace Unchord
             m_events[35] = OnRegion35;
         }
 
-        public int GetState(System.Random _prng, float ox, float oy, float px, float py, float lx, float ly, float rx1, float rx2, float ry1, float ry2)
+        public int GetState(System.Random _prng, float ox, float oy, float px, float py, float lx, float ly)
         {
-            int code = m_GetRegion(ox, oy, px, py, lx, ly, rx1, rx2, ry1, ry2);
+            int code = m_GetRegion(ox, oy, px, py, lx, ly, x1, x2, y1, y2);
             // UnityEngine.Debug.LogFormat("current code: {0}", code);
             return m_events[code](_prng);
         }

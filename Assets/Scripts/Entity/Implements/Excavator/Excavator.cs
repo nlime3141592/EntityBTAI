@@ -20,23 +20,25 @@ namespace Unchord
         public const int c_st_GROGGY                    = 12;
 
         // organ hierarchy
+        [Header("Sub Organs")]
         public ExcavatorRightArm rightArm;
 
-        public Vector2 aiCenterOffset; // Inspector에서 값 할당 필요
-
-        public ExcavatorTerrainSensor senseData;
+        [Header("Excavator State Transition AI")]
+        public Vector2 aiCenterOffset;
         public ExcavatorStateRegion3_001 stateAi_001;
         public ExcavatorStateRegion3_002 stateAi_002;
         public ExcavatorStateRegion3_003 stateAi_003;
 
-        // Prefabs
-        public ExcavatorProjectile projectile;
-        public ExcavatorWave wave;
+        public ExcavatorTerrainSensor senseData;
 
         private EntitySpawnData m_spawnData;
         private LinkedListNode<EntitySpawnData> m_spawnDataNode;
 
-#region 아직 정리 안 함.
+        [Header("Excavator Prefabs")]
+        public ExcavatorProjectile projectile;
+        public ExcavatorWave wave;
+
+        [Header("Excavator Parameters")]
         public float walkSpeed = 12.0f;
 
         public float gravity = -49.5f;
@@ -46,15 +48,13 @@ namespace Unchord
         public float time_idleMax = 1.5f;
         public float time_groggy = 5.0f;
 
-        public float rangeAi3_rx1 = 10.5f;
-        public float rangeAi3_rx2 = 21.0f;
-        public float rangeAi3_ry1 = 4.0f;
-        public float rangeAi3_ry2 = 8.0f;
+        public int waveLength = 15;
 
+        [Header("Skill Ranges")]
         public AreaSensorBox skillRange_stamping_01;
 
-        public int waveLength = 15;
-#endregion
+        public bool bAggro;
+        public List<Entity> aggroTargets;
 
         public override void OnAwakeEntity()
         {

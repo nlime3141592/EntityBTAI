@@ -6,7 +6,7 @@ namespace Unchord
         {
             base.OnStateBegin();
 
-            float dx = instance.aggroAi.targets[0].transform.position.x - instance.transform.position.x;
+            float dx = instance.aggroTargets[0].transform.position.x - instance.transform.position.x;
 
             if(dx < 0)
                 instance.lookDir.x = Direction.Negative;

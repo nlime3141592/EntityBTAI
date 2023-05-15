@@ -2,14 +2,17 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public abstract class StateEventTrigger : ExtendedComponent<EntityController>
+    public abstract class StateEventTrigger<T_IStateEvent> : ExtendedComponent<EntityController>
+    where T_IStateEvent : class, IStateEvent
     {
-        protected IEntityStateEvent iEventListener { get; private set; }
+        protected T_IStateEvent iEventListener { get; private set; }
 
         protected void UpdateEventListener()
         {
-            if(baseComponent.fsm.state != iEventListener)
-                iEventListener = baseComponent.fsm.state as IEntityStateEvent;
+            if(System.Object.ReferenceEquals(baseComponent.fsm.state, iEventListener))
+                return;
+
+            iEventListener = baseComponent.fsm.state as T_IStateEvent;
         }
     }
 }

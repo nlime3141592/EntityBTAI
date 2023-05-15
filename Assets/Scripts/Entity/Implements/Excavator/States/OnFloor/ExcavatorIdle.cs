@@ -42,38 +42,28 @@ namespace Unchord
             {
                 float ox = instance.transform.position.x + instance.aiCenterOffset.x;
                 float oy = instance.transform.position.y + instance.aiCenterOffset.y;
-                float px = instance.aggroAi.targets[0].transform.position.x;
-                float py = instance.aggroAi.targets[0].transform.position.y;
+                float px = instance.aggroTargets[0].transform.position.x;
+                float py = instance.aggroTargets[0].transform.position.y;
                 float lx = instance.lookDir.fx;
                 float ly = instance.lookDir.fy;
-                float rx1 = instance.rangeAi3_rx1;
-                float rx2 = instance.rangeAi3_rx2;
-                float ry1 = instance.rangeAi3_ry1;
-                float ry2 = instance.rangeAi3_ry2;
 
                 if(instance.phase == 0) return instance.stateAi_001.GetState(
                     instance.prng,
                     ox, oy,
                     px, py,
-                    lx, ly,
-                    rx1, rx2,
-                    ry1, ry2
+                    lx, ly
                 );
                 else if(instance.phase == 1) return instance.stateAi_002.GetState(
                     instance.prng,
                     ox, oy,
                     px, py,
-                    lx, ly,
-                    rx1, rx2,
-                    ry1, ry2
+                    lx, ly
                 );
                 else if(instance.phase == 2) return instance.stateAi_003.GetState(
                     instance.prng,
                     ox, oy,
                     px, py,
-                    lx, ly,
-                    rx1, rx2,
-                    ry1, ry2
+                    lx, ly
                 );
             }
 

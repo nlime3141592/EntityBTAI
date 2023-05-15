@@ -2,6 +2,7 @@ using System;
 
 namespace Unchord
 {
+    [Serializable]
     public class ExcavatorStateRegion3_002 : StateRegion3
     {
         protected override int OnRegion00(Random _prng)

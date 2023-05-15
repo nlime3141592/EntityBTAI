@@ -4,12 +4,13 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public abstract class ExcavatorState : MonsterState<Excavator>
+    public abstract class ExcavatorState : MonsterState<Excavator>,
+    IEntityAggressionEvents
     {
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            instance.senseData.OnUpdate(instance);
+            instance.senseData.OnFixedUpdate(instance);
         }
 
         public override void OnUpdate()
@@ -46,6 +47,21 @@ namespace Unchord
                 return Excavator.c_st_GROGGY;
 
             return MachineConstant.c_lt_PASS;
+        }
+
+        public virtual void OnAggroBegin(SET_EntityAggression _aggModule)
+        {
+            instance.bAggro = true;
+        }
+
+        public virtual void OnAggroEnd(SET_EntityAggression _aggModule)
+        {
+            instance.bAggro = false;
+        }
+
+        public virtual void OnAggressive(SET_EntityAggression _aggModule)
+        {
+            instance.aggroTargets = _aggModule.targets;
         }
     }
 }

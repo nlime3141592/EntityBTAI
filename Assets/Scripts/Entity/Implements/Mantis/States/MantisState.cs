@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public abstract class MantisState : MonsterState<Mantis>
+    public abstract class MantisState : MonsterState<Mantis>,
+    IEntityAggressionEvents
     {
         public override void OnFixedUpdate()
         {
@@ -27,6 +28,21 @@ namespace Unchord
                 return transit;
 
             return MachineConstant.c_lt_PASS;
+        }
+
+        public virtual void OnAggroBegin(SET_EntityAggression _aggModule)
+        {
+            instance.bAggro = true;
+        }
+
+        public virtual void OnAggroEnd(SET_EntityAggression _aggModule)
+        {
+            instance.bAggro = false;
+        }
+
+        public virtual void OnAggressive(SET_EntityAggression _aggModule)
+        {
+            instance.aggroTargets = _aggModule.targets;
         }
     }
 }

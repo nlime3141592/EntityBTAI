@@ -19,20 +19,20 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.aggroAi.bAggro)
+            else if(instance.bAggro)
                 return Excavator.c_st_WAKE_UP;
 
             return MachineConstant.c_lt_PASS;
         }
 
-        public override void OnAggroBegin()
+        public override void OnAggroBegin(SET_EntityAggression _aggModule)
         {
-            base.OnAggroBegin();
+            base.OnAggroBegin(_aggModule);
 
-            instance.aggroAi.sensor.box.l = 200;
-            instance.aggroAi.sensor.box.t = 200;
-            instance.aggroAi.sensor.box.r = 200;
-            instance.aggroAi.sensor.box.b = 200;
+            _aggModule.boxSensor.box.l = 200;
+            _aggModule.boxSensor.box.t = 200;
+            _aggModule.boxSensor.box.r = 200;
+            _aggModule.boxSensor.box.b = 200;
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Unchord
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(SpriteRenderer))]
-    [RequireComponent(typeof(SET_AnimationEvents))]
     [RequireComponent(typeof(EntityController))]
     [DisallowMultipleComponent]
     public abstract class Entity : MonoBehaviour
@@ -29,7 +28,10 @@ namespace Unchord
         public System.Random prng { get; private set; }
 #endregion
 
-#region Stat Table
+        [Header("Entity Identification")]
+        public string entityName = "Unknown Entity";
+
+        [Header("Entity Stat Table")]
         public Stat maxHealth;
         public Stat maxMana;
 
@@ -47,44 +49,33 @@ namespace Unchord
         public Stat groggyStrength;
         public Stat maxGroggyValue;
 
-        // 생각...
-        // Stat이 나타내는 값이, 어떤 지표의 상한선(최대값 또는 최소값)인 경우에, 새로운 필드 변수를 지정해야 됨.
-        // Stat이 나타내는 값을 그대로 활용해야 한다면, Stat Modifier를 추가해서 finalValue를 얻어내는 방식을 사용함.
-
-#endregion
-
-#region Allocate on Editor
+        // TODO: 이 변수에 할당하는 동작을 자동화할 것.
         public List<Collider2D> volumeCollisions; // 지형 충돌 영역(= 물체의 부피)
         public List<Collider2D> battleTriggers; // 전투 트리거
 
-#endregion
-
-#region Components
         private Rigidbody2D m_physics;
         private SpriteRenderer m_spRenderer;
         private Animator m_animator;
-#endregion
 
-#region Variables
+        [Header("Entity Physical Variables")]
         public DirectionVector2 lookDir; // 시선 방향
-        public Vector3 eulerRotation; // 방향 회전
+        [HideInInspector] public Vector3 eulerRotation; // 방향 회전
 
-        public int phase;
+        public int phase; // 엔티티 페이즈
 
-        public bool bInvincibility;
+        public bool bInvincibility; // 무적
         public float groggyValue; // TODO: groggyValue 이름 뭘로 바꿀지 고민해보기.
 
+        // 애니메이션 클립 타이밍 체크 변수
         public bool bBeginOfAnimation;
         public bool bBeginOfAction;
         public bool bEndOfAction;
         public bool bEndOfAnimation;
 
-        private float m_health = 1;
-        private float m_mana = 1;
+        private float m_health = 1; // 현재 체력
+        private float m_mana = 1; // 현재 마나
 
         [HideInInspector] public List<Collider2D> sensorBuffer;
-
-#endregion
 
 #region 아직 정리 안 함.
         public bool bParrying;

@@ -2,6 +2,7 @@ using System;
 
 namespace Unchord
 {
+    [Serializable]
     public class MantisStateRegion3_002 : StateRegion3
     {
         protected override int OnQuarter2(Random _prng)

@@ -48,6 +48,7 @@ namespace Unchord
 #endregion
 
 #region Player Datas
+        [Header("Player Parameters")]
         public float ledgerp = 0.06f;
         public float ledgeVerticalLengthWeight = 0.5f;
 

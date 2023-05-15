@@ -93,7 +93,7 @@ namespace Unchord
 
         private void m_TraceArm()
         {
-            Entity target = instance.aggroAi.targets[0];
+            Entity target = instance.aggroTargets[0];
         }
     }
 }
