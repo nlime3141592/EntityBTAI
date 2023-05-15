@@ -13,7 +13,7 @@ namespace Unchord
         public override void OnUpdate()
         {
             base.OnUpdate();
-            instance.bParrying = instance.aController.bBeginOfAction && !instance.aController.bEndOfAction;
+            instance.bParrying = instance.bBeginOfAction && !instance.bEndOfAction;
         }
 
         public override int Transit()
@@ -22,7 +22,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.iManager.parryingUp || instance.aController.bEndOfAnimation)
+            else if(instance.iManager.parryingUp || instance.bEndOfAnimation)
                 return Player.c_st_IDLE_SHORT;
 
             return MachineConstant.c_lt_PASS;

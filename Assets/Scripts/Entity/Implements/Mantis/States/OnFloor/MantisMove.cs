@@ -14,8 +14,6 @@ namespace Unchord
 
             instance.vm.FreezePosition(false, false);
 
-            instance.bFixedLookDirByAxis.x = true;
-
             m_leftMoveFrame = m_moveFrame;
         }
 
@@ -37,13 +35,6 @@ namespace Unchord
                 return Mantis.c_st_IDLE;
 
             return MachineConstant.c_lt_PASS;
-        }
-
-        public override void OnStateEnd()
-        {
-            base.OnStateEnd();
-
-            instance.bFixedLookDirByAxis.x = false;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return Player.c_st_TAKE_DOWN_002;
 
             return MachineConstant.c_lt_PASS;

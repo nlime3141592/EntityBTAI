@@ -34,7 +34,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return Player.c_st_FREE_FALL;
             else if(instance.countLeft_JumpOnAir > 0 && instance.iManager.jumpDown)
                 return Player.c_st_JUMP_ON_AIR;

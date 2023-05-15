@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    [RequireComponent(typeof(StateEventTriggerOnCollisionEnter2D))]
+    [RequireComponent(typeof(SET_OnCollisionEnter2D))]
     [RequireComponent(typeof(BattleModule))]
     public class ExcavatorProjectile : Entity
     {

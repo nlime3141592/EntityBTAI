@@ -20,7 +20,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.senseData.bOnWallFront || instance.aController.bEndOfAnimation)
+            else if(instance.senseData.bOnWallFront || instance.bEndOfAnimation)
                 return Excavator.c_st_IDLE;
 
             return MachineConstant.c_lt_PASS;

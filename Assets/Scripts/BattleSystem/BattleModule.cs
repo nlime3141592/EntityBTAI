@@ -7,23 +7,12 @@ namespace Unchord
 {
     [RequireComponent(typeof(EntityController))]
     [DisallowMultipleComponent]
-    public class BattleModule : MonoBehaviour
+    public class BattleModule : ExtendedComponent<EntityController>
     {
         public List<string> tags;
         public LayerMask mask;
 
-        private EntityController m_eController;
         private List<Collider2D> m_ignores;
-
-        private void OnValidate()
-        {
-            TryGetComponent<EntityController>(out m_eController);
-        }
-
-        private void Awake()
-        {
-            TryGetComponent<EntityController>(out m_eController);
-        }
 
         public void SetIgnoreColliders(List<Collider2D> ignores)
         {
@@ -37,8 +26,6 @@ namespace Unchord
                 return 0;
             else if(target.fixedTakenDamage.finalValue > 0) // Target Entity가 입는 고정 피해
                 return target.fixedTakenDamage.finalValue;
-            else if(executor.healthProportionDamage.finalValue > 0) // Executor Entity가 가하는 체력 비례 데미지
-                return target.maxHealth.finalValue * executor.healthProportionDamage.finalValue;
 
             float baseDamage = executor.strength.finalValue - target.defence.finalValue;
 
@@ -60,7 +47,7 @@ namespace Unchord
 
         public void TriggerBattleState()
         {
-            IStateBase current = m_eController.fsm.state;
+            IStateBase current = baseComponent.fsm.state;
             (current as IBattleState)?.OnTriggerBattleState(this);
         }
 
@@ -88,16 +75,6 @@ namespace Unchord
             finalDamage *= (1.0f + Utilities.Max<float>(0, _attacker.finalDamage.finalValue));
 
             return Utilities.Max<float>(1, finalDamage);
-        }
-
-        public static float GetFinalGroggy(Entity _publisher, Entity _receiver)
-        {
-            float finalMental = _receiver.mentality.finalValue;
-
-            if(finalMental < 0.001f)
-                return 0.001f;
-
-            return finalMental;
         }
     }
 }

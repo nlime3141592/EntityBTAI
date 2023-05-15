@@ -10,15 +10,13 @@ namespace Unchord
         {
             base.OnStateBegin();
 
-            instance.aController.Reset();
-            instance.aController.SetState(idConstant);
-
-            instance.aController.onBeginOfAnimation += OnAnimationBegin;
-            instance.aController.onBeginOfAction += OnActionBegin;
-            instance.aController.onEndOfAction += OnActionEnd;
-            instance.aController.onEndOfAnimation += OnAnimationEnd;
+            instance.bBeginOfAnimation = false;
+            instance.bBeginOfAction = false;
+            instance.bEndOfAction = false;
+            instance.bEndOfAnimation = false;
+            instance.animator.SetInteger("state", this.idConstant);
         }
-
+ 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
@@ -26,21 +24,39 @@ namespace Unchord
         }
 
         public virtual void OnTriggerEnter2D(Collider2D _collider) {}
-        public virtual void OnCollisionEnter2D(Collision2D _collision) {}
+        public virtual void OnTriggerExit2D(Collider2D _collider) {}
+        public virtual void OnTriggerStay2D(Collider2D _collider) {}
 
-        public virtual void OnAnimationBegin() {}
-        public virtual void OnActionBegin() {}
-        public virtual void OnActionEnd() {}
-        public virtual void OnAnimationEnd() {}
+        public virtual void OnCollisionEnter2D(Collision2D _collision) {}
+        public virtual void OnCollisionExit2D(Collision2D _collision) {}
+        public virtual void OnCollisionStay2D(Collision2D _collision) {}
+
+        public virtual void OnAnimationBegin()
+        {
+            instance.bBeginOfAnimation = true;
+            instance.bBeginOfAction = false;
+            instance.bEndOfAction = false;
+            instance.bEndOfAnimation = false;
+        }
+
+        public virtual void OnActionBegin()
+        {
+            instance.bBeginOfAction = true;
+        }
+
+        public virtual void OnActionEnd()
+        {
+            instance.bEndOfAction = true;
+        }
+
+        public virtual void OnAnimationEnd()
+        {
+            instance.bEndOfAnimation = true;
+        }
 
         public override void OnStateEnd()
         {
             base.OnStateEnd();
-
-            instance.aController.onBeginOfAnimation -= OnAnimationBegin;
-            instance.aController.onBeginOfAction -= OnActionBegin;
-            instance.aController.onEndOfAction -= OnActionEnd;
-            instance.aController.onEndOfAnimation -= OnAnimationEnd;
         }
 
         private void m_FixedUpdateRotation()

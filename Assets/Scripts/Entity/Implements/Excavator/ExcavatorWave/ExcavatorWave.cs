@@ -4,7 +4,7 @@ namespace Unchord
 {
     // TODO: Rigidbody2D의 물리 연산 모드를 Continuous로 설정해야 함.
 
-    [RequireComponent(typeof(StateEventTriggerOnTriggerEnter2D))]
+    [RequireComponent(typeof(SET_OnTriggerEnter2D))]
     [RequireComponent(typeof(BattleModule))]
     public class ExcavatorWave : Entity
     {

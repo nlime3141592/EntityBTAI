@@ -97,6 +97,8 @@ namespace Unchord
 
         public Vector2 offset_StandCamera;
 
+        public BoolVector2 bFixedLookDirByAxis; // 입력에 의한 시선 방향 전환 제어
+
         public TimerHandler timerCoyote_AttackOnFloor;
         public int stateNext_AttackOnFloor;
 

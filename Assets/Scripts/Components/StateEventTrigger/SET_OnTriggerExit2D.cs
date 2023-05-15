@@ -1,0 +1,14 @@
+using UnityEngine;
+
+namespace Unchord
+{
+    [AddComponentMenu("State Event Trigger/OnTriggerExit2D (SET)")]
+    public sealed class SET_OnTriggerExit2D : StateEventTrigger
+    {
+        private void OnTriggerExit2D(Collider2D _collider)
+        {
+            base.UpdateEventListener();
+            iEventListener.OnTriggerExit2D(_collider);
+        }
+    }
+}

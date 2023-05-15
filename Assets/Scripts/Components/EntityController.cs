@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Unchord
 {
     [DisallowMultipleComponent]
-    public class EntityController : EntityBehaviour
+    public class EntityController : ExtendedComponent<Entity>
     {        
         public IStateMachineBase fsm { get; private set; }
 
@@ -16,22 +16,22 @@ namespace Unchord
         {
             base.Awake();
 
-            if(!entity.InitSingletonInstance())
+            if(!baseComponent.InitSingletonInstance())
             {
-                Destroy(entity.gameObject);
+                Destroy(baseComponent.gameObject);
                 return;
             }
 
-            entity.OnAwakeEntity();
+            baseComponent.OnAwakeEntity();
         }
 
         protected override void Start()
         {
             base.Start();
 
-            entity.OnStartEntity();
-            fsm = entity.InitStateMachine();
-            entity.gameObject.SetActive(entity.InitActiveSelf());
+            baseComponent.OnStartEntity();
+            fsm = baseComponent.InitStateMachine();
+            baseComponent.gameObject.SetActive(baseComponent.InitActiveSelf());
         }
 
         protected override void FixedUpdate()
@@ -49,8 +49,8 @@ namespace Unchord
 
             if(m_bCanDestroy())
             {
-                entity.OnEndOfEntity();
-                Destroy(entity.gameObject);
+                baseComponent.OnEndOfEntity();
+                Destroy(baseComponent.gameObject);
             }
         }
 
@@ -62,12 +62,12 @@ namespace Unchord
 
             // Update Debug Values.
             CURRENT_STATE_ID_CONSTANT = fsm.state.idConstant;
-            CURRENT_HEALTH = entity.health;
+            CURRENT_HEALTH = baseComponent.health;
         }
 
         private bool m_bCanDestroy()
         {
-            return entity.health <= 0 && !fsm.bStarted;
+            return baseComponent.health <= 0 && !fsm.bStarted;
         }
     }
 }

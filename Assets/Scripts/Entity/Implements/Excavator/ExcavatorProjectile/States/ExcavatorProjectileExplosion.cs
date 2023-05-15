@@ -19,7 +19,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return MachineConstant.c_st_MACHINE_OFF;
             
             return MachineConstant.c_lt_PASS;

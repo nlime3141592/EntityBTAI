@@ -6,19 +6,13 @@ namespace Unchord
     {
         public override int idConstant => Excavator.c_st_SHOCK_WAVE;
 
-        public override void OnStateBegin()
-        {
-            base.OnStateBegin();
-            instance.bFixedLookDirByAxis.x = true;
-        }
-
         public override int Transit()
         {
             int transit = base.Transit();
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return Excavator.c_st_IDLE;
             
             return MachineConstant.c_lt_PASS;

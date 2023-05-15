@@ -2,19 +2,14 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public abstract class StateEventTrigger : MonoBehaviour
+    public abstract class StateEventTrigger : ExtendedComponent<EntityController>
     {
-        protected Entity entity => m_entity;
-        private Entity m_entity;
+        protected IEntityStateEvent iEventListener { get; private set; }
 
-        private void OnValidate()
+        protected void UpdateEventListener()
         {
-            TryGetComponent<Entity>(out m_entity);
-        }
-
-        private void Awake()
-        {
-            TryGetComponent<Entity>(out m_entity);
+            if(baseComponent.fsm.state != iEventListener)
+                iEventListener = baseComponent.fsm.state as IEntityStateEvent;
         }
     }
 }

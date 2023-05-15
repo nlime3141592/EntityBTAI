@@ -64,7 +64,7 @@ namespace Unchord
         {
             base.OnUpdate();
 
-            if(!instance.aController.bBeginOfAction)
+            if(!instance.bBeginOfAction)
                 return;
 
             if(instance.iManager.parryingDown)
@@ -87,9 +87,9 @@ namespace Unchord
                 return transit;
             else if(!instance.senseData.datFloor.bOnHit)
                 return Player.c_st_FREE_FALL;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return Player.c_st_IDLE_SHORT;
-            else if(instance.aController.bEndOfAction)
+            else if(instance.bEndOfAction)
             {
                 if(bCapturedParryingDown)
                     return Player.c_st_EMERGENCY_PARRYING;

@@ -13,7 +13,6 @@ namespace Unchord
         public override void OnStateBegin()
         {
             base.OnStateBegin();
-            instance.bFixedLookDirByAxis.x = true;
 
             m_ang_current = m_ang_beg;
         }
@@ -24,7 +23,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return Excavator.c_st_IDLE;
             
             return MachineConstant.c_lt_PASS;

@@ -6,7 +6,7 @@ namespace Unchord
 
         public override int Transit()
         {
-            if(instance.aController.bEndOfAnimation)
+            if(instance.bEndOfAnimation)
                 return MachineConstant.c_st_MACHINE_OFF;
 
             return MachineConstant.c_lt_PASS;

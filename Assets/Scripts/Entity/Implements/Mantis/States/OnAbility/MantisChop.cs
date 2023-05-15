@@ -82,7 +82,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return Mantis.c_st_IDLE;
 
             return MachineConstant.c_lt_PASS;

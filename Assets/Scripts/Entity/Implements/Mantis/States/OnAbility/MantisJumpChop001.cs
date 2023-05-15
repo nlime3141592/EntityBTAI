@@ -14,7 +14,7 @@ namespace Unchord
         {
             base.OnFixedUpdate();
 
-            if(!instance.aController.bBeginOfAction)
+            if(!instance.bBeginOfAction)
                 return;
 
             instance.vm.SetVelocityXY(m_vx, m_vy);

@@ -188,33 +188,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d74abd29971b7548abb33193370f621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeCollisions:
-  - {fileID: 1339446025}
-  battleTriggers:
-  - {fileID: 1033197511}
   maxHealth:
     baseValue: 2000
   maxMana:
     baseValue: 0
-  healthProportionDamage:
-    baseValue: 0
   strength:
     baseValue: 5
+  defence:
+    baseValue: 0
+  fixedTakenDamage:
+    baseValue: 0
   criticalChance:
     baseValue: 0
   criticalDamage:
     baseValue: 0
   finalDamage:
     baseValue: 0
-  fixedTakenDamage:
+  gravityPercent:
     baseValue: 0
-  defence:
+  moveSpeedPercent:
     baseValue: 0
   mentality:
     baseValue: 0
-  bFixedLookDirByAxis:
-    x: 0
-    y: 0
+  volumeCollisions:
+  - {fileID: 1339446025}
+  battleTriggers:
+  - {fileID: 1033197511}
   lookDir:
     x: 0
     y: 0
@@ -222,9 +221,11 @@ MonoBehaviour:
   phase: 0
   bInvincibility: 0
   groggyValue: 0
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
   sensorBuffer: []
-  CURRENT_STATE: 0
-  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
   waitSecondOnChangeAggro: 0.75
@@ -330,9 +331,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 63183677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ea12b73c5623ac41a615689049d4704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_baseComponent: {fileID: 63183678}
+  CURRENT_STATE_ID_CONSTANT: 0
+  CURRENT_HEALTH: 0
 --- !u!95 &63183680
 Animator:
   serializedVersion: 3
@@ -466,11 +470,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 63183677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
+  m_Script: {fileID: 11500000, guid: d0cf3cf40a6ae56489a13c6216ffa76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CURRENT_STATE_ID_CONSTANT: 0
-  CURRENT_HEALTH: 0
+  m_baseComponent: {fileID: 63183679}
 --- !u!1 &69667359
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,9 +486,8 @@ GameObject:
   - component: {fileID: 69667364}
   - component: {fileID: 69667363}
   - component: {fileID: 69667362}
-  - component: {fileID: 69667361}
   - component: {fileID: 69667360}
-  - component: {fileID: 69667366}
+  - component: {fileID: 69667361}
   m_Layer: 0
   m_Name: Excavator (0)
   m_TagString: Untagged
@@ -505,33 +507,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179e363ea081c8240869a6faa2891ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeCollisions:
-  - {fileID: 1614172490}
-  battleTriggers:
-  - {fileID: 464347464}
   maxHealth:
     baseValue: 2000
   maxMana:
     baseValue: 0
-  healthProportionDamage:
-    baseValue: 0
   strength:
     baseValue: 7
+  defence:
+    baseValue: 0
+  fixedTakenDamage:
+    baseValue: 0
   criticalChance:
     baseValue: 0
   criticalDamage:
     baseValue: 0
   finalDamage:
     baseValue: 0
-  fixedTakenDamage:
+  gravityPercent:
     baseValue: 0
-  defence:
+  moveSpeedPercent:
     baseValue: 0
   mentality:
     baseValue: 0
-  bFixedLookDirByAxis:
-    x: 0
-    y: 0
+  volumeCollisions:
+  - {fileID: 1614172490}
+  battleTriggers:
+  - {fileID: 464347464}
   lookDir:
     x: 0
     y: 0
@@ -539,9 +540,11 @@ MonoBehaviour:
   phase: 0
   bInvincibility: 0
   groggyValue: 0
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
   sensorBuffer: []
-  CURRENT_STATE: 0
-  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
   waitSecondOnChangeAggro: 0.75
@@ -613,7 +616,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 69667359}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d8aa218870abd24ba9e40b54b3c46a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &69667362
@@ -724,20 +727,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &69667366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69667359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CURRENT_STATE_ID_CONSTANT: 0
-  CURRENT_HEALTH: 0
 --- !u!1 &93637024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,9 +1564,8 @@ GameObject:
   - component: {fileID: 906718991}
   - component: {fileID: 906718990}
   - component: {fileID: 906718989}
-  - component: {fileID: 906718988}
   - component: {fileID: 906718987}
-  - component: {fileID: 906718992}
+  - component: {fileID: 906718988}
   m_Layer: 0
   m_Name: ExcavatorRightHand
   m_TagString: Untagged
@@ -1611,15 +1599,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2cafb20d026394f93a071f7bf746ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeCollisions: []
-  battleTriggers: []
   maxHealth:
     baseValue: 0
   maxMana:
     baseValue: 0
-  healthProportionDamage:
-    baseValue: 0
   strength:
+    baseValue: 0
+  defence:
+    baseValue: 0
+  fixedTakenDamage:
     baseValue: 0
   criticalChance:
     baseValue: 0
@@ -1627,15 +1615,14 @@ MonoBehaviour:
     baseValue: 0
   finalDamage:
     baseValue: 0
-  fixedTakenDamage:
+  gravityPercent:
     baseValue: 0
-  defence:
+  moveSpeedPercent:
     baseValue: 0
   mentality:
     baseValue: 0
-  bFixedLookDirByAxis:
-    x: 0
-    y: 0
+  volumeCollisions: []
+  battleTriggers: []
   lookDir:
     x: 0
     y: 0
@@ -1643,9 +1630,11 @@ MonoBehaviour:
   phase: 0
   bInvincibility: 0
   groggyValue: 0
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
   sensorBuffer: []
-  CURRENT_STATE: 0
-  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
 --- !u!114 &906718988
@@ -1657,7 +1646,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 906718985}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d8aa218870abd24ba9e40b54b3c46a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &906718989
@@ -1751,20 +1740,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &906718992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906718985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CURRENT_STATE_ID_CONSTANT: 0
-  CURRENT_HEALTH: 0
 --- !u!1 &1004430210
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,17 +2078,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e93915f3e34d1de4792fb4875d1c865b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeCollisions:
-  - {fileID: 1987182882}
-  battleTriggers:
-  - {fileID: 1811821256}
   maxHealth:
     baseValue: 2000
   maxMana:
     baseValue: 0
-  healthProportionDamage:
-    baseValue: 0
   strength:
+    baseValue: 0
+  defence:
+    baseValue: 0
+  fixedTakenDamage:
     baseValue: 0
   criticalChance:
     baseValue: 0
@@ -2121,15 +2094,16 @@ MonoBehaviour:
     baseValue: 0
   finalDamage:
     baseValue: 0
-  fixedTakenDamage:
+  gravityPercent:
     baseValue: 0
-  defence:
+  moveSpeedPercent:
     baseValue: 0
   mentality:
     baseValue: 0
-  bFixedLookDirByAxis:
-    x: 0
-    y: 0
+  volumeCollisions:
+  - {fileID: 1987182882}
+  battleTriggers:
+  - {fileID: 1811821256}
   lookDir:
     x: 0
     y: 0
@@ -2137,9 +2111,11 @@ MonoBehaviour:
   phase: 0
   bInvincibility: 0
   groggyValue: 0
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
   sensorBuffer: []
-  CURRENT_STATE: 0
-  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
   "\uD604\uC7AC\uCCB4\uB825": 0
@@ -2155,6 +2131,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_entity: {fileID: 1083395504}
+  <bBeginOfAnimation>k__BackingField: 0
+  <bBeginOfAction>k__BackingField: 0
+  <bEndOfAction>k__BackingField: 0
+  <bEndOfAnimation>k__BackingField: 0
+  m_animator: {fileID: 1083395506}
 --- !u!95 &1083395506
 Animator:
   serializedVersion: 3
@@ -2207,6 +2189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_entity: {fileID: 1083395504}
   CURRENT_STATE_ID_CONSTANT: 0
   CURRENT_HEALTH: 0
 --- !u!1 &1155413886
@@ -2784,9 +2767,8 @@ GameObject:
   - component: {fileID: 1605662618}
   - component: {fileID: 1605662617}
   - component: {fileID: 1605662616}
-  - component: {fileID: 1605662615}
   - component: {fileID: 1605662614}
-  - component: {fileID: 1605662619}
+  - component: {fileID: 1605662615}
   m_Layer: 0
   m_Name: ExcavatorRightArm
   m_TagString: Untagged
@@ -2821,15 +2803,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe3e5ce0c4e7dc40bbd9abd609ce8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeCollisions: []
-  battleTriggers: []
   maxHealth:
     baseValue: 0
   maxMana:
     baseValue: 0
-  healthProportionDamage:
-    baseValue: 0
   strength:
+    baseValue: 0
+  defence:
+    baseValue: 0
+  fixedTakenDamage:
     baseValue: 0
   criticalChance:
     baseValue: 0
@@ -2837,15 +2819,14 @@ MonoBehaviour:
     baseValue: 0
   finalDamage:
     baseValue: 0
-  fixedTakenDamage:
+  gravityPercent:
     baseValue: 0
-  defence:
+  moveSpeedPercent:
     baseValue: 0
   mentality:
     baseValue: 0
-  bFixedLookDirByAxis:
-    x: 0
-    y: 0
+  volumeCollisions: []
+  battleTriggers: []
   lookDir:
     x: 0
     y: 0
@@ -2853,9 +2834,11 @@ MonoBehaviour:
   phase: 0
   bInvincibility: 0
   groggyValue: 0
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
   sensorBuffer: []
-  CURRENT_STATE: 0
-  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
   rightHand: {fileID: 0}
@@ -2868,7 +2851,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1605662612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d8aa218870abd24ba9e40b54b3c46a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &1605662616
@@ -2962,20 +2945,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1605662619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1605662612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CURRENT_STATE_ID_CONSTANT: 0
-  CURRENT_HEALTH: 0
 --- !u!1 &1614172488
 GameObject:
   m_ObjectHideFlags: 0
@@ -3155,11 +3124,10 @@ GameObject:
   - component: {fileID: 1751650959}
   - component: {fileID: 1751650958}
   - component: {fileID: 1751650957}
-  - component: {fileID: 1751650955}
   - component: {fileID: 1751650956}
   - component: {fileID: 1751650954}
-  - component: {fileID: 1751650953}
   - component: {fileID: 1751650952}
+  - component: {fileID: 1751650953}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -3198,7 +3166,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1751650951}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bacda261d0d24e4fba429343647cb83, type: 3}
+  m_Script: {fileID: 11500000, guid: 9d8aa218870abd24ba9e40b54b3c46a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!95 &1751650954
@@ -3220,20 +3188,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1751650955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1751650951}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef07dc695a3de8447a3d4823d57843d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CURRENT_STATE_ID_CONSTANT: 0
-  CURRENT_HEALTH: 0
 --- !u!114 &1751650956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3246,35 +3200,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad2f45a5cbdbd9c46a093f22e8b30870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  volumeCollisions:
-  - {fileID: 1247878694}
-  - {fileID: 93637026}
-  - {fileID: 568642915}
-  battleTriggers:
-  - {fileID: 374918600}
   maxHealth:
     baseValue: 100000
   maxMana:
     baseValue: 0
-  healthProportionDamage:
-    baseValue: 0
   strength:
     baseValue: 300
+  defence:
+    baseValue: 0
+  fixedTakenDamage:
+    baseValue: 0
   criticalChance:
     baseValue: 0
   criticalDamage:
     baseValue: 0
   finalDamage:
     baseValue: 0
-  fixedTakenDamage:
+  gravityPercent:
     baseValue: 0
-  defence:
+  moveSpeedPercent:
     baseValue: 0
   mentality:
     baseValue: 0
-  bFixedLookDirByAxis:
-    x: 0
-    y: 1
+  volumeCollisions:
+  - {fileID: 1247878694}
+  - {fileID: 93637026}
+  - {fileID: 568642915}
+  battleTriggers:
+  - {fileID: 374918600}
   lookDir:
     x: 1
     y: 1
@@ -3282,9 +3235,11 @@ MonoBehaviour:
   phase: 0
   bInvincibility: 0
   groggyValue: 0
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
   sensorBuffer: []
-  CURRENT_STATE: 0
-  CURRENT_HEALTH: 0
   bParrying: 0
   moveDir: {x: 0, y: 0}
   battleModule: {fileID: 0}
@@ -3363,6 +3318,9 @@ MonoBehaviour:
   countLeft_Dash: 0
   countLeft_AttackOnAir: 0
   offset_StandCamera: {x: 0, y: 0}
+  bFixedLookDirByAxis:
+    x: 0
+    y: 1
   stateNext_AttackOnFloor: 0
   stateNext_AttackOnAir: 0
   CURRENT_TYPE: 

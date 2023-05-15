@@ -25,7 +25,6 @@ namespace Unchord
         {
             base.OnStateBegin();
             ++instance.phase;
-            instance.bFixedLookDirByAxis.x = true;
             // instance.battleModule.targetLayerMask |= 1 << LayerMask.NameToLayer("Terrain");
             // instance.AllowHitFromBattleModule(false);
             instance.IgnoreBattleTrigger(null, false); // TODO: 배틀 트리거를 넣어줘야 함.
@@ -38,7 +37,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return Excavator.c_st_FREE_FALL;
             
             return MachineConstant.c_lt_PASS;

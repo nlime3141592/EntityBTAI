@@ -32,7 +32,7 @@ namespace Unchord
             base.OnUpdateAlways();
             if(instance.iManager.parryingDown)
                 m_bParryingDown = true;
-            if(instance.aController.bEndOfAction)
+            if(instance.bEndOfAction)
             {
                 // TODO: 이 블럭 안에 패링 입력을 받을지 고민해보기.
             }
@@ -46,7 +46,7 @@ namespace Unchord
                 return transit;
             else if(!instance.senseData.datFloor.bOnHit)
                 return Player.c_st_FREE_FALL;
-            else if(instance.aController.bEndOfAnimation)
+            else if(instance.bEndOfAnimation)
                 return Player.c_st_IDLE_SHORT;
             else if(m_bParryingDown)
                 return Player.c_st_EMERGENCY_PARRYING;
