@@ -16,6 +16,14 @@ namespace Unchord
         private List<Collider2D> m_sensorBuffer;
         private List<Entity> m_targets;
 
+        protected override void Awake()
+        {
+            base.Awake();
+
+            m_sensorBuffer = new List<Collider2D>(1);
+            m_targets = new List<Entity>(1);
+        }
+
         public SkillModule Reset()
         {
             m_sensorBuffer.Clear();
@@ -25,11 +33,14 @@ namespace Unchord
 
         public SkillModule SenseColliders(AreaSensor _sensor)
         {
+            Entity moduleOwner = baseComponent.baseComponent;
+
+            SensorUtilities.Bind(moduleOwner.transform, _sensor.transform);
+            _sensor.OnUpdate();
             _sensor.Sense(in m_sensorBuffer, tags, mask);
 
             if(bIgnoreSelf)
             {
-                Entity moduleOwner = baseComponent.baseComponent;
                 this.IgnoreColliders(moduleOwner.battleTriggers);
                 this.IgnoreColliders(moduleOwner.volumeCollisions);
             }
@@ -71,7 +82,7 @@ namespace Unchord
 
         public float GetStandardDamage(Entity _attacker, Entity _victim)
         {
-            return 0;
+            return _attacker.strength.finalValue;
         }
 
         public void OnSkill()

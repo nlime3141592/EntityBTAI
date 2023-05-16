@@ -1,9 +1,8 @@
-using System;
-using UnityEngine;
+using System.Collections.Generic;
 
 namespace Unchord
 {
-    public class PlayerAttackOnAir002 : PlayerAttackOnAirBase
+    public class PlayerAttackOnAir002 : PlayerAttackOnAirBase, ISkillEvent
     {
         public override int idConstant => Player.c_st_ATTACK_ON_AIR_002;
 
@@ -21,6 +20,20 @@ namespace Unchord
             base.OnStateBegin();
 
             instance.stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_001;
+        }
+
+        public void OnSkill(SkillModule _skModule)
+        {
+            List<Entity> targets = _skModule
+                .Reset()
+                .SenseColliders(instance.skillRange_AttackOnAir002_01)
+                .GetTargets();
+
+            foreach(Entity victim in targets)
+            {
+                float standardDamage = _skModule.GetStandardDamage(instance, victim);
+                victim.ChangeHealth(-standardDamage);
+            }
         }
     }
 }

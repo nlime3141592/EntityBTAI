@@ -90,6 +90,11 @@ namespace Unchord
         public AreaSensorBox skillRange_AttackOnFloor001_01;
         public AreaSensorBox skillRange_AttackOnFloor002_01;
         public AreaSensorBox skillRange_AttackOnFloor003_01;
+
+        public AreaSensorBox skillRange_AttackOnAir001_01;
+        public AreaSensorBox skillRange_AttackOnAir002_01;
+
+        public AreaSensorBox skillRange_TakeDown003_01;
 #endregion
 
 #region Player Variables
@@ -120,6 +125,9 @@ namespace Unchord
 #endregion
 
         public List<Slab> sitSlabs;
+        public List<Slab> downJumpedSlabs;
+        public List<Slab> curOverlapSlabs;
+        public List<Slab> prevOverlapSlabs;
 
         public override bool InitSingletonInstance()
         {

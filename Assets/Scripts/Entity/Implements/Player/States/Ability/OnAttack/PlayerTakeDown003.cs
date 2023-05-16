@@ -1,6 +1,8 @@
+using System.Collections.Generic;
+
 namespace Unchord
 {
-    public class PlayerTakeDown003 : PlayerTakeDownBase
+    public class PlayerTakeDown003 : PlayerTakeDownBase, ISkillEvent
     {
         private bool m_bCapturedParringDown;
 
@@ -52,6 +54,20 @@ namespace Unchord
             base.OnStateEnd();
 
             instance.vm.FreezePosition(false, false);
+        }
+
+        public void OnSkill(SkillModule _skModule)
+        {
+            List<Entity> targets = _skModule
+                .Reset()
+                .SenseColliders(instance.skillRange_TakeDown003_01)
+                .GetTargets();
+
+            foreach(Entity victim in targets)
+            {
+                float standardDamage = _skModule.GetStandardDamage(instance, victim);
+                victim.ChangeHealth(-standardDamage);
+            }
         }
     }
 }

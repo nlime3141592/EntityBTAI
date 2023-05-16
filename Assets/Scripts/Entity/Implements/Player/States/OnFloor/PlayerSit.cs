@@ -13,6 +13,8 @@ namespace Unchord
             instance.sensorBuffer.Clear();
             instance.sitSlabs.Clear();
 
+            SensorUtilities.Bind(instance.transform, instance.slabSensorOnSit.transform);
+            instance.slabSensorOnSit.OnUpdate();
             instance.slabSensorOnSit.Sense(in instance.sensorBuffer, null, 1 << LayerMask.NameToLayer("Terrain"));
             instance.sensorBuffer.GetComponents<Slab>(in instance.sitSlabs);
         }
@@ -21,6 +23,12 @@ namespace Unchord
         {
             base.OnFixedUpdate();
             instance.offset_StandCamera = Vector2.down;
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+            instance.slabSensorOnSit.DebugSensor(Color.blue, Time.deltaTime);
         }
 
         public override int Transit()

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public class PlayerAttackOnFloor002 : PlayerAttackOnFloorBase, IBattleState
+    public class PlayerAttackOnFloor002 : PlayerAttackOnFloorBase, ISkillEvent
     {
         // TODO: 값 대입을 파일 처리할 수 있도록 할 것.
         public float baseDamage { get; private set; }
@@ -41,21 +41,17 @@ namespace Unchord
             instance.skillRange_AttackOnFloor002_01.OnUpdate();
         }
 
-        public void OnTriggerBattleState(BattleModule _btModule)
+        public void OnSkill(SkillModule _skModule)
         {
-            instance.sensorBuffer.Clear();
-            m_targets.Clear();
+            List<Entity> targets = _skModule
+                .Reset()
+                .SenseColliders(instance.skillRange_AttackOnFloor002_01)
+                .GetTargets();
 
-            instance.skillRange_AttackOnFloor002_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
-            instance.sensorBuffer
-                .IgnoreColliders(instance.battleTriggers)
-                .IgnoreColliders(instance.volumeCollisions)
-                .GetComponents<Entity>(in m_targets);
-
-            foreach(Entity entity in m_targets)
+            foreach(Entity victim in targets)
             {
-                float finalDamage = BattleModule.GetFinalDamage(instance, entity, baseDamage);
-                entity.ChangeHealth(-finalDamage);
+                float standardDamage = _skModule.GetStandardDamage(instance, victim);
+                victim.ChangeHealth(-standardDamage);
             }
         }
     }
