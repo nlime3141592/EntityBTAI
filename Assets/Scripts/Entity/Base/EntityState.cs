@@ -23,7 +23,7 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            m_FixedUpdateRotation();
+            FixedUpdateRotation();
         }
 
         public virtual void OnTriggerEnter2D(Collider2D _collider) {}
@@ -62,7 +62,7 @@ namespace Unchord
             base.OnStateEnd();
         }
 
-        private void m_FixedUpdateRotation()
+        protected void FixedUpdateRotation()
         {
             float x = m_GetEulerRotation(instance.lookDir.y, instance.eulerRotation.x);
             float y = m_GetEulerRotation(instance.lookDir.x, instance.eulerRotation.y);

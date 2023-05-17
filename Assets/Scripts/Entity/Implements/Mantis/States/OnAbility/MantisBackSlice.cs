@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Unchord
 {
-    public class MantisBackSlice : MantisAttack
+    public class MantisBackSlice : MantisAttack, ISkillEvent
     {
         public float baseDamage { get; private set; }
 
@@ -17,6 +17,14 @@ namespace Unchord
             baseDamage = 1.0f;
 
             m_targets = new List<Entity>(1);
+        }
+
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            SensorUtilities.Bind(instance.transform, instance.skillRange_BackSlice_01.transform);
+            instance.skillRange_BackSlice_01.OnUpdate();
         }
 
         public override int Transit()
@@ -37,29 +45,22 @@ namespace Unchord
                 instance.lookDir.x = Direction.Negative;
             else
                 instance.lookDir.x = Direction.Positive;
+
+            FixedUpdateRotation();
         }
 
-        public override void OnUpdate()
+        public void OnSkill(SkillModule _skModule)
         {
-            base.OnUpdate();
+instance.skillRange_BackSlice_01.DebugSensor(UnityEngine.Color.cyan, 2.0f);
+            List<Entity> targets = _skModule
+                .Reset()
+                .SenseColliders(instance.skillRange_BackSlice_01)
+                .GetTargets();
 
-            SensorUtilities.Bind(instance.transform, instance.skillRange_BackSlice_01.transform);
-            instance.skillRange_BackSlice_01.OnUpdate();
-        }
-
-        public void OnTriggerBattleState(BattleModule _btModule)
-        {
-            instance.sensorBuffer.Clear();
-            instance.skillRange_BackSlice_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
-            instance.sensorBuffer
-                .IgnoreColliders(instance.battleTriggers)
-                .IgnoreColliders(instance.volumeCollisions)
-                .GetComponents<Entity>(in m_targets);
-
-            foreach(Entity entity in m_targets)
+            foreach(Entity victim in targets)
             {
-                float finalDamage = BattleModule.GetFinalDamage(instance, entity, baseDamage);
-                entity.ChangeHealth(-finalDamage);
+                float finalDamage = _skModule.GetStandardDamage(instance, victim);
+                victim.ChangeHealth(-finalDamage);
             }
         }
     }

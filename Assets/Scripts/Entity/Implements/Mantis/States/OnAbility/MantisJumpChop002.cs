@@ -3,7 +3,7 @@ using System.Collections.Generic;
 namespace Unchord
 {
     // NOTE: 도약찍기 제 2상태, 착지 및 공격 동작
-    public class MantisJumpChop002 : MantisAttack, IBattleState
+    public class MantisJumpChop002 : MantisAttack, ISkillEvent
     {
         public float baseDamage { get; private set; }
 
@@ -32,6 +32,14 @@ namespace Unchord
             instance.vm.SetVelocityXY(0.0f, -0.1f);
         }
 
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            SensorUtilities.Bind(instance.transform, instance.skillRange_JumpChop002_01.transform);
+            instance.skillRange_JumpChop002_01.OnUpdate();
+        }
+
         public override int Transit()
         {
             int transit = base.Transit();
@@ -44,27 +52,18 @@ namespace Unchord
             return MachineConstant.c_lt_PASS;
         }
 
-        public override void OnUpdate()
+        public void OnSkill(SkillModule _skModule)
         {
-            base.OnUpdate();
+instance.skillRange_JumpChop002_01.DebugSensor(UnityEngine.Color.cyan, 2.0f);
+            List<Entity> targets = _skModule
+                .Reset()
+                .SenseColliders(instance.skillRange_JumpChop002_01)
+                .GetTargets();
 
-            SensorUtilities.Bind(instance.transform, instance.skillRange_JumpChop002_01.transform);
-            instance.skillRange_JumpChop002_01.OnUpdate();
-        }
-
-        public void OnTriggerBattleState(BattleModule _btModule)
-        {
-            instance.sensorBuffer.Clear();
-            instance.skillRange_JumpChop002_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
-            instance.sensorBuffer
-                .IgnoreColliders(instance.battleTriggers)
-                .IgnoreColliders(instance.volumeCollisions)
-                .GetComponents<Entity>(in m_targets);
-
-            foreach(Entity entity in m_targets)
+            foreach(Entity victim in targets)
             {
-                float finalDamage = BattleModule.GetFinalDamage(instance, entity, baseDamage);
-                entity.ChangeHealth(-finalDamage);
+                float finalDamage = _skModule.GetStandardDamage(instance, victim);
+                victim.ChangeHealth(-finalDamage);
             }
         }
     }

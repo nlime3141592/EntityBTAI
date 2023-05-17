@@ -136,10 +136,10 @@ GameObject:
   - component: {fileID: 63183681}
   - component: {fileID: 63183680}
   - component: {fileID: 63183678}
-  - component: {fileID: 63183684}
   - component: {fileID: 63183685}
   - component: {fileID: 63183679}
   - component: {fileID: 63183686}
+  - component: {fileID: 63183684}
   m_Layer: 7
   m_Name: Mantis (0)
   m_TagString: Untagged
@@ -410,7 +410,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 63183677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ffbe9574fa6d9a4e9375f6223171ad1, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cad7a86013fd9b459f1ff3d5029212e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tags:
@@ -418,6 +418,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 128
+  bIgnoreSelf: 1
 --- !u!114 &63183685
 MonoBehaviour:
   m_ObjectHideFlags: 0
