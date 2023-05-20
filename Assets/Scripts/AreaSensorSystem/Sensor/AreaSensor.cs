@@ -11,7 +11,7 @@ namespace Unchord
 
         public abstract void Sense(in List<Collider2D> _colliders, in List<string> _tags, LayerMask _mask);
 
-        public void OnUpdate()
+        public virtual void OnUpdate()
         {
             TransformManager2.SyncTransforms(this.transform);
         }

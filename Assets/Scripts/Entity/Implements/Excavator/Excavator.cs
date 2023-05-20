@@ -48,6 +48,9 @@ namespace Unchord
         public float time_idleMax = 1.5f;
         public float time_groggy = 5.0f;
 
+        public float time_idleRotationMin = 0.8f;
+        public float time_idleRotationMax = 1.5f;
+
         public int waveLength = 15;
 
         [Header("Skill Ranges")]

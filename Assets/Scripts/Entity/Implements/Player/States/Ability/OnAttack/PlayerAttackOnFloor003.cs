@@ -33,14 +33,6 @@ namespace Unchord
             instance.stateNext_AttackOnFloor = Player.c_st_ATTACK_ON_FLOOR_001;
         }
 
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-
-            SensorUtilities.Bind(instance.transform, instance.skillRange_AttackOnFloor003_01.transform);
-            instance.skillRange_AttackOnFloor003_01.OnUpdate();
-        }
-
         public void OnSkill(SkillModule _skModule)
         {
             List<Entity> targets = _skModule

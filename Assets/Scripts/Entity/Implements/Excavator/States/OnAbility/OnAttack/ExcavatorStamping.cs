@@ -1,6 +1,6 @@
 namespace Unchord
 {
-    public class ExcavatorStamping : ExcavatorAttack, IBattleState
+    public class ExcavatorStamping : ExcavatorAttack, ISkillEvent
     {
         public override int idConstant => Excavator.c_st_STAMPING;
 /*
@@ -31,9 +31,20 @@ namespace Unchord
             return MachineConstant.c_lt_PASS;
         }
 
-        public void OnTriggerBattleState(BattleModule _btModule)
+        public void OnSkill(SkillModule _skModule)
         {
-            instance.skillRange_stamping_01.Sense(in instance.sensorBuffer, _btModule.tags, _btModule.mask);
+            System.Collections.Generic.List<Entity> targets = _skModule
+                .Reset()
+                .SenseColliders(instance.skillRange_stamping_01)
+                .GetTargets();
+
+            instance.skillRange_stamping_01.DebugSensor(UnityEngine.Color.cyan, 1.0f);
+
+            foreach(Entity victim in targets)
+            {
+                float standardDamage = _skModule.GetStandardDamage(instance, victim);
+                victim.ChangeHealth(-standardDamage);
+            }
         }
     }
 }

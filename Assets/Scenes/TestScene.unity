@@ -251,10 +251,10 @@ MonoBehaviour:
       lsx: 1
       lsy: 1
     box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
+      l: 5
+      t: 3
+      r: 13.5
+      b: 5
   skillRange_UpSlice_01:
     transform:
       lpx: 0
@@ -482,6 +482,8 @@ GameObject:
   - component: {fileID: 69667360}
   - component: {fileID: 69667361}
   - component: {fileID: 69667366}
+  - component: {fileID: 69667368}
+  - component: {fileID: 69667367}
   m_Layer: 7
   m_Name: Excavator (0)
   m_TagString: Untagged
@@ -531,7 +533,7 @@ MonoBehaviour:
   battleTriggers:
   - {fileID: 464347464}
   lookDir:
-    x: 0
+    x: -1
     y: 0
   eulerRotation: {x: 0, y: 0, z: 0}
   phase: 0
@@ -569,6 +571,8 @@ MonoBehaviour:
   time_idleMin: 0.8
   time_idleMax: 1.5
   time_groggy: 5
+  time_idleRotationMin: 0.8
+  time_idleRotationMax: 1.5
   waveLength: 15
   skillRange_stamping_01:
     transform:
@@ -720,6 +724,60 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CURRENT_STATE_ID_CONSTANT: 0
   CURRENT_HEALTH: 0
+--- !u!114 &69667367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69667359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cad7a86013fd9b459f1ff3d5029212e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - Player
+  mask:
+    serializedVersion: 2
+    m_Bits: 128
+  bIgnoreSelf: 1
+--- !u!114 &69667368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69667359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e2a61f4a12951a49a5579586cd13a14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxSensor:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 20
+      t: 20
+      r: 20
+      b: 20
+  targets: []
+  tags:
+  - Player
+  mask:
+    serializedVersion: 2
+    m_Bits: 128
+  bIgnoreSelf: 1
+  bCanAggro: 1
+  bAggro: 0
+  bAggroPrev: 0
 --- !u!1 &93637024
 GameObject:
   m_ObjectHideFlags: 0

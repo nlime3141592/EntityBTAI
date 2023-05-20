@@ -7,6 +7,7 @@ namespace Unchord
         public override int idConstant => Excavator.c_st_IDLE;
 
         private float m_time_leftIdle;
+        private float m_time_leftRotation;
 
         public override void OnStateBegin()
         {
@@ -16,17 +17,49 @@ namespace Unchord
             float min = instance.time_idleMin;
             float max = instance.time_idleMax;
             m_time_leftIdle = (max - min) * weight + min;
+
+            weight = UnityEngine.Random.value;
+            min = instance.time_idleRotationMin / 4;
+            max = instance.time_idleRotationMax / 4;
+            m_time_leftRotation = (max - min) * weight + min;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
             instance.vm.SetVelocityXY(0.0f, -1.0f);
+
+            if(m_time_leftRotation <= 0)
+            {
+                instance.lookDir.x = m_GetLookDirX();
+
+                float weight = UnityEngine.Random.value;
+                float min = instance.time_idleRotationMin;
+                float max = instance.time_idleRotationMax;
+                m_time_leftRotation = (max - min) * weight + min;
+            }
+        }
+
+        private Direction m_GetLookDirX()
+        {
+            if(!instance.bAggro)
+                return instance.lookDir.x;
+            
+            float tx = instance.aggroTargets[0].transform.position.x;
+            float px = instance.transform.position.x;
+
+            if(tx - px < 0)
+                return Direction.Negative;
+            else
+                return Direction.Positive;
         }
 
         public override void OnUpdate()
         {
             base.OnUpdate();
+
+            if(m_time_leftRotation > 0)
+                m_time_leftRotation -= Time.deltaTime;
 
             if(m_time_leftIdle > 0)
                 m_time_leftIdle -= Time.deltaTime;

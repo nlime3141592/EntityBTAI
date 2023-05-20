@@ -10,7 +10,7 @@ namespace Unchord
             base.OnFixedUpdate();
             instance.senseData.OnFixedUpdate(instance);
 
-            SensorUtilities.Bind(instance.transform, instance.slabSensorOnBody.transform);
+            instance.transform.BindLocal(instance.slabSensorOnBody.transform);
             instance.slabSensorOnBody.OnUpdate();
             m_IgnoreSlabs();
 

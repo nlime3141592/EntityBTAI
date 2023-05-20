@@ -23,6 +23,13 @@ namespace Unchord
             AddSensedColliders(_colliders, _tags, sensed);
         }
 
+        public override void OnUpdate()
+        {
+            base.OnUpdate();
+
+            box.Sync(transform);
+        }
+
         public override void DebugSensor(Color _color, float _duration)
         {
             base.DebugSensor(_color, _duration);

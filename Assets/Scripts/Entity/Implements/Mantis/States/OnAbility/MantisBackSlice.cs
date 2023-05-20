@@ -19,14 +19,6 @@ namespace Unchord
             m_targets = new List<Entity>(1);
         }
 
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-
-            SensorUtilities.Bind(instance.transform, instance.skillRange_BackSlice_01.transform);
-            instance.skillRange_BackSlice_01.OnUpdate();
-        }
-
         public override int Transit()
         {
             int transit = base.Transit();
@@ -51,11 +43,12 @@ namespace Unchord
 
         public void OnSkill(SkillModule _skModule)
         {
-instance.skillRange_BackSlice_01.DebugSensor(UnityEngine.Color.cyan, 2.0f);
             List<Entity> targets = _skModule
                 .Reset()
                 .SenseColliders(instance.skillRange_BackSlice_01)
                 .GetTargets();
+
+            instance.skillRange_BackSlice_01.DebugSensor(UnityEngine.Color.cyan, 2.0f);
 
             foreach(Entity victim in targets)
             {

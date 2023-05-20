@@ -13,7 +13,7 @@ namespace Unchord
             instance.sensorBuffer.Clear();
             instance.sitSlabs.Clear();
 
-            SensorUtilities.Bind(instance.transform, instance.slabSensorOnSit.transform);
+            instance.transform.BindLocal(instance.slabSensorOnSit.transform);
             instance.slabSensorOnSit.OnUpdate();
             instance.slabSensorOnSit.Sense(in instance.sensorBuffer, null, 1 << LayerMask.NameToLayer("Terrain"));
             instance.sensorBuffer.GetComponents<Slab>(in instance.sitSlabs);

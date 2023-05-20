@@ -35,7 +35,7 @@ namespace Unchord
         {
             Entity moduleOwner = baseComponent.baseComponent;
 
-            SensorUtilities.Bind(moduleOwner.transform, _sensor.transform);
+            moduleOwner.transform.BindLocal(_sensor.transform);
             _sensor.OnUpdate();
             _sensor.Sense(in m_sensorBuffer, tags, mask);
 
