@@ -18,6 +18,10 @@ namespace Unchord
         public const int c_st_BASIC_LANDING             = 10;
         public const int c_st_DIE                       = 11;
         public const int c_st_GROGGY                    = 12;
+        public const int c_st_ANCHORING_001             = 13;
+        public const int c_st_ANCHORING_002             = 14;
+        public const int c_st_ANCHORING_003             = 15;
+        public const int c_st_ANCHORING_004             = 16;
 
         // organ hierarchy
         [Header("Sub Organs")]
@@ -50,6 +54,8 @@ namespace Unchord
 
         public float time_idleRotationMin = 0.8f;
         public float time_idleRotationMax = 1.5f;
+
+        public float time_anchor = 2.0f;
 
         public int waveLength = 15;
 
@@ -85,7 +91,7 @@ namespace Unchord
 
         public override IStateMachineBase InitStateMachine()
         {
-            StateMachine<Excavator> machine = new StateMachine<Excavator>(13);
+            StateMachine<Excavator> machine = new StateMachine<Excavator>(20);
             machine.instance = this;
 
             machine.Add(new ExcavatorSleep());
@@ -94,13 +100,17 @@ namespace Unchord
             machine.Add(new ExcavatorWalkFront());
             machine.Add(new ExcavatorFreeFall());
             machine.Add(new ExcavatorStamping());
-            machine.Add(new ExcavatorAnchoring());
+            // machine.Add(new ExcavatorAnchoring());
             machine.Add(new ExcavatorShockWave());
             machine.Add(new ExcavatorShootMissile());
             machine.Add(new ExcavatorBreakFloor());
             machine.Add(new ExcavatorLanding());
             machine.Add(new ExcavatorDie());
             machine.Add(new ExcavatorGroggy());
+            machine.Add(new ExcavatorAnchoring001());
+            machine.Add(new ExcavatorAnchoring002());
+            machine.Add(new ExcavatorAnchoring003());
+            machine.Add(new ExcavatorAnchoring004());
 
             machine.Begin(Excavator.c_st_SLEEP);
             return machine;

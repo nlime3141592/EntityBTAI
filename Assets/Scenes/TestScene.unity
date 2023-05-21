@@ -146,7 +146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &63183678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,7 +490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &69667360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -573,6 +573,7 @@ MonoBehaviour:
   time_groggy: 5
   time_idleRotationMin: 0.8
   time_idleRotationMax: 1.5
+  time_anchor: 20
   waveLength: 15
   skillRange_stamping_01:
     transform:
@@ -2558,6 +2559,11 @@ MonoBehaviour:
   bParrying: 0
   moveDir: {x: 0, y: 0}
   rightHand: {fileID: 0}
+  nextState: 0
+  degSpeed_Tracking: 45
+  offset_TrackingBeg: {x: 0, y: 0}
+  offset_TrackingEnd: {x: 0, y: 0}
+  target_Tracking: {fileID: 0}
 --- !u!114 &1605662615
 MonoBehaviour:
   m_ObjectHideFlags: 0

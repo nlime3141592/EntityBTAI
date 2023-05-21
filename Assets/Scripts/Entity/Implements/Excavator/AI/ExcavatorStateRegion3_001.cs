@@ -15,8 +15,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3) return Excavator.c_st_WALK;
-            // else return Excavator.c_st_ANCHORING;
-            else return Excavator.c_st_STAMPING;
+            else return Excavator.c_st_ANCHORING;
+            // else return Excavator.c_st_STAMPING;
         }
 
         protected override int OnRegion02(Random _prng)
@@ -24,8 +24,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 5) return Excavator.c_st_WALK;
-            // else return Excavator.c_st_ANCHORING;
-            else return Excavator.c_st_STAMPING;
+            else return Excavator.c_st_ANCHORING;
+            // else return Excavator.c_st_STAMPING;
         }
 
         protected override int OnRegion03(Random _prng)
@@ -38,8 +38,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 2) return Excavator.c_st_WALK;
-            // else return Excavator.c_st_ANCHORING;
-            else return Excavator.c_st_STAMPING;
+            else return Excavator.c_st_ANCHORING;
+            // else return Excavator.c_st_STAMPING;
         }
 
         protected override int OnRegion05(Random _prng)
@@ -47,8 +47,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 4) return Excavator.c_st_WALK;
-            // else return Excavator.c_st_ANCHORING;
-            else return Excavator.c_st_STAMPING;
+            else return Excavator.c_st_ANCHORING;
+            // else return Excavator.c_st_STAMPING;
         }
 
         protected override int OnRegion06(Random _prng)
@@ -61,8 +61,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 2) return Excavator.c_st_WALK;
-            // else return Excavator.c_st_ANCHORING;
-            else return Excavator.c_st_STAMPING;
+            else return Excavator.c_st_ANCHORING;
+            // else return Excavator.c_st_STAMPING;
         }
 
         protected override int OnRegion08(Random _prng)
@@ -70,8 +70,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3) return Excavator.c_st_WALK;
-            // else return Excavator.c_st_ANCHORING;
-            else return Excavator.c_st_STAMPING;
+            else return Excavator.c_st_ANCHORING;
+            // else return Excavator.c_st_STAMPING;
         }
     }
 }

@@ -69,12 +69,7 @@ namespace Unchord
 
             if(transit != MachineConstant.c_lt_PASS)
                 return transit;
-            else if(m_phaser.current == 0 && instance.bEndOfAnimation)
-                return Excavator.c_st_ANCHORING;
-            else if(m_phaser.current == 1 && m_anchorTimer.bEndOfTimer)
-                return Excavator.c_st_ANCHORING;
-            // else if(m_phaser.current == 2 && instance.hand.bReturn) return Excavator.c_st_ANCHORING;
-            else if(m_phaser.current == 3 && instance.bEndOfAnimation)
+            else if(instance.rightArm.nextState == -1)
                 return Excavator.c_st_IDLE;
 
             return MachineConstant.c_lt_PASS;

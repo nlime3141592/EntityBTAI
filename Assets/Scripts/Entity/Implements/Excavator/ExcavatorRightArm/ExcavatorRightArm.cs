@@ -11,6 +11,13 @@ namespace Unchord
         // organ hierarchy
         public ExcavatorRightHand rightHand;
 
+        public int nextState = -1;
+
+        public float degSpeed_Tracking = 45.0f;
+        public Vector2 offset_TrackingBeg;
+        public Vector2 offset_TrackingEnd;
+        public Entity target_Tracking;
+
         public override void OnAwakeEntity()
         {
             base.OnAwakeEntity();
