@@ -18,7 +18,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 2) return Excavator.c_st_WALK;
-            else if(prn < 6) return Excavator.c_st_ANCHORING;
+            // else if(prn < 6) return Excavator.c_st_ANCHORING;
+            else if(prn < 6) return Excavator.c_st_STAMPING;
             else return Excavator.c_st_SHOCK_WAVE;
         }
 
@@ -27,7 +28,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3) return Excavator.c_st_WALK;
-            else if(prn < 7) return Excavator.c_st_ANCHORING;
+            // else if(prn < 7) return Excavator.c_st_ANCHORING;
+            else if(prn < 7) return Excavator.c_st_STAMPING;
             else return Excavator.c_st_SHOCK_WAVE;
         }
 
@@ -44,7 +46,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 2) return Excavator.c_st_WALK;
-            else if(prn < 7) return Excavator.c_st_ANCHORING;
+            // else if(prn < 7) return Excavator.c_st_ANCHORING;
+            else if(prn < 7) return Excavator.c_st_STAMPING;
             else return Excavator.c_st_SHOCK_WAVE;
         }
 
@@ -53,7 +56,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3) return Excavator.c_st_WALK;
-            else if(prn < 7) return Excavator.c_st_ANCHORING;
+            // else if(prn < 7) return Excavator.c_st_ANCHORING;
+            else if(prn < 7) return Excavator.c_st_STAMPING;
             else return Excavator.c_st_SHOCK_WAVE;
         }
 
@@ -70,7 +74,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 2) return Excavator.c_st_WALK;
-            else if(prn < 8) return Excavator.c_st_ANCHORING;
+            // else if(prn < 8) return Excavator.c_st_ANCHORING;
+            else if(prn < 8) return Excavator.c_st_STAMPING;
             else return Excavator.c_st_SHOCK_WAVE;
         }
 
@@ -79,7 +84,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3) return Excavator.c_st_WALK;
-            else if(prn < 8) return Excavator.c_st_ANCHORING;
+            // else if(prn < 8) return Excavator.c_st_ANCHORING;
+            else if(prn < 8) return Excavator.c_st_STAMPING;
             else return Excavator.c_st_SHOCK_WAVE;
         }
     }

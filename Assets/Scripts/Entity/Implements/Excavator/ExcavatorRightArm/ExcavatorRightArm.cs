@@ -18,6 +18,10 @@ namespace Unchord
         public Vector2 offset_TrackingEnd;
         public Entity target_Tracking;
 
+        public Vector2 offset_rightArmJoint002;
+        public Vector2 position_rightArmJoint001;
+        public Vector2 position_rightArmJoint002;
+
         public override void OnAwakeEntity()
         {
             base.OnAwakeEntity();

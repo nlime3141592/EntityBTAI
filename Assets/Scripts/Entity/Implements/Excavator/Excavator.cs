@@ -59,6 +59,9 @@ namespace Unchord
 
         public int waveLength = 15;
 
+        public Vector2 offset_rightArmJoint001;
+        public Vector2 position_rightArmJoint001;
+
         [Header("Skill Ranges")]
         public AreaSensorBox skillRange_stamping_01;
 

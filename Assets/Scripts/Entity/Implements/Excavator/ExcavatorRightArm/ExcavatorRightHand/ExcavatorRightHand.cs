@@ -8,6 +8,10 @@ namespace Unchord
         public const int c_st_IDLE = 1;
         public const int c_st_SHOOT = 2;
 
+        public Vector2 offset_rightArmJoint003;
+        public Vector2 position_rightArmJoint002;
+        public Vector2 position_rightArmJoint003;
+
         public override IStateMachineBase InitStateMachine()
         {
             StateMachine<ExcavatorRightHand> machine = new StateMachine<ExcavatorRightHand>(3);
