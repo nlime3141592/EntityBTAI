@@ -18,7 +18,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 4)              return Mantis.c_st_UP_SLICE;
-            else if(prn < 6)         return Mantis.c_st_COMBO_SHOUT;
+            // else if(prn < 6)         return Mantis.c_st_COMBO_SHOUT;
+            else if(prn < 6)         return Mantis.c_st_CHOP;
             else if(prn < 9)         return Mantis.c_st_CHOP;
             else                            return Mantis.c_st_WALK_BACK;
         }
@@ -28,7 +29,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 4)              return Mantis.c_st_CHOP;
-            else if(prn < 6)         return Mantis.c_st_COMBO_SHOUT;
+            // else if(prn < 6)         return Mantis.c_st_COMBO_SHOUT;
+            else if(prn < 6)         return Mantis.c_st_CHOP;
             else if(prn < 8)         return Mantis.c_st_UP_SLICE;
             else if(prn < 9)         return Mantis.c_st_WALK_BACK;
             else                            return Mantis.c_st_WALK_FRONT;
@@ -47,7 +49,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 5)              return Mantis.c_st_UP_SLICE;
-            else if(prn < 7)         return Mantis.c_st_COMBO_SHOUT;
+            // else if(prn < 7)         return Mantis.c_st_COMBO_SHOUT;
+            else if(prn < 7)         return Mantis.c_st_CHOP;
             else if(prn < 8)         return Mantis.c_st_CHOP;
             else                            return Mantis.c_st_WALK_BACK;
         }
@@ -57,7 +60,8 @@ namespace Unchord
             int prn = _prng.Next(10);
 
             if(prn < 3)              return Mantis.c_st_CHOP;
-            else if(prn < 5)         return Mantis.c_st_COMBO_SHOUT;
+            // else if(prn < 5)         return Mantis.c_st_COMBO_SHOUT;
+            else if(prn < 5)         return Mantis.c_st_CHOP;
             else if(prn < 8)         return Mantis.c_st_UP_SLICE;
             else if(prn < 9)         return Mantis.c_st_WALK_BACK;
             else                            return Mantis.c_st_WALK_FRONT;

@@ -99,8 +99,10 @@ namespace Unchord
 
             foreach(Entity victim in targets)
             {
-                float finalDamage = _skModule.GetStandardDamage(instance, victim);
-                victim.ChangeHealth(-finalDamage);
+                if(victim is Player && _skModule.TryGroggy(victim))
+                    continue;
+                else
+                    _skModule.TakeDamage(victim, 1.0f);
             }
         }
     }

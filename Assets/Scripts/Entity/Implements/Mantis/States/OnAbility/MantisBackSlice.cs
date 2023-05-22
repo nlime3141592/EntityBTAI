@@ -31,7 +31,7 @@ namespace Unchord
             return MachineConstant.c_lt_PASS;
         }
 
-        public override void OnActionBegin()
+        public void OnSkill(SkillModule _skModule)
         {
             if(instance.lookDir.x == Direction.Positive)
                 instance.lookDir.x = Direction.Negative;
@@ -39,10 +39,7 @@ namespace Unchord
                 instance.lookDir.x = Direction.Positive;
 
             FixedUpdateRotation();
-        }
 
-        public void OnSkill(SkillModule _skModule)
-        {
             List<Entity> targets = _skModule
                 .Reset()
                 .SenseColliders(instance.skillRange_BackSlice_01)
@@ -52,8 +49,10 @@ namespace Unchord
 
             foreach(Entity victim in targets)
             {
-                float finalDamage = _skModule.GetStandardDamage(instance, victim);
-                victim.ChangeHealth(-finalDamage);
+                if(victim is Player && _skModule.TryGroggy(victim))
+                    continue;
+                else
+                    _skModule.TakeDamage(victim, 1.0f);
             }
         }
     }

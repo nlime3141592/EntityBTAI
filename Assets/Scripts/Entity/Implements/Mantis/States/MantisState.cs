@@ -22,7 +22,7 @@ namespace Unchord
                 else if(instance.phase == 1)
                     return Mantis.c_st_DIE;
             }
-            else if(instance.groggyValue >= 1.0f)
+            else if(instance.groggyValue >= instance.maxGroggyValue.finalValue)
                 return Mantis.c_st_GROGGY;
             else if(transit != MachineConstant.c_lt_PASS)
                 return transit;

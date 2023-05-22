@@ -10,7 +10,9 @@ namespace Unchord
 
         [Header("Debug Values")]
         public int CURRENT_STATE_ID_CONSTANT;
+        public int CURRENT_PHASE;
         public float CURRENT_HEALTH;
+        public float CURRENT_GROGGY_VALUE;
 
         protected override void Awake()
         {
@@ -62,7 +64,9 @@ namespace Unchord
 
             // Update Debug Values.
             CURRENT_STATE_ID_CONSTANT = fsm.state.idConstant;
+            CURRENT_PHASE = baseComponent.phase;
             CURRENT_HEALTH = baseComponent.health;
+            CURRENT_GROGGY_VALUE = baseComponent.groggyValue;
         }
 
         private bool m_bCanDestroy()

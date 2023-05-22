@@ -80,9 +80,32 @@ namespace Unchord
             return m_targets;
         }
 
-        public float GetStandardDamage(Entity _attacker, Entity _victim)
+        public float GetStandardDamage(Entity _attacker, Entity _victim, float _weight)
         {
             return _attacker.strength.finalValue;
+        }
+
+        public SkillModule TakeDamage(Entity _victim, float _weight)
+        {
+            Entity moduleOwner = baseComponent.baseComponent;
+            float finalDamage = GetStandardDamage(moduleOwner, _victim, _weight);
+            _victim.ChangeHealth(-finalDamage);
+            return this;
+        }
+
+        public bool TryGroggy(Entity _victim)
+        {
+            Entity moduleOwner = baseComponent.baseComponent;
+            int sumDirX = moduleOwner.lookDir.ix + _victim.lookDir.ix;
+            int sumDirY = moduleOwner.lookDir.iy + _victim.lookDir.iy;
+
+            if(_victim.bParrying && sumDirX * sumDirY == 0)
+            {
+                moduleOwner.groggyValue = Utilities.Min<float>(moduleOwner.maxGroggyValue.finalValue, moduleOwner.groggyValue + _victim.groggyStrength.finalValue);
+                return true;
+            }
+
+            return false;
         }
 
         public void OnSkill()

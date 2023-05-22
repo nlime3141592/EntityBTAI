@@ -40,11 +40,10 @@ namespace Unchord
                 .SenseColliders(instance.skillRange_AttackOnFloor002_01)
                 .GetTargets();
 
+            instance.skillRange_AttackOnFloor002_01.DebugSensor(UnityEngine.Color.magenta, 2.0f);
+
             foreach(Entity victim in targets)
-            {
-                float standardDamage = _skModule.GetStandardDamage(instance, victim);
-                victim.ChangeHealth(-standardDamage);
-            }
+                _skModule.TakeDamage(victim, 1.0f);
         }
     }
 }
