@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Unchord
@@ -37,6 +38,20 @@ namespace Unchord
             instance.timerCoyote_AttackOnAir.OnUpdate(dT);
         }
 
+        protected bool bCanLandOnFloor()
+        {
+            Slab hitSlab;
+
+            if(!instance.senseData.datFloor.bOnDetected)
+                return false;
+            else if(!instance.senseData.datFloor.hitData.collider.gameObject.TryGetComponent<Slab>(out hitSlab))
+                return true;
+            else if(instance.downJumpedSlabs.Contains(hitSlab))
+                return false;
+            else
+                return instance.senseData.datFloor.bOnHit;
+        }
+
         private void m_SetLookDir()
         {
             instance.lookDir.x = m_GetLookDir(
@@ -66,25 +81,26 @@ namespace Unchord
 
         private void m_IgnoreSlabs()
         {
-            System.Collections.Generic.List<Slab> current = instance.prevOverlapSlabs;
-            System.Collections.Generic.List<Slab> prev = instance.curOverlapSlabs;
-            System.Collections.Generic.List<Slab> sit = instance.downJumpedSlabs;
+            List<Slab> current = instance.prevOverlapSlabs;
+            List<Slab> prev = instance.curOverlapSlabs;
+            List<Slab> dJumped = instance.downJumpedSlabs;
+
             instance.curOverlapSlabs = current;
             instance.prevOverlapSlabs = prev;
 
             instance.sensorBuffer.Clear();
             current.Clear();
 
-            instance.slabSensorOnBody.Sense(in instance.sensorBuffer, null, 1 << LayerMask.NameToLayer("Terrain"));
+            instance.slabSensorOnBody.Sense(in instance.sensorBuffer, null, 1 << LayerMask.NameToLayer("Slab"));
             instance.sensorBuffer.GetComponents<Slab>(in current);
 
-            for(int i = 0; i < sit.Count; ++i)
-                if(!current.Contains(sit[i]))
-                    current.Add(sit[i]);
+            for(int i = 0; i < dJumped.Count; ++i)
+                if(!current.Contains(dJumped[i]))
+                    current.Add(dJumped[i]);
 
             for(int i = 0; i < current.Count; ++i)
             {
-                if(!prev.Contains(current[i]))
+                if(prev.Count == 0 || !prev.Contains(current[i]))
                 {
                     current[i].IgnoreCollision(instance.hCol.head);
                     current[i].IgnoreCollision(instance.hCol.body);
@@ -94,7 +110,7 @@ namespace Unchord
 
             for(int i = 0; i < prev.Count; ++i)
             {
-                if(!current.Contains(prev[i]))
+                if(current.Count == 0 || !current.Contains(prev[i]))
                 {
                     prev[i].AcceptCollision(instance.hCol.head);
                     prev[i].AcceptCollision(instance.hCol.body);

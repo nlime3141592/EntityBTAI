@@ -21,7 +21,7 @@ namespace Unchord
                 return Player.c_st_JUMP_ON_AIR;
             else if(instance.iManager.rushDown)
                 return Player.c_st_DASH;
-            else if(instance.senseData.datFloor.bOnHit)
+            else if(bCanLandOnFloor())
                 return Player.c_st_IDLE_SHORT;
             else if(instance.senseData.datFloor.bOnDetected)
                 return MachineConstant.c_lt_PASS;

@@ -67,7 +67,7 @@ namespace Unchord
                 return transit;
             else if(instance.senseData.datCeil.bOnHit || instance.bEndOfAnimation)
                 return Player.c_st_FREE_FALL;
-            else if(instance.senseData.datFloor.bOnHit)
+            else if(bCanLandOnFloor())
                 return Player.c_st_IDLE_SHORT;
             else if(instance.bEndOfAction)
             {

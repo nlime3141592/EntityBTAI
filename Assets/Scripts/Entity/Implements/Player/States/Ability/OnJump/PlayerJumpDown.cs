@@ -36,12 +36,9 @@ namespace Unchord
 
             vy = instance.speed_JumpDown;
 
-            instance.downJumpedSlabs.Clear();
-
-            for(int i = 0; i < instance.sitSlabs.Count; ++i)
-                instance.downJumpedSlabs.Add(instance.sitSlabs[i]);
-
-            instance.sitSlabs.Clear();
+            List<Slab> tmp_slabs = instance.sitSlabs;
+            instance.sitSlabs = instance.downJumpedSlabs;
+            instance.downJumpedSlabs = tmp_slabs;
         }
 
         public override void OnFixedUpdate()

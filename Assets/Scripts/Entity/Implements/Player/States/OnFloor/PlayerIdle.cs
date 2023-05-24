@@ -13,7 +13,7 @@ namespace Unchord
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
-            instance.vm.SetVelocityY(-1.0f);
+            instance.vm.SetVelocityY(-10.0f);
         }
 
         public override int Transit()

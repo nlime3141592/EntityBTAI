@@ -150,7 +150,7 @@ namespace Unchord
 */
 
             int tmpLayer = 1 << LayerMask.NameToLayer("Terrain");
-            datFloor.targetLayer = tmpLayer;
+            datFloor.targetLayer = tmpLayer | 1 << LayerMask.NameToLayer("Slab");
             datCeil.targetLayer = tmpLayer;
             datWallFrontB.targetLayer = tmpLayer;
             datWallFrontT.targetLayer = tmpLayer;
