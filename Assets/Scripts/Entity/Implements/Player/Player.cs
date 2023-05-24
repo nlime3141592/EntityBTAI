@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Unchord
 {
+    [AddComponentMenu("Unchord System/Entity/Player")]
     public class Player : Entity
     {
         public const int c_st_IDLE_LONG                     = 0;
