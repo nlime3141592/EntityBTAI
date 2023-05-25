@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/BossMantis.unity
     guid: e3e1008341cfa1f4ab58d6ba7b740a68
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/BossHub.unity
     guid: d3cc2bde7e19e074eb345adc7845c041
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BossExcavator.unity
     guid: f235061d9b98e7a4a9814fb08143a397
   m_configObjects: {}

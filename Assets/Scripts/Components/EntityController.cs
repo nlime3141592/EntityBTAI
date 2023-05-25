@@ -27,6 +27,13 @@ namespace Unchord
             baseComponent.OnAwakeEntity();
         }
 
+        protected override void OnEnable()
+        {
+            base.OnEnable();
+
+            baseComponent.OnEnableEntity();
+        }
+
         protected override void Start()
         {
             base.Start();
@@ -67,6 +74,13 @@ namespace Unchord
             CURRENT_PHASE = baseComponent.phase;
             CURRENT_HEALTH = baseComponent.health;
             CURRENT_GROGGY_VALUE = baseComponent.groggyValue;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            baseComponent.OnDisableEntity();
         }
 
         private bool m_bCanDestroy()

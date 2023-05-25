@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,7 +35,7 @@ namespace Unchord
             yield return m_Process(SceneManager.UnloadSceneAsync(map));
         }
 
-        public static IEnumerator Open(int map)
+        public static IEnumerator Open(int map, Action onOpened)
         {
             Scene scene = SceneManager.GetSceneByBuildIndex(map);
 
@@ -42,6 +43,7 @@ namespace Unchord
                 yield break;
 
             yield return m_Process(SceneManager.LoadSceneAsync(map, LoadSceneMode.Additive));
+            onOpened();
         }
     }
 }

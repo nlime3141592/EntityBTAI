@@ -18,6 +18,11 @@ namespace Unchord
             TryGetComponent<T_Component>(out m_baseComponent);
         }
 
+        protected virtual void OnEnable()
+        {
+
+        }
+
         protected virtual void Start()
         {
 
@@ -34,6 +39,11 @@ namespace Unchord
         }
 
         protected virtual void LateUpdate()
+        {
+            
+        }
+
+        protected virtual void OnDisable()
         {
             
         }

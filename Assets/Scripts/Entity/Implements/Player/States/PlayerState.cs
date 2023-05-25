@@ -21,7 +21,7 @@ namespace Unchord
         public override void OnUpdate()
         {
             base.OnUpdate();
-            instance.iManager.UpdateInputs(true);
+            instance.iManager.UpdateInputs(instance.bGameStarted);
         }
 
         public override void OnLateUpdate()

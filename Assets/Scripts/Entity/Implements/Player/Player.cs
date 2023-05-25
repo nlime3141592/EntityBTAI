@@ -99,6 +99,8 @@ namespace Unchord
 #endregion
 
 #region Player Variables
+        public bool bGameStarted = false;
+
         public bool bIsRun = false;
 
         public int countLeft_JumpOnAir = 0;

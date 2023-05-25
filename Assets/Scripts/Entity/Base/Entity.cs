@@ -101,6 +101,9 @@ namespace Unchord
             m_health = Utilities.Max<float>(1, maxHealth.finalValue);
         }
 
+        // MonoBehaviour.OnEnable()
+        public virtual void OnEnableEntity() {}
+
         // MonoBehaviour.Start()
         public virtual void OnStartEntity() {}
         public abstract IStateMachineBase InitStateMachine();
@@ -114,6 +117,9 @@ namespace Unchord
         // MonoBehaviour.LateUpdate()
 
         // MonoBehaviour.OnDrawGizmos()
+
+        // MonoBehaviour.OnDisable()
+        public virtual void OnDisableEntity() {}
 
 #endregion
 

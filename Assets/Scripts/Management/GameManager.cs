@@ -9,16 +9,18 @@ namespace Unchord
         public static GameManager instance => m_instance;
         private static GameManager m_instance;
 
-        public CameraTraceModule camModule;
         public GamePage gamePage;
         public MenuPage menuPage;
+
+        public VirtualCameraFollower vCamFollower;
 
         public int firstMap;
         public Vector2 firstSpawnPoint;
 
-        public bool bGameStarted { get; private set; }
+        public bool bGameStarted { get; private set; } = false;
 
         public LinkedList<EntitySpawnData> generatedBoss;
+        public List<Entity> lBoss;
 
         private void Start()
         {
@@ -41,6 +43,8 @@ namespace Unchord
         {
             if(Input.GetKeyDown(KeyCode.Escape))
                 Application.Quit();
+
+            Player.instance.bGameStarted = this.bGameStarted;
         }
 
         private IEnumerator m_OnProgramStart()
@@ -58,14 +62,17 @@ namespace Unchord
         {
             menuPage.gameObject.SetActive(false);
             yield return FadeManager.FadeOut(0.7f);
-            yield return MapManager.Open(firstMap);
-            Player player = Player.instance;
-            player.transform.position = firstSpawnPoint;
-            camModule.Alloc(player.transform);
-            yield return new WaitForSeconds(0.5f);
-            gamePage.gameObject.SetActive(true);
+            yield return StartCoroutine(MapManager.Open(firstMap, m_OnOpenScene));
             yield return FadeManager.FadeIn(1.2f);
             bGameStarted = true;
+        }
+
+        private void m_OnOpenScene()
+        {
+            Player player = Player.instance;
+            player.transform.position = firstSpawnPoint;
+            vCamFollower.Follow(player.transform, Vector2.up, 0);
+            gamePage.gameObject.SetActive(true);
         }
 
         public void OnGameEnd()

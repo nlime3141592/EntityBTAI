@@ -66,8 +66,22 @@ namespace Unchord
             stateAi_001 = new MantisStateRegion3_001();
             stateAi_002 = new MantisStateRegion3_002();
 
-            m_spawnData = new EntitySpawnData("사마귀", this);
+            // m_spawnData = new EntitySpawnData("사마귀", this);
             // m_spawnDataNode = new LinkedListNode<EntitySpawnData>(m_spawnData);
+        }
+
+        public override void OnEnableEntity()
+        {
+            base.OnEnableEntity();
+
+            GameManager.instance.lBoss.Add(this);
+        }
+
+        public override void OnDisableEntity()
+        {
+            base.OnDisableEntity();
+
+            GameManager.instance.lBoss.RemoveAll((e) => e == this);
         }
 
         public override void OnStartEntity()
