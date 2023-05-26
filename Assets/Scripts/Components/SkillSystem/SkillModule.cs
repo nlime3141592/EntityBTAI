@@ -82,10 +82,31 @@ namespace Unchord
 
         public float GetStandardDamage(Entity _attacker, Entity _victim, float _weight)
         {
-            return _attacker.strength.finalValue;
+            if(_victim.bInvincibility) // NOTE: 무적
+                return 0;
+            else if(_victim.fixedTakenDamage.finalValue > 0) // NOTE: 고정 피해량
+                return _victim.fixedTakenDamage.finalValue;
+
+            // NOTE: 순수 데미지 연산
+            float pureDamage = _attacker.strength.finalValue - _victim.defence.finalValue;
+
+            if(pureDamage <= 0)
+                return 0;
+
+            float finalDamage = pureDamage;
+
+            // NOTE: 크리티컬 확률 발동 및 크리티컬 데미지 연산
+            float isCritical = UnityEngine.Random.value;
+            if(isCritical < _attacker.criticalChance.finalValue)
+                finalDamage *= (2.0f + Utilities.Max<float>(0, _attacker.criticalDamage.finalValue));
+
+            // NOTE: 최종 데미지 증가
+            finalDamage *= (1.0f + Utilities.Max<float>(0, _attacker.finalDamage.finalValue));
+            
+            return Utilities.Max<float>(1, finalDamage);
         }
 
-        public SkillModule TakeDamage(Entity _victim, float _weight)
+        public SkillModule TakeStandardDamage(Entity _victim, float _weight)
         {
             Entity moduleOwner = baseComponent.baseComponent;
             float finalDamage = GetStandardDamage(moduleOwner, _victim, _weight);
