@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    [AddComponentMenu("Unchord System/Entity/Mantis")]
+    [AddComponentMenu("Unchord System/Entity Components/Mantis")]
     public class Mantis : Monster
     {
         public const int c_st_IDLE                       = 0;

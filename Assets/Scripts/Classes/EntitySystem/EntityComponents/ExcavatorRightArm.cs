@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Unchord
 {
+    [AddComponentMenu("Unchord System/Entity Components/Excavator Right Arm")]
     public class ExcavatorRightArm : Entity
     {
         public const int c_st_HIDDEN = 0;

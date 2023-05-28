@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    [AddComponentMenu("Unchord System/Entity/StaticObject")]
+    [AddComponentMenu("Unchord System/Entity Components/Static Object")]
     public class StaticObject : Entity
     {
         public const int c_st_IDLE = 0;

@@ -6,6 +6,7 @@ namespace Unchord
 
     [RequireComponent(typeof(SEH_OnTriggerEnter2D))]
     [RequireComponent(typeof(SkillModule))]
+    [AddComponentMenu("Unchord System/Entity Components/Excavator Wave")]
     public class ExcavatorWave : Entity
     {
         public const int c_st_IDLE = 0;

@@ -4,6 +4,7 @@ namespace Unchord
 {
     [RequireComponent(typeof(SEH_OnCollisionEnter2D))]
     [RequireComponent(typeof(SkillModule))]
+    [AddComponentMenu("Unchord System/Entity Components/Excavator Projectile")]
     public class ExcavatorProjectile : Entity
     {
         public const int c_st_IDLE = 0;

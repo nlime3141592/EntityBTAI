@@ -27,6 +27,32 @@ namespace System
             return v;
         }
 
+        public static double RandomGaussian(this Random prng, double min, double max)
+        {
+            double u, v, S;
+
+            do
+            {
+                u = 2 * prng.NextDouble() - 1;
+                v = 2 * prng.NextDouble() - 1;
+                S = u * u + v * v;
+            }
+            while(S >= 1);
+
+            double x = u * Math.Sqrt(-2 * Math.Log(S) / S);
+
+            double mean = (min + max) / 2;
+            double sigma = (max - mean) / 3;
+            double finalValue = x * sigma + mean;
+
+            if(finalValue < min)
+                return min;
+            else if(finalValue > max)
+                return max;
+            else
+                return finalValue;
+        }
+
         /// <summary>
         /// 표준정규분포표의 확률변수 별 기댓값에 기반해 임의의 난수를 생성합니다.
         /// 양 극단 값(평균을 기준으로 4.5-Sigma에 해당하는 값)은 약 0.0006% 확률로 등장합니다.

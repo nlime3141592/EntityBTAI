@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Unchord
 {
-    [AddComponentMenu("Unchord System/Entity/Excavator")]
+    [AddComponentMenu("Unchord System/Entity Components/Excavator")]
     public class Excavator : Monster
     {
         public const int c_st_SLEEP                     = 0;
