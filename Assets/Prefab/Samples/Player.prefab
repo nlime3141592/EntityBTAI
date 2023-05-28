@@ -563,7 +563,6 @@ MonoBehaviour:
   sensorBuffer: []
   bParrying: 0
   moveDir: {x: 0, y: 0}
-  battleModule: {fileID: 0}
   hCol: {fileID: 0}
   ledgerp: 0.06
   ledgeVerticalLengthWeight: 0.5
@@ -704,6 +703,7 @@ MonoBehaviour:
       t: 0
       r: 5.5
       b: 1.7
+  bGameStarted: 0
   bIsRun: 1
   countLeft_JumpOnAir: 0
   countLeft_Dash: 0
@@ -748,19 +748,207 @@ MonoBehaviour:
   m_GameObject: {fileID: 1042913733656552156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d3116a758f86d445bde65f363b1d94f, type: 3}
+  m_Script: {fileID: 11500000, guid: ad2f45a5cbdbd9c46a093f22e8b30870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bShow: 0
-  flipX: 0
-  flipY: 0
-  ltrbs:
-  - color: {r: 0.495283, g: 0.883674, b: 1, a: 1}
-    ltrb:
-      left: 0.6
-      top: 2.5
-      right: 0.6
-      bottom: 1.93
+  entityName: Unknown Entity
+  maxHealth:
+    baseValue: 0
+  maxMana:
+    baseValue: 0
+  strength:
+    baseValue: 0
+  defence:
+    baseValue: 0
+  fixedTakenDamage:
+    baseValue: 0
+  criticalChance:
+    baseValue: 0
+  criticalDamage:
+    baseValue: 0
+  finalDamage:
+    baseValue: 0
+  gravityPercent:
+    baseValue: 0
+  moveSpeedPercent:
+    baseValue: 0
+  groggyStrength:
+    baseValue: 0
+  maxGroggyValue:
+    baseValue: 0
+  volumeCollisions: []
+  battleTriggers: []
+  lookDir:
+    x: 0
+    y: 0
+  eulerRotation: {x: 0, y: 0, z: 0}
+  phase: 0
+  bInvincibility: 0
+  groggyValue: 0
+  bBeginOfAnimation: 0
+  bBeginOfAction: 0
+  bEndOfAction: 0
+  bEndOfAnimation: 0
+  sensorBuffer: []
+  bParrying: 0
+  moveDir: {x: 0, y: 0}
+  hCol: {fileID: 0}
+  ledgerp: 0.06
+  ledgeVerticalLengthWeight: 0.5
+  speed_Walk: 6
+  speed_Run: 12
+  speed_JumpOnFloor: 16
+  speed_JumpOnAir: 20
+  speed_JumpOnWall_X: 3
+  speed_JumpOnWall_Y: 16
+  speed_Roll: 16
+  speed_Dash: 32
+  speed_AttackOnAir: 1.5
+  speed_TakeDown: 65
+  speed_JumpDown: 5.5
+  speedMin_FreeFall: -35
+  speedMin_WallSlidingFront: -6
+  force_JumpOnFloor: 49.5
+  force_JumpOnAir: 49.5
+  force_JumpOnWall: 49.5
+  force_JumpDown: 49.5
+  gravity_FreeFall: -49.5
+  gravity_WallSlidingFront: -9.81
+  gravity_AttackOnAir: -49.5
+  time_idleShort: 10
+  frame_IdleShort: 100
+  count_JumpOnAir: 1
+  count_Dash: 1
+  count_AttackOnAir: 1
+  slabSensorOnSit:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
+  slabSensorOnBody:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
+  skillRange_AttackOnFloor001_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
+  skillRange_AttackOnFloor002_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
+  skillRange_AttackOnFloor003_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
+  skillRange_AttackOnAir001_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
+  skillRange_AttackOnAir002_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
+  skillRange_TakeDown003_01:
+    transform:
+      lpx: 0
+      lpy: 0
+      ldeg: 0
+      lfx: 0
+      lfy: 0
+      lsx: 1
+      lsy: 1
+    box:
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
+  bGameStarted: 0
+  bIsRun: 0
+  countLeft_JumpOnAir: 0
+  countLeft_Dash: 0
+  countLeft_AttackOnAir: 0
+  offset_StandCamera: {x: 0, y: 0}
+  bFixedLookDirByAxis:
+    x: 0
+    y: 0
+  stateNext_AttackOnFloor: 0
+  stateNext_AttackOnAir: 0
+  CURRENT_TYPE: 
+  DEBUG_COYOTE: 0
+  sitSlabs: []
+  downJumpedSlabs: []
+  curOverlapSlabs: []
+  prevOverlapSlabs: []
 --- !u!114 &1042913733656552146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -770,7 +958,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1042913733656552156}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d8aa218870abd24ba9e40b54b3c46a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 90bf661a88a81614d9f7b721dd3293aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1042913733656552144

@@ -362,7 +362,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2809344575138740492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d8aa218870abd24ba9e40b54b3c46a8, type: 3}
+  m_Script: {fileID: 11500000, guid: 90bf661a88a81614d9f7b721dd3293aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2809344575138740494
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2809344575138740492}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e2a61f4a12951a49a5579586cd13a14, type: 3}
+  m_Script: {fileID: 11500000, guid: 1af2c7226b3b35b42b6e2f34535b9f63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   boxSensor:
@@ -403,16 +403,15 @@ MonoBehaviour:
       lsx: 1
       lsy: 1
     box:
-      l: 20
-      t: 20
-      r: 20
-      b: 20
+      l: 0.5
+      t: 0.5
+      r: 0.5
+      b: 0.5
   targets: []
-  tags:
-  - Player
+  tags: []
   mask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 0
   bIgnoreSelf: 1
   bCanAggro: 1
   bAggro: 0
