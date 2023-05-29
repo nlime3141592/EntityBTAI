@@ -17,7 +17,8 @@ namespace Unchord
         public int firstMap;
         public Vector2 firstSpawnPoint;
 
-        public bool bGameStarted { get; private set; } = false;
+        public bool bGameStarted => m_bGameStarted;
+        public bool m_bGameStarted = false; // NOTE: 테스트 중일 때만 public으로 선언, 실제 릴리즈 시에 private으로 변경합니다.
 
         public LinkedList<EntitySpawnData> generatedBoss;
         public List<Entity> lBoss;
@@ -64,7 +65,7 @@ namespace Unchord
             yield return FadeManager.FadeOut(0.7f);
             yield return StartCoroutine(MapManager.Open(firstMap, m_OnOpenScene));
             yield return FadeManager.FadeIn(1.2f);
-            bGameStarted = true;
+            m_bGameStarted = true;
         }
 
         private void m_OnOpenScene()
@@ -77,7 +78,7 @@ namespace Unchord
 
         public void OnGameEnd()
         {
-            bGameStarted = false;
+            m_bGameStarted = false;
         }
     }
 }

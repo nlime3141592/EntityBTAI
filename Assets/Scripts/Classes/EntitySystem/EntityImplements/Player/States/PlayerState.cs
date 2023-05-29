@@ -40,16 +40,20 @@ namespace Unchord
 
         protected bool bCanLandOnFloor()
         {
+            bool bHitSlab;
             Slab hitSlab;
 
-            if(!instance.senseData.datFloor.bOnDetected)
+            TerrainSenseData dat = instance.senseData.datFloor;
+
+            if(!dat.bOnHit)
                 return false;
-            else if(!instance.senseData.datFloor.hitData.collider.gameObject.TryGetComponent<Slab>(out hitSlab))
-                return true;
-            else if(instance.downJumpedSlabs.Contains(hitSlab))
-                return false;
+
+            bHitSlab = dat.hitData.collider.gameObject.TryGetComponent<Slab>(out hitSlab);
+
+            if(bHitSlab)
+                return !instance.downJumpedSlabs.Contains(hitSlab);
             else
-                return instance.senseData.datFloor.bOnHit;
+                return true;
         }
 
         private void m_SetLookDir()

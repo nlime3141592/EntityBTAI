@@ -76,5 +76,24 @@ namespace Unchord
             else
                 return 0;
         }
+
+        // NOTE: 정밀 추적, 추적 오차 각 범위 = 0
+        private float m_UpdateArmAngle(Vector2 _beg, Vector2 _end, Vector2 _target, float _angSpeed, float _dT)
+        {
+            Vector2 a = _target - _beg;
+            Vector2 b = _end - _beg;
+
+            float dA = _angSpeed * _dT;
+            float theta = Vector2.Angle(a, b); // NOTE: 0~180, eulerAngle.
+            float det = a.x * b.y - a.y * b.x;
+            float dir = 0;
+
+            if(det < 0)
+                dir = 1;
+            else if(det > 0)
+                dir = -1;
+
+            return dir * Utilities.Min<float>(dA, theta);
+        }
     }
 }
