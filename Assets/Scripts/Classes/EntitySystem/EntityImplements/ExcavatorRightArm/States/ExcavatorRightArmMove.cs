@@ -44,7 +44,7 @@ namespace Unchord
             float sin2t = Mathf.Sin(m_dzDeg * 2 * Mathf.Deg2Rad);
             float dVelocity = instance.degSpeed_Tracking * sin2t * Time.fixedDeltaTime;
             float dir = m_GetPointSide(m_beg, m_end, target.transform.position);
-            m_zDeg = Utilities.Max<float>(0, m_dzDeg - dVelocity * dir);
+            m_zDeg = UnchordUtility.Max(0, m_dzDeg - dVelocity * dir);
             m_dzDegCos = Mathf.Cos(m_zDeg * Mathf.Deg2Rad);
             m_dzDegSin = Mathf.Sin(m_zDeg * Mathf.Deg2Rad);
             m_beg.Set(
@@ -93,7 +93,7 @@ namespace Unchord
             else if(det > 0)
                 dir = -1;
 
-            return dir * Utilities.Min<float>(dA, theta);
+            return dir * UnchordUtility.Min(dA, theta);
         }
     }
 }

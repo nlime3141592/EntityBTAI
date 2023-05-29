@@ -110,10 +110,10 @@ namespace Unchord
 
         public BoolVector2 bFixedLookDirByAxis; // 입력에 의한 시선 방향 전환 제어
 
-        public TimerHandler timerCoyote_AttackOnFloor;
+        public InternalTimer timerCoyote_AttackOnFloor;
         public int stateNext_AttackOnFloor;
 
-        public TimerHandler timerCoyote_AttackOnAir;
+        public InternalTimer timerCoyote_AttackOnAir;
         public int stateNext_AttackOnAir;
 #endregion
 
@@ -147,8 +147,8 @@ namespace Unchord
 
             hCol = GetComponent<ElongatedHexagonCollider2D>();
 
-            timerCoyote_AttackOnFloor = new TimerHandler();
-            timerCoyote_AttackOnAir = new TimerHandler();
+            timerCoyote_AttackOnFloor = new InternalTimer();
+            timerCoyote_AttackOnAir = new InternalTimer();
 
             iManager = new PlayerInputManager();
         }
@@ -188,8 +188,8 @@ namespace Unchord
             stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_001;
 
             // timer handler settings
-            timerCoyote_AttackOnFloor.onEndOfTimer += () => { stateNext_AttackOnFloor = Player.c_st_ATTACK_ON_FLOOR_001; };
-            timerCoyote_AttackOnAir.onEndOfTimer += () => { stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_001; };
+            timerCoyote_AttackOnFloor.onEnd += () => { stateNext_AttackOnFloor = Player.c_st_ATTACK_ON_FLOOR_001; };
+            timerCoyote_AttackOnAir.onEnd += () => { stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_001; };
 
             fsm.Begin(Player.c_st_IDLE_SHORT);
             return fsm;

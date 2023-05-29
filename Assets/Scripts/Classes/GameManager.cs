@@ -4,11 +4,8 @@ using UnityEngine;
 
 namespace Unchord
 {
-    public class GameManager : MonoBehaviour
+    public sealed class GameManager : Manager<GameManager>
     {
-        public static GameManager instance => m_instance;
-        private static GameManager m_instance;
-
         public GamePage gamePage;
         public MenuPage menuPage;
 
@@ -23,21 +20,16 @@ namespace Unchord
         public LinkedList<EntitySpawnData> generatedBoss;
         public List<Entity> lBoss;
 
-        private void Start()
+        public GameManager()
         {
-            if(m_instance == null)
-            {
-                m_instance = this;
+            generatedBoss = new LinkedList<EntitySpawnData>();
+            lBoss = new List<Entity>();
+        }
 
-                generatedBoss = new LinkedList<EntitySpawnData>();
-
-                StartCoroutine(m_OnProgramStart());
-            }
-            else
-            {
-                Destroy(this.gameObject);
-                return;
-            }
+        public void ListenQuitGame()
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+                Application.Quit();
         }
 
         private void Update()
@@ -47,7 +39,7 @@ namespace Unchord
 
             Player.instance.bGameStarted = this.bGameStarted;
         }
-
+/*
         private IEnumerator m_OnProgramStart()
         {
             yield return new WaitForSeconds(0.5f);
@@ -80,5 +72,6 @@ namespace Unchord
         {
             m_bGameStarted = false;
         }
+*/
     }
 }

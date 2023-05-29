@@ -13,7 +13,7 @@ namespace Unchord
 
         public override void Sync(Transform2 _transform)
         {
-            float minScale = Utilities.Min<float>(_transform.gsx, _transform.gsy);
+            float minScale = UnchordUtility.Min(_transform.gsx, _transform.gsy);
 
             cx = _transform.gpx;
             cy = _transform.gpy;

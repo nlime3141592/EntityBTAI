@@ -98,12 +98,12 @@ namespace Unchord
             // NOTE: 크리티컬 확률 발동 및 크리티컬 데미지 연산
             float isCritical = UnityEngine.Random.value;
             if(isCritical < _attacker.criticalChance.finalValue)
-                finalDamage *= (2.0f + Utilities.Max<float>(0, _attacker.criticalDamage.finalValue));
+                finalDamage *= (2.0f + UnchordUtility.Max(0, _attacker.criticalDamage.finalValue));
 
             // NOTE: 최종 데미지 증가
-            finalDamage *= (1.0f + Utilities.Max<float>(0, _attacker.finalDamage.finalValue));
+            finalDamage *= (1.0f + UnchordUtility.Max(0, _attacker.finalDamage.finalValue));
             
-            return Utilities.Max<float>(1, finalDamage);
+            return UnchordUtility.Max(1, finalDamage);
         }
 
         public SkillModule TakeStandardDamage(Entity _victim, float _weight)
@@ -122,7 +122,7 @@ namespace Unchord
 
             if(_victim.bParrying && sumDirX * sumDirY == 0)
             {
-                moduleOwner.groggyValue = Utilities.Min<float>(moduleOwner.maxGroggyValue.finalValue, moduleOwner.groggyValue + _victim.groggyStrength.finalValue);
+                moduleOwner.groggyValue = UnchordUtility.Min(moduleOwner.maxGroggyValue.finalValue, moduleOwner.groggyValue + _victim.groggyStrength.finalValue);
                 return true;
             }
 

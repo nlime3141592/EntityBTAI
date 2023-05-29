@@ -1,8 +1,8 @@
-namespace UnchordMetroidvania
+namespace System
 {
-    public static class ObjectExtension_001
+    public static partial class ObjectExtension
     {
-        public static bool IsNull<T>(this System.Object obj)
+        public static bool IsNull<T>(this Object obj)
         where T : class
         {
             if(object.ReferenceEquals(obj, null)) return true;

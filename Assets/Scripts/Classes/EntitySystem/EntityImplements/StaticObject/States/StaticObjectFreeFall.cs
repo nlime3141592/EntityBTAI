@@ -13,7 +13,7 @@ namespace Unchord
             base.OnFixedUpdate();
 
             float dSpeed = (1.0f + instance.gravityPercent.finalValue / 100) * instance.gravity * Time.fixedDeltaTime;
-            m_vy = Utilities.Max<float>(instance.speedMin_FreeFall, m_vy + dSpeed);
+            m_vy = UnchordUtility.Max(instance.speedMin_FreeFall, m_vy + dSpeed);
             instance.vm.SetVelocityY(m_vy);
         }
 
@@ -21,7 +21,7 @@ namespace Unchord
         {
             base.OnStateBegin();
 
-            m_vy = Utilities.Max<float>(instance.speedMin_FreeFall, instance.vm.x);
+            m_vy = UnchordUtility.Max(instance.speedMin_FreeFall, instance.vm.x);
             instance.vm.FreezePosition(false, false);
         }
 

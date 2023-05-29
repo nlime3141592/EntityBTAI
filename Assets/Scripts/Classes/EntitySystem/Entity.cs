@@ -98,7 +98,7 @@ namespace Unchord
             if(sensorBuffer == null)
                 sensorBuffer = new List<Collider2D>();
 
-            m_health = Utilities.Max<float>(1, maxHealth.finalValue);
+            m_health = UnchordUtility.Max(1, maxHealth.finalValue);
         }
 
         // MonoBehaviour.OnEnable()
@@ -126,7 +126,7 @@ namespace Unchord
 #region Entity Property Modifiers
         public float SetHealth(float _health)
         {
-            m_health = Utilities.Mid<float>(0, maxHealth.finalValue, _health);
+            m_health = UnchordUtility.Mid(0, maxHealth.finalValue, _health);
             return m_health;
         }
 
@@ -137,7 +137,7 @@ namespace Unchord
 
         public float SetMana(float _mana)
         {
-            m_mana = Utilities.Mid<float>(0, maxMana.finalValue, _mana);
+            m_mana = UnchordUtility.Mid(0, maxMana.finalValue, _mana);
             return m_mana;
         }
 

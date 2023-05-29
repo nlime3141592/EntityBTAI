@@ -18,7 +18,7 @@ namespace Unchord
 
         public void OnGameStart()
         {
-            GameManager.instance.OnGameStart();
+            // GameManager.instance.OnGameStart();
         }
     }
 }
