@@ -169,18 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.4
-  yValue: 0.4
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 0
-  minY: 0
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &50430771
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1310,18 +1300,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.8
-  yValue: 0.8
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 0
-  minY: 0
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &714902582
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1501,18 +1481,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.1
-  yValue: 0.1
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 0
-  minY: 0
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &775209775
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1692,18 +1662,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.6
-  yValue: 0.6
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 0
-  minY: 0
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &1260503155
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1858,18 +1818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.2
-  yValue: 0.2
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 0
-  minY: 0
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &1352030332
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1967,18 +1917,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.8
-  yValue: 1.6
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 1
-  minY: 20
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &1438759790
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2076,18 +2016,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.1
-  yValue: 1
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 0
-  minY: 0
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &1511022660
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2303,6 +2233,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1610105238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1610105240}
+  - component: {fileID: 1610105239}
+  m_Layer: 0
+  m_Name: TestPortal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1610105239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610105238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073bacf403eb7f848840e503fba89dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedFadeOut: 3.5
+  speedFadeIn: 3.5
+  nextMap: ErrorMap
+  nextPosition: {x: 0, y: 0}
+--- !u!4 &1610105240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610105238}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1640623818
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,18 +2578,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.6
-  yValue: 1.4
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 1
-  minY: 20
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &1769104847
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2849,18 +2816,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba235bc52a50a546ad55fef66c64e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xValue: 0.4
-  yValue: 1.2
-  xFix: 0
-  yFix: 0
-  useMinX: 0
-  minX: 0
-  useMaxX: 0
-  maxX: 0
-  useMinY: 1
-  minY: 20
-  useMaxY: 0
-  maxY: 0
+  parallaxEffectX: 0
+  parallaxEffectY: 0
 --- !u!212 &1942232421
 SpriteRenderer:
   m_ObjectHideFlags: 0
