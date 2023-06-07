@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Unchord
 {
@@ -19,8 +20,9 @@ namespace Unchord
 
         private void m_OnPortal()
         {
-            Loading.cmdQueue.Enqueue(Loading.StartLoading);
-            Loading.cmdQueue.Enqueue(() => Map.TryOpenMap("LoadingScene01"));
+            AsyncOperation op = SceneManager.LoadSceneAsync("LoadingScene01", LoadSceneMode.Additive);
+            Loading.StartLoading();
+
             Loading.cmdQueue.Enqueue(Loading.fader.GetFadeOutCommand(speedFadeOut));
             Loading.cmdQueue.Enqueue(() =>
             {
@@ -37,6 +39,7 @@ namespace Unchord
                 return true;
             });
             Loading.cmdQueue.Enqueue(Loading.fader.GetFadeInCommand(speedFadeIn));
+            Loading.cmdQueue.Enqueue(() => Map.TryCloseMap("LoadingScene01"));
             Loading.cmdQueue.Enqueue(Loading.EndLoading);
         }
     }

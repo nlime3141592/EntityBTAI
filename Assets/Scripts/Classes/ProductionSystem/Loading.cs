@@ -4,7 +4,7 @@ namespace Unchord
 {
     public static class Loading
     {
-        public static readonly Fader fader = new Fader(1);
+        public static readonly Fader fader = new Fader(0);
         public static readonly CommandQueue cmdQueue = new CommandQueue(8);
 
         public static bool bLoading { get; private set; } = false;
@@ -33,9 +33,7 @@ namespace Unchord
         {
             return () =>
             {
-                float dT = _time * Time.deltaTime;
-                float next = s_m_delay + dT;
-
+                float next = s_m_delay + Time.deltaTime;
                 s_m_delay = next;
                 return next >= _time;
             };
