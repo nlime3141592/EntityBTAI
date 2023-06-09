@@ -5,45 +5,63 @@ namespace Unchord
 {
     public static class Map
     {
-        public static AsyncOperation asyncLoader { get; private set; }
-        public static AsyncOperation asyncUnloader { get; private set; }
-
-        public static bool TryOpenMap(string _mapName)
+        private abstract class m_MapAsyncOperator : ICommand
         {
-            if(asyncLoader == null)
+            protected string mapName;
+            protected AsyncOperation asyncOperation;
+
+            public m_MapAsyncOperator(string _mapName)
             {
-                asyncLoader = SceneManager.LoadSceneAsync(_mapName, LoadSceneMode.Additive);
-                asyncLoader.allowSceneActivation = true;
-                return false;
+                mapName = _mapName;
             }
-            else if(asyncLoader.isDone)
+
+            public abstract void Execute(CommandQueueCallback _callbackOnEnd);
+        }
+
+        private sealed class m_MapOpenAsyncOperator : m_MapAsyncOperator
+        {
+            public m_MapOpenAsyncOperator(string _mapName)
+            : base(_mapName)
             {
-                asyncLoader = null;
-                return true;
+
             }
-            else
+
+            public override void Execute(CommandQueueCallback _callbackOnEnd)
             {
-                return false;
+                if(base.asyncOperation == null)
+                    base.asyncOperation = SceneManager.LoadSceneAsync(mapName, LoadSceneMode.Additive);
+
+                if(base.asyncOperation.isDone)
+                    _callbackOnEnd();
             }
         }
 
-        public static bool TryCloseMap(string _mapName)
+        private sealed class m_MapCloseAsyncOperator : m_MapAsyncOperator
         {
-            if(asyncUnloader == null)
+            public m_MapCloseAsyncOperator(string _mapName)
+            : base(_mapName)
             {
-                asyncUnloader = SceneManager.UnloadSceneAsync(_mapName);
-                asyncUnloader.allowSceneActivation = true;
-                return false;
+
             }
-            else if(asyncUnloader.isDone)
+
+            public override void Execute(CommandQueueCallback _callbackOnEnd)
             {
-                asyncUnloader = null;
-                return true;
+                if(base.asyncOperation == null)
+                    base.asyncOperation = SceneManager.UnloadSceneAsync(mapName);
+
+                if(base.asyncOperation.isDone)
+                    _callbackOnEnd();
             }
-            else
-            {
-                return false;
-            }
+        }
+
+        public static ICommand Open(string _mapName)
+        {
+            return new m_MapOpenAsyncOperator(_mapName);
+        }
+
+        public static ICommand Close(string _mapName)
+        {
+            return new m_MapCloseAsyncOperator(_mapName);
         }
     }
 }

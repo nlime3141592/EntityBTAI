@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Unchord
 {
@@ -9,34 +10,51 @@ namespace Unchord
 
         public static bool bLoading { get; private set; } = false;
 
-        private static float s_m_delay;
+        private static AsyncOperation s_m_asyncLoader;
+        private static AsyncOperation s_m_asyncUnloader;
 
-        public static bool StartLoading()
+        public static void StartLoading(string _loadingSceneName)
         {
-            bLoading = true;
-            return true;
-        }
-
-        public static bool EndLoading()
-        {
-            bLoading = false;
-            return true;
-        }
-
-        public static bool ClearDelay()
-        {
-            s_m_delay = 0;
-            return true;
-        }
-
-        public static Command GetUpdateDelayCommand(float _time)
-        {
-            return () =>
+            s_m_asyncLoader = SceneManager.LoadSceneAsync(_loadingSceneName, LoadSceneMode.Additive);
+            s_m_asyncLoader.completed += (_op) =>
             {
-                float next = s_m_delay + Time.deltaTime;
-                s_m_delay = next;
-                return next >= _time;
+                s_m_asyncLoader = null;
             };
+
+            bLoading = true;
+        }
+
+        public static void EndLoading(string _loadingSceneName)
+        {
+            s_m_asyncUnloader = SceneManager.UnloadSceneAsync(_loadingSceneName);
+            s_m_asyncUnloader.completed += (_op) =>
+            {
+                s_m_asyncUnloader = null;
+                bLoading = false;
+            };
+        }
+
+        public static ICommand GetDelay(float _time)
+        {
+            return new m_Delay(_time);
+        }
+
+        private class m_Delay : ICommand
+        {
+            private float m_delay;
+
+            public m_Delay(float _delay)
+            {
+                m_delay = _delay;
+            }
+
+            public void Execute(CommandQueueCallback _callbackOnEnd)
+            {
+                m_delay -= Time.deltaTime;
+
+                if(m_delay <= 0)
+                    _callbackOnEnd();
+            }
         }
     }
 }

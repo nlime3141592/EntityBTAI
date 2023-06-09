@@ -1,4 +1,6 @@
+using System;
+
 namespace Unchord
 {
-    public delegate bool Command();
+    public delegate void Command(CommandQueueCallback _callbackOnEnd);
 }

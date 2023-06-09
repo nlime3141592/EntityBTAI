@@ -13,7 +13,7 @@ namespace Unchord
         {
             
         }
-
+/*
         void Update()
         {
             // if(GameManager.instance.generatedBoss.Count > 0)
@@ -27,6 +27,6 @@ namespace Unchord
             {
                 bossHealth.gameObject.SetActive(false);
             }
-        }
+        }*/
     }
 }

@@ -6,5 +6,6 @@ namespace Unchord
         ICommandQueue Enqueue(Command _cmd);
 
         int Count { get; }
+        int CountBegin { get; }
     }
 }

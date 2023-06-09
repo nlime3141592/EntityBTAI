@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Unchord
 {
@@ -20,27 +19,24 @@ namespace Unchord
 
         private void m_OnPortal()
         {
-            AsyncOperation op = SceneManager.LoadSceneAsync("LoadingScene01", LoadSceneMode.Additive);
-            Loading.StartLoading();
+            Loading.fader.speedFadeOut = this.speedFadeOut;
+            Loading.fader.speedFadeIn = this.speedFadeIn;
 
-            Loading.cmdQueue.Enqueue(Loading.fader.GetFadeOutCommand(speedFadeOut));
-            Loading.cmdQueue.Enqueue(() =>
-            {
-                PlayerScene.instance.vCamFollower.Unfollow();
-                return true;
-            });
-            Loading.cmdQueue.Enqueue(PlayerScene.instance.FixToHiddenFloor);
-            Loading.cmdQueue.Enqueue(() => Map.TryCloseMap(this.gameObject.scene.name));
-            Loading.cmdQueue.Enqueue(() => Map.TryOpenMap(nextMap));
-            Loading.cmdQueue.Enqueue(() =>
+            Loading.cmdQueue.Enqueue(Loading.fader.TryFadeOut);
+            Loading.cmdQueue.Enqueue(PlayerScene.instance.vCamFollower.Unfollow);
+            Loading.cmdQueue.Enqueue(Map.Close(this.gameObject.scene.name));
+            Loading.cmdQueue.Enqueue(PlayerScene.instance.OnMapClose);
+            Loading.cmdQueue.Enqueue(Map.Open(nextMap));
+            Loading.cmdQueue.Enqueue((_callbackOnEnd) =>
             {
                 Player.instance.transform.position = new Vector3(nextPosition.x, nextPosition.y, Player.instance.transform.position.z);
                 PlayerScene.instance.vCamFollower.Follow(Player.instance.transform, Vector2.zero, 0);
-                return true;
+                _callbackOnEnd();
             });
-            Loading.cmdQueue.Enqueue(Loading.fader.GetFadeInCommand(speedFadeIn));
-            Loading.cmdQueue.Enqueue(() => Map.TryCloseMap("LoadingScene01"));
-            Loading.cmdQueue.Enqueue(Loading.EndLoading);
+            Loading.cmdQueue.Enqueue(Loading.GetDelay(0.8f));
+            Loading.cmdQueue.Enqueue(Loading.fader.TryFadeIn);
+
+            Loading.StartLoading("LoadingScene01");
         }
     }
 }

@@ -13,10 +13,10 @@ namespace Unchord
         {
             
         }
-
+/*
         private void Update()
         {
-            List<Entity> lBoss = GameManager.instance.lBoss;
+            // List<Entity> lBoss = GameManager.instance.lBoss;
 
             if(lBoss == null || lBoss.Count == 0)
             {
@@ -32,6 +32,6 @@ namespace Unchord
             float mGroggy = lBoss[0].maxGroggyValue.finalValue;
 
             txt.text = string.Format($"{eName} (phase-{phase + 1})\nHP: {cHealth}/{mHealth}\nGroggy: {cGroggy}/{mGroggy}");
-        }
+        }*/
     }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Unchord
 {
@@ -19,16 +20,18 @@ namespace Unchord
 
         private void Update()
         {
-            if(Loading.cmdQueue.Count > 0)
-                Loading.cmdQueue.Execute();
-            else
-                Destroy(this.gameObject);
+            Loading.cmdQueue.Execute(m_OnEndLoading);
         }
 
         private void OnDestroy()
         {
             if(m_instance == this)
                 m_instance = null;
+        }
+
+        private void m_OnEndLoading()
+        {
+            Loading.EndLoading(gameObject.scene.name);
         }
     }
 }

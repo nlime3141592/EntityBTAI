@@ -74,14 +74,14 @@ namespace Unchord
         {
             base.OnEnableEntity();
 
-            GameManager.instance.lBoss.Add(this);
+            // GameManager.instance.lBoss.Add(this);
         }
 
         public override void OnDisableEntity()
         {
             base.OnDisableEntity();
 
-            GameManager.instance.lBoss.RemoveAll((e) => e == this);
+            // GameManager.instance.lBoss.RemoveAll((e) => e == this);
         }
 
         public override void OnStartEntity()

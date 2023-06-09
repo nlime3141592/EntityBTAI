@@ -1,7 +1,9 @@
+using System;
+
 namespace Unchord
 {
     public interface ICommand
     {
-        bool Execute();
+        void Execute(CommandQueueCallback _callbackOnEnd);
     }
 }

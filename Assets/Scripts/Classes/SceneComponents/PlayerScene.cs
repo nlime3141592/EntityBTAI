@@ -32,30 +32,16 @@ namespace Unchord
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.G))
-                m_TestLoading();
+            
         }
 
-        public bool FixToHiddenFloor()
+        public void OnMapClose(CommandQueueCallback _callbackOnEnd)
         {
             float px = hiddenPosition.x;
             float py = hiddenPosition.y;
             float pz = Player.instance.transform.position.z;
             Player.instance.transform.position = new Vector3(px, py, pz);
-            return true;
-        }
-
-        private void m_TestLoading()
-        {
-            AsyncOperation op = SceneManager.LoadSceneAsync("LoadingScene01", LoadSceneMode.Additive);
-            Loading.StartLoading();
-
-            Loading.cmdQueue.Enqueue(Loading.fader.GetFadeOutCommand(1.5f));
-            Loading.cmdQueue.Enqueue(Loading.ClearDelay);
-            Loading.cmdQueue.Enqueue(Loading.GetUpdateDelayCommand(2.5f));
-            Loading.cmdQueue.Enqueue(Loading.fader.GetFadeInCommand(0.75f));
-            Loading.cmdQueue.Enqueue(() => Map.TryCloseMap("LoadingScene01"));
-            Loading.cmdQueue.Enqueue(Loading.EndLoading);
+            _callbackOnEnd();
         }
     }
 }

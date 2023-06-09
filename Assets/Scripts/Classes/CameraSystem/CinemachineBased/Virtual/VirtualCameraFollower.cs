@@ -10,9 +10,10 @@ namespace Unchord
             base.SetPosition(_followee.position, _offset, _degRotationZ);
         }
 
-        public void Unfollow()
+        public void Unfollow(CommandQueueCallback _callbackOnEnd = null)
         {
             baseComponent.m_Follow = null;
+            _callbackOnEnd?.Invoke();
         }
 
         public void Unfollow(Vector2 _postPosition, Vector2 _offset, float _degRotationZ)
