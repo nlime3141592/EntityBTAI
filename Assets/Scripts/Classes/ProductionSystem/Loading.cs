@@ -33,28 +33,5 @@ namespace Unchord
                 bLoading = false;
             };
         }
-
-        public static ICommand GetDelay(float _time)
-        {
-            return new m_Delay(_time);
-        }
-
-        private class m_Delay : ICommand
-        {
-            private float m_delay;
-
-            public m_Delay(float _delay)
-            {
-                m_delay = _delay;
-            }
-
-            public void Execute(CommandQueueCallback _callbackOnEnd)
-            {
-                m_delay -= Time.deltaTime;
-
-                if(m_delay <= 0)
-                    _callbackOnEnd();
-            }
-        }
     }
 }

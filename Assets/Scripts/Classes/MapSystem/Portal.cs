@@ -33,7 +33,7 @@ namespace Unchord
                 PlayerScene.instance.vCamFollower.Follow(Player.instance.transform, Vector2.zero, 0);
                 _callbackOnEnd();
             });
-            Loading.cmdQueue.Enqueue(Loading.GetDelay(0.8f));
+            Loading.cmdQueue.Enqueue(Delay.Get(0.8f));
             Loading.cmdQueue.Enqueue(Loading.fader.TryFadeIn);
 
             Loading.StartLoading("LoadingScene01");
