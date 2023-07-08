@@ -16,12 +16,27 @@ namespace Unchord
         private List<Collider2D> m_sensorBuffer;
         private List<Entity> m_targets;
 
+        private bool m_bSkillBegin = false;
+
         protected override void Awake()
         {
             base.Awake();
 
             m_sensorBuffer = new List<Collider2D>(1);
             m_targets = new List<Entity>(1);
+
+            m_bSkillBegin = false;
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if(m_bSkillBegin)
+            {
+                base.UpdateEventListener();
+                iEvListener?.OnSkill(this);
+            }
         }
 
         public SkillModule Reset()
@@ -129,10 +144,23 @@ namespace Unchord
             return false;
         }
 
+        // NOTE: 스킬을 1회 사용합니다.
         public void OnSkill()
         {
             base.UpdateEventListener();
             iEvListener?.OnSkill(this);
+        }
+
+        // NOTE: 실시간 스킬 사용을 시작합니다. 매 프레임 스킬 함수를 호출합니다.
+        public void OnSkillBegin()
+        {
+            m_bSkillBegin = true;
+        }
+
+        // NOTE: 실시간 스킬 사용을 종료합니다.
+        public void OnSkillEnd()
+        {
+            m_bSkillBegin = false;
         }
     }
 }
