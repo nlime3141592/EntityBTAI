@@ -162,5 +162,32 @@ namespace Unchord
         {
             m_bSkillBegin = false;
         }
+
+        public void OnUpdateTargets(List<SkillTarget> _targets, List<Entity> _captured, float _innerCooltime, Action<Entity> _skillExecution)
+        {
+            int beg = _targets.Count - 1;
+
+            for(int i = beg; i >= 0; --i)
+            {
+                _captured.Remove(_targets[i].target);
+
+                if(_targets[i].innerCooltime <= 0)
+                {
+                    // TODO: 스킬의 효과를 적용하는 코드를 여기에 작성합니다.
+                    _skillExecution(_targets[i].target);
+                    _targets[i].innerCooltime = _innerCooltime;
+                }
+                else
+                {
+                    _targets[i].innerCooltime -= Time.deltaTime;
+                }
+            }
+
+            for(int i = 0; i < _captured.Count; ++i)
+            {
+                _skillExecution(_captured[i]);
+                _targets.Add(new SkillTarget(_captured[i], _innerCooltime));
+            }
+        }
     }
 }
