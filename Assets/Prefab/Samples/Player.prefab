@@ -388,7 +388,6 @@ GameObject:
   - component: {fileID: 1042913733656552149}
   - component: {fileID: 1042913733656552151}
   - component: {fileID: 1042913733656552145}
-  - component: {fileID: 1042913733656552147}
   - component: {fileID: 1042913733656552146}
   - component: {fileID: 1042913733656552144}
   - component: {fileID: 1042913733656552150}
@@ -574,7 +573,8 @@ MonoBehaviour:
   speed_JumpOnWall_Y: 16
   speed_Roll: 16
   speed_Dash: 32
-  speed_AttackOnAir: 1.5
+  speed_AttackOnAir001: 1.5
+  speed_AttackOnAir002: 1.5
   speed_TakeDown: 65
   speed_JumpDown: 5.5
   speedMin_FreeFall: -35
@@ -587,6 +587,11 @@ MonoBehaviour:
   gravity_WallSlidingFront: -9.81
   gravity_AttackOnAir: -49.5
   time_idleShort: 10
+  timeCoyote_AttackOnFloor001: 1
+  timeCoyote_AttackOnFloor002: 1
+  timeCoyote_AttackOnFloor003: 1
+  timeCoyote_AttackOnAir001: 2
+  timeCoyote_AttackOnAir002: 2
   frame_IdleShort: 100
   count_JumpOnAir: 1
   count_Dash: 1
@@ -739,216 +744,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1042913733656552147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1042913733656552156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad2f45a5cbdbd9c46a093f22e8b30870, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityName: Unknown Entity
-  maxHealth:
-    baseValue: 0
-  maxMana:
-    baseValue: 0
-  strength:
-    baseValue: 0
-  defence:
-    baseValue: 0
-  fixedTakenDamage:
-    baseValue: 0
-  criticalChance:
-    baseValue: 0
-  criticalDamage:
-    baseValue: 0
-  finalDamage:
-    baseValue: 0
-  gravityPercent:
-    baseValue: 0
-  moveSpeedPercent:
-    baseValue: 0
-  groggyStrength:
-    baseValue: 0
-  maxGroggyValue:
-    baseValue: 0
-  volumeCollisions: []
-  battleTriggers: []
-  lookDir:
-    x: 0
-    y: 0
-  eulerRotation: {x: 0, y: 0, z: 0}
-  phase: 0
-  bInvincibility: 0
-  groggyValue: 0
-  bBeginOfAnimation: 0
-  bBeginOfAction: 0
-  bEndOfAction: 0
-  bEndOfAnimation: 0
-  sensorBuffer: []
-  bParrying: 0
-  moveDir: {x: 0, y: 0}
-  hCol: {fileID: 0}
-  ledgerp: 0.06
-  ledgeVerticalLengthWeight: 0.5
-  speed_Walk: 6
-  speed_Run: 12
-  speed_JumpOnFloor: 16
-  speed_JumpOnAir: 20
-  speed_JumpOnWall_X: 3
-  speed_JumpOnWall_Y: 16
-  speed_Roll: 16
-  speed_Dash: 32
-  speed_AttackOnAir: 1.5
-  speed_TakeDown: 65
-  speed_JumpDown: 5.5
-  speedMin_FreeFall: -35
-  speedMin_WallSlidingFront: -6
-  force_JumpOnFloor: 49.5
-  force_JumpOnAir: 49.5
-  force_JumpOnWall: 49.5
-  force_JumpDown: 49.5
-  gravity_FreeFall: -49.5
-  gravity_WallSlidingFront: -9.81
-  gravity_AttackOnAir: -49.5
-  time_idleShort: 10
-  frame_IdleShort: 100
-  count_JumpOnAir: 1
-  count_Dash: 1
-  count_AttackOnAir: 1
-  slabSensorOnSit:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
-  slabSensorOnBody:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
-  skillRange_AttackOnFloor001_01:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
-  skillRange_AttackOnFloor002_01:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
-  skillRange_AttackOnFloor003_01:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
-  skillRange_AttackOnAir001_01:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
-  skillRange_AttackOnAir002_01:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
-  skillRange_TakeDown003_01:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 0.5
-      t: 0.5
-      r: 0.5
-      b: 0.5
-  bGameStarted: 0
-  bIsRun: 0
-  countLeft_JumpOnAir: 0
-  countLeft_Dash: 0
-  countLeft_AttackOnAir: 0
-  offset_StandCamera: {x: 0, y: 0}
-  bFixedLookDirByAxis:
-    x: 0
-    y: 0
-  stateNext_AttackOnFloor: 0
-  stateNext_AttackOnAir: 0
-  CURRENT_TYPE: 
-  DEBUG_COYOTE: 0
-  sitSlabs: []
-  downJumpedSlabs: []
-  curOverlapSlabs: []
-  prevOverlapSlabs: []
 --- !u!114 &1042913733656552146
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -415,30 +415,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e2a61f4a12951a49a5579586cd13a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxSensor:
-    transform:
-      lpx: 0
-      lpy: 0
-      ldeg: 0
-      lfx: 0
-      lfy: 0
-      lsx: 1
-      lsy: 1
-    box:
-      l: 20
-      t: 20
-      r: 20
-      b: 20
-  targets: []
-  tags:
-  - Player
-  mask:
-    serializedVersion: 2
-    m_Bits: 128
-  bIgnoreSelf: 1
-  bCanAggro: 1
-  bAggro: 0
-  bAggroPrev: 0
 --- !u!1 &245115075
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,7 +1108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &1081670867
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2095,13 +2071,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1042913733656552151, guid: 2a836ffb021e19b4dbe0fa1796e37df5, type: 3}
+      propertyPath: bGameStarted
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042913733656552151, guid: 2a836ffb021e19b4dbe0fa1796e37df5, type: 3}
+      propertyPath: speed_JumpOnFloor
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042913733656552151, guid: 2a836ffb021e19b4dbe0fa1796e37df5, type: 3}
+      propertyPath: gravity_AttackOnAir
+      value: -60
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042913733656552151, guid: 2a836ffb021e19b4dbe0fa1796e37df5, type: 3}
+      propertyPath: speed_AttackOnAir001
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1042913733656552151, guid: 2a836ffb021e19b4dbe0fa1796e37df5, type: 3}
+      propertyPath: speed_AttackOnAir002
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1042913733656552156, guid: 2a836ffb021e19b4dbe0fa1796e37df5, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1042913733656552156, guid: 2a836ffb021e19b4dbe0fa1796e37df5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a836ffb021e19b4dbe0fa1796e37df5, type: 3}

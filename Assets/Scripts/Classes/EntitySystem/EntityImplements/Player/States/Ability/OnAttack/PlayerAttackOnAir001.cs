@@ -11,16 +11,17 @@ namespace Unchord
             base.OnConstruct();
 
             base.baseDamage = 1.0f;
-            base.speed_Hop = 20.0f;
-            base.coyote = 2.0f;
         }
 
         public override void OnStateBegin()
         {
             base.OnStateBegin();
 
+            base.speed_Hop = instance.speed_AttackOnAir001;
+
             instance.stateNext_AttackOnAir = Player.c_st_ATTACK_ON_AIR_002;
             --instance.countLeft_AttackOnAir;
+            instance.timerCoyote_AttackOnAir.SetTimer(instance.timeCoyote_AttackOnAir001);
         }
 
         public override bool CanTransit()

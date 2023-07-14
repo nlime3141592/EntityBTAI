@@ -54,13 +54,14 @@ namespace Unchord
 
         public float speed_Walk = 6.0f;
         public float speed_Run = 12.0f;
-        public float speed_JumpOnFloor = 16.0f;
+        public float speed_JumpOnFloor = 24.0f;
         public float speed_JumpOnAir = 20.0f;
         public float speed_JumpOnWall_X = 3.0f;
         public float speed_JumpOnWall_Y = 16.0f;
         public float speed_Roll = 16.0f;
         public float speed_Dash = 32.0f;
-        public float speed_AttackOnAir = 1.5f;
+        public float speed_AttackOnAir001 = 11.0f;
+        public float speed_AttackOnAir002 = 11.0f;
         public float speed_TakeDown = 65.0f;
         public float speed_JumpDown = 5.5f;
 
@@ -74,9 +75,14 @@ namespace Unchord
 
         public float gravity_FreeFall = -49.5f;
         public float gravity_WallSlidingFront = -9.81f;
-        public float gravity_AttackOnAir = -49.5f;
+        public float gravity_AttackOnAir = -60.0f;
 
         public float time_idleShort = 10.0f;
+        public float timeCoyote_AttackOnFloor001 = 1.0f;
+        public float timeCoyote_AttackOnFloor002 = 1.0f;
+        public float timeCoyote_AttackOnFloor003 = 1.0f;
+        public float timeCoyote_AttackOnAir001 = 2.0f;
+        public float timeCoyote_AttackOnAir002 = 2.0f;
 
         public int frame_IdleShort = 100;
 

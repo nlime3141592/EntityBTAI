@@ -6,12 +6,9 @@ namespace Unchord
     public abstract class PlayerAttackOnAirBase : PlayerAttack
     {
         public float baseDamage;
-        public float speed_Hop;
-        public float coyote { get; protected set; }
+        protected float speed_Hop;
 
         protected bool bCapturedAttackDown { get; private set; }
-
-        private float m_speed_Hop;
 
         public override void OnStateBegin()
         {
@@ -21,17 +18,14 @@ namespace Unchord
 
             instance.bFixedLookDirByAxis.x = false;
             instance.vm.FreezePosition(true, false);
-            instance.timerCoyote_AttackOnAir.SetTimer(coyote);
-
-            m_speed_Hop = speed_Hop;
         }
 
         public override void OnFixedUpdate()
         {
             base.OnFixedUpdate();
 
-            instance.vm.SetVelocityXY(0.0f, m_speed_Hop);
-            m_speed_Hop += instance.gravity_AttackOnAir * Time.fixedDeltaTime;
+            instance.vm.SetVelocityXY(0.0f, speed_Hop);
+            speed_Hop += instance.gravity_AttackOnAir * Time.fixedDeltaTime;
         }
 
         public override void OnActionBegin()
