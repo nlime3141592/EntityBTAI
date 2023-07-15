@@ -567,14 +567,14 @@ MonoBehaviour:
   ledgeVerticalLengthWeight: 0.5
   speed_Walk: 6
   speed_Run: 12
-  speed_JumpOnFloor: 16
+  speed_JumpOnFloor: 24
   speed_JumpOnAir: 20
   speed_JumpOnWall_X: 3
   speed_JumpOnWall_Y: 16
   speed_Roll: 16
   speed_Dash: 32
-  speed_AttackOnAir001: 1.5
-  speed_AttackOnAir002: 1.5
+  speed_AttackOnAir001: 11
+  speed_AttackOnAir002: 11
   speed_TakeDown: 65
   speed_JumpDown: 5.5
   speedMin_FreeFall: -35
@@ -585,7 +585,7 @@ MonoBehaviour:
   force_JumpDown: 49.5
   gravity_FreeFall: -49.5
   gravity_WallSlidingFront: -9.81
-  gravity_AttackOnAir: -49.5
+  gravity_AttackOnAir: -60
   time_idleShort: 10
   timeCoyote_AttackOnFloor001: 1
   timeCoyote_AttackOnFloor002: 1
@@ -708,7 +708,7 @@ MonoBehaviour:
       t: 0
       r: 5.5
       b: 1.7
-  bGameStarted: 0
+  bGameStarted: 1
   bIsRun: 1
   countLeft_JumpOnAir: 0
   countLeft_Dash: 0
